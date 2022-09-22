@@ -20,7 +20,7 @@ Please note that the example application only demonstrates a subset of the SDK f
 
 Before you can actually start compiling and using the example applications please ensure you have the following ready:
 
-* An[Authentication Cloud](https://docs.nevis.net/authcloud/) instance provided by Nevis.
+* An [Authentication Cloud](https://docs.nevis.net/authcloud/) instance provided by Nevis.
 * An [access key](https://docs.nevis.net/authcloud/access-app/access-key) to use with the authentication cloud.
 * The archive containing the Nevis Mobile Authentication SDK Flutter plugin, binaries and SDK installer
 
@@ -147,4 +147,3 @@ Now that the Flutter example application is up and running, it's time to try it 
 ### Where to go from here?
 
 Check out our comprehensive [Nevis Mobile Authentication SDK documentation](https://docs.nevis.net/mobilesdk/).
- It will provide you with all the details on how to develop your own Flutter application using the SDK.
