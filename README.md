@@ -1,16 +1,118 @@
 # Nevis Mobile Authentication SDK Flutter Example Application
 
-Demonstrates how to use the nevis_mobile_authentication_sdk Flutter plugin.
+This repository contains the example application demonstrating how to use the Nevis Mobile Authentication SDK Flutter plugin in a Flutter application.
+The Nevis Mobile Authentication SDK allows you to integrate FIDO UAF 1.1 based authentication in your mobile application. 
+
+Some of the features demonstrated in this example are:
+
+* first
+* second
+* third
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Before getting started, make sure you have a proper Flutter development environment. Please follow the official Nevis [documentation](https://docs.nevis.net/mobilesdk/)
 
-A few resources to get you started if this is your first Flutter project:
+### What you will need
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Before you can actually start compiling and using the example applications please ensure you have the following ready:
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* An[Authentication Cloud](https://docs.nevis.net/authcloud/) instance provided by Nevis.
+* An [access key](https://docs.nevis.net/authcloud/access-app/access-key) to use with the authentication cloud.
+* The archive containing the Nevis Mobile Authentication SDK Flutter plugin, binaries and SDK installer
+
+Your development setup has to meet the following prerequisites:
+
+* Xcode 13, including Swift 5.5.2 or later
+* Android 6 or later, with API level 23 -or-
+* Android 10 or later, with API level 29, for the biometric authenticator to work
+* Gradle 7.4 or later
+
+### Initialization
+
+The flutter plugin installation is handed by an SDK installer.
+
+During the installation the following changes are made directly in the Flutter example application project. The paths are relative to the project.
+
+The following build related files are modified:
+
+- `pubspec.yaml`
+- `android/build.gradle`
+- `android/gradle.properties`
+- `android/app/build.gradle`
+- `ios/Podfile`
+
+The build script modifications are made between `NEVIS_SDK_INSTALLER_PATCH` and `NEVIS_SDK_INSTALLER_PATCH_END` comments.
+
+The following folders and content will be added to your Flutter application:
+
+- `plugin`
+- `android/native-dependencies`
+- `android/app/nevis-sdk-dependencies.gradle`
+- `ios/native-dependencies`
+
+#### Installation
+
+1. Unpack the received SDK package called `nevis-mobile-authentication-sdk-installer-flutter-FLUTTER_PLUGIN_VERSION.tar.gz`. The suffix `FLUTTER_PLUGIN_VERSION` in the name is replaced with the actual version of the contained Flutter Plugin.
+
+   ```bash
+   tar -xvf nevis-mobile-authentication-sdk-installer-flutter-FLUTTER_PLUGIN_VERSION.tar.gz
+   ```
+
+2. Change into the directory `nevis-mobile-authentication-sdk-installer-flutter-FLUTTER_PLUGIN_VERSION` and use it as your working directory.
+3. Run the SKD installer command:
+
+   ```bash
+   ./sdkinstall for-framework Flutter FLUTTER_APP_PROJECT_DIR
+   ```
+
+   `FLUTTER_APP_PROJECT_DIR` is your project directory, the path of your Flutter application project, for example: `~/Projects/Flutter/nevis-mobile-authentication-sdk-example-app-flutter`.
+
+   You can run the following command to get the full list of available arguments and options of `sdkinstall` tool:
+
+   ```shell
+   ./sdkinstall for-framework --help
+   ```
+
+4. Run the `flutter pub get` command in your `FLUTTER_APP_PROJECT_DIR` directory.
+5. Run `pod install` in your `FLUTTER_APP_PROJECT_DIR/ios` directory.
+6. Synchronize your `FLUTTER_APP_PROJECT_DIR/android` project if opened in Android Studio.
+
+#### Troubleshooting
+
+In case of any error during the installation, check the console log and the created `install.log` file beside the `sdkinstall` tool for more detailed errors.
+
+### Configuration
+
+Before being able to use the example application with your Nevis Customer Authentication cloud instance, you'll need to update the configuration file with the right host information.
+
+Edit the `assets/config_cloud.json` file and replace the host name information with your cloud instance:
+
+```json
+{
+  "login": {
+    "loginRequestURL": "https://<YOUR INSTANCE>.mauth.nevis.cloud/_app/auth/pwd"
+  },
+  "sdk": {
+    "hostname": "<YOUR INSTANCE>.mauth.nevis.cloud",
+    ...
+  }
+}
+```
+
+### Build & Run
+
+Now you're ready to build the example application by running:
+
+```bash
+flutter build ios
+flutter build android
+```
+
+In order to run the Flutter application, you'll need a running emulator or simulator instance, then you can start the application by running:
+
+```bash
+flutter run
+```
+
+
