@@ -1,3 +1,5 @@
+![Nevis Logo](https://www.nevis.net/hubfs/Nevis/images/logotype.svg)
+
 # Nevis Mobile Authentication SDK Flutter Example Application
 
 This repository contains the example application demonstrating how to use the Nevis Mobile Authentication SDK Flutter plugin in a Flutter application.
