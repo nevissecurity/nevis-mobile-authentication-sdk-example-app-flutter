@@ -8,7 +8,7 @@ The Nevis Mobile Authentication SDK allows you to integrate FIDO UAF 1.1 based a
 Some features demonstrated in this example application are:
 
 * Registering via QR code
-* Simulating and in-band authentication after registration
+* Simulating in-band authentication after registration
 * Deregistering a registered account
 * Changing the PIN of the PIN authenticator
 * Changing the device information
