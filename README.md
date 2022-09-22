@@ -3,11 +3,16 @@
 This repository contains the example application demonstrating how to use the Nevis Mobile Authentication SDK Flutter plugin in a Flutter application.
 The Nevis Mobile Authentication SDK allows you to integrate FIDO UAF 1.1 based authentication in your mobile application. 
 
-Some of the features demonstrated in this example are:
+Some features demonstrated in this example application are:
 
-* first
-* second
-* third
+* Registering via QR code
+* Simulating and in-band authentication after registration
+* Deregistering a registered account
+* Changing the PIN of the PIN authenticator
+* Changing the device information
+* Registering using the Auth Cloud API (app link URIs)
+
+Please note that the example application only demonstrates a subset of the SDK features. The main purpose is to demonstrate how the SDK can be used and not to cover all supported scenarios and use cases.
 
 ## Getting Started
 
@@ -96,16 +101,23 @@ Edit the `assets/config_cloud.json` file and replace the host name information w
 }
 ```
 
-### Build & Run
+### Build
 
 Now you're ready to build the example application by running:
 
 ```bash
 flutter build ios
+```
+
+```bash
 flutter build android
 ```
 
-In order to run the Flutter application, you'll need a running emulator or simulator instance, then you can start the application by running:
+### Run
+
+In order to run the Flutter application, you'll need a running emulator or simulator instance or a phone connected to your computer.
+
+You start the application by running:
 
 ```bash
 flutter run
