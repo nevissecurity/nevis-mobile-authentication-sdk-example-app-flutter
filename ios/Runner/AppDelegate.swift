@@ -34,29 +34,11 @@ import UIKit
 		GeneratedPluginRegistrant.register(with: self)
 		deepLinkEventChannel?.setStreamHandler(linkStreamHandler)
 
-		resetKeychain()
-
 		return super.application(application, didFinishLaunchingWithOptions: launchOptions)
 	}
 
 	override func application(_: UIApplication, open url: URL, options _: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
 		deepLinkEventChannel?.setStreamHandler(linkStreamHandler)
 		return linkStreamHandler.handleLink(url.absoluteString)
-	}
-}
-
-private extension AppDelegate {
-	func resetKeychain() {
-		deleteAllKeys(for: kSecClassGenericPassword)
-		deleteAllKeys(for: kSecClassInternetPassword)
-		deleteAllKeys(for: kSecClassCertificate)
-		deleteAllKeys(for: kSecClassKey)
-		deleteAllKeys(for: kSecClassIdentity)
-	}
-
-	func deleteAllKeys(for secClass: CFString) {
-		let attributes = [kSecClass as String: secClass as AnyObject]
-		let status = SecItemDelete(attributes as CFDictionary)
-		assert(status == noErr || status == errSecItemNotFound, "Failed to clear keychain. Error: \(status)")
 	}
 }
