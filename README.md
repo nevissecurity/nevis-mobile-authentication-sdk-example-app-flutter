@@ -128,7 +128,7 @@ flutter build ios --no-codesign
 ```
 
 ```bash
-flutter build android
+flutter build apk --debug
 ```
 
 ### Run
