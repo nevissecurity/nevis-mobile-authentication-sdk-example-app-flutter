@@ -129,21 +129,4 @@ flutter run
 
 Now that the Flutter example application is up and running, it's time to try it out!
 
-2. Visit `https://<your-cloud-instance>.mauth.nevis.cloud/test.html`
-3. Expand the **Setup & Tokens** panel, and provide your access key in the *Access Token* text field.
-4. Click on **Check + Continue**. The message "Provided token and URL are valid, you are good to go!" appears.
-5. Expand the **Enroll a new authenticator** panel.
-6. Select (if needed) the **App/Push** tab.
-7. Provide a username (any username will work for testing purposes) in the **Username** text field.
-8. Click on **Enroll**. A QR code is displayed.
-9. Scan the QR code with the previously built application and proceed with the registration process.
-10. Expand the **Sign an Approval (that is, transaction or login)** panel.
-11. Select (if needed) the **App/Push** tab.
-12. Provide the username that was given during registration in the **Username** text field.
-13. Select **QR Code** in the **Approval Method** drop down menu.
-14. Click on **Send Approval**. A QR code is displayed.
-15. Scan the QR code with the previously built application and proceed with the authentication.
-
-### Where to go from here?
-
-Check out our comprehensive [Nevis Mobile Authentication SDK documentation](https://docs.nevis.net/mobilesdk/).
+Check out our [Quickstart Guide](https://docs.nevis.net/mobilesdk/quickstart).
