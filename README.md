@@ -113,7 +113,7 @@ The example apps are supporting two kinds of configuration: `cloud` and `onPremi
 > Only *build-time* configuration change is supported.
 
 
-To change the configuration open the [getit_root.dart](nevis_mobile_authentication_sdk/example/lib/getit_root.dart) file which describes the dependency injection related configuration using the `get_it` dart package.
+To change the configuration open the [getit_root.dart](lib/getit_root.dart) file which describes the dependency injection related configuration using the `get_it` dart package.
 The `environment` parameter should be changed to one of the values already mentioned.
 
 ### Build
