@@ -21,7 +21,6 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  nevis_mobile_authentication_sdk: 3.0.0
   cupertino_icons: 1.0.4
   intl: 0.17.0
   flutter_bloc: 8.0.1
