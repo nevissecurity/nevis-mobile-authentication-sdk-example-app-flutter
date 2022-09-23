@@ -91,7 +91,9 @@ In case of any error during the installation, check the console log and the crea
 
 Before being able to use the example application with your Nevis Customer Authentication cloud instance, you'll need to update the configuration file with the right host information.
 
-Edit the `assets/config_cloud.json` file and replace the host name information with your cloud instance:
+Edit the `assets/config_cloud.json` file and replace
+- the host name information with your cloud instance
+- the facetId with your android facetId
 
 ```json
 {
@@ -100,7 +102,8 @@ Edit the `assets/config_cloud.json` file and replace the host name information w
   },
   "sdk": {
     "hostname": "<YOUR INSTANCE>.mauth.nevis.cloud",
-    ...
+    "facetId": "<YOUR ANDROID FACET_ID>",
+     ...
   }
 }
 ```
@@ -121,7 +124,7 @@ The `environment` parameter should be changed to one of the values already menti
 Now you're ready to build the example application by running:
 
 ```bash
-flutter build ios
+flutter build ios --no-codesign
 ```
 
 ```bash
@@ -137,6 +140,10 @@ You start the application by running:
 ```bash
 flutter run
 ```
+
+> **_NOTE_**  
+> Running the application on an iOS device required codesign setup.
+
 
 ### Try it out 
 
