@@ -26,10 +26,12 @@ Before you can actually start compiling and using the example applications pleas
 
 Your development setup has to meet the following prerequisites:
 
+* iOS 12 or later
 * Xcode 13, including Swift 5.5.2 or later
 * Android 6 or later, with API level 23 -or-
 * Android 10 or later, with API level 29, for the biometric authenticator to work
 * Gradle 7.4 or later
+* Flutter SDK 3.0.x, stable channel
 
 ### Initialization
 
@@ -102,6 +104,17 @@ Edit the `assets/config_cloud.json` file and replace the host name information w
   }
 }
 ```
+
+#### Change configuration
+
+The example apps are supporting two kinds of configuration: `cloud` and `onPremise`.
+
+> **_NOTE_**  
+> Only *build-time* configuration change is supported.
+
+
+To change the configuration open the [getit_root.dart](nevis_mobile_authentication_sdk/example/lib/getit_root.dart) file which describes the dependency injection related configuration using the `get_it` dart package.
+The `environment` parameter should be changed to one of the values already mentioned.
 
 ### Build
 

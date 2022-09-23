@@ -1,9 +1,9 @@
 {
   "login": {
-    "loginRequestURL": "https://mobileauthdev2.westeurope.cloudapp.azure.com/auth/pwd"
+    "loginRequestURL": "https://mycompany.com/auth/pwd"
   },
   "sdk": {
-    "baseUrl": "https://mobileauthdev2.westeurope.cloudapp.azure.com",
+    "baseUrl": "https://mycompany.com/auth/pwd",
     "registrationRequestPath": "/nevisfido/uaf/1.1/request/registration/",
     "registrationResponsePath": "/nevisfido/uaf/1.1/registration/",
     "authenticationRequestPath": "/auth/fidouaf",

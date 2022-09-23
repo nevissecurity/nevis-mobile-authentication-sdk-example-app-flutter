@@ -12,4 +12,4 @@ final getIt = GetIt.instance;
   asExtension: false, // default
 )
 // acceptable values for environment parameter are cloud & onPremise
-void configureDependencies() => $initGetIt(getIt, environment: 'onPremise');
+void configureDependencies() => $initGetIt(getIt, environment: 'cloud');
