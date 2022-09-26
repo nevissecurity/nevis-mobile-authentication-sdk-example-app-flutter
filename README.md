@@ -83,6 +83,10 @@ The following folders and content will be added to your Flutter app:
    ./sdkinstall for-framework --help
    ```
 
+   > **Warning**
+   >
+   > The `sdkinstall` command assumes that the `flutter` binary is accessible from your `PATH` environment variable.
+
 4. Run the `flutter pub get` command in your `FLUTTER_APP_PROJECT_DIR` directory.
 5. Run the `flutter pub run build_runner build --delete-conflicting-outputs` command in your `FLUTTER_APP_PROJECT_DIR` directory.
 6. Run `pod install` in your `FLUTTER_APP_PROJECT_DIR/ios` directory.
