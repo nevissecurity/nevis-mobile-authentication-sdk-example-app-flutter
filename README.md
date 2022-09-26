@@ -68,10 +68,10 @@ The following folders and content will be added to your Flutter app:
 3. Run the SDK installer command:
 
    ```bash
-   ./sdkinstall for-framework Flutter FLUTTER_APP_PROJECT_DIR   
+   ./sdkinstall for-framework Flutter EXAMPLE_APP_PROJECT_DIR
    ```
 
-   `FLUTTER_APP_PROJECT_DIR` is your project directory, the path of your Flutter app project, for example: `~/Projects/Flutter/nevis-mobile-authentication-sdk-example-app-flutter`:
+   `EXAMPLE_APP_PROJECT_DIR` is the path where this repository has been checked out. For example: `~/Projects/Flutter/nevis-mobile-authentication-sdk-example-app-flutter`:
    
    ```bash
    ./sdkinstall for-framework Flutter ~/Projects/Flutter/nevis-mobile-authentication-sdk-example-app-flutter
@@ -87,10 +87,10 @@ The following folders and content will be added to your Flutter app:
    >
    > The `sdkinstall` command assumes that the `flutter` binary is accessible from your `PATH` environment variable.
 
-4. Run the `flutter pub get` command in your `FLUTTER_APP_PROJECT_DIR` directory.
-5. Run the `flutter pub run build_runner build --delete-conflicting-outputs` command in your `FLUTTER_APP_PROJECT_DIR` directory.
-6. Run `pod install` in your `FLUTTER_APP_PROJECT_DIR/ios` directory.
-7. Synchronize your `FLUTTER_APP_PROJECT_DIR/android` project if opened in Android Studio.
+4. Run the `flutter pub get` command in your `EXAMPLE_APP_PROJECT_DIR` directory.
+5. Run the `flutter pub run build_runner build --delete-conflicting-outputs` command in your `EXAMPLE_APP_PROJECT_DIR` directory.
+6. Run `pod install` in your `EXAMPLE_APP_PROJECT_DIR/ios` directory.
+7. Synchronize your `EXAMPLE_APP_PROJECT_DIR/android` project if opened in Android Studio.
 
 #### Troubleshooting
 
