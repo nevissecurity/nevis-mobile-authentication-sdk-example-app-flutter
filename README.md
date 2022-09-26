@@ -65,13 +65,17 @@ The following folders and content will be added to your Flutter application:
    ```
 
 2. Change into the directory `nevis-mobile-authentication-sdk-installer-flutter-FLUTTER_PLUGIN_VERSION` and use it as your working directory.
-3. Run the SKD installer command:
+3. Run the SDK installer command:
 
    ```bash
-   ./sdkinstall for-framework Flutter FLUTTER_APP_PROJECT_DIR
+   ./sdkinstall for-framework Flutter FLUTTER_APP_PROJECT_DIR   
    ```
 
-   `FLUTTER_APP_PROJECT_DIR` is your project directory, the path of your Flutter application project, for example: `~/Projects/Flutter/nevis-mobile-authentication-sdk-example-app-flutter`.
+   `FLUTTER_APP_PROJECT_DIR` is your project directory, the path of your Flutter application project, for example: `~/Projects/Flutter/nevis-mobile-authentication-sdk-example-app-flutter`:
+   
+   ```bash
+   ./sdkinstall for-framework Flutter ~/Projects/Flutter/nevis-mobile-authentication-sdk-example-app-flutter
+   ```
 
    You can run the following command to get the full list of available arguments and options of `sdkinstall` tool:
 
