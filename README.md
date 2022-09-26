@@ -65,7 +65,7 @@ The following folders and content will be added to your Flutter application:
    ```
 
 2. Change into the directory `nevis-mobile-authentication-sdk-installer-flutter-FLUTTER_PLUGIN_VERSION` and use it as your working directory.
-3. Run the SKD installer command:
+3. Run the SDK installer command:
 
    ```bash
    ./sdkinstall for-framework Flutter FLUTTER_APP_PROJECT_DIR
@@ -80,8 +80,9 @@ The following folders and content will be added to your Flutter application:
    ```
 
 4. Run the `flutter pub get` command in your `FLUTTER_APP_PROJECT_DIR` directory.
-5. Run `pod install` in your `FLUTTER_APP_PROJECT_DIR/ios` directory.
-6. Synchronize your `FLUTTER_APP_PROJECT_DIR/android` project if opened in Android Studio.
+5. Run the `flutter pub run build_runner build --delete-conflicting-outputs` command in your `FLUTTER_APP_PROJECT_DIR` directory.
+6. Run `pod install` in your `FLUTTER_APP_PROJECT_DIR/ios` directory.
+7. Synchronize your `FLUTTER_APP_PROJECT_DIR/android` project if opened in Android Studio.
 
 #### Troubleshooting
 
