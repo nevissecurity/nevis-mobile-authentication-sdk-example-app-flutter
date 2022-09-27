@@ -38,13 +38,13 @@ DerivedData
 .project
 .settings
 local.properties
-android.iml
+*.iml
 ReadMe.html
 ReadMe.pdf
 
 # Cocoapods
 #
-example/ios/Pods
+/ios/Pods
 **/Podfile.lock
 
 # node.js
@@ -60,12 +60,22 @@ yarn-error.log
 #environment
 **/.env
 
-# Flutter related
+# Flutter/Dart/Pub related
 **/pubspec.lock
 **/*.mocks.dart
 **/*.g.dart
+*.log
 **/doc
 **/untranslated.txt
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+lib/getit_root.config.dart
 
 # Fastlane
 **/fastlane/report.xml

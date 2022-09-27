@@ -1,0 +1,32 @@
+# Format options
+--allman false
+--elseposition next-line
+--voidtype tuple
+--indent tab
+--ranges spaced
+--self init-only
+--symlinks follow
+
+# Rules
+--enable blankLinesBetweenScopes
+--enable consecutiveSpaces
+--enable duplicateImports
+--enable emptyBraces
+--enable leadingDelimiters
+--enable redundantBreak
+--enable spaceAroundBraces
+--enable spaceAroundBrackets
+--enable spaceAroundComments
+--enable spaceAroundGenerics
+--enable spaceAroundOperators
+--enable spaceInsideBraces
+--enable spaceInsideBrackets
+--enable spaceInsideComments
+--enable spaceInsideGenerics
+--enable spaceInsideParens
+--enable wrapArguments
+
+--disable redundantFileprivate
+
+# File options
+--exclude Pods

@@ -1,0 +1,18 @@
+{
+  "login": {
+    "loginRequestURL": "https://mycompany.com/auth/pwd"
+  },
+  "sdk": {
+    "baseUrl": "https://mycompany.com/auth/pwd",
+    "registrationRequestPath": "/nevisfido/uaf/1.1/request/registration/",
+    "registrationResponsePath": "/nevisfido/uaf/1.1/registration/",
+    "authenticationRequestPath": "/auth/fidouaf",
+    "authenticationResponsePath": "/auth/fidouaf/authenticationresponse/",
+    "deregistrationRequestPath": "/nevisfido/uaf/1.1/request/deregistration/",
+    "dispatchTargetResourcePath": "/nevisfido/token/dispatch/targets/",
+    "networkTimeoutInSeconds": "60",
+    "authenticationMaxRetries": 3,
+    "authenticationRetryIntervalInSeconds": "1",
+    "userInteractionTimeoutInSeconds": "240"
+  }
+}

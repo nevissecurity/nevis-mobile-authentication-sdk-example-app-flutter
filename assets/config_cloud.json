@@ -1,0 +1,12 @@
+{
+  "login": {
+    "loginRequestURL": "https://myinstance.mauth.nevis.cloud/_app/auth/pwd"
+  },
+  "sdk": {
+    "hostname": "myinstance.mauth.nevis.cloud",
+    "networkTimeoutInSeconds": "60",
+    "authenticationMaxRetries": 3,
+    "authenticationRetryIntervalInSeconds": "1",
+    "userInteractionTimeoutInSeconds": "240"
+  }
+}

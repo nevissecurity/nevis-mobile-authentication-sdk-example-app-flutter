@@ -1,0 +1,175 @@
+{
+  "appTitle": "Nevis Mobile Authentication Flutter Plugin Example",
+  "authenticatorDescriptionBiometric": "Authentication based on biometrics",
+  "authenticatorDescriptionFaceID": "Authentication based on Face ID",
+  "authenticatorDescriptionFingerprint": "Authentication based on fingerprint",
+  "authenticatorDescriptionTouchID": "Authentication based on Touch ID",
+  "authenticatorDescriptionPin": "Authentication using a PIN",
+  "authenticatorTitleBiometric": "Face/Fingerprint",
+  "authenticatorTitleFaceID": "Face ID",
+  "authenticatorTitleFingerprint": "Fingerprint",
+  "authenticatorTitleTouchID": "Touch ID",
+  "authenticatorTitlePin": "PIN",
+  "cancelButtonTitle": "Cancel",
+  "confirmButtonTitle": "Ok",
+  "errorType": "Latest error: {errorType}",
+  "@errorType": {
+    "placeholders": {
+      "errorType": {
+        "type": "String",
+        "example": "none"
+      }
+    }
+  },
+  "error": "Latest error description: {errorDescription}",
+  "@error": {
+    "placeholders": {
+      "errorDescription": {
+        "type": "String",
+        "example": "Missing property"
+      }
+    }
+  },
+  "businessErrorTypeAccountsNotFound": "No accounts were found for the operation.",
+  "businessErrorTypeAuthenticatorNotFound": "No available authenticator found.",
+  "businessErrorTypeDispatchTargetNotFound": "No dispatch target was found for the operation.",
+  "businessErrorTypeInvalidState": "Invalid state.",
+  "businessErrorTypeMissingCookie": "No cookie was provided in the legacy login response.",
+  "businessErrorTypeMissingDispatchTokenResponse": "The returned URI did not have a dispatchTokenResponse query parameter.",
+  "businessErrorTypeMissingOpenSettingsOperationForUser": "No open settings operation found for the given user.",
+  "businessErrorTypePinAuthenticatorNotFound": "Pin authenticator not found.",
+  "businessErrorTypeRegisteredAccountsNotFound": "There are no registered accounts.",
+  "initStepName": "Init step",
+  "initFail": "Init failed",
+  "initSuccess": "Init was successful",
+  "numberOfRegisteredAccounts": "Number of registered accounts: {numberOfRegisteredAccounts}",
+  "@numberOfRegisteredAccounts": {
+    "placeholders": {
+      "numberOfRegisteredAccounts": {
+        "type": "int",
+        "example": "0"
+      }
+    }
+  },
+  "oobDeepLink": "Redirect from: {redirectUrl}",
+  "@oobDeepLink": {
+    "placeholders": {
+      "redirectUrl": {
+        "type": "String"
+      }
+    }
+  },
+  "oobDeepLinkActionName": "Start process",
+  "selectAccountScreenTitle": "Select an account",
+  "selectAccountSelectAllAccounts": "Select all",
+  "selectAuthenticatorScreenTitle": "Select an Authentication Method",
+  "homeRegisteredAccounts": "Registered accounts {accountNumber}",
+  "@homeRegisteredAccounts": {
+    "placeholders": {
+      "accountNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "homeSoftwareDeliveredOnly": "Software delivered only",
+  "readQrCode": "Read Qr Code",
+  "inBandAuthenticate": "In-Band Authenticate",
+  "deregister": "Deregister",
+  "pinChange": "PIN Change",
+  "changeDeviceInformation": "Change Device Information",
+  "authCloudApiRegistration": "Auth Cloud Api Registration",
+  "inBandRegister": "In-Band Register",
+  "cameraAccessDenied": "Please allow access to camera.",
+  "cameraAccessPermanentlyDenied": "Camera access is denied. Please go to settings and allow it.",
+  "cameraInitializationFailed": "Failed to initialize camera.",
+  "readQrCodeScreenTitle": "Read Qr Code",
+  "popUpNegativeButtonText": "Cancel",
+  "pinPopUpLabel": "PIN",
+  "pinPopUpTitle": "Pin authentication required",
+  "pinPopUpErrorWrongCredentials": "Wrong credentials",
+  "biometricPopUpTitle": "Biometric authentication required",
+  "biometricPopUpDescription": "Please use the default biometric method to identify yourself.",
+  "pinScreenTitleEnrollment": "Create PIN",
+  "pinScreenTitleVerification": "Verify PIN",
+  "pinScreenTitleCredentialChange": "Change PIN",
+  "pinScreenDescriptionEnrollment": "Please define a six digit PIN.",
+  "pinScreenDescriptionVerification": "Please enter your PIN to complete the process.",
+  "pinScreenDescriptionCredentialChange": "Please define a six digit PIN.",
+  "pinOldPinTitle": "Old PIN",
+  "pinOldPinPlaceholder": "Enter old PIN",
+  "pinNewPinTitle": "New PIN",
+  "pinNewPinPlaceholder": "Enter new PIN",
+  "pinPinTitle": "PIN",
+  "pinPinPlaceholder": "Enter PIN",
+  "pinConfirmPinTitle": "Confirm PIN",
+  "pinConfirmPinPlaceholder": "Enter PIN confirmation",
+  "pinProtectionStatusDescriptionUnlocked": "Authenticator is unlocked. You have {retryCount} try left.\nPlease retry in {coolDown} seconds.",
+  "@pinProtectionStatusDescriptionUnlocked": {
+    "placeholders": {
+      "retryCount": {
+        "type": "int"
+      },
+      "coolDown": {
+        "type": "int"
+      }
+    }
+  },
+  "pinProtectionStatusDescriptionLocked": "Authenticator is locked.",
+  "pinErrorEqualPins": "Equal PINs entered.",
+  "pinConfirmButtonTitle": "Confirm",
+  "transactionConfirmationScreenTitle": "Transaction confirmation",
+  "operationFailedResultTitle": "{operation} failed!",
+  "@operationFailedResultTitle": {
+    "placeholders": {
+      "operation": {
+        "type": "String"
+      }
+    }
+  },
+  "operationSucceededResultTitle": "{operation} successful!",
+  "@operationSucceededResultTitle": {
+    "placeholders": {
+      "operation": {
+        "type": "String"
+      }
+    }
+  },
+  "operationTypeInit": "Init SDK",
+  "operationTypeRegistration": "Registration",
+  "operationTypeAuthCloudApiRegistration": "Auth Cloud Registration",
+  "operationTypeAuthentication": "Authentication",
+  "operationTypeDeregistration": "Deregistration",
+  "operationTypePinChange": "Pin change",
+  "operationTypeDeviceInformationChange": "Device information change",
+  "operationTypePayloadDecode": "Payload decode",
+  "operationTypeUnknown": "Operation",
+  "registrationScreenTitle": "In-Band Registration",
+  "registrationUsernameTitle": "Username",
+  "registrationUsernamePlaceholder": "Enter username",
+  "registrationPasswordTitle": "Password",
+  "registrationPasswordPlaceholder": "Enter password",
+  "registrationConfirmButtonTitle": "Confirm",
+  "registrationCancelButtonTitle": "Cancel",
+  "changeDeviceInformationTitle": "Change Device Information",
+  "changeDeviceInformationCurrentName": "Current name: {currentName}",
+  "@changeDeviceInformationCurrentName": {
+    "placeholders": {
+      "currentName": {
+        "type": "String"
+      }
+    }
+  },
+  "changeDeviceInformationNewName": "New name",
+  "changeDeviceInformationEmptyCurrentName": "There is no name given to the device information currently!",
+  "authCloudApiRegistrationTitle": "Auth Cloud Registration",
+  "authCloudApiRegistrationEnrollResponse": "Enroll response",
+  "authCloudApiRegistrationAppLinkUri": "App Link Uri",
+  "authCloudApiRegistrationErrorMissingData": "Either the response or the appLinkUri is required.",
+  "authCloudApiRegistrationErrorWrongData": "You cannot provide both the response and the appLinkUri.",
+  "pinUserVerificationInvalidPinError": "Invalid PIN.",
+  "pinChangeRecoverableInvalidPin": "Invalid PIN.",
+  "pinChangeRecoverableInvalidPinFormat": "The PIN must be at least 6 characters long. It may contain only numeric characters.",
+  "pinChangeRecoverableOldPinEqualsNewPin": "The new and the old PIN cannot be the same.",
+  "fingerprintUserVerificationError": "User verification has failed.",
+  "pinEnrollmentInvalidPinFormat": "The PIN must be at least 6 characters long. It may contain only numeric characters."
+}
