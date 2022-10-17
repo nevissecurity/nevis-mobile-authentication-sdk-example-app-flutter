@@ -32,7 +32,7 @@ class SelectAuthenticatorContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _localization = AppLocalizations.of(context)!;
+    final localization = AppLocalizations.of(context)!;
 
     return BlocConsumer<SelectAuthenticatorBloc, SelectAuthenticatorState>(
       listener: (_, state) {},
@@ -45,7 +45,7 @@ class SelectAuthenticatorContent extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: AppText.title(_localization.selectAuthenticatorScreenTitle),
+                          child: AppText.title(localization.selectAuthenticatorScreenTitle),
                         ),
                         Expanded(
                           child: ListView.builder(

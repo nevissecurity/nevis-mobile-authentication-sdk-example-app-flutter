@@ -18,6 +18,7 @@ class Button extends StatelessWidget {
       margin: EdgeInsets.zero,
       child: TextButton(
         onPressed: onPressed,
+        style: _buttonStyle(context),
         child: Text(
           text,
           textAlign: TextAlign.center, // needed because longer texts where the text displayed in more lines
@@ -29,7 +30,6 @@ class Button extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        style: _buttonStyle(context),
       ),
     );
   }

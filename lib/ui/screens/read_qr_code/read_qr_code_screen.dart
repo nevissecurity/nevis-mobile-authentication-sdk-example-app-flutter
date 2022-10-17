@@ -35,16 +35,16 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _localization = AppLocalizations.of(context)!;
+    final localization = AppLocalizations.of(context)!;
     Widget content;
     if (_permissionStatus == PermissionStatus.granted) {
-      content = _mobileScannerContent(_localization);
+      content = _mobileScannerContent(localization);
     } else if (_permissionStatus == PermissionStatus.denied) {
-      content = _textContent(_localization, Colors.black, _localization.cameraAccessDenied);
+      content = _textContent(localization, Colors.black, localization.cameraAccessDenied);
     } else if (_permissionStatus == PermissionStatus.permanentlyDenied) {
-      content = _textContent(_localization, Colors.black, _localization.cameraAccessPermanentlyDenied);
+      content = _textContent(localization, Colors.black, localization.cameraAccessPermanentlyDenied);
     } else {
-      content = _textContent(_localization, Colors.black, _localization.cameraInitializationFailed);
+      content = _textContent(localization, Colors.black, localization.cameraInitializationFailed);
     }
 
     return AppScaffold(
@@ -66,8 +66,8 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen> {
                   onDetect: (barcode, args) {
                     if (barcode.rawValue != null) {
                       final String code = barcode.rawValue!;
-                      final _readQrCodeBloc = context.read<ReadQrCodeBloc>();
-                      _readQrCodeBloc.add(QrCodeScannedEvent(code));
+                      final readQrCodeBloc = context.read<ReadQrCodeBloc>();
+                      readQrCodeBloc.add(QrCodeScannedEvent(code));
                     }
                   }),
             ),
@@ -94,13 +94,13 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen> {
               ),
             ),
             Positioned(
+              right: 8.0,
               child: CloseButton(
                 color: color,
                 onPressed: () {
                   Navigator.pop(context);
                 },
               ),
-              right: 8.0,
             ),
           ],
         ),

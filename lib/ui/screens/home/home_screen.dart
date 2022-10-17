@@ -16,8 +16,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _localization = AppLocalizations.of(context)!;
-    final _homeBloc = context.read<HomeBloc>();
+    final localization = AppLocalizations.of(context)!;
+    final homeBloc = context.read<HomeBloc>();
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (ctx, state) {
         return AppScaffold(
@@ -34,55 +34,55 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: AppText.title(_localization.appTitle),
+                        child: AppText.title(localization.appTitle),
                       ),
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(top: 8.0, right: 0.0, left: 0.0, bottom: 64.0),
                           child: Text(
-                            _localization.homeRegisteredAccounts(state.registeredAccounts),
+                            localization.homeRegisteredAccounts(state.registeredAccounts),
                           ),
                         ),
                       ),
                       Button.outlined(
-                          text: _localization.readQrCode,
+                          text: localization.readQrCode,
                           onPressed: () {
-                            _homeBloc.add(ReadQrCodeEvent());
+                            homeBloc.add(ReadQrCodeEvent());
                           }),
                       Button.outlined(
-                          text: _localization.inBandAuthenticate,
+                          text: localization.inBandAuthenticate,
                           onPressed: () {
-                            _homeBloc.add(InBandAuthenticationEvent());
+                            homeBloc.add(InBandAuthenticationEvent());
                           }),
                       Button.outlined(
-                        text: _localization.deregister,
+                        text: localization.deregister,
                         onPressed: () {
-                          _homeBloc.add(DeregisterEvent());
+                          homeBloc.add(DeregisterEvent());
                         },
                       ),
                       Button.outlined(
-                          text: _localization.pinChange,
+                          text: localization.pinChange,
                           onPressed: () {
-                            _homeBloc.add(PinChangeEvent());
+                            homeBloc.add(PinChangeEvent());
                           }),
                       Button.outlined(
-                          text: _localization.changeDeviceInformation,
+                          text: localization.changeDeviceInformation,
                           onPressed: () {
-                            _homeBloc.add(ChangeDeviceInformationEvent());
+                            homeBloc.add(ChangeDeviceInformationEvent());
                           }),
                       Button.outlined(
-                          text: _localization.authCloudApiRegistration,
+                          text: localization.authCloudApiRegistration,
                           onPressed: () {
-                            _homeBloc.add(AuthCloudApiRegistrationEvent());
+                            homeBloc.add(AuthCloudApiRegistrationEvent());
                           }),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text(_localization.homeSoftwareDeliveredOnly),
+                        child: Text(localization.homeSoftwareDeliveredOnly),
                       ),
                       Button.outlined(
-                          text: _localization.inBandRegister,
+                          text: localization.inBandRegister,
                           onPressed: () {
-                            _homeBloc.add(InBandRegisterEvent());
+                            homeBloc.add(InBandRegisterEvent());
                           }),
                       const SizedBox(
                         height: 16.0,

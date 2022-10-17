@@ -1,6 +1,6 @@
 // Copyright © 2022 Nevis Security AG. All rights reserved.
 
-import 'package:meta/meta.dart';
+import 'package:flutter/material.dart';
 
 @immutable
 abstract class ReadQrCodeState {}

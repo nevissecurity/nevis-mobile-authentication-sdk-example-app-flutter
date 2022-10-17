@@ -13,42 +13,42 @@ class AuthenticatorListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _localization = AppLocalizations.of(context)!;
-    final _titles = {
-      Aaid.pin.rawValue: _localization.authenticatorTitlePin,
+    final localization = AppLocalizations.of(context)!;
+    final titles = {
+      Aaid.pin.rawValue: localization.authenticatorTitlePin,
     };
 
     if (Platform.isAndroid) {
-      _titles.addAll({
-        Aaid.fingerprint.rawValue: _localization.authenticatorTitleFingerprint,
-        Aaid.biometric.rawValue: _localization.authenticatorTitleBiometric,
+      titles.addAll({
+        Aaid.fingerprint.rawValue: localization.authenticatorTitleFingerprint,
+        Aaid.biometric.rawValue: localization.authenticatorTitleBiometric,
       });
     } else if (Platform.isIOS) {
-      _titles.addAll({
-        Aaid.fingerprint.rawValue: _localization.authenticatorTitleTouchID,
-        Aaid.biometric.rawValue: _localization.authenticatorTitleFaceID,
+      titles.addAll({
+        Aaid.fingerprint.rawValue: localization.authenticatorTitleTouchID,
+        Aaid.biometric.rawValue: localization.authenticatorTitleFaceID,
       });
     }
 
-    final _descriptions = {
-      Aaid.pin.rawValue: _localization.authenticatorDescriptionPin,
+    final descriptions = {
+      Aaid.pin.rawValue: localization.authenticatorDescriptionPin,
     };
 
     if (Platform.isAndroid) {
-      _descriptions.addAll({
-        Aaid.fingerprint.rawValue: _localization.authenticatorDescriptionFingerprint,
-        Aaid.biometric.rawValue: _localization.authenticatorDescriptionBiometric,
+      descriptions.addAll({
+        Aaid.fingerprint.rawValue: localization.authenticatorDescriptionFingerprint,
+        Aaid.biometric.rawValue: localization.authenticatorDescriptionBiometric,
       });
     } else if (Platform.isIOS) {
-      _descriptions.addAll({
-        Aaid.fingerprint.rawValue: _localization.authenticatorDescriptionTouchID,
-        Aaid.biometric.rawValue: _localization.authenticatorDescriptionFaceID,
+      descriptions.addAll({
+        Aaid.fingerprint.rawValue: localization.authenticatorDescriptionTouchID,
+        Aaid.biometric.rawValue: localization.authenticatorDescriptionFaceID,
       });
     }
 
     return ListTile(
-      title: Text(_titles[authenticator.aaid] ?? 'Unknown AAID: ${authenticator.aaid}'),
-      subtitle: Text(_descriptions[authenticator.aaid] ?? 'N/A'),
+      title: Text(titles[authenticator.aaid] ?? 'Unknown AAID: ${authenticator.aaid}'),
+      subtitle: Text(descriptions[authenticator.aaid] ?? 'N/A'),
       onTap: onTap,
     );
   }

@@ -41,13 +41,13 @@ class ScrollableColumn extends StatelessWidget {
   Widget _column() {
     return Column(
       key: key,
-      children: children,
       mainAxisAlignment: mainAxisAlignment,
       mainAxisSize: mainAxisSize,
       crossAxisAlignment: crossAxisAlignment,
       textBaseline: textBaseline,
       textDirection: textDirection,
       verticalDirection: verticalDirection,
+      children: children,
     );
   }
 }

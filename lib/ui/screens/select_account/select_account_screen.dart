@@ -30,7 +30,7 @@ class SelectAccountContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _localization = AppLocalizations.of(context)!;
+    final localization = AppLocalizations.of(context)!;
     return BlocBuilder<SelectAccountBloc, SelectAccountState>(
       builder: (_, state) {
         return AppScaffold(
@@ -40,10 +40,10 @@ class SelectAccountContent extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: AppText.title(_localization.selectAccountScreenTitle),
+                  child: AppText.title(localization.selectAccountScreenTitle),
                 ),
                 if (state is SelectAccountInitialState)
-                  ..._list(context: context, localizations: _localization, state: state)
+                  ..._list(context: context, localizations: localization, state: state)
                 else
                   const CircularProgressIndicator(),
               ],

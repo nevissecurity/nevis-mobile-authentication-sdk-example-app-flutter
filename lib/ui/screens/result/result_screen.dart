@@ -33,7 +33,7 @@ class ResultContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _localization = AppLocalizations.of(context)!;
+    final localization = AppLocalizations.of(context)!;
 
     return BlocConsumer<ResultBloc, ResultState>(
       listener: (_, state) {},
@@ -50,13 +50,13 @@ class ResultContent extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              AppText.title(_title(_localization, state)),
-                              if (state.errorType != null) AppText.body(state.errorType!.resolve(_localization)),
+                              AppText.title(_title(localization, state)),
+                              if (state.errorType != null) AppText.body(state.errorType!.resolve(localization)),
                               if (state.description != null) AppText.body(state.description!),
                             ]),
                       ),
                       Button.outlined(
-                        text: _localization.confirmButtonTitle,
+                        text: localization.confirmButtonTitle,
                         onPressed: () {
                           final event = NavigateToHomeEvent(
                             resultType: state.type,
