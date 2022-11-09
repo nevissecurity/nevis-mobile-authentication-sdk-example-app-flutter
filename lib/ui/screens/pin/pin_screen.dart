@@ -22,15 +22,15 @@ class PinScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _modalRoute = ModalRoute.of(context)!;
-    final _parameter = _modalRoute.settings.arguments as PinParameter;
+    final modalRoute = ModalRoute.of(context)!;
+    final parameter = modalRoute.settings.arguments as PinParameter;
 
     return BlocProvider<PinBloc>(
       create: (ctx) => GetIt.I.get<PinBloc>()
         ..add(PinCreatedEvent(
-          mode: _parameter.mode,
-          username: _parameter.username,
-          pinVerificationData: _parameter.pinVerificationData,
+          mode: parameter.mode,
+          username: parameter.username,
+          pinVerificationData: parameter.pinVerificationData,
         )),
       child: const PinScreenContent(),
     );

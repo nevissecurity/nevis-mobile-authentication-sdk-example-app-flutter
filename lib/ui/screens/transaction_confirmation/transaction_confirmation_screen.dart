@@ -35,8 +35,8 @@ class TransactionConfirmationContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TransactionConfirmationBloc, TransactionConfirmationState>(
       builder: (_, state) {
-        final _localization = AppLocalizations.of(context)!;
-        final _bloc = context.read<TransactionConfirmationBloc>();
+        final localization = AppLocalizations.of(context)!;
+        final bloc = context.read<TransactionConfirmationBloc>();
         return AppScaffold(
           body: Center(
             child: ScrollableColumn(
@@ -45,7 +45,7 @@ class TransactionConfirmationContent extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: AppText.title(_localization.transactionConfirmationScreenTitle),
+                  child: AppText.title(localization.transactionConfirmationScreenTitle),
                 ),
                 Expanded(child: _data(state)),
                 Padding(
@@ -54,15 +54,15 @@ class TransactionConfirmationContent extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Button.outlined(
-                        text: _localization.confirmButtonTitle,
+                        text: localization.confirmButtonTitle,
                         onPressed: () {
-                          _bloc.add(TransactionConfirmationUserAcceptedEvent());
+                          bloc.add(TransactionConfirmationUserAcceptedEvent());
                         },
                       ),
                       Button.outlined(
-                        text: _localization.cancelButtonTitle,
+                        text: localization.cancelButtonTitle,
                         onPressed: () {
-                          _bloc.add(TransactionConfirmationUserCancelledEvent());
+                          bloc.add(TransactionConfirmationUserCancelledEvent());
                         },
                       ),
                     ],
