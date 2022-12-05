@@ -8,8 +8,8 @@ import 'package:injectable/injectable.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/configuration/model/app_configuration.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/configuration/model/app_environment.dart';
 
-const cloud = Environment('cloud');
-const onPremise = Environment('onPremise');
+const authenticationCloud = Environment('authenticationCloud');
+const identitySuite = Environment('identitySuite');
 
 abstract class ConfigurationLoader {
   AppEnvironment get environment;
@@ -26,20 +26,20 @@ abstract class ConfigurationLoader {
   }
 }
 
-@cloud
+@authenticationCloud
 @Singleton(as: ConfigurationLoader)
-class CloudConfigurationLoader extends ConfigurationLoader {
-  CloudConfigurationLoader();
+class AuthenticationCloudConfigurationLoader extends ConfigurationLoader {
+  AuthenticationCloudConfigurationLoader();
 
   @override
-  AppEnvironment get environment => AppEnvironment.cloud;
+  AppEnvironment get environment => AppEnvironment.authenticationCloud;
 }
 
-@onPremise
+@identitySuite
 @Singleton(as: ConfigurationLoader)
-class OnPremiseConfigurationLoader extends ConfigurationLoader {
-  OnPremiseConfigurationLoader();
+class IdentitySuiteConfigurationLoader extends ConfigurationLoader {
+  IdentitySuiteConfigurationLoader();
 
   @override
-  AppEnvironment get environment => AppEnvironment.onPremise;
+  AppEnvironment get environment => AppEnvironment.identitySuite;
 }

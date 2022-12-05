@@ -71,7 +71,7 @@
       }
     }
   },
-  "homeSoftwareDeliveredOnly": "Software delivered only",
+  "homeIdentitySuiteOnly": "Identity Suite only",
   "readQrCode": "Read Qr Code",
   "inBandAuthenticate": "In-Band Authenticate",
   "deregister": "Deregister",

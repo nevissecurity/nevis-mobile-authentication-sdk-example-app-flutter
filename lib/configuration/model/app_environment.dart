@@ -1,17 +1,17 @@
 // Copyright © 2022 Nevis Security AG. All rights reserved.
 
 enum AppEnvironment {
-  cloud,
-  onPremise,
+  authenticationCloud,
+  identitySuite,
 }
 
 extension AppEnvironmentExtension on AppEnvironment {
   String get configFileName {
     switch (this) {
-      case AppEnvironment.cloud:
-        return 'config_cloud.json';
-      case AppEnvironment.onPremise:
-        return 'config_on_premise.json';
+      case AppEnvironment.authenticationCloud:
+        return 'config_authentication_cloud.json';
+      case AppEnvironment.identitySuite:
+        return 'config_identity_suite.json';
     }
   }
 }

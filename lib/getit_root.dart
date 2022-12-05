@@ -11,5 +11,5 @@ final getIt = GetIt.instance;
   preferRelativeImports: true, // default
   asExtension: false, // default
 )
-// acceptable values for environment parameter are cloud & onPremise
-void configureDependencies() => $initGetIt(getIt, environment: 'cloud');
+// acceptable values for environment parameter are authenticationCloud & identitySuite
+void configureDependencies() => $initGetIt(getIt, environment: 'authenticationCloud');

@@ -3,7 +3,7 @@
  */
 
 buildscript {
-    ext.gradle_version = '7.0.0'
+    ext.gradle_version = '7.2.2'
     ext.kotlin_version = '1.6.0'
 
     repositories {
@@ -21,6 +21,13 @@ allprojects {
     repositories {
         google ()
         mavenCentral ()
+        maven {
+            url "https://maven.pkg.github.com/nevissecurity/nevis-mobile-authentication-sdk-android-package"
+            credentials {
+                username = "<GITHUB_USERNAME>"
+                password = "<GITHUB_PERSONAL_ACCESS_TOKEN>"
+            }
+        }
     }
 }
 
