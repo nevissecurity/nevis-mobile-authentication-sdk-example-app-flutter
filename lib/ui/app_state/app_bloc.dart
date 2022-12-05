@@ -131,7 +131,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   Future<void> _handleAuthenticationSucceeded(DomainAuthenticationSucceededState state) async {
     // based on current backend configuration FIDO UAF authentication is needed for deregistration
-    // and dispatch target deletion in the software delivered env (on-premise).
+    // and dispatch target deletion in the Identity Suite environment.
     // The result of the authentication is handled (username + auth provider) and based on the requested operation type
     // the corresponding use case will be executed.
     final username = state.username;

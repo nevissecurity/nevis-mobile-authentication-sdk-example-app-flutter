@@ -77,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                           }),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text(localization.homeSoftwareDeliveredOnly),
+                        child: Text(localization.homeIdentitySuiteOnly),
                       ),
                       Button.outlined(
                           text: localization.inBandRegister,

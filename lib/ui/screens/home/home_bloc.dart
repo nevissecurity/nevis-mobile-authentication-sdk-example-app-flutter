@@ -105,6 +105,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     return await _clientProvider.init(configuration.sdkConfiguration, () async {
       add(ClientInitializedEvent());
     }).catchError((error) {
+      _yieldBasedOnCurrentState(emit);
       _errorHandler.handle(error);
     });
   }
@@ -130,10 +131,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _handleDeregister(DeregisterEvent event, Emitter<HomeState> emit) async {
-    if (_configurationLoader.environment == AppEnvironment.onPremise) {
-      // On the example app onPremise environment the deregistration endpoint is guarded,
+    if (_configurationLoader.environment == AppEnvironment.identitySuite) {
+      // In the example app Identity Suite environment the deregistration endpoint is guarded,
       // and as such we need to provide a cookie to the deregister call.
-      // Also on onPremise a deregistration has to be authenticated for every user,
+      // Also on Identity Suite a deregistration has to be authenticated for every user,
       // so batch deregistration is not really possible.
       await _globalNavigationManager.pushSelectAccount(SelectAccountParameter(
         operationType: OperationType.deregistration,
@@ -162,8 +163,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _handleInBandRegister(InBandRegisterEvent event, Emitter<HomeState> emit) async {
-    // in-band registration is supported only in software delivered (on-premise) environment
-    // to start it a username is needed along with cookies or jwt with the help of a login endpoint
     _globalNavigationManager.pushLegacyLogin();
     _yieldBasedOnCurrentState(emit);
   }
@@ -171,7 +170,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _handlePinChange(PinChangeEvent event, Emitter<HomeState> emit) async {
     // we should only pass the accounts to the account selection that already have a pin enrollment
     final filteredAuthenticators = _authenticators.where((element) => element.aaid.isPin);
-    if (filteredAuthenticators.isEmpty) _errorHandler.handle(BusinessException.pinAuthenticatorNotFound());
+    if (filteredAuthenticators.isEmpty) {
+      return _errorHandler.handle(BusinessException.pinAuthenticatorNotFound());
+    }
     final userEnrollment = _authenticators.first.userEnrollment;
     final eligibleAccounts =
         _registeredAccounts.where((element) => userEnrollment.isEnrolled(element.username)).toSet();

@@ -50,7 +50,7 @@ class SelectAccountBloc extends Bloc<SelectAccountEvent, SelectAccountState> {
       ));
     } else if (_parameter.operationType == OperationType.authentication ||
         _parameter.operationType == OperationType.deregistration) {
-      // in-band authentication or deregistration (in software delivered env) is in progress
+      // in-band authentication or deregistration (in Identity Suite env) is in progress
       // (arriving from the Home screen)
       await _authenticateUseCase
           .execute(
