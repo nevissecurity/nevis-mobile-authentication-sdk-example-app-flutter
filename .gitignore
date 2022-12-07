@@ -63,7 +63,6 @@ yarn-error.log
 # Flutter/Dart/Pub related
 **/pubspec.lock
 **/*.mocks.dart
-**/*.g.dart
 *.log
 **/doc
 **/untranslated.txt
@@ -75,7 +74,6 @@ yarn-error.log
 .pub-cache/
 .pub/
 /build/
-lib/getit_root.config.dart
 
 # Fastlane
 **/fastlane/report.xml
