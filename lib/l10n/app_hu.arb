@@ -33,7 +33,7 @@
   "selectAccountSelectAllAccounts": "Az összes kiválasztása",
   "selectAuthenticatorScreenTitle": "Válasszon egy azonosítási módot",
   "homeRegisteredAccounts": "Regisztrált fiókok száma: {accountNumber}",
-  "homeSoftwareDeliveredOnly": "Csak szoftver szállított esetben",
+  "homeIdentitySuiteOnly": "Csak Identity Suite esetben",
   "readQrCode": "Qr kód olvasás",
   "inBandAuthenticate": "In-Band azonosítás",
   "deregister": "Deregisztrálás",
