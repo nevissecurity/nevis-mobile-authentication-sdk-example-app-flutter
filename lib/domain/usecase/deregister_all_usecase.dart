@@ -11,7 +11,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repos
 
 abstract class DeregisterAllUseCase {
   Future<void> execute({
-    required Set<Authenticator> authenticators,
+    required Set<Account> accounts,
     required AuthorizationProvider? authorizationProvider,
   });
 }
@@ -28,7 +28,7 @@ class DeregisterAllUseCaseImpl implements DeregisterAllUseCase {
 
   @override
   Future<void> execute({
-    required Set<Authenticator> authenticators,
+    required Set<Account> accounts,
     required AuthorizationProvider? authorizationProvider,
   }) async {
     final batchCall = GetIt.I.get<BatchCall>();
@@ -36,27 +36,24 @@ class DeregisterAllUseCaseImpl implements DeregisterAllUseCase {
 
     _operationTypeRepository.save(OperationType.deregistration);
 
-    for (var authenticator in authenticators) {
-      for (var account in authenticator.registration.registeredAccounts) {
-        batchCalls.add(() async {
-          var deregistration = _clientProvider.client.operations.deregistration //
-              .username(account.username)
-              .aaid(authenticator.aaid)
-              .onSuccess(() {
-            debugPrint('Deregistration succeeded.');
-            batchCall.onOperationFinished();
-          }).onError((error) {
-            debugPrint('Deregistration failed: ${error.runtimeType}');
-            batchCall.onOperationFinished(error: error);
-          });
-
-          if (authorizationProvider != null) {
-            deregistration.authorizationProvider(authorizationProvider);
-          }
-
-          await deregistration.execute();
+    for (var account in accounts) {
+      batchCalls.add(() async {
+        var deregistration = _clientProvider.client.operations.deregistration //
+            .username(account.username)
+            .onSuccess(() {
+          debugPrint('Deregistration succeeded.');
+          batchCall.onOperationFinished();
+        }).onError((error) {
+          debugPrint('Deregistration failed: ${error.runtimeType}');
+          batchCall.onOperationFinished(error: error);
         });
-      }
+
+        if (authorizationProvider != null) {
+          deregistration.authorizationProvider(authorizationProvider);
+        }
+
+        await deregistration.execute();
+      });
     }
     return batchCall.call(
       batchLength: batchCalls.length,

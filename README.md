@@ -77,7 +77,7 @@ Run `pod install` in your [iOS](/ios) directory.
 
 Before being able to use the example app with your Authentication Cloud instance, you'll need to update the configuration file with the right host information.
 
-Edit the `assets/config_cloud.json` file and replace
+Edit the `assets/config_authentication_cloud.json` file and replace
 - the host name information with your Authentication Cloud instance
 - the FacetId with your Android FacetId
 

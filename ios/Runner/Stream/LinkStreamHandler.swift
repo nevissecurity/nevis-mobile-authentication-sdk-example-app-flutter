@@ -23,7 +23,7 @@ class LinkStreamHandler: NSObject, FlutterStreamHandler {
 	}
 
 	func handleLink(_ link: String) -> Bool {
-		guard let eventSink = eventSink else {
+		guard let eventSink else {
 			queuedLinks.append(link)
 			return false
 		}
