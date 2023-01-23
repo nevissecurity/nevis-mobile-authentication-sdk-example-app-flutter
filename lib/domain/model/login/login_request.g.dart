@@ -11,7 +11,8 @@ LoginRequest _$LoginRequestFromJson(Map<String, dynamic> json) => LoginRequest(
       password: json['isiwebpasswd'] as String,
     );
 
-Map<String, dynamic> _$LoginRequestToJson(LoginRequest instance) => <String, dynamic>{
+Map<String, dynamic> _$LoginRequestToJson(LoginRequest instance) =>
+    <String, dynamic>{
       'isiwebuserid': instance.username,
       'isiwebpasswd': instance.password,
     };

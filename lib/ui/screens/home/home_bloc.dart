@@ -142,7 +142,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       ));
     } else {
       await _deregisterAllUseCase
-          .execute(authenticators: _authenticators, authorizationProvider: null)
+          .execute(accounts: _registeredAccounts, authorizationProvider: null)
           .catchError((error) {
         _errorHandler.handle(error);
       });

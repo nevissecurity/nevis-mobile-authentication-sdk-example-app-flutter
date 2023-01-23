@@ -30,3 +30,4 @@
 
 # File options
 --exclude Pods
+--swiftversion 5.7

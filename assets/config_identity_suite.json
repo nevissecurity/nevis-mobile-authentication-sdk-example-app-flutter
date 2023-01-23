@@ -3,7 +3,7 @@
     "loginRequestURL": "https://mycompany.com/auth/pwd"
   },
   "sdk": {
-    "baseUrl": "https://mycompany.com/auth/pwd",
+    "baseUrl": "https://mycompany.com",
     "registrationRequestPath": "/nevisfido/uaf/1.1/request/registration/",
     "registrationResponsePath": "/nevisfido/uaf/1.1/registration/",
     "authenticationRequestPath": "/auth/fidouaf",
