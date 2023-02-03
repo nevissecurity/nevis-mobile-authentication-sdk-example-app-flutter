@@ -141,11 +141,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         accounts: _registeredAccounts,
       ));
     } else {
-      await _deregisterAllUseCase
-          .execute(accounts: _registeredAccounts, authorizationProvider: null)
-          .catchError((error) {
-        _errorHandler.handle(error);
-      });
+      if (_registeredAccounts.isEmpty) {
+        _errorHandler.handle(BusinessException.registeredAccountsNotFound());
+      } else {
+        await _deregisterAllUseCase
+            .execute(accounts: _registeredAccounts, authorizationProvider: null)
+            .catchError((error) {
+          _errorHandler.handle(error);
+        });
+      }
     }
   }
 

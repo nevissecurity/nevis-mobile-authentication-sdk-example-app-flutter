@@ -80,8 +80,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: const [Locale('hu', ''), Locale('en', '')],
-        locale: const Locale('en', ''),
+        supportedLocales: const [Locale('en')],
+        locale: const Locale('en'),
       ),
     );
   }
