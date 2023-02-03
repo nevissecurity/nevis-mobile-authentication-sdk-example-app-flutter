@@ -130,6 +130,22 @@ flutter run
 > **Note**  
 > Running the app on an iOS device required codesign setup.
 
+#### Troubleshooting
+
+##### Not enough space on Android emulator
+
+When the Android emulator has insufficient internal memory the installation may fail with the error:
+
+```bash
+android.os.ParcelableException: java.io.IOException: Requested internal only, but not enough space
+```
+
+The solution is to increase the internal memory. In Android Studio
+* Open the Virtual Device Manager.
+* Select the emulator which you want to make changes then click on the edit button associated to it.
+* Click on _Show Advanced Settings_ button to expose hidden things.
+* Scroll down to the _Memory and Storage_ section and increase the amount of _Internal Storage_.
+* Finally, hit the _Finish_ button to apply the changes. Reboot the Android emulator to ensure everything will work as expected.
 
 ### Try it out 
 
