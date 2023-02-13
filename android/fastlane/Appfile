@@ -1,0 +1,2 @@
+json_key_file("") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("ch.nevis.nevis_mobile_authentication_sdk_example_app_flutter") # e.g. com.krausefx.app

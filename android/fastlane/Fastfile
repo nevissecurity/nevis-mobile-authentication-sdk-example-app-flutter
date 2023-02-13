@@ -1,0 +1,75 @@
+##
+## Fastlane configuration for the Nevis Mobile Authentication SDK Example App Flutter Android application.
+## See https://docs.fastlane.tools
+##
+
+default_platform(:android)
+
+root_dir = File.expand_path(File.join(File.dirname(__FILE__), "../"))
+signing_configs_gradle = File.join(root_dir, "app/signing_configs.gradle")
+apk_path = File.join(root_dir, "../build/app/outputs/flutter-apk/app-debug.apk")
+display_name = "Nevis Mobile Authentication SDK Example App Flutter Android"
+
+def report_on_success(message)
+	slack(
+		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
+		slack_url: ENV['SLACK_WEBHOOK_URL']
+	) if ENV['SLACK_WEBHOOK_URL']
+end
+
+def report_on_error(message, exception)
+	slack(
+		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
+		slack_url: ENV['SLACK_WEBHOOK_URL'],
+		success: false,
+		attachment_properties: {
+			fields: [
+				{
+					title: "Error message",
+					value: exception.to_s,
+					short: false
+				}
+			]
+		}
+	) if ENV['SLACK_WEBHOOK_URL']
+	UI.user_error!("#{exception}")
+end
+
+platform :android do
+	desc "Build and distribute the application"
+    desc "#### Options"
+    desc " * **`version`**: The version of the application."
+    desc " * **`build_number`**: The build number of the application."
+    desc ""
+	lane :main do |options|
+		begin
+    		version = options[:version]
+	    	build_number = options[:build_number]
+			UI.message("Distributing #{display_name} #{version} (#{build_number}) 📦")
+
+			sh("echo \"#{ENV["SIGNING_CONFIGS"]}\" > #{signing_configs_gradle}")
+
+            modify_gradle_file(
+                constant: "signingConfig",
+                value: "signingConfigs.signing",
+            )
+
+            modify_gradle_file(
+                constant: "apply plugin: 'kotlin-android'",
+                value: "apply from: 'signing_configs.gradle'",
+                mode: 'append'
+            )
+
+            sh('flutter build apk --debug')
+
+            firebase_app_distribution(
+                app: ENV["FIREBASE_APP_ID_ANDROID"],
+                apk_path: apk_path,
+                groups: 'developers, internal-testers, presales'
+            )
+            report_on_success("#{display_name} build is completed: #{version} (#{build_number}) ✅")
+		rescue => exception
+			report_on_error("#{display_name} build failed ❌", exception)
+		end
+	end
+end

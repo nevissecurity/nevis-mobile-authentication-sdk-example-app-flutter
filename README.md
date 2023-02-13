@@ -2,6 +2,9 @@
 
 # Nevis Mobile Authentication SDK Flutter Example App
 
+[![Main Branch Commit](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-flutter/actions/workflows/main.yml/badge.svg)](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-flutter/actions/workflows/main.yml)
+[![Verify Pull Request](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-flutter/actions/workflows/pr.yml/badge.svg)](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-flutter/actions/workflows/pr.yml)
+
 This repository contains the example app demonstrating how to use the Nevis Mobile Authentication SDK Flutter plugin in a Flutter app.
 The Nevis Mobile Authentication SDK allows you to integrate passwordless authentication to your existing mobile app, backed by FIDO UAF 1.1. 
 
@@ -39,26 +42,13 @@ Open a terminal and run the `flutter pub get` command in the root directory to g
 <details>
 <summary>Android</summary>
 
-1. The Nevis Mobile Authentication Client SDK for Android is published as a GitHub package. In order to be able to download it please edit your [build.gradle](/android/build.gradle) file and add your GitHub username and personal access token:
-
-```groovy
-allprojects {
-    repositories {
-        google ()
-        mavenCentral ()
-        maven {
-            url "https://maven.pkg.github.com/nevissecurity/nevis-mobile-authentication-sdk-android-package"
-            credentials {
-                username = <GITHUB_USERNAME>
-                password = <GITHUB_PERSONAL_ACCESS_TOKEN>
-            }
-        }
-    }
-}
-```
-
-> **Note**  
-> Accessing GitHub packages requires you to have a GitHub account. You must provide a Personal Access Token, as described [here](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-gradle-registry#using-a-published-package).
+1. The Nevis Mobile Authentication Client SDK for Android is published as a GitHub package. In order to be able to download it a valid GitHub account and a Personal Access Token is needed. Please define these in one of the following ways:
+    * as environment variables.
+    * in `gradle.properties` in `GRADLE_USER_HOME` directory or in Gradle installation directory.
+    ```properties
+    GITHUB_USERNAME=<YOUR USERNAME>
+    GITHUB_PERSONAL_ACCESS_TOKEN=<YOUR PERSONAL ACCESS TOKEN>
+    ```  
 
 2. Synchronize your [android](/android) project if opened in Android Studio.
 

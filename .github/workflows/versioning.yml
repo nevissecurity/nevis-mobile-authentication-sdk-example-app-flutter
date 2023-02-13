@@ -1,0 +1,42 @@
+# A reusable workflow file for handling app versioning
+
+name: Versioning
+
+on:
+  workflow_call:
+    outputs:
+      version:
+        description: "The current version"
+        value: ${{ jobs.versioning.outputs.version }}
+      build:
+        description: "The generated build number"
+        value: ${{ jobs.versioning.outputs.build }}
+
+jobs:
+  versioning:
+    name: Get
+    runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.version_number.outputs.version }}
+      build: ${{ steps.build_number.outputs.build_number }}
+
+    steps:
+      # Checkout the repository under $GITHUB_WORKSPACE
+      - name: Checkout Project
+        uses: actions/checkout@v3
+
+      # Get version number from the pubspec file
+      - name: Get Version Number
+        id: version_number
+        run: |
+          VERSION=`cat pubspec.yaml | grep -o 'version:[^:].*' | cut -f2 -d":" | cut -f1 -d"+" | xargs`
+          echo "version=$(echo $VERSION)" >> $GITHUB_OUTPUT
+          echo Version number is $VERSION
+
+      # Generate build number
+      - name: Generate Build Number
+        id: build_number
+        uses: onyxmueller/build-tag-number@v1
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}

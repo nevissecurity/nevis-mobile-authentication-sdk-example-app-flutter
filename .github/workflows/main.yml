@@ -1,0 +1,57 @@
+name: Main Branch Commit
+
+on:
+  push:
+    branches: [ 'main' ]
+  workflow_dispatch:
+
+jobs:
+  versioning:
+    name: Versioning
+    uses: ./.github/workflows/versioning.yml
+
+  publish_ios:
+    name: iOS
+    needs: versioning
+    uses: ./.github/workflows/publish_ios.yml
+    with:
+      version: ${{ needs.versioning.outputs.version }}
+      build-number: ${{ needs.versioning.outputs.build }}
+    secrets:
+      HOST_NAME: ${{ secrets.HOST_NAME }}
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      FIREBASE_APP_ID_IOS: ${{ secrets.FIREBASE_APP_ID_IOS }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      MATCH_GIT_AUTHORIZATION: ${{ secrets.MATCH_GIT_AUTHORIZATION }}
+      MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      DEVELOPER_PORTAL_TEAM_ID: ${{ secrets.DEVELOPER_PORTAL_TEAM_ID }}
+      CODE_SIGNING_IDENTITY: ${{ secrets.CODE_SIGNING_IDENTITY }}
+      PROVISIONING_PROFILE_SPECIFIER: ${{ secrets.PROVISIONING_PROFILE_SPECIFIER }}
+      TEMP_KEYCHAIN_NAME: ${{ secrets.TEMP_KEYCHAIN_NAME }}
+
+  publish_android:
+    name: Android
+    needs: versioning
+    uses: ./.github/workflows/publish_android.yml
+    with:
+      version: ${{ needs.versioning.outputs.version }}
+      build-number: ${{ needs.versioning.outputs.build }}
+    secrets:
+      HOST_NAME: ${{ secrets.HOST_NAME }}
+      ANDROID_FACET_ID: ${{ secrets.ANDROID_FACET_ID }}
+      KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
+      SIGNING_CONFIGS: ${{ secrets.SIGNING_CONFIGS }}
+      GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
+      GITHUB_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      FIREBASE_APP_ID_ANDROID: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  tag:
+    name: Tag
+    needs: [versioning, publish_ios, publish_android]
+    uses: ./.github/workflows/tagging.yml
+    with:
+      version: ${{ needs.versioning.outputs.version }}
+      build-number: ${{ needs.versioning.outputs.build }}
