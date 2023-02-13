@@ -26,19 +26,28 @@ class ResultBloc extends Bloc<ResultEvent, ResultState> {
     on<NavigateToHomeEvent>(_handleNavigateToHome);
   }
 
-  void _handleCreated(ResultCreatedEvent event, Emitter<ResultState> emit) {
-    final operationType = _operationTypeStateRepository.state ?? OperationType.unknown;
-    emit(ResultLoadedState(
-      operationType: operationType,
-      type: event.parameter.type,
-      description: event.parameter.description,
-      errorType: event.parameter.errorType,
-    ));
+  void _handleCreated(
+    ResultCreatedEvent event,
+    Emitter<ResultState> emit,
+  ) {
+    final operationType =
+        _operationTypeStateRepository.state ?? OperationType.unknown;
+    emit(
+      ResultLoadedState(
+        operationType: operationType,
+        type: event.parameter.type,
+        description: event.parameter.description,
+        errorType: event.parameter.errorType,
+      ),
+    );
   }
 
-  void _handleNavigateToHome(NavigateToHomeEvent event, Emitter<ResultState> emit) {
-    final initClientFailed =
-        (event.resultType == OperationResultType.failure && event.operationType == OperationType.init);
+  void _handleNavigateToHome(
+    NavigateToHomeEvent event,
+    Emitter<ResultState> emit,
+  ) {
+    final initClientFailed = (event.resultType == OperationResultType.failure &&
+        event.operationType == OperationType.init);
     if (initClientFailed == false) {
       _localDataBloc.add(LoadAccountsEvent());
     }

@@ -12,7 +12,8 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/c
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/change_device_information/change_device_information_state.dart';
 
 @injectable
-class ChangeDeviceInformationBloc extends Bloc<ChangeDeviceInformationEvent, ChangeDeviceInformationState> {
+class ChangeDeviceInformationBloc
+    extends Bloc<ChangeDeviceInformationEvent, ChangeDeviceInformationState> {
   final GlobalNavigationManager _globalNavigationManager;
   final ChangeDeviceInformationUseCase _changeDeviceInformationUseCase;
   final DeviceInformationUseCase _deviceInformationUseCase;
@@ -31,7 +32,10 @@ class ChangeDeviceInformationBloc extends Bloc<ChangeDeviceInformationEvent, Cha
     on<ChangeCancelledEvent>(_handleCancel);
   }
 
-  void _handleCreated(ChangeDeviceInformationScreenCreated event, Emitter<ChangeDeviceInformationState> emit) async {
+  void _handleCreated(
+    ChangeDeviceInformationScreenCreated event,
+    Emitter<ChangeDeviceInformationState> emit,
+  ) async {
     _deviceInformation = await _deviceInformationUseCase.execute();
     if (_deviceInformation == null) {
       _errorHandler.handle(BusinessException.deviceInformationNotFound());
@@ -39,7 +43,10 @@ class ChangeDeviceInformationBloc extends Bloc<ChangeDeviceInformationEvent, Cha
     emit(ChangeDeviceInformationLoaded(_deviceInformation?.name));
   }
 
-  void _handleConfirm(ChangeConfirmedEvent event, Emitter<ChangeDeviceInformationState> emit) async {
+  void _handleConfirm(
+    ChangeConfirmedEvent event,
+    Emitter<ChangeDeviceInformationState> emit,
+  ) async {
     await _changeDeviceInformationUseCase
         .execute(
       name: event.newName,
@@ -50,7 +57,10 @@ class ChangeDeviceInformationBloc extends Bloc<ChangeDeviceInformationEvent, Cha
     });
   }
 
-  void _handleCancel(ChangeCancelledEvent event, Emitter<ChangeDeviceInformationState> emit) {
+  void _handleCancel(
+    ChangeCancelledEvent event,
+    Emitter<ChangeDeviceInformationState> emit,
+  ) {
     _globalNavigationManager.popUntilHome();
   }
 }

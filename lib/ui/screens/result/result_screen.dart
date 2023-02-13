@@ -22,7 +22,8 @@ class ResultScreen extends StatelessWidget {
     final modalRoute = ModalRoute.of(context)!;
     final parameter = modalRoute.settings.arguments as ResultParameter;
     return BlocProvider<ResultBloc>(
-      create: (ctx) => GetIt.I.get<ResultBloc>()..add(ResultCreatedEvent(parameter)),
+      create: (ctx) =>
+          GetIt.I.get<ResultBloc>()..add(ResultCreatedEvent(parameter)),
       child: const ResultContent(),
     );
   }
@@ -51,8 +52,11 @@ class ResultContent extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               AppText.title(_title(localization, state)),
-                              if (state.errorType != null) AppText.body(state.errorType!.resolve(localization)),
-                              if (state.description != null) AppText.body(state.description!),
+                              if (state.errorType != null)
+                                AppText.body(
+                                    state.errorType!.resolve(localization)),
+                              if (state.description != null)
+                                AppText.body(state.description!),
                             ]),
                       ),
                       Button.outlined(
@@ -79,9 +83,11 @@ class ResultContent extends StatelessWidget {
   String _title(AppLocalizations localizations, ResultLoadedState state) {
     switch (state.type) {
       case OperationResultType.success:
-        return localizations.operationSucceededResultTitle(state.operationType.resolve(localizations));
+        return localizations.operationSucceededResultTitle(
+            state.operationType.resolve(localizations));
       case OperationResultType.failure:
-        return localizations.operationFailedResultTitle(state.operationType.resolve(localizations));
+        return localizations.operationFailedResultTitle(
+            state.operationType.resolve(localizations));
     }
   }
 }

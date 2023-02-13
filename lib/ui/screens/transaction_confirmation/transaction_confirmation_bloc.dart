@@ -13,10 +13,12 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/t
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/transaction_confirmation/transaction_confirmation_state.dart';
 
 @injectable
-class TransactionConfirmationBloc extends Bloc<TransactionConfirmationEvent, TransactionConfirmationState> {
+class TransactionConfirmationBloc
+    extends Bloc<TransactionConfirmationEvent, TransactionConfirmationState> {
   final ErrorHandler _errorHandler;
   final SelectAccountUseCase _selectAccountUseCase;
-  final CancelUserInteractionOperationUseCase _cancelUserInteractionOperationUseCase;
+  final CancelUserInteractionOperationUseCase
+      _cancelUserInteractionOperationUseCase;
   final GlobalNavigationManager _globalNavigationManager;
   late TransactionConfirmationParameter _parameter;
 
@@ -36,7 +38,9 @@ class TransactionConfirmationBloc extends Bloc<TransactionConfirmationEvent, Tra
     Emitter<TransactionConfirmationState> emit,
   ) {
     _parameter = event.parameter;
-    emit(TransactionConfirmationInitialState(event.parameter.transactionData));
+    emit(
+      TransactionConfirmationInitialState(event.parameter.transactionData),
+    );
   }
 
   Future<void> _handleUserAccepted(
@@ -49,10 +53,12 @@ class TransactionConfirmationBloc extends Bloc<TransactionConfirmationEvent, Tra
         _errorHandler.handle(error);
       });
     } else {
-      _globalNavigationManager.pushSelectAuthenticator(SelectAuthenticatorParameter(
-        authenticators: _parameter.authenticators!,
-        operationType: OperationType.authentication,
-      ));
+      _globalNavigationManager.pushSelectAuthenticator(
+        SelectAuthenticatorParameter(
+          authenticators: _parameter.authenticators!,
+          operationType: OperationType.authentication,
+        ),
+      );
     }
   }
 

@@ -46,7 +46,8 @@ extension BusinessErrorTypeLocalizationExtension on BusinessErrorType {
       case BusinessErrorType.missingDispatchTokenResponse:
         return localizations.businessErrorTypeMissingDispatchTokenResponse;
       case BusinessErrorType.missingOpenSettingsOperationForUser:
-        return localizations.businessErrorTypeMissingOpenSettingsOperationForUser;
+        return localizations
+            .businessErrorTypeMissingOpenSettingsOperationForUser;
       case BusinessErrorType.pinAuthenticatorNotFound:
         return localizations.businessErrorTypePinAuthenticatorNotFound;
       case BusinessErrorType.registeredAccountsNotFound:

@@ -9,10 +9,14 @@ abstract class ResetUserInteractionStateUseCase {
 }
 
 @Injectable(as: ResetUserInteractionStateUseCase)
-class ResetUserInteractionStateUseCaseImpl extends ResetUserInteractionStateUseCase {
-  final StateRepository<UserInteractionOperationState> _userInteractionOperationStateRepository;
+class ResetUserInteractionStateUseCaseImpl
+    extends ResetUserInteractionStateUseCase {
+  final StateRepository<UserInteractionOperationState>
+      _userInteractionOperationStateRepository;
 
-  ResetUserInteractionStateUseCaseImpl(this._userInteractionOperationStateRepository);
+  ResetUserInteractionStateUseCaseImpl(
+    this._userInteractionOperationStateRepository,
+  );
 
   @override
   void execute() {

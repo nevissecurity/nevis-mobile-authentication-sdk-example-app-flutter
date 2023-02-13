@@ -31,8 +31,10 @@ class AppScaffoldContent extends StatelessWidget {
     final localization = AppLocalizations.of(context)!;
     final bloc = context.read<AppBloc>();
     return BlocConsumer<AppBloc, AppState>(
-      listenWhen: (oldState, newState) => _isCurrent(context) && newState.isListenable,
-      buildWhen: (oldState, newState) => _isCurrent(context) && !newState.isListenable,
+      listenWhen: (oldState, newState) =>
+          _isCurrent(context) && newState.isListenable,
+      buildWhen: (oldState, newState) =>
+          _isCurrent(context) && !newState.isListenable,
       listener: (ctx, state) async {
         if (state is VerifyFingerPrintState) {
           bloc.add(UserFingerPrintEvent());
@@ -42,7 +44,8 @@ class AppScaffoldContent extends StatelessWidget {
             description: localization.biometricPopUpDescription,
             cancelButtonText: localization.popUpNegativeButtonText,
           ));
-        } else if (state is VerifyPinState && currentScreen(context) != PinRoute.pin) {
+        } else if (state is VerifyPinState &&
+            currentScreen(context) != PinRoute.pin) {
           bloc.add(UserPinEvent(
             protectionStatus: state.protectionStatus,
             lastRecoverableError: state.lastRecoverableError,

@@ -40,11 +40,14 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen> {
     if (_permissionStatus == PermissionStatus.granted) {
       content = _mobileScannerContent(localization);
     } else if (_permissionStatus == PermissionStatus.denied) {
-      content = _textContent(localization, Colors.black, localization.cameraAccessDenied);
+      content = _textContent(
+          localization, Colors.black, localization.cameraAccessDenied);
     } else if (_permissionStatus == PermissionStatus.permanentlyDenied) {
-      content = _textContent(localization, Colors.black, localization.cameraAccessPermanentlyDenied);
+      content = _textContent(localization, Colors.black,
+          localization.cameraAccessPermanentlyDenied);
     } else {
-      content = _textContent(localization, Colors.black, localization.cameraInitializationFailed);
+      content = _textContent(
+          localization, Colors.black, localization.cameraInitializationFailed);
     }
 
     return AppScaffold(
@@ -53,7 +56,8 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen> {
   }
 
   Widget _mobileScannerContent(AppLocalizations localization) {
-    _controller = MobileScannerController(facing: CameraFacing.back, torchEnabled: false);
+    _controller =
+        MobileScannerController(facing: CameraFacing.back, torchEnabled: false);
     return Stack(
       alignment: AlignmentDirectional.topCenter,
       children: [
@@ -79,7 +83,8 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen> {
     );
   }
 
-  Widget _textContent(AppLocalizations localization, Color color, String? text) {
+  Widget _textContent(
+      AppLocalizations localization, Color color, String? text) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[

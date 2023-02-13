@@ -12,7 +12,8 @@ class ChangeDeviceInformationRoute {
 
   Map<String, WidgetBuilder> get routes => {
         changeDeviceInformation: (context) => BlocProvider(
-              create: (_) => GetIt.I.get<ChangeDeviceInformationBloc>()..add(ChangeDeviceInformationScreenCreated()),
+              create: (_) => GetIt.I.get<ChangeDeviceInformationBloc>()
+                ..add(ChangeDeviceInformationScreenCreated()),
               child: const ChangeDeviceInformationScreen(),
             ),
       };

@@ -10,9 +10,11 @@ class LoginConfiguration {
 
   LoginConfiguration(this.loginRequestURL);
 
-  factory LoginConfiguration.fromJson(Map<String, dynamic> json) => _$LoginConfigurationFromJson(json);
+  factory LoginConfiguration.fromJson(Map<String, dynamic> json) =>
+      _$LoginConfigurationFromJson(json);
 
-  LoginConfiguration fromJson(Map<String, dynamic> json) => LoginConfiguration.fromJson(json);
+  LoginConfiguration fromJson(Map<String, dynamic> json) =>
+      LoginConfiguration.fromJson(json);
 
   Map<String, dynamic> toJson() => _$LoginConfigurationToJson(this);
 }

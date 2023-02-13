@@ -24,26 +24,35 @@ class LocalDataBloc extends Bloc<LocalDataEvent, LocalDataState> {
     on<LoadAccountsEvent>(_handleLoadAccounts);
   }
 
-  Future<void> _handleLoadAccounts(LoadAccountsEvent event, Emitter<LocalDataState> emit) async {
-    _registeredAccounts = await _clientProvider.client.localData.accounts.catchError((error) {
+  Future<void> _handleLoadAccounts(
+    LoadAccountsEvent event,
+    Emitter<LocalDataState> emit,
+  ) async {
+    _registeredAccounts =
+        await _clientProvider.client.localData.accounts.catchError((error) {
       _errorHandler.handle(error);
       return Set<Account>.identity();
     });
 
-    _deviceInformation = await _clientProvider.client.localData.deviceInformation.catchError((error) {
+    _deviceInformation = await _clientProvider
+        .client.localData.deviceInformation
+        .catchError((error) {
       _errorHandler.handle(error);
       return null;
     });
 
-    _authenticators = await _clientProvider.client.localData.authenticators.catchError((error) {
+    _authenticators = await _clientProvider.client.localData.authenticators
+        .catchError((error) {
       _errorHandler.handle(error);
       return Set<Authenticator>.identity();
     });
 
-    emit(LocalDataLoaded(
-      accounts: _registeredAccounts,
-      deviceInformation: _deviceInformation,
-      authenticators: _authenticators,
-    ));
+    emit(
+      LocalDataLoaded(
+        accounts: _registeredAccounts,
+        deviceInformation: _deviceInformation,
+        authenticators: _authenticators,
+      ),
+    );
   }
 }

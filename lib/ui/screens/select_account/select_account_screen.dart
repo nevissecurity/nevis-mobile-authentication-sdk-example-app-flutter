@@ -19,7 +19,8 @@ class SelectAccountScreen extends StatelessWidget {
     final modalRoute = ModalRoute.of(context)!;
     final parameter = modalRoute.settings.arguments as SelectAccountParameter;
     return BlocProvider<SelectAccountBloc>(
-      create: (ctx) => GetIt.I.get<SelectAccountBloc>()..add(SelectAccountCreatedEvent(parameter)),
+      create: (ctx) => GetIt.I.get<SelectAccountBloc>()
+        ..add(SelectAccountCreatedEvent(parameter)),
       child: const SelectAccountContent(),
     );
   }
@@ -43,7 +44,10 @@ class SelectAccountContent extends StatelessWidget {
                   child: AppText.title(localization.selectAccountScreenTitle),
                 ),
                 if (state is SelectAccountInitialState)
-                  ..._list(context: context, localizations: localization, state: state)
+                  ..._list(
+                      context: context,
+                      localizations: localization,
+                      state: state)
                 else
                   const CircularProgressIndicator(),
               ],

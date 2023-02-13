@@ -62,7 +62,9 @@ class _PinScreenContentState extends State<PinScreenContent> {
     _localization = AppLocalizations.of(context)!;
     return BlocBuilder<PinBloc, PinState>(
       builder: (_, state) {
-        if (state is PinUpdatedState && state.previousMode != null && state.mode != state.previousMode) {
+        if (state is PinUpdatedState &&
+            state.previousMode != null &&
+            state.mode != state.previousMode) {
           pinController.clear();
           oldPinController.clear();
           _errorMessage = null;
@@ -81,10 +83,13 @@ class _PinScreenContentState extends State<PinScreenContent> {
                           child: AppText.title(_title(state.mode)),
                         ),
                         Text(_description(state.mode)),
-                        if (state.mode == PinMode.credentialChange) _oldPinField(),
+                        if (state.mode == PinMode.credentialChange)
+                          _oldPinField(),
                         _pinField(state.mode),
                         if (_errorMessage != null) _errorMessageWidget(),
-                        if (state.protectionStatus is! PinProtectionStatusLockedOut) _infoMessageWidget(state),
+                        if (state.protectionStatus
+                            is! PinProtectionStatusLockedOut)
+                          _infoMessageWidget(state),
                         _confirmButton(state.mode),
                         const SizedBox(height: 16),
                         _cancelButton(state.mode),
@@ -146,9 +151,13 @@ class _PinScreenContentState extends State<PinScreenContent> {
           obscureText: true,
           controller: pinController,
           keyboardType: TextInputType.number,
-          textInputAction: (mode == PinMode.verification) ? TextInputAction.done : TextInputAction.next,
+          textInputAction: (mode == PinMode.verification)
+              ? TextInputAction.done
+              : TextInputAction.next,
           decoration: InputDecoration(
-            labelText: (mode == PinMode.credentialChange) ? _localization.pinNewPinTitle : _localization.pinPinTitle,
+            labelText: (mode == PinMode.credentialChange)
+                ? _localization.pinNewPinTitle
+                : _localization.pinPinTitle,
             hintText: (mode == PinMode.credentialChange)
                 ? _localization.pinNewPinPlaceholder
                 : _localization.pinPinPlaceholder,
@@ -186,11 +195,13 @@ class _PinScreenContentState extends State<PinScreenContent> {
     if (state.protectionStatus is PinProtectionStatusLockedOut) {
       return _localization.pinProtectionStatusDescriptionLocked;
     } else if (state.protectionStatus is PinProtectionStatusLastAttemptFailed) {
-      final status = state.protectionStatus as PinProtectionStatusLastAttemptFailed;
+      final status =
+          state.protectionStatus as PinProtectionStatusLastAttemptFailed;
       final remainingRetries = status.remainingRetries;
       final coolDownTime = status.coolDownTime.inSeconds;
       // NOTE: if coolDownTime is not zero, a countdown timer should be started.
-      return _localization.pinProtectionStatusDescriptionUnlocked(remainingRetries, coolDownTime);
+      return _localization.pinProtectionStatusDescriptionUnlocked(
+          remainingRetries, coolDownTime);
     }
     return "";
   }

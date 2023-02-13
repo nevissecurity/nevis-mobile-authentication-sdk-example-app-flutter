@@ -27,17 +27,31 @@ class LegacyLoginBloc extends Bloc<LegacyLoginEvent, LegacyLoginState> {
     on<ConfirmEvent>(_handleConfirmEvent);
   }
 
-  Future<void> _handleConfirmEvent(ConfirmEvent event, Emitter<LegacyLoginState> emit) async {
+  Future<void> _handleConfirmEvent(
+    ConfirmEvent event,
+    Emitter<LegacyLoginState> emit,
+  ) async {
     final configuration = await _configurationLoader.load();
     final uri = Uri.parse(configuration.loginConfiguration.loginRequestURL);
-    final loginRequest = LoginRequest(username: event.username, password: event.password);
-    final credentials = await _loginUseCase.execute(uri: uri, loginRequest: loginRequest).catchError((e) {
+    final loginRequest = LoginRequest(
+      username: event.username,
+      password: event.password,
+    );
+    final credentials = await _loginUseCase
+        .execute(
+      uri: uri,
+      loginRequest: loginRequest,
+    )
+        .catchError((e) {
       _errorHandler.handle(e);
       return Credentials.empty();
     });
 
     await _registrationUseCase
-        .execute(username: credentials.username, authorizationProvider: credentials.authorizationProvider)
+        .execute(
+      username: credentials.username,
+      authorizationProvider: credentials.authorizationProvider,
+    )
         .catchError((e) {
       _errorHandler.handle(e);
     });

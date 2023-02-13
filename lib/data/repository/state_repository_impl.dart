@@ -28,22 +28,27 @@ abstract class StateRepositoryImpl<T> implements StateRepository<T> {
 }
 
 @Injectable(as: StateRepository<UserInteractionOperationState>)
-class UserInteractionOperationStateRepositoryImpl extends StateRepositoryImpl<UserInteractionOperationState> {
-  UserInteractionOperationStateRepositoryImpl(Cache<UserInteractionOperationState> userInteractionOperationStateCache)
+class UserInteractionOperationStateRepositoryImpl
+    extends StateRepositoryImpl<UserInteractionOperationState> {
+  UserInteractionOperationStateRepositoryImpl(
+      Cache<UserInteractionOperationState> userInteractionOperationStateCache)
       : super(userInteractionOperationStateCache);
 }
 
 @Injectable(as: StateRepository<EnrollPinState>)
 class EnrollPinStateRepositoryImpl extends StateRepositoryImpl<EnrollPinState> {
-  EnrollPinStateRepositoryImpl(Cache<EnrollPinState> enrollPinStateCache) : super(enrollPinStateCache);
+  EnrollPinStateRepositoryImpl(Cache<EnrollPinState> enrollPinStateCache)
+      : super(enrollPinStateCache);
 }
 
 @Injectable(as: StateRepository<PinChangeState>)
 class ChangePinStateRepositoryImpl extends StateRepositoryImpl<PinChangeState> {
-  ChangePinStateRepositoryImpl(Cache<PinChangeState> changePinStateCache) : super(changePinStateCache);
+  ChangePinStateRepositoryImpl(Cache<PinChangeState> changePinStateCache)
+      : super(changePinStateCache);
 }
 
 @Injectable(as: StateRepository<OperationType>)
 class OperationTypeRepositoryImpl extends StateRepositoryImpl<OperationType> {
-  OperationTypeRepositoryImpl(Cache<OperationType> operationTypeCache) : super(operationTypeCache);
+  OperationTypeRepositoryImpl(Cache<OperationType> operationTypeCache)
+      : super(operationTypeCache);
 }

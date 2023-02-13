@@ -41,7 +41,9 @@ class BatchCallImpl implements BatchCall {
   }
 
   @override
-  Future<void> onOperationFinished({MobileAuthenticationClientError? error}) async {
+  Future<void> onOperationFinished({
+    MobileAuthenticationClientError? error,
+  }) async {
     _finishedOperations++;
     final isSuccess = error == null;
     if (_finishedOperations == _batchLength && isSuccess) {

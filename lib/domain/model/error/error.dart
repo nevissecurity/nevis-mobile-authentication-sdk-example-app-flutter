@@ -7,24 +7,30 @@ class BusinessException implements Exception {
 
   BusinessException(this.type);
 
-  BusinessException.accountsNotFound() : type = BusinessErrorType.accountsNotFound;
+  BusinessException.accountsNotFound()
+      : type = BusinessErrorType.accountsNotFound;
 
-  BusinessException.authenticatorNotFound() : type = BusinessErrorType.authenticatorNotFound;
+  BusinessException.authenticatorNotFound()
+      : type = BusinessErrorType.authenticatorNotFound;
 
-  BusinessException.deviceInformationNotFound() : type = BusinessErrorType.deviceInformationNotFound;
+  BusinessException.deviceInformationNotFound()
+      : type = BusinessErrorType.deviceInformationNotFound;
 
   BusinessException.invalidState() : type = BusinessErrorType.invalidState;
 
   BusinessException.missingCookie() : type = BusinessErrorType.missingCookie;
 
-  BusinessException.missingDispatchTokenResponse() : type = BusinessErrorType.missingDispatchTokenResponse;
+  BusinessException.missingDispatchTokenResponse()
+      : type = BusinessErrorType.missingDispatchTokenResponse;
 
   BusinessException.missingOpenSettingsOperationForUser()
       : type = BusinessErrorType.missingOpenSettingsOperationForUser;
 
-  BusinessException.pinAuthenticatorNotFound() : type = BusinessErrorType.pinAuthenticatorNotFound;
+  BusinessException.pinAuthenticatorNotFound()
+      : type = BusinessErrorType.pinAuthenticatorNotFound;
 
-  BusinessException.registeredAccountsNotFound() : type = BusinessErrorType.registeredAccountsNotFound;
+  BusinessException.registeredAccountsNotFound()
+      : type = BusinessErrorType.registeredAccountsNotFound;
 }
 
 class PinNotEnrolledException implements Exception {

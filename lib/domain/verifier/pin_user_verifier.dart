@@ -14,7 +14,8 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repos
 class PinUserVerifierImpl implements PinUserVerifier {
   final DomainBloc _domainBloc;
   final ErrorHandler _errorHandler;
-  final StateRepository<UserInteractionOperationState> _userInteractionOperationStateRepository;
+  final StateRepository<UserInteractionOperationState>
+      _userInteractionOperationStateRepository;
 
   PinUserVerifierImpl(
     this._domainBloc,
@@ -28,7 +29,10 @@ class PinUserVerifierImpl implements PinUserVerifier {
   }
 
   @override
-  void verifyPin(PinUserVerificationContext context, PinUserVerificationHandler handler) {
+  void verifyPin(
+    PinUserVerificationContext context,
+    PinUserVerificationHandler handler,
+  ) {
     if (context.lastRecoverableError != null) {
       debugPrint(
           'There was a recoverable error: ${context.lastRecoverableError.runtimeType} ${context.lastRecoverableError?.description}');
@@ -38,11 +42,13 @@ class PinUserVerifierImpl implements PinUserVerifier {
       _errorHandler.handle(BusinessException.invalidState());
       return;
     }
-    _userInteractionOperationStateRepository.save(state.copyWith(
-      accountSelectionHandler: null,
-      authenticatorSelectionHandler: null,
-      userVerificationHandler: handler,
-    ));
+    _userInteractionOperationStateRepository.save(
+      state.copyWith(
+        accountSelectionHandler: null,
+        authenticatorSelectionHandler: null,
+        userVerificationHandler: handler,
+      ),
+    );
     final event = PinUserVerificationEvent(
       lastRecoverableError: context.lastRecoverableError,
       protectionStatus: context.authenticatorProtectionStatus,

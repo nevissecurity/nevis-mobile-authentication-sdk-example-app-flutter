@@ -28,8 +28,10 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/t
 
 @singleton
 class AppBloc extends Bloc<AppEvent, AppState> {
-  final FingerPrintListenForOsCredentialsUseCase _fingerPrintListenForOsCredentialsUseCase;
-  final BiometricListenForOsCredentialsUseCase _biometricListenForOsCredentialsUseCase;
+  final FingerPrintListenForOsCredentialsUseCase
+      _fingerPrintListenForOsCredentialsUseCase;
+  final BiometricListenForOsCredentialsUseCase
+      _biometricListenForOsCredentialsUseCase;
   final AuthenticatorsUseCase _authenticatorsUseCase;
   final DeregisterUseCase _deregisterUseCase;
   final ConfigurationLoader _configurationLoader;
@@ -57,40 +59,55 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<UserPinEvent>(_handleUserPinEvent);
   }
 
-  void _handleDomainEvent(AppDomainEvent event, Emitter<AppState> emit) {
+  void _handleDomainEvent(
+    AppDomainEvent event,
+    Emitter<AppState> emit,
+  ) {
     final state = event.domainState;
     if (state is DomainVerifyState) {
       _handleDomainVerify(state, emit);
     } else if (state is DomainSelectAuthenticatorState) {
-      _globalNavigationManager.pushSelectAuthenticator(SelectAuthenticatorParameter(
-        authenticators: state.authenticators,
-        operationType: state.operationType,
-      ));
+      _globalNavigationManager.pushSelectAuthenticator(
+        SelectAuthenticatorParameter(
+          authenticators: state.authenticators,
+          operationType: state.operationType,
+        ),
+      );
     } else if (state is DomainResultState) {
-      _globalNavigationManager.pushResult(ResultParameter.success(description: state.description));
+      _globalNavigationManager
+          .pushResult(ResultParameter.success(description: state.description));
     } else if (state is DomainSelectAccountState) {
-      _globalNavigationManager.pushSelectAccount(SelectAccountParameter(
-        operationType: state.operationType,
-        accounts: state.accounts,
-        transactionConfirmationData: state.transactionConfirmationData,
-      ));
+      _globalNavigationManager.pushSelectAccount(
+        SelectAccountParameter(
+          operationType: state.operationType,
+          accounts: state.accounts,
+          transactionConfirmationData: state.transactionConfirmationData,
+        ),
+      );
     } else if (state is DomainTransactionConfirmationState) {
-      _globalNavigationManager.pushTransactionData(TransactionConfirmationParameter(
-        transactionData: state.transactionData,
-        selectedAccount: state.selectedAccount,
-        authenticators: state.authenticators,
-      ));
+      _globalNavigationManager.pushTransactionData(
+        TransactionConfirmationParameter(
+          transactionData: state.transactionData,
+          selectedAccount: state.selectedAccount,
+          authenticators: state.authenticators,
+        ),
+      );
     } else if (state is DomainAuthenticationSucceededState) {
       _handleAuthenticationSucceeded(state);
     }
   }
 
-  void _handleDomainVerify(DomainVerifyState state, Emitter<AppState> emit) {
+  void _handleDomainVerify(
+    DomainVerifyState state,
+    Emitter<AppState> emit,
+  ) {
     if (state is DomainPinState && state.mode == PinMode.verification) {
-      emit(VerifyPinState(
-        protectionStatus: state.protectionStatus,
-        lastRecoverableError: state.lastRecoverableError,
-      ));
+      emit(
+        VerifyPinState(
+          protectionStatus: state.protectionStatus,
+          lastRecoverableError: state.lastRecoverableError,
+        ),
+      );
     } else if (state is DomainVerifyFingerPrintState) {
       emit(VerifyFingerPrintState());
     } else if (state is DomainVerifyBiometricState) {
@@ -98,7 +115,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
   }
 
-  Future<void> _handleUserFingerPrintEvent(UserFingerPrintEvent event, Emitter<AppState> emit) async {
+  Future<void> _handleUserFingerPrintEvent(
+    UserFingerPrintEvent event,
+    Emitter<AppState> emit,
+  ) async {
     await _fingerPrintListenForOsCredentialsUseCase.execute().then((_) {
       emit(InitialState());
     }).catchError((error) {
@@ -106,7 +126,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     });
   }
 
-  Future<void> _handleUserBiometricEvent(UserBiometricEvent event, Emitter<AppState> emit) async {
+  Future<void> _handleUserBiometricEvent(
+    UserBiometricEvent event,
+    Emitter<AppState> emit,
+  ) async {
     await _biometricListenForOsCredentialsUseCase
         .execute(BiometricPromptOptions(
       title: event.title,
@@ -120,16 +143,23 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     });
   }
 
-  Future<void> _handleUserPinEvent(UserPinEvent event, Emitter<AppState> emit) async {
-    _globalNavigationManager.pushPin(PinParameter.verification(
-      pinVerificationData: PinVerificationData(
-        protectionStatus: event.protectionStatus,
-        lastRecoverableError: event.lastRecoverableError,
+  Future<void> _handleUserPinEvent(
+    UserPinEvent event,
+    Emitter<AppState> emit,
+  ) async {
+    _globalNavigationManager.pushPin(
+      PinParameter.verification(
+        pinVerificationData: PinVerificationData(
+          protectionStatus: event.protectionStatus,
+          lastRecoverableError: event.lastRecoverableError,
+        ),
       ),
-    ));
+    );
   }
 
-  Future<void> _handleAuthenticationSucceeded(DomainAuthenticationSucceededState state) async {
+  Future<void> _handleAuthenticationSucceeded(
+    DomainAuthenticationSucceededState state,
+  ) async {
     // based on current backend configuration FIDO UAF authentication is needed for deregistration
     // and dispatch target deletion in the Identity Suite environment.
     // The result of the authentication is handled (username + auth provider) and based on the requested operation type
@@ -148,7 +178,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       }
 
       final uri = Uri.parse(configuration.sdkConfiguration.baseUrl + path);
-      for (CookieContainer container in authorizationProvider.cookieContainers) {
+      for (CookieContainer container
+          in authorizationProvider.cookieContainers) {
         container.uri = uri;
       }
     }
@@ -176,7 +207,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   Future<Set<Authenticator>> _registeredAuthenticators(String username) async {
     final authenticators = await _authenticatorsUseCase.execute();
-    return authenticators.where((element) => element.registration.isRegistered(username)).toSet();
+    return authenticators
+        .where((element) => element.registration.isRegistered(username))
+        .toSet();
   }
 
   @override

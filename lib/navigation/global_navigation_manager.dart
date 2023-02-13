@@ -33,7 +33,8 @@ class GlobalNavigationManager {
   }
 
   void popUntilHome() {
-    return _navigatorKey?.currentState?.popUntil((route) => route.settings.name == HomeRoute.home);
+    return _navigatorKey?.currentState
+        ?.popUntil((route) => route.settings.name == HomeRoute.home);
   }
 
   Future<dynamic>? pushReadQrCode() {
@@ -45,18 +46,24 @@ class GlobalNavigationManager {
   }
 
   Future<dynamic>? pushPin(PinParameter parameter) {
-    return _navigatorKey?.currentState?.pushNamed(PinRoute.pin, arguments: parameter);
+    return _navigatorKey?.currentState
+        ?.pushNamed(PinRoute.pin, arguments: parameter);
   }
 
   Future<dynamic>? pushSelectAccount(SelectAccountParameter parameter) {
-    return _navigatorKey?.currentState?.pushNamed(SelectAccountRoute.selectAccount, arguments: parameter);
+    return _navigatorKey?.currentState
+        ?.pushNamed(SelectAccountRoute.selectAccount, arguments: parameter);
   }
 
-  Future<dynamic>? pushSelectAuthenticator(SelectAuthenticatorParameter parameter) {
-    return _navigatorKey?.currentState?.pushNamed(SelectAuthenticatorRoute.selectAuthenticator, arguments: parameter);
+  Future<dynamic>? pushSelectAuthenticator(
+      SelectAuthenticatorParameter parameter) {
+    return _navigatorKey?.currentState?.pushNamed(
+        SelectAuthenticatorRoute.selectAuthenticator,
+        arguments: parameter);
   }
 
-  Future<dynamic>? pushTransactionData(TransactionConfirmationParameter parameter) {
+  Future<dynamic>? pushTransactionData(
+      TransactionConfirmationParameter parameter) {
     return _navigatorKey?.currentState?.pushNamed(
       TransactionConfirmationRoute.transactionConfirmation,
       arguments: parameter,
@@ -64,14 +71,17 @@ class GlobalNavigationManager {
   }
 
   Future<dynamic>? pushResult(ResultParameter parameter) {
-    return _navigatorKey?.currentState?.pushNamed(ResultRoute.result, arguments: parameter);
+    return _navigatorKey?.currentState
+        ?.pushNamed(ResultRoute.result, arguments: parameter);
   }
 
   Future<dynamic>? pushChangeDeviceInformation() {
-    return _navigatorKey?.currentState?.pushNamed(ChangeDeviceInformationRoute.changeDeviceInformation);
+    return _navigatorKey?.currentState
+        ?.pushNamed(ChangeDeviceInformationRoute.changeDeviceInformation);
   }
 
   Future<dynamic>? pushAuthCloudApiRegistration() {
-    return _navigatorKey?.currentState?.pushNamed(AuthCloudApiRegistrationRoute.authCloudApiRegistration);
+    return _navigatorKey?.currentState
+        ?.pushNamed(AuthCloudApiRegistrationRoute.authCloudApiRegistration);
   }
 }

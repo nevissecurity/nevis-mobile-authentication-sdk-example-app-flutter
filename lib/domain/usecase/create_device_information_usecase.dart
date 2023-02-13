@@ -12,7 +12,8 @@ abstract class CreateDeviceInformationUseCase {
 }
 
 @Injectable(as: CreateDeviceInformationUseCase)
-class CreateDeviceInformationUseCaseImpl implements CreateDeviceInformationUseCase {
+class CreateDeviceInformationUseCaseImpl
+    implements CreateDeviceInformationUseCase {
   final DeviceInfoPlugin _deviceInfoPlugin = DeviceInfoPlugin();
 
   CreateDeviceInformationUseCaseImpl();
@@ -20,7 +21,8 @@ class CreateDeviceInformationUseCaseImpl implements CreateDeviceInformationUseCa
   @override
   Future<DeviceInformation> execute() async {
     final deviceName = await _getDeviceName();
-    final formattedDate = DateFormat('dd.MM.yyyy kk:mm:sss').format(DateTime.now());
+    final formattedDate =
+        DateFormat('dd.MM.yyyy kk:mm:sss').format(DateTime.now());
     return Future.value(DeviceInformation(name: '$deviceName-$formattedDate'));
   }
 
@@ -37,7 +39,8 @@ class CreateDeviceInformationUseCaseImpl implements CreateDeviceInformationUseCa
       deviceName = '${iosInfo.name}';
     }
     deviceName = deviceName?.trim();
-    deviceName = deviceName == null || deviceName.isEmpty ? "Unknown" : deviceName;
+    deviceName =
+        deviceName == null || deviceName.isEmpty ? "Unknown" : deviceName;
     return '$osPrefix$deviceName';
   }
 }

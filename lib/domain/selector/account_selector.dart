@@ -15,7 +15,8 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/valid
 class AccountSelectorImpl implements AccountSelector {
   final DomainBloc _domainBloc;
   final ErrorHandler _errorHandler;
-  final StateRepository<UserInteractionOperationState> _userInteractionOperationStateRepository;
+  final StateRepository<UserInteractionOperationState>
+      _userInteractionOperationStateRepository;
   final AccountValidator _accountValidator;
 
   AccountSelectorImpl(
@@ -26,27 +27,35 @@ class AccountSelectorImpl implements AccountSelector {
   );
 
   @override
-  void selectAccount(AccountSelectionContext context, AccountSelectionHandler handler) async {
+  void selectAccount(
+    AccountSelectionContext context,
+    AccountSelectionHandler handler,
+  ) async {
     try {
-      _userInteractionOperationStateRepository.save(UserInteractionOperationState(
-        accountSelectionHandler: handler,
-      ));
+      _userInteractionOperationStateRepository.save(
+        UserInteractionOperationState(
+          accountSelectionHandler: handler,
+        ),
+      );
 
       final validAccounts = await _validateAccounts(context);
       if (validAccounts.isNotEmpty) {
-        _domainBloc.add(SelectAccountEvent(
-          // `unknown` operation type is used, because it can be in-band or out-of-band
-          operationType: OperationType.unknown,
-          accounts: validAccounts,
-          transactionConfirmationData: context.transactionConfirmationData,
-        ));
+        _domainBloc.add(
+          SelectAccountEvent(
+            // `unknown` operation type is used, because it can be in-band or out-of-band
+            operationType: OperationType.unknown,
+            accounts: validAccounts,
+            transactionConfirmationData: context.transactionConfirmationData,
+          ),
+        );
       }
     } catch (error) {
       _errorHandler.handle(error);
     }
   }
 
-  Future<Set<Account>> _validateAccounts(AccountSelectionContext context) async {
+  Future<Set<Account>> _validateAccounts(
+      AccountSelectionContext context) async {
     final validAccounts = await _accountValidator.validate(context);
     if (validAccounts.length > 1) {
       return Future.value(validAccounts);
@@ -66,10 +75,12 @@ class AccountSelectorImpl implements AccountSelector {
       final account = validAccounts.first;
       if (context.transactionConfirmationData != null) {
         // Display transaction confirmation
-        _domainBloc.add(TransactionConfirmationEvent(
-          transactionData: context.transactionConfirmationData!,
-          selectedAccount: account,
-        ));
+        _domainBloc.add(
+          TransactionConfirmationEvent(
+            transactionData: context.transactionConfirmationData!,
+            selectedAccount: account,
+          ),
+        );
         return Future.value({});
       } else {
         // Typical case: authentication with username provided, just use it.

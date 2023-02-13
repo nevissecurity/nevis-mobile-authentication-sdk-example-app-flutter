@@ -11,7 +11,8 @@ abstract class SelectAccountUseCase {
 
 @Injectable(as: SelectAccountUseCase)
 class SelectAccountUseCaseImpl implements SelectAccountUseCase {
-  final StateRepository<UserInteractionOperationState> _userInteractionOperationStateRepository;
+  final StateRepository<UserInteractionOperationState>
+      _userInteractionOperationStateRepository;
 
   SelectAccountUseCaseImpl(this._userInteractionOperationStateRepository);
 

@@ -9,7 +9,9 @@ class AuthenticatorListTile extends StatelessWidget {
   final Authenticator authenticator;
   final GestureTapCallback? onTap;
 
-  const AuthenticatorListTile({Key? key, required this.authenticator, this.onTap}) : super(key: key);
+  const AuthenticatorListTile(
+      {Key? key, required this.authenticator, this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,8 @@ class AuthenticatorListTile extends StatelessWidget {
 
     if (Platform.isAndroid) {
       descriptions.addAll({
-        Aaid.fingerprint.rawValue: localization.authenticatorDescriptionFingerprint,
+        Aaid.fingerprint.rawValue:
+            localization.authenticatorDescriptionFingerprint,
         Aaid.biometric.rawValue: localization.authenticatorDescriptionBiometric,
       });
     } else if (Platform.isIOS) {
@@ -47,7 +50,8 @@ class AuthenticatorListTile extends StatelessWidget {
     }
 
     return ListTile(
-      title: Text(titles[authenticator.aaid] ?? 'Unknown AAID: ${authenticator.aaid}'),
+      title: Text(
+          titles[authenticator.aaid] ?? 'Unknown AAID: ${authenticator.aaid}'),
       subtitle: Text(descriptions[authenticator.aaid] ?? 'N/A'),
       onTap: onTap,
     );

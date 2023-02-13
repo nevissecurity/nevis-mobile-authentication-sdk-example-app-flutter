@@ -13,5 +13,9 @@ class LocalDataLoaded extends LocalDataState {
   final DeviceInformation? deviceInformation;
   final Set<Authenticator> authenticators;
 
-  LocalDataLoaded({required this.accounts, this.deviceInformation, required this.authenticators});
+  LocalDataLoaded({
+    required this.accounts,
+    this.deviceInformation,
+    required this.authenticators,
+  });
 }

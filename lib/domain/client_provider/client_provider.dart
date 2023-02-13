@@ -30,7 +30,8 @@ class ClientProviderImpl implements ClientProvider {
   );
 
   @override
-  MobileAuthenticationClient get client => GetIt.I.get<MobileAuthenticationClient>();
+  MobileAuthenticationClient get client =>
+      GetIt.I.get<MobileAuthenticationClient>();
 
   @override
   Future<void> init(

@@ -9,8 +9,10 @@ abstract class CancelUserInteractionOperationUseCase {
 }
 
 @Injectable(as: CancelUserInteractionOperationUseCase)
-class CancelUserInteractionOperationUseCaseImpl extends CancelUserInteractionOperationUseCase {
-  final StateRepository<UserInteractionOperationState> _userInteractionOperationStateRepository;
+class CancelUserInteractionOperationUseCaseImpl
+    extends CancelUserInteractionOperationUseCase {
+  final StateRepository<UserInteractionOperationState>
+      _userInteractionOperationStateRepository;
 
   CancelUserInteractionOperationUseCaseImpl(
     this._userInteractionOperationStateRepository,

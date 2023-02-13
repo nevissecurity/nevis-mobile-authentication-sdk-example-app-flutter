@@ -3,7 +3,8 @@
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/simple_base_state.dart';
 
-class PinChangeState implements SimpleBaseState<PinChangeContext, PinChangeHandler> {
+class PinChangeState
+    implements SimpleBaseState<PinChangeContext, PinChangeHandler> {
   final PinChangeContext _context;
   final PinChangeHandler _handler;
 

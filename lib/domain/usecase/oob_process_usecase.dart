@@ -30,7 +30,8 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
   final PinUserVerifier _pinUserVerifier;
   final FingerprintUserVerifier _fingerprintUserVerifier;
   final DomainBloc _domainBloc;
-  final StateRepository<UserInteractionOperationState> _userInteractionOperationStateRepository;
+  final StateRepository<UserInteractionOperationState>
+      _userInteractionOperationStateRepository;
   final StateRepository<OperationType> _operationTypeRepository;
   final ErrorHandler _errorHandler;
 
@@ -84,7 +85,8 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
         _errorHandler.handle(error);
       });
     }).onAuthentication((authentication) async {
-      await handleAuthentication(authentication: authentication).catchError((error) {
+      await handleAuthentication(authentication: authentication)
+          .catchError((error) {
         _errorHandler.handle(error);
       });
     }).onError((error) {

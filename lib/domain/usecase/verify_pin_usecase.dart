@@ -12,13 +12,15 @@ abstract class VerifyPinUseCase {
 
 @Injectable(as: VerifyPinUseCase)
 class VerifyPinUseCaseImpl extends VerifyPinUseCase {
-  final StateRepository<UserInteractionOperationState> _userInteractionOperationStateRepository;
+  final StateRepository<UserInteractionOperationState>
+      _userInteractionOperationStateRepository;
 
   VerifyPinUseCaseImpl(this._userInteractionOperationStateRepository);
 
   @override
   Future<void> execute(String pin) async {
-    final handler = _userInteractionOperationStateRepository.state?.userVerificationHandler;
+    final handler =
+        _userInteractionOperationStateRepository.state?.userVerificationHandler;
     if (handler == null) throw BusinessException.invalidState();
     if (handler is! PinUserVerificationHandler) {
       throw BusinessException.invalidState();

@@ -20,8 +20,10 @@ class TransactionConfirmationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<TransactionConfirmationBloc>(
       create: (_) {
-        final params = ModalRoute.of(context)!.settings.arguments as TransactionConfirmationParameter;
-        return GetIt.I.get<TransactionConfirmationBloc>()..add(TransactionConfirmationScreenCreatedEvent(params));
+        final params = ModalRoute.of(context)!.settings.arguments
+            as TransactionConfirmationParameter;
+        return GetIt.I.get<TransactionConfirmationBloc>()
+          ..add(TransactionConfirmationScreenCreatedEvent(params));
       },
       child: const TransactionConfirmationContent(),
     );
@@ -33,7 +35,8 @@ class TransactionConfirmationContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TransactionConfirmationBloc, TransactionConfirmationState>(
+    return BlocBuilder<TransactionConfirmationBloc,
+        TransactionConfirmationState>(
       builder: (_, state) {
         final localization = AppLocalizations.of(context)!;
         final bloc = context.read<TransactionConfirmationBloc>();
@@ -45,7 +48,8 @@ class TransactionConfirmationContent extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: AppText.title(localization.transactionConfirmationScreenTitle),
+                  child: AppText.title(
+                      localization.transactionConfirmationScreenTitle),
                 ),
                 Expanded(child: _data(state)),
                 Padding(

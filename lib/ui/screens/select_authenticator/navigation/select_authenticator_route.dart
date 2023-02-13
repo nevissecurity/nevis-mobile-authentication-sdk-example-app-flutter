@@ -6,5 +6,6 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/s
 class SelectAuthenticatorRoute {
   static const selectAuthenticator = "select_authenticator";
 
-  Map<String, WidgetBuilder> get routes => {selectAuthenticator: (context) => const SelectAuthenticatorScreen()};
+  Map<String, WidgetBuilder> get routes =>
+      {selectAuthenticator: (context) => const SelectAuthenticatorScreen()};
 }

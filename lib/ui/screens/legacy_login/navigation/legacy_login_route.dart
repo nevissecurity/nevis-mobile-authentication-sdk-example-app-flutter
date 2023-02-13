@@ -6,5 +6,6 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/l
 class LegacyLoginRoute {
   static const legacyLogin = "legacy_login";
 
-  Map<String, WidgetBuilder> get routes => {legacyLogin: (context) => const LegacyLoginScreen()};
+  Map<String, WidgetBuilder> get routes =>
+      {legacyLogin: (context) => const LegacyLoginScreen()};
 }

@@ -14,10 +14,12 @@ class ChangeDeviceInformationScreen extends StatefulWidget {
   const ChangeDeviceInformationScreen({Key? key}) : super(key: key);
 
   @override
-  State<ChangeDeviceInformationScreen> createState() => _ChangeDeviceInformationScreenState();
+  State<ChangeDeviceInformationScreen> createState() =>
+      _ChangeDeviceInformationScreenState();
 }
 
-class _ChangeDeviceInformationScreenState extends State<ChangeDeviceInformationScreen> {
+class _ChangeDeviceInformationScreenState
+    extends State<ChangeDeviceInformationScreen> {
   final _nameController = TextEditingController();
   late AppLocalizations _localization;
 
@@ -30,7 +32,8 @@ class _ChangeDeviceInformationScreenState extends State<ChangeDeviceInformationS
   @override
   Widget build(BuildContext context) {
     _localization = AppLocalizations.of(context)!;
-    return BlocBuilder<ChangeDeviceInformationBloc, ChangeDeviceInformationState>(
+    return BlocBuilder<ChangeDeviceInformationBloc,
+        ChangeDeviceInformationState>(
       builder: (ctx, state) {
         return AppScaffold(
           body: Padding(
@@ -53,8 +56,10 @@ class _ChangeDeviceInformationScreenState extends State<ChangeDeviceInformationS
 
   Widget _nameLabel(ChangeDeviceInformationState state) {
     String text;
-    if (state is ChangeDeviceInformationLoaded && state.deviceInformationCurrentName != null) {
-      text = _localization.changeDeviceInformationCurrentName(state.deviceInformationCurrentName!);
+    if (state is ChangeDeviceInformationLoaded &&
+        state.deviceInformationCurrentName != null) {
+      text = _localization.changeDeviceInformationCurrentName(
+          state.deviceInformationCurrentName!);
     } else {
       text = _localization.changeDeviceInformationEmptyCurrentName;
     }
@@ -77,7 +82,8 @@ class _ChangeDeviceInformationScreenState extends State<ChangeDeviceInformationS
             // we just want the widget to rebuild, so the button can get into a correct state
             setState(() {});
           },
-          onEditingComplete: () => FocusManager.instance.primaryFocus?.unfocus(),
+          onEditingComplete: () =>
+              FocusManager.instance.primaryFocus?.unfocus(),
           decoration: InputDecoration(
             labelText: _localization.changeDeviceInformationNewName,
             hintText: _localization.changeDeviceInformationNewName,
@@ -95,7 +101,9 @@ class _ChangeDeviceInformationScreenState extends State<ChangeDeviceInformationS
           text: _localization.confirmButtonTitle,
           onPressed: () {
             FocusManager.instance.primaryFocus?.unfocus();
-            context.read<ChangeDeviceInformationBloc>().add(ChangeConfirmedEvent(_nameController.text));
+            context
+                .read<ChangeDeviceInformationBloc>()
+                .add(ChangeConfirmedEvent(_nameController.text));
           },
         ),
       ],

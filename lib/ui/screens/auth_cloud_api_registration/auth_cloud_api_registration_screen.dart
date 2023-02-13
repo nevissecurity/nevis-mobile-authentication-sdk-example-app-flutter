@@ -28,10 +28,12 @@ class AuthCloudApiRegistrationContent extends StatefulWidget {
   const AuthCloudApiRegistrationContent({Key? key}) : super(key: key);
 
   @override
-  State<AuthCloudApiRegistrationContent> createState() => _AuthCloudApiRegistrationContentState();
+  State<AuthCloudApiRegistrationContent> createState() =>
+      _AuthCloudApiRegistrationContentState();
 }
 
-class _AuthCloudApiRegistrationContentState extends State<AuthCloudApiRegistrationContent> {
+class _AuthCloudApiRegistrationContentState
+    extends State<AuthCloudApiRegistrationContent> {
   final _enrollResponseController = TextEditingController();
   final _appLinkUriController = TextEditingController();
   String? _errorMessage;
@@ -47,7 +49,8 @@ class _AuthCloudApiRegistrationContentState extends State<AuthCloudApiRegistrati
   @override
   Widget build(BuildContext context) {
     _localization = AppLocalizations.of(context)!;
-    return BlocBuilder<AuthCloudApiRegistrationBloc, AuthCloudApiRegistrationState>(
+    return BlocBuilder<AuthCloudApiRegistrationBloc,
+        AuthCloudApiRegistrationState>(
       builder: (ctx, state) {
         return AppScaffold(
           body: Padding(
@@ -81,7 +84,8 @@ class _AuthCloudApiRegistrationContentState extends State<AuthCloudApiRegistrati
             // we just want the widget to rebuild, so the button can get into a correct state
             setState(() {});
           },
-          onEditingComplete: () => FocusManager.instance.primaryFocus?.unfocus(),
+          onEditingComplete: () =>
+              FocusManager.instance.primaryFocus?.unfocus(),
           decoration: InputDecoration(
             labelText: _localization.authCloudApiRegistrationEnrollResponse,
             hintText: _localization.authCloudApiRegistrationEnrollResponse,
@@ -103,7 +107,8 @@ class _AuthCloudApiRegistrationContentState extends State<AuthCloudApiRegistrati
             // we just want the widget to rebuild, so the button can get into a correct state
             setState(() {});
           },
-          onEditingComplete: () => FocusManager.instance.primaryFocus?.unfocus(),
+          onEditingComplete: () =>
+              FocusManager.instance.primaryFocus?.unfocus(),
           decoration: InputDecoration(
             labelText: _localization.authCloudApiRegistrationAppLinkUri,
             hintText: _localization.authCloudApiRegistrationAppLinkUri,
@@ -143,7 +148,9 @@ class _AuthCloudApiRegistrationContentState extends State<AuthCloudApiRegistrati
     return Button.outlined(
       text: _localization.cancelButtonTitle,
       onPressed: () {
-        context.read<AuthCloudApiRegistrationBloc>().add(RegistrationCancelledEvent());
+        context
+            .read<AuthCloudApiRegistrationBloc>()
+            .add(RegistrationCancelledEvent());
       },
     );
   }
@@ -164,7 +171,8 @@ class _AuthCloudApiRegistrationContentState extends State<AuthCloudApiRegistrati
         break;
       case AuthCloudApiRegistrationValidationError.missingData:
         setState(() {
-          _errorMessage = _localization.authCloudApiRegistrationErrorMissingData;
+          _errorMessage =
+              _localization.authCloudApiRegistrationErrorMissingData;
         });
         break;
       case AuthCloudApiRegistrationValidationError.wrongData:
@@ -176,11 +184,13 @@ class _AuthCloudApiRegistrationContentState extends State<AuthCloudApiRegistrati
   }
 
   AuthCloudApiRegistrationValidationError _validateData() {
-    if (_enrollResponseController.text.isEmpty && _appLinkUriController.text.isEmpty) {
+    if (_enrollResponseController.text.isEmpty &&
+        _appLinkUriController.text.isEmpty) {
       return AuthCloudApiRegistrationValidationError.missingData;
     }
 
-    if (_enrollResponseController.text.isNotEmpty && _appLinkUriController.text.isNotEmpty) {
+    if (_enrollResponseController.text.isNotEmpty &&
+        _appLinkUriController.text.isNotEmpty) {
       return AuthCloudApiRegistrationValidationError.wrongData;
     }
 

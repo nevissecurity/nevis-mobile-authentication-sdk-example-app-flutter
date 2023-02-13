@@ -15,7 +15,8 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/s
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/select_authenticator/select_authenticator_state.dart';
 
 @injectable
-class SelectAuthenticatorBloc extends Bloc<SelectAuthenticatorEvent, SelectAuthenticatorState> {
+class SelectAuthenticatorBloc
+    extends Bloc<SelectAuthenticatorEvent, SelectAuthenticatorState> {
   final SelectAuthenticatorUseCase _selectAuthenticatorUseCase;
   final GlobalNavigationManager _globalNavigationManager;
   final ErrorHandler _errorHandler;
@@ -31,9 +32,12 @@ class SelectAuthenticatorBloc extends Bloc<SelectAuthenticatorEvent, SelectAuthe
   }
 
   Future<void> _handleAuthenticatorSelectedEvent(
-      AuthenticatorSelectedEvent event, Emitter<SelectAuthenticatorState> emit) async {
+    AuthenticatorSelectedEvent event,
+    Emitter<SelectAuthenticatorState> emit,
+  ) async {
     debugPrint('Selected authenticator: ${event.authenticator.aaid}');
-    await _selectAuthenticatorUseCase.execute(event.authenticator.aaid, (String username) {
+    await _selectAuthenticatorUseCase.execute(event.authenticator.aaid,
+        (String username) {
       final parameter = PinParameter.enrollment(
         username: username,
       );
@@ -45,7 +49,9 @@ class SelectAuthenticatorBloc extends Bloc<SelectAuthenticatorEvent, SelectAuthe
   }
 
   Future<void> _handleSelectAuthenticatorCreated(
-      SelectAuthenticatorCreatedEvent event, Emitter<SelectAuthenticatorState> emit) async {
+    SelectAuthenticatorCreatedEvent event,
+    Emitter<SelectAuthenticatorState> emit,
+  ) async {
     _parameter = event.parameter;
     emit(SelectAuthenticatorLoadedState(_parameter));
   }

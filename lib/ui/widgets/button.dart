@@ -21,7 +21,8 @@ class Button extends StatelessWidget {
         style: _buttonStyle(context),
         child: Text(
           text,
-          textAlign: TextAlign.center, // needed because longer texts where the text displayed in more lines
+          textAlign: TextAlign
+              .center, // needed because longer texts where the text displayed in more lines
           style: const TextStyle(
             fontWeight: FontWeight.w500,
             fontStyle: FontStyle.normal,

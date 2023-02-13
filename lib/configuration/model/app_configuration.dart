@@ -19,9 +19,11 @@ class AppConfiguration {
     required this.sdkConfiguration,
   });
 
-  factory AppConfiguration.fromJson(Map<String, dynamic> json) => _$AppConfigurationFromJson(json);
+  factory AppConfiguration.fromJson(Map<String, dynamic> json) =>
+      _$AppConfigurationFromJson(json);
 
-  AppConfiguration fromJson(Map<String, dynamic> json) => AppConfiguration.fromJson(json);
+  AppConfiguration fromJson(Map<String, dynamic> json) =>
+      AppConfiguration.fromJson(json);
 
   Map<String, dynamic> toJson() => _$AppConfigurationToJson(this);
 }

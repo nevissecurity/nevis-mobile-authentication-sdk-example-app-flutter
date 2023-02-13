@@ -17,10 +17,12 @@ class SelectAuthenticatorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final params = ModalRoute.of(context)!.settings.arguments as SelectAuthenticatorParameter;
+    final params = ModalRoute.of(context)!.settings.arguments
+        as SelectAuthenticatorParameter;
     return BlocProvider<SelectAuthenticatorBloc>(
       create: (_) {
-        return GetIt.I.get<SelectAuthenticatorBloc>()..add(SelectAuthenticatorCreatedEvent(params));
+        return GetIt.I.get<SelectAuthenticatorBloc>()
+          ..add(SelectAuthenticatorCreatedEvent(params));
       },
       child: const SelectAuthenticatorContent(),
     );
@@ -45,19 +47,22 @@ class SelectAuthenticatorContent extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: AppText.title(localization.selectAuthenticatorScreenTitle),
+                          child: AppText.title(
+                              localization.selectAuthenticatorScreenTitle),
                         ),
                         Expanded(
                           child: ListView.builder(
                               itemCount: state.parameter.authenticators.length,
                               itemBuilder: (BuildContext context, int index) {
-                                final authenticator = state.parameter.authenticators.elementAt(index);
+                                final authenticator = state
+                                    .parameter.authenticators
+                                    .elementAt(index);
                                 return AuthenticatorListTile(
                                   authenticator: authenticator,
                                   onTap: () {
-                                    context
-                                        .read<SelectAuthenticatorBloc>()
-                                        .add(AuthenticatorSelectedEvent(authenticator));
+                                    context.read<SelectAuthenticatorBloc>().add(
+                                        AuthenticatorSelectedEvent(
+                                            authenticator));
                                   },
                                 );
                               }),

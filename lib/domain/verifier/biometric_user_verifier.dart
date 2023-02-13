@@ -14,7 +14,8 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repos
 class BiometricUserVerifierImpl implements BiometricUserVerifier {
   final DomainBloc _domainBloc;
   final ErrorHandler _errorHandler;
-  final StateRepository<UserInteractionOperationState> _userInteractionOperationStateRepository;
+  final StateRepository<UserInteractionOperationState>
+      _userInteractionOperationStateRepository;
 
   BiometricUserVerifierImpl(
     this._domainBloc,
@@ -28,17 +29,20 @@ class BiometricUserVerifierImpl implements BiometricUserVerifier {
   }
 
   @override
-  void verifyBiometric(BiometricUserVerificationContext context, BiometricUserVerificationHandler handler) {
+  void verifyBiometric(BiometricUserVerificationContext context,
+      BiometricUserVerificationHandler handler) {
     final state = _userInteractionOperationStateRepository.state;
     if (state == null) {
       _errorHandler.handle(BusinessException.invalidState());
       return;
     }
-    _userInteractionOperationStateRepository.save(state.copyWith(
-      accountSelectionHandler: null,
-      authenticatorSelectionHandler: null,
-      userVerificationHandler: handler,
-    ));
+    _userInteractionOperationStateRepository.save(
+      state.copyWith(
+        accountSelectionHandler: null,
+        authenticatorSelectionHandler: null,
+        userVerificationHandler: handler,
+      ),
+    );
     _domainBloc.add(BiometricUserVerificationEvent());
   }
 }

@@ -30,7 +30,8 @@ class ScrollableColumn extends StatelessWidget {
       builder: (ctx, viewportConstraints) {
         return SingleChildScrollView(
           child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: viewportConstraints.maxHeight),
+            constraints:
+                BoxConstraints(minHeight: viewportConstraints.maxHeight),
             child: (flex) ? IntrinsicHeight(child: _column()) : _column(),
           ),
         );

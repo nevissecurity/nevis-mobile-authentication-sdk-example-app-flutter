@@ -14,7 +14,8 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repos
 class FingerprintUserVerifierImpl implements FingerprintUserVerifier {
   final DomainBloc _domainBloc;
   final ErrorHandler _errorHandler;
-  final StateRepository<UserInteractionOperationState> _userInteractionOperationStateRepository;
+  final StateRepository<UserInteractionOperationState>
+      _userInteractionOperationStateRepository;
 
   FingerprintUserVerifierImpl(
     this._domainBloc,
@@ -28,17 +29,22 @@ class FingerprintUserVerifierImpl implements FingerprintUserVerifier {
   }
 
   @override
-  void verifyFingerprint(FingerprintUserVerificationContext context, FingerprintUserVerificationHandler handler) {
+  void verifyFingerprint(
+    FingerprintUserVerificationContext context,
+    FingerprintUserVerificationHandler handler,
+  ) {
     final state = _userInteractionOperationStateRepository.state;
     if (state == null) {
       _errorHandler.handle(BusinessException.invalidState());
       return;
     }
-    _userInteractionOperationStateRepository.save(state.copyWith(
-      accountSelectionHandler: null,
-      authenticatorSelectionHandler: null,
-      userVerificationHandler: handler,
-    ));
+    _userInteractionOperationStateRepository.save(
+      state.copyWith(
+        accountSelectionHandler: null,
+        authenticatorSelectionHandler: null,
+        userVerificationHandler: handler,
+      ),
+    );
     _domainBloc.add(FingerPrintUserVerificationEvent());
   }
 }

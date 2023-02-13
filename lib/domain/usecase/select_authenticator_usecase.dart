@@ -12,12 +12,16 @@ abstract class SelectAuthenticatorUseCase {
 
 @Injectable(as: SelectAuthenticatorUseCase)
 class SelectAuthenticatorUseCaseImpl implements SelectAuthenticatorUseCase {
-  final StateRepository<UserInteractionOperationState> _userInteractionOperationStateRepository;
+  final StateRepository<UserInteractionOperationState>
+      _userInteractionOperationStateRepository;
 
   SelectAuthenticatorUseCaseImpl(this._userInteractionOperationStateRepository);
 
   @override
-  Future<void> execute(String aaid, Function(String username) onNotEnrolled) async {
+  Future<void> execute(
+    String aaid,
+    Function(String username) onNotEnrolled,
+  ) async {
     final state = _userInteractionOperationStateRepository.state;
     if (state == null) {
       throw BusinessException.invalidState();
@@ -35,16 +39,20 @@ class SelectAuthenticatorUseCaseImpl implements SelectAuthenticatorUseCase {
       throw BusinessException.invalidState();
     }
     await authenticatorSelectionHandler.aaid(aaid);
-    _userInteractionOperationStateRepository.save(state.copyWith(
-      authenticatorSelectionHandler: null,
-      accountSelectionHandler: null,
-    ));
+    _userInteractionOperationStateRepository.save(
+      state.copyWith(
+        authenticatorSelectionHandler: null,
+        accountSelectionHandler: null,
+      ),
+    );
   }
 
   bool _isPinEnrolled(AuthenticatorSelectionContext context) {
-    var filteredAuthenticators = context.authenticators.where((e) => e.aaid.isPin);
+    var filteredAuthenticators =
+        context.authenticators.where((e) => e.aaid.isPin);
     if (filteredAuthenticators.isNotEmpty) {
-      return filteredAuthenticators.first.userEnrollment.isEnrolled(context.account.username);
+      return filteredAuthenticators.first.userEnrollment
+          .isEnrolled(context.account.username);
     }
 
     return false;

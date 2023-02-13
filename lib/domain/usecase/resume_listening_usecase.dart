@@ -11,13 +11,16 @@ abstract class ResumeListeningUseCase {
 
 @Injectable(as: ResumeListeningUseCase)
 class ResumeListeningUseCaseImpl extends ResumeListeningUseCase {
-  final StateRepository<UserInteractionOperationState> _userInteractionOperationStateRepository;
+  final StateRepository<UserInteractionOperationState>
+      _userInteractionOperationStateRepository;
 
   ResumeListeningUseCaseImpl(this._userInteractionOperationStateRepository);
 
   @override
   Future<void> execute() async {
-    final osAuthenticationListenHandler = _userInteractionOperationStateRepository.state?.osAuthenticationListenHandler;
+    final osAuthenticationListenHandler =
+        _userInteractionOperationStateRepository
+            .state?.osAuthenticationListenHandler;
     await osAuthenticationListenHandler?.resumeListening();
     debugPrint("Listening resumed.");
   }
