@@ -34,20 +34,30 @@ class SelectAccountBloc extends Bloc<SelectAccountEvent, SelectAccountState> {
     on<AccountSelectedEvent>(_handleAccountSelected);
   }
 
-  void _handleAccountScreenCreated(SelectAccountCreatedEvent event, Emitter<SelectAccountState> emit) {
+  void _handleAccountScreenCreated(
+    SelectAccountCreatedEvent event,
+    Emitter<SelectAccountState> emit,
+  ) {
     _parameter = event.parameter;
-    emit(SelectAccountInitialState(
-      accounts: _parameter.accounts,
-    ));
+    emit(
+      SelectAccountInitialState(
+        accounts: _parameter.accounts,
+      ),
+    );
   }
 
-  void _handleAccountSelected(AccountSelectedEvent event, Emitter<SelectAccountState> emit) async {
+  void _handleAccountSelected(
+    AccountSelectedEvent event,
+    Emitter<SelectAccountState> emit,
+  ) async {
     // first check the existence of transaction confirmation data that can be received during an OOB auth
     if (_parameter.transactionConfirmationData != null) {
-      _globalNavigationManager.pushTransactionData(TransactionConfirmationParameter(
-        transactionData: _parameter.transactionConfirmationData!,
-        selectedAccount: event.account,
-      ));
+      _globalNavigationManager.pushTransactionData(
+        TransactionConfirmationParameter(
+          transactionData: _parameter.transactionConfirmationData!,
+          selectedAccount: event.account,
+        ),
+      );
     } else if (_parameter.operationType == OperationType.authentication ||
         _parameter.operationType == OperationType.deregistration) {
       // in-band authentication or deregistration (in Identity Suite env) is in progress
@@ -69,7 +79,9 @@ class SelectAccountBloc extends Bloc<SelectAccountEvent, SelectAccountState> {
       _globalNavigationManager.pushPin(parameter);
     } else {
       // simple account selection (e.g. during usernameless oob auth)
-      await _selectAccountUseCase.execute(event.account.username).catchError((error) {
+      await _selectAccountUseCase
+          .execute(event.account.username)
+          .catchError((error) {
         _errorHandler.handle(error);
       });
     }

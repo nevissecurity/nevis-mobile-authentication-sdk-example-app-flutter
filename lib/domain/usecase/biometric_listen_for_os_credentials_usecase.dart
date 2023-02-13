@@ -11,10 +11,14 @@ abstract class BiometricListenForOsCredentialsUseCase {
 }
 
 @Injectable(as: BiometricListenForOsCredentialsUseCase)
-class BiometricListenForOsCredentialsUseCaseImpl extends BiometricListenForOsCredentialsUseCase {
-  final StateRepository<UserInteractionOperationState> _userInteractionOperationStateRepository;
+class BiometricListenForOsCredentialsUseCaseImpl
+    extends BiometricListenForOsCredentialsUseCase {
+  final StateRepository<UserInteractionOperationState>
+      _userInteractionOperationStateRepository;
 
-  BiometricListenForOsCredentialsUseCaseImpl(this._userInteractionOperationStateRepository);
+  BiometricListenForOsCredentialsUseCaseImpl(
+    this._userInteractionOperationStateRepository,
+  );
 
   @override
   Future<void> execute(BiometricPromptOptions options) async {
@@ -25,10 +29,13 @@ class BiometricListenForOsCredentialsUseCaseImpl extends BiometricListenForOsCre
     if (handler is! BiometricUserVerificationHandler) {
       throw BusinessException.invalidState();
     }
-    _userInteractionOperationStateRepository.save(state.copyWith(
-      accountSelectionHandler: null,
-      authenticatorSelectionHandler: null,
-      osAuthenticationListenHandler: await handler.listenForOsCredentials(options),
-    ));
+    _userInteractionOperationStateRepository.save(
+      state.copyWith(
+        accountSelectionHandler: null,
+        authenticatorSelectionHandler: null,
+        osAuthenticationListenHandler:
+            await handler.listenForOsCredentials(options),
+      ),
+    );
   }
 }

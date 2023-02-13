@@ -6,5 +6,6 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/r
 class ResultRoute {
   static const result = "result";
 
-  Map<String, WidgetBuilder> get routes => {result: (context) => const ResultScreen()};
+  Map<String, WidgetBuilder> get routes =>
+      {result: (context) => const ResultScreen()};
 }

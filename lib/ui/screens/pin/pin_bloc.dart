@@ -23,7 +23,8 @@ class PinBloc extends Bloc<PinEvent, PinState> {
   final DomainBloc _domainBloc;
   final CancelPinOperationUseCase _cancelPinOperationUseCase;
   final ProvidedPinsUseCase _providedPinUseCase;
-  final CancelUserInteractionOperationUseCase _cancelUserInteractionOperationUseCase;
+  final CancelUserInteractionOperationUseCase
+      _cancelUserInteractionOperationUseCase;
   final SetPinUseCase _setPinUseCase;
   final VerifyPinUseCase _verifyPinUseCase;
   final ErrorHandler _errorHandler;
@@ -50,7 +51,10 @@ class PinBloc extends Bloc<PinEvent, PinState> {
     });
   }
 
-  Future<void> _handlePinCreatedEvent(PinCreatedEvent event, Emitter<PinState> emit) async {
+  Future<void> _handlePinCreatedEvent(
+    PinCreatedEvent event,
+    Emitter<PinState> emit,
+  ) async {
     try {
       if (event.mode == PinMode.verification) {
         final pinVerificationData = event.pinVerificationData;
@@ -74,7 +78,10 @@ class PinBloc extends Bloc<PinEvent, PinState> {
     }
   }
 
-  Future<void> _handlePinEnterEvent(PinEnterEvent event, Emitter<PinState> emit) async {
+  Future<void> _handlePinEnterEvent(
+    PinEnterEvent event,
+    Emitter<PinState> emit,
+  ) async {
     final credentials = event.credentials;
     switch (event.mode) {
       case PinMode.enrollment:
@@ -83,7 +90,9 @@ class PinBloc extends Bloc<PinEvent, PinState> {
         });
         break;
       case PinMode.verification:
-        await _verifyPinUseCase.execute(credentials.pinValue).catchError((error) {
+        await _verifyPinUseCase
+            .execute(credentials.pinValue)
+            .catchError((error) {
           _errorHandler.handle(error);
         });
         break;
@@ -93,7 +102,10 @@ class PinBloc extends Bloc<PinEvent, PinState> {
           _errorHandler.handle(BusinessException.invalidState());
         }
         await _providedPinUseCase
-            .execute(oldPin: credentials.oldValue!, newPin: credentials.pinValue)
+            .execute(
+          oldPin: credentials.oldValue!,
+          newPin: credentials.pinValue,
+        )
             .catchError((error) {
           _errorHandler.handle(error);
         });
@@ -101,7 +113,10 @@ class PinBloc extends Bloc<PinEvent, PinState> {
     }
   }
 
-  Future<void> _handleCancelledEvent(UserCancelledEvent event, Emitter<PinState> emit) async {
+  Future<void> _handleCancelledEvent(
+    UserCancelledEvent event,
+    Emitter<PinState> emit,
+  ) async {
     switch (event.mode) {
       case PinMode.enrollment:
       case PinMode.credentialChange:
@@ -110,15 +125,21 @@ class PinBloc extends Bloc<PinEvent, PinState> {
         });
         break;
       case PinMode.verification:
-        await _cancelUserInteractionOperationUseCase.execute().catchError((error) {
+        await _cancelUserInteractionOperationUseCase
+            .execute()
+            .catchError((error) {
           _errorHandler.handle(error);
         });
         break;
     }
   }
 
-  Future<void> _handlePinDomainEvent(PinDomainEvent event, Emitter<PinState> emit) async {
-    final previousMode = state is PinUpdatedState ? (state as PinUpdatedState).mode : null;
+  Future<void> _handlePinDomainEvent(
+    PinDomainEvent event,
+    Emitter<PinState> emit,
+  ) async {
+    final previousMode =
+        state is PinUpdatedState ? (state as PinUpdatedState).mode : null;
     if (event is PinEnrollmentEvent) {
       final state = PinUpdatedState.enrollment(
         protectionStatus: event.protectionStatus,

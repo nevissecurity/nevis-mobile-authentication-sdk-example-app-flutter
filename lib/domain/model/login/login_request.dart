@@ -17,9 +17,11 @@ class LoginRequest {
     required this.password,
   });
 
-  factory LoginRequest.fromJson(Map<String, dynamic> json) => _$LoginRequestFromJson(json);
+  factory LoginRequest.fromJson(Map<String, dynamic> json) =>
+      _$LoginRequestFromJson(json);
 
-  LoginRequest fromJson(Map<String, dynamic> json) => LoginRequest.fromJson(json);
+  LoginRequest fromJson(Map<String, dynamic> json) =>
+      LoginRequest.fromJson(json);
 
   Map<String, dynamic> toJson() => _$LoginRequestToJson(this);
 }

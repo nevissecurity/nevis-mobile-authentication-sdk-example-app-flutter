@@ -19,7 +19,8 @@ abstract class ErrorHandler {
 class ErrorHandlerImpl extends ErrorHandler {
   // Here we cannot use AppBlock for navigation because AppBlock also injects an instance of ErrorHandler, that would lead to circular dependency.
   final GlobalNavigationManager _globalNavigationManager;
-  final StateRepository<UserInteractionOperationState> _userInteractionOperationStateRepository;
+  final StateRepository<UserInteractionOperationState>
+      _userInteractionOperationStateRepository;
 
   ErrorHandlerImpl(
     this._globalNavigationManager,
@@ -63,7 +64,9 @@ class ErrorHandlerImpl extends ErrorHandler {
     return ResultParameter.failure(description: errorDescription);
   }
 
-  ResultParameter _processMobileAuthenticationClientError(MobileAuthenticationClientError error) {
+  ResultParameter _processMobileAuthenticationClientError(
+    MobileAuthenticationClientError error,
+  ) {
     if (error is InitializationError) {
       return ResultParameter.failure(description: error.description);
     } else if (error is OperationFidoError) {

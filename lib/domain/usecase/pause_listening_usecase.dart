@@ -11,13 +11,18 @@ abstract class PauseListeningUseCase {
 
 @Injectable(as: PauseListeningUseCase)
 class PauseListeningUseCaseImpl extends PauseListeningUseCase {
-  final StateRepository<UserInteractionOperationState> _userInteractionOperationStateRepository;
+  final StateRepository<UserInteractionOperationState>
+      _userInteractionOperationStateRepository;
 
-  PauseListeningUseCaseImpl(this._userInteractionOperationStateRepository);
+  PauseListeningUseCaseImpl(
+    this._userInteractionOperationStateRepository,
+  );
 
   @override
   Future<void> execute() async {
-    final osAuthenticationListenHandler = _userInteractionOperationStateRepository.state?.osAuthenticationListenHandler;
+    final osAuthenticationListenHandler =
+        _userInteractionOperationStateRepository
+            .state?.osAuthenticationListenHandler;
     await osAuthenticationListenHandler?.pauseListening();
     debugPrint("Listening paused.");
   }

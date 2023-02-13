@@ -8,7 +8,8 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/user_interaction_operation_state.dart';
 
 @Singleton(as: Cache<UserInteractionOperationState>)
-class UserInteractionOperationStateCacheImpl extends CacheImpl<UserInteractionOperationState> {}
+class UserInteractionOperationStateCacheImpl
+    extends CacheImpl<UserInteractionOperationState> {}
 
 @Singleton(as: Cache<EnrollPinState>)
 class EnrollPinStateCacheImpl extends CacheImpl<EnrollPinState> {}

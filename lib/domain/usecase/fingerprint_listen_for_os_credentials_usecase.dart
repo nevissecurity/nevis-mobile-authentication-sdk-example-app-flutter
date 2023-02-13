@@ -11,10 +11,14 @@ abstract class FingerPrintListenForOsCredentialsUseCase {
 }
 
 @Injectable(as: FingerPrintListenForOsCredentialsUseCase)
-class FingerPrintListenForOsCredentialsUseCaseImpl extends FingerPrintListenForOsCredentialsUseCase {
-  final StateRepository<UserInteractionOperationState> _userInteractionOperationStateRepository;
+class FingerPrintListenForOsCredentialsUseCaseImpl
+    extends FingerPrintListenForOsCredentialsUseCase {
+  final StateRepository<UserInteractionOperationState>
+      _userInteractionOperationStateRepository;
 
-  FingerPrintListenForOsCredentialsUseCaseImpl(this._userInteractionOperationStateRepository);
+  FingerPrintListenForOsCredentialsUseCaseImpl(
+    this._userInteractionOperationStateRepository,
+  );
 
   @override
   Future<void> execute() async {
@@ -25,10 +29,12 @@ class FingerPrintListenForOsCredentialsUseCaseImpl extends FingerPrintListenForO
     if (handler is! FingerprintUserVerificationHandler) {
       throw BusinessException.invalidState();
     }
-    _userInteractionOperationStateRepository.save(state.copyWith(
-      accountSelectionHandler: null,
-      authenticatorSelectionHandler: null,
-      osAuthenticationListenHandler: await handler.listenForOsCredentials(),
-    ));
+    _userInteractionOperationStateRepository.save(
+      state.copyWith(
+        accountSelectionHandler: null,
+        authenticatorSelectionHandler: null,
+        osAuthenticationListenHandler: await handler.listenForOsCredentials(),
+      ),
+    );
   }
 }

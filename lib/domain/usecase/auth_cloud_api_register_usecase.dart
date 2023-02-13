@@ -30,7 +30,8 @@ class AuthCloudApiRegisterUseCaseImpl implements AuthCloudApiRegisterUseCase {
   final BiometricUserVerifier _biometricUserVerifier;
   final FingerprintUserVerifier _fingerprintUserVerifier;
   final DomainBloc _domainBloc;
-  final StateRepository<UserInteractionOperationState> _userInteractionOperationStateRepository;
+  final StateRepository<UserInteractionOperationState>
+      _userInteractionOperationStateRepository;
   final StateRepository<OperationType> _operationTypeRepository;
   final ErrorHandler _errorHandler;
 
@@ -53,7 +54,8 @@ class AuthCloudApiRegisterUseCaseImpl implements AuthCloudApiRegisterUseCase {
   }) async {
     final deviceInformation = await _createDeviceInformationUseCase.execute();
     _operationTypeRepository.save(OperationType.authCloudApiRegistration);
-    var authCloudApiRegistration = _clientProvider.client.operations.authCloudApiRegistration
+    var authCloudApiRegistration = _clientProvider
+        .client.operations.authCloudApiRegistration
         .deviceInformation(deviceInformation)
         .authenticatorSelector(_authenticatorSelector)
         .pinEnroller(_pinEnroller)

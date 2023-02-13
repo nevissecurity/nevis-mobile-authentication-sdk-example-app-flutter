@@ -4,12 +4,15 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/t
 
 abstract class TransactionConfirmationEvent {}
 
-class TransactionConfirmationScreenCreatedEvent extends TransactionConfirmationEvent {
+class TransactionConfirmationScreenCreatedEvent
+    extends TransactionConfirmationEvent {
   final TransactionConfirmationParameter parameter;
 
   TransactionConfirmationScreenCreatedEvent(this.parameter);
 }
 
-class TransactionConfirmationUserAcceptedEvent extends TransactionConfirmationEvent {}
+class TransactionConfirmationUserAcceptedEvent
+    extends TransactionConfirmationEvent {}
 
-class TransactionConfirmationUserCancelledEvent extends TransactionConfirmationEvent {}
+class TransactionConfirmationUserCancelledEvent
+    extends TransactionConfirmationEvent {}

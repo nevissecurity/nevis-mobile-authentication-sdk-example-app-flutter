@@ -12,7 +12,8 @@ abstract class AccountValidator {
 class AccountValidatorImpl implements AccountValidator {
   @override
   Future<Set<Account>> validate(AccountSelectionContext context) async {
-    final supportedAuthenticators = context.authenticators.where((i) => i.isSupportedByHardware).toList();
+    final supportedAuthenticators =
+        context.authenticators.where((i) => i.isSupportedByHardware).toList();
     if (supportedAuthenticators.isEmpty) {
       throw BusinessException.authenticatorNotFound();
     }
@@ -20,7 +21,10 @@ class AccountValidatorImpl implements AccountValidator {
     Set<Account> accounts = {};
     for (var authenticator in supportedAuthenticators) {
       for (var account in authenticator.registration.registeredAccounts) {
-        if (await context.isPolicyCompliant(authenticator.aaid, account.username)) {
+        if (await context.isPolicyCompliant(
+          authenticator.aaid,
+          account.username,
+        )) {
           accounts.add(account);
         }
       }

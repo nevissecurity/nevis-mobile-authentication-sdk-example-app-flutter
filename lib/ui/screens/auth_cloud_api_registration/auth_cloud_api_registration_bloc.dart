@@ -10,7 +10,8 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/a
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/util/string_utils.dart';
 
 @injectable
-class AuthCloudApiRegistrationBloc extends Bloc<AuthCloudApiRegistrationEvent, AuthCloudApiRegistrationState> {
+class AuthCloudApiRegistrationBloc
+    extends Bloc<AuthCloudApiRegistrationEvent, AuthCloudApiRegistrationState> {
   final GlobalNavigationManager _globalNavigationManager;
   final AuthCloudApiRegisterUseCase _authCloudApiRegisterUseCase;
   final ErrorHandler _errorHandler;
@@ -24,9 +25,14 @@ class AuthCloudApiRegistrationBloc extends Bloc<AuthCloudApiRegistrationEvent, A
     on<RegistrationCancelledEvent>(_handleCancel);
   }
 
-  void _handleConfirm(RegistrationConfirmedEvent event, Emitter<AuthCloudApiRegistrationState> emit) async {
-    String? enrollResponse = event.enrollResponse.isNullOrEmpty ? null : event.enrollResponse;
-    String? appLinkUri = event.appLinkUri.isNullOrEmpty ? null : event.appLinkUri;
+  void _handleConfirm(
+    RegistrationConfirmedEvent event,
+    Emitter<AuthCloudApiRegistrationState> emit,
+  ) async {
+    String? enrollResponse =
+        event.enrollResponse.isNullOrEmpty ? null : event.enrollResponse;
+    String? appLinkUri =
+        event.appLinkUri.isNullOrEmpty ? null : event.appLinkUri;
     await _authCloudApiRegisterUseCase
         .execute(
       enrollResponse: enrollResponse,
@@ -37,7 +43,10 @@ class AuthCloudApiRegistrationBloc extends Bloc<AuthCloudApiRegistrationEvent, A
     });
   }
 
-  void _handleCancel(RegistrationCancelledEvent event, Emitter<AuthCloudApiRegistrationState> emit) {
+  void _handleCancel(
+    RegistrationCancelledEvent event,
+    Emitter<AuthCloudApiRegistrationState> emit,
+  ) {
     _globalNavigationManager.popUntilHome();
   }
 }

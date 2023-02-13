@@ -38,9 +38,11 @@ class HomeScreen extends StatelessWidget {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 8.0, right: 0.0, left: 0.0, bottom: 64.0),
+                          padding: const EdgeInsets.only(
+                              top: 8.0, right: 0.0, left: 0.0, bottom: 64.0),
                           child: Text(
-                            localization.homeRegisteredAccounts(state.registeredAccounts),
+                            localization.homeRegisteredAccounts(
+                                state.registeredAccounts),
                           ),
                         ),
                       ),

@@ -7,5 +7,9 @@ class TransactionConfirmationParameter {
   final Account? selectedAccount;
   final Set<Authenticator>? authenticators;
 
-  TransactionConfirmationParameter({required this.transactionData, this.selectedAccount, this.authenticators});
+  TransactionConfirmationParameter({
+    required this.transactionData,
+    this.selectedAccount,
+    this.authenticators,
+  });
 }

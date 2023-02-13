@@ -6,4 +6,5 @@ import 'package:flutter/material.dart';
 abstract class AuthCloudApiRegistrationState {}
 
 @immutable
-class AuthCloudApiRegistrationInitialState extends AuthCloudApiRegistrationState {}
+class AuthCloudApiRegistrationInitialState
+    extends AuthCloudApiRegistrationState {}

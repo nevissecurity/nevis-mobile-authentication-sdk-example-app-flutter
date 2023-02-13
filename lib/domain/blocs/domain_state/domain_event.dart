@@ -10,7 +10,11 @@ class SelectAccountEvent extends DomainEvent {
   final Set<Account> accounts;
   final String? transactionConfirmationData;
 
-  SelectAccountEvent({required this.operationType, required this.accounts, this.transactionConfirmationData});
+  SelectAccountEvent({
+    required this.operationType,
+    required this.accounts,
+    this.transactionConfirmationData,
+  });
 }
 
 class TransactionConfirmationEvent extends DomainEvent {
@@ -29,13 +33,18 @@ class SelectAuthenticatorEvent extends DomainEvent {
   final Set<Authenticator> authenticators;
   final OperationType? operationType;
 
-  SelectAuthenticatorEvent({required this.authenticators, this.operationType});
+  SelectAuthenticatorEvent({
+    required this.authenticators,
+    this.operationType,
+  });
 }
 
 class ResultEvent extends DomainEvent {
   final String? description;
 
-  ResultEvent({this.description});
+  ResultEvent({
+    this.description,
+  });
 }
 
 class AuthenticationSucceededEvent extends DomainEvent {
@@ -43,7 +52,11 @@ class AuthenticationSucceededEvent extends DomainEvent {
   final AuthorizationProvider? authorizationProvider;
   final String? description;
 
-  AuthenticationSucceededEvent({required this.operation, this.authorizationProvider, this.description});
+  AuthenticationSucceededEvent({
+    required this.operation,
+    this.authorizationProvider,
+    this.description,
+  });
 }
 
 abstract class PinEvent extends DomainEvent {
@@ -60,9 +73,7 @@ class PinEnrollmentEvent extends PinEvent {
   PinEnrollmentEvent({
     required PinAuthenticatorProtectionStatus? protectionStatus,
     this.lastRecoverableError,
-  }) : super(
-          protectionStatus: protectionStatus,
-        );
+  }) : super(protectionStatus: protectionStatus);
 }
 
 class PinUserVerificationEvent extends PinEvent {
@@ -71,9 +82,7 @@ class PinUserVerificationEvent extends PinEvent {
   PinUserVerificationEvent({
     required PinAuthenticatorProtectionStatus protectionStatus,
     this.lastRecoverableError,
-  }) : super(
-          protectionStatus: protectionStatus,
-        );
+  }) : super(protectionStatus: protectionStatus);
 }
 
 class PinChangeEvent extends PinEvent {
@@ -82,9 +91,7 @@ class PinChangeEvent extends PinEvent {
   PinChangeEvent({
     required PinAuthenticatorProtectionStatus protectionStatus,
     this.lastRecoverableError,
-  }) : super(
-          protectionStatus: protectionStatus,
-        );
+  }) : super(protectionStatus: protectionStatus);
 }
 
 class FingerPrintUserVerificationEvent extends DomainEvent {}

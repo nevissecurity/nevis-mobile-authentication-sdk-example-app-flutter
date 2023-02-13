@@ -14,9 +14,11 @@ class LoginResponse {
     required this.extId,
   });
 
-  factory LoginResponse.fromJson(Map<String, dynamic> json) => _$LoginResponseFromJson(json);
+  factory LoginResponse.fromJson(Map<String, dynamic> json) =>
+      _$LoginResponseFromJson(json);
 
-  LoginResponse fromJson(Map<String, dynamic> json) => LoginResponse.fromJson(json);
+  LoginResponse fromJson(Map<String, dynamic> json) =>
+      LoginResponse.fromJson(json);
 
   Map<String, dynamic> toJson() => _$LoginResponseToJson(this);
 }

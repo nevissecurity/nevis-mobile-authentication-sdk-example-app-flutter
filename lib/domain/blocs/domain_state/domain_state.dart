@@ -42,13 +42,18 @@ class DomainSelectAuthenticatorState extends DomainState {
   final OperationType? operationType;
   final Set<Authenticator> authenticators;
 
-  DomainSelectAuthenticatorState({required this.authenticators, required this.operationType});
+  DomainSelectAuthenticatorState({
+    required this.authenticators,
+    required this.operationType,
+  });
 }
 
 class DomainResultState extends DomainState {
   final String? description;
 
-  DomainResultState({this.description});
+  DomainResultState({
+    this.description,
+  });
 }
 
 class DomainSelectAccountState extends DomainState {

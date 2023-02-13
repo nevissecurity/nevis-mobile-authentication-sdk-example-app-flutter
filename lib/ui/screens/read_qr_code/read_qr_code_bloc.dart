@@ -21,7 +21,10 @@ class ReadQrCodeBloc extends Bloc<ReadQrCodeEvent, ReadQrCodeState> {
     on<QrCodeScannedEvent>(_handleQrCodeScannedEvent);
   }
 
-  Future<void> _handleQrCodeScannedEvent(QrCodeScannedEvent event, Emitter<ReadQrCodeState> emit) async {
+  Future<void> _handleQrCodeScannedEvent(
+    QrCodeScannedEvent event,
+    Emitter<ReadQrCodeState> emit,
+  ) async {
     await _oobProcessUseCase.execute(event.content).catchError((error) {
       _errorHandler.handle(error);
     });

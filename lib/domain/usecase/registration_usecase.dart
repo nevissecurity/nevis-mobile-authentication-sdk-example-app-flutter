@@ -30,7 +30,8 @@ class RegistrationUseCaseImpl implements RegistrationUseCase {
   final BiometricUserVerifier _biometricUserVerifier;
   final FingerprintUserVerifier _fingerprintUserVerifier;
   final DomainBloc _domainBloc;
-  final StateRepository<UserInteractionOperationState> _userInteractionOperationStateRepository;
+  final StateRepository<UserInteractionOperationState>
+      _userInteractionOperationStateRepository;
   final StateRepository<OperationType> _operationTypeRepository;
   final ErrorHandler _errorHandler;
 

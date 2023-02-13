@@ -6,6 +6,8 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/a
 class AuthCloudApiRegistrationRoute {
   static const authCloudApiRegistration = "auth_cloud_api_registration";
 
-  Map<String, WidgetBuilder> get routes =>
-      {authCloudApiRegistration: (context) => const AuthCloudApiRegistrationScreen()};
+  Map<String, WidgetBuilder> get routes => {
+        authCloudApiRegistration: (context) =>
+            const AuthCloudApiRegistrationScreen()
+      };
 }

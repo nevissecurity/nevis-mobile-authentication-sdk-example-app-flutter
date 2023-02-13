@@ -18,7 +18,8 @@ abstract class ChangeDeviceInformationUseCase {
 }
 
 @Injectable(as: ChangeDeviceInformationUseCase)
-class ChangeDeviceInformationUseCaseImpl implements ChangeDeviceInformationUseCase {
+class ChangeDeviceInformationUseCaseImpl
+    implements ChangeDeviceInformationUseCase {
   final ClientProvider _clientProvider;
   final StateRepository<OperationType> _operationTypeRepository;
   final DomainBloc _domainBloc;
@@ -38,8 +39,9 @@ class ChangeDeviceInformationUseCaseImpl implements ChangeDeviceInformationUseCa
     bool? disablePushNotifications,
   }) async {
     _operationTypeRepository.save(OperationType.deviceInformationChange);
-    var deviceInformationChange = _clientProvider.client.operations.deviceInformationChange //
-        .onSuccess(() {
+    var deviceInformationChange =
+        _clientProvider.client.operations.deviceInformationChange //
+            .onSuccess(() {
       debugPrint('Change device information succeeded.');
       _domainBloc.add(ResultEvent());
       _operationTypeRepository.reset();
