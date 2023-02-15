@@ -153,4 +153,4 @@ Now that the Flutter example app is up and running, it's time to try it out!
 
 Check out our [Quickstart Guide](https://docs.nevis.net/mobilesdk/quickstart).
 
-© 2022 made with ❤ by Nevis
+© 2023 made with ❤ by Nevis
