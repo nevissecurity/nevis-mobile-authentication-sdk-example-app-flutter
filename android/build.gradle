@@ -17,6 +17,23 @@ buildscript {
     }
 }
 
+ext.getConfig = { String name ->
+    def env = System.getenv(name)
+    if (env != null) {
+        return env
+    }
+    def prop = System.getProperty(name)
+    if (prop != null) {
+        return prop
+    }
+    if (project.hasProperty(name)) {
+        return project.getProperty(name)
+    }
+
+    println("Getting env variable failed, returning empty: set $name as environment variable or as system property in your ~/.gradle/gradle.properties")
+    return ""
+}
+
 allprojects {
     repositories {
         google ()
@@ -24,8 +41,8 @@ allprojects {
         maven {
             url "https://maven.pkg.github.com/nevissecurity/nevis-mobile-authentication-sdk-android-package"
             credentials {
-                username = "<GITHUB_USERNAME>"
-                password = "<GITHUB_PERSONAL_ACCESS_TOKEN>"
+                username = getConfig("GITHUB_USERNAME")
+                password = getConfig("GITHUB_PERSONAL_ACCESS_TOKEN")
             }
         }
     }

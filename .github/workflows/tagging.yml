@@ -1,0 +1,39 @@
+# A reusable workflow file for tag creation.
+
+name: Tagging
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: "The current version number"
+        required: true
+        type: string
+      build-number:
+        description: "The current build number"
+        required: true
+        type: string
+
+jobs:
+  tag:
+    name: Create
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository under $GITHUB_WORKSPACE
+      - name: Checkout Project
+        uses: actions/checkout@v3
+
+      - name: Create Tag
+        uses: actions/github-script@v6
+        env:
+          TAG_NAME: release/${{ inputs.version }}/${{ inputs.build-number }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/" + process.env.TAG_NAME,
+              sha: context.sha
+            })
