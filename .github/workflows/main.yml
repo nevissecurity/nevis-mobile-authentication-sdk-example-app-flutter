@@ -3,6 +3,9 @@ name: Main Branch Commit
 on:
   push:
     branches: [ 'main' ]
+  schedule:
+    # At 5:30 am on the 1st and 15th day of the month (every two weeks)
+    - cron: '30 5 1,15 * *'
   workflow_dispatch:
 
 jobs:
