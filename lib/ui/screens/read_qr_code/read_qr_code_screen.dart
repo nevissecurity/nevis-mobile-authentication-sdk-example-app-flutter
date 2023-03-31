@@ -56,8 +56,10 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen> {
   }
 
   Widget _mobileScannerContent(AppLocalizations localization) {
-    _controller =
-        MobileScannerController(facing: CameraFacing.back, torchEnabled: false);
+    _controller = MobileScannerController(
+      facing: CameraFacing.back,
+      torchEnabled: false,
+    );
     return Stack(
       alignment: AlignmentDirectional.topCenter,
       children: [
