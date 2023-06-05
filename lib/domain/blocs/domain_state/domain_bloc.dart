@@ -49,7 +49,7 @@ class DomainBloc extends Bloc<DomainEvent, DomainState>
   ) async {
     emit(
       DomainSelectAuthenticatorState(
-          authenticators: event.authenticators,
+          authenticatorItems: event.authenticatorItems,
           operationType: event.operationType),
     );
   }
@@ -62,7 +62,6 @@ class DomainBloc extends Bloc<DomainEvent, DomainState>
       DomainTransactionConfirmationState(
         transactionData: event.transactionData,
         selectedAccount: event.selectedAccount,
-        authenticators: event.authenticators,
       ),
     );
   }

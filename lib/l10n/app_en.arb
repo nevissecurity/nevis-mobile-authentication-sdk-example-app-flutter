@@ -1,10 +1,5 @@
 {
   "appTitle": "Nevis Mobile Authentication Flutter Plugin Example",
-  "authenticatorDescriptionBiometric": "Authentication based on biometrics",
-  "authenticatorDescriptionFaceID": "Authentication based on Face ID",
-  "authenticatorDescriptionFingerprint": "Authentication based on fingerprint",
-  "authenticatorDescriptionTouchID": "Authentication based on Touch ID",
-  "authenticatorDescriptionPin": "Authentication using a PIN",
   "authenticatorTitleBiometric": "Face/Fingerprint",
   "authenticatorTitleFaceID": "Face ID",
   "authenticatorTitleFingerprint": "Fingerprint",
@@ -63,6 +58,8 @@
   "selectAccountScreenTitle": "Select an account",
   "selectAccountSelectAllAccounts": "Select all",
   "selectAuthenticatorScreenTitle": "Select an Authentication Method",
+  "selectAuthenticatorAuthenticatorIsNotPolicyCompliant": "This authentication method cannot be used with your application",
+  "selectAuthenticatorAuthenticatorIsNotEnrolled": "Before using the authenticator, enroll it in the phone System Settings",
   "homeRegisteredAccounts": "Registered accounts {accountNumber}",
   "@homeRegisteredAccounts": {
     "placeholders": {

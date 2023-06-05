@@ -1,4 +1,5 @@
 {
+  "allowClass2Sensors": false,
   "login": {
     "loginRequestURL": "https://myinstance.mauth.nevis.cloud/_app/auth/pwd"
   },

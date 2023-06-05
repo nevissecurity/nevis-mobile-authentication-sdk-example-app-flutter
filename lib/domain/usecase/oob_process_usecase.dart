@@ -24,7 +24,8 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
   final CreateDeviceInformationUseCase _createDeviceInformationUseCase;
   final OobPayloadDecodeUseCase _oobPayloadDecodeUseCase;
   final AccountSelector _accountSelector;
-  final AuthenticatorSelector _authenticatorSelector;
+  final AuthenticatorSelector _registrationAuthenticatorSelector;
+  final AuthenticatorSelector _authenticationAuthenticatorSelector;
   final PinEnroller _pinEnroller;
   final BiometricUserVerifier _biometricUserVerifier;
   final PinUserVerifier _pinUserVerifier;
@@ -40,7 +41,8 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
     this._createDeviceInformationUseCase,
     this._oobPayloadDecodeUseCase,
     this._accountSelector,
-    this._authenticatorSelector,
+    @Named("auth_selector_reg") this._registrationAuthenticatorSelector,
+    @Named("auth_selector_auth") this._authenticationAuthenticatorSelector,
     this._pinEnroller,
     this._biometricUserVerifier,
     this._pinUserVerifier,
@@ -102,7 +104,7 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
   }) async {
     return await registration
         .deviceInformation(deviceInformation)
-        .authenticatorSelector(_authenticatorSelector)
+        .authenticatorSelector(_registrationAuthenticatorSelector)
         .pinEnroller(_pinEnroller)
         .biometricUserVerifier(_biometricUserVerifier)
         .fingerprintUserVerifier(_fingerprintUserVerifier)
@@ -124,7 +126,7 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
   }) async {
     return await authentication
         .accountSelector(_accountSelector)
-        .authenticatorSelector(_authenticatorSelector)
+        .authenticatorSelector(_authenticationAuthenticatorSelector)
         .pinUserVerifier(_pinUserVerifier)
         .fingerprintUserVerifier(_fingerprintUserVerifier)
         .biometricUserVerifier(_biometricUserVerifier)

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/authenticator/authenticator_item.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/operation_type.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/pin/pin_mode.dart';
 
@@ -40,10 +41,10 @@ class DomainVerifyBiometricState extends DomainVerifyState {}
 
 class DomainSelectAuthenticatorState extends DomainState {
   final OperationType? operationType;
-  final Set<Authenticator> authenticators;
+  final Set<AuthenticatorItem> authenticatorItems;
 
   DomainSelectAuthenticatorState({
-    required this.authenticators,
+    required this.authenticatorItems,
     required this.operationType,
   });
 }
@@ -71,12 +72,10 @@ class DomainSelectAccountState extends DomainState {
 class DomainTransactionConfirmationState extends DomainState {
   final String transactionData;
   final Account? selectedAccount;
-  final Set<Authenticator>? authenticators;
 
   DomainTransactionConfirmationState({
     required this.transactionData,
     this.selectedAccount,
-    this.authenticators,
   });
 }
 

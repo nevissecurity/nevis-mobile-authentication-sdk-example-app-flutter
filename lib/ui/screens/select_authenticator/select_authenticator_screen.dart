@@ -52,17 +52,21 @@ class SelectAuthenticatorContent extends StatelessWidget {
                         ),
                         Expanded(
                           child: ListView.builder(
-                              itemCount: state.parameter.authenticators.length,
+                              itemCount:
+                                  state.parameter.authenticatorItems.length,
                               itemBuilder: (BuildContext context, int index) {
-                                final authenticator = state
-                                    .parameter.authenticators
+                                final item = state.parameter.authenticatorItems
                                     .elementAt(index);
                                 return AuthenticatorListTile(
-                                  authenticator: authenticator,
+                                  item: item,
                                   onTap: () {
-                                    context.read<SelectAuthenticatorBloc>().add(
-                                        AuthenticatorSelectedEvent(
-                                            authenticator));
+                                    if (item.isEnabled()) {
+                                      final bloc = context
+                                          .read<SelectAuthenticatorBloc>();
+                                      bloc.add(
+                                        AuthenticatorSelectedEvent(item.aaid),
+                                      );
+                                    }
                                   },
                                 );
                               }),
