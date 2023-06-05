@@ -35,9 +35,8 @@ class SelectAuthenticatorBloc
     AuthenticatorSelectedEvent event,
     Emitter<SelectAuthenticatorState> emit,
   ) async {
-    debugPrint('Selected authenticator: ${event.authenticator.aaid}');
-    await _selectAuthenticatorUseCase.execute(event.authenticator.aaid,
-        (String username) {
+    debugPrint('Selected authenticator aaid: ${event.aaid}');
+    await _selectAuthenticatorUseCase.execute(event.aaid, (String username) {
       final parameter = PinParameter.enrollment(
         username: username,
       );

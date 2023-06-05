@@ -69,7 +69,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     } else if (state is DomainSelectAuthenticatorState) {
       _globalNavigationManager.pushSelectAuthenticator(
         SelectAuthenticatorParameter(
-          authenticators: state.authenticators,
+          authenticatorItems: state.authenticatorItems,
           operationType: state.operationType,
         ),
       );
@@ -89,7 +89,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         TransactionConfirmationParameter(
           transactionData: state.transactionData,
           selectedAccount: state.selectedAccount,
-          authenticators: state.authenticators,
         ),
       );
     } else if (state is DomainAuthenticationSucceededState) {

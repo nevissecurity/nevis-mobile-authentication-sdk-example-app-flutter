@@ -1,4 +1,5 @@
 {
+  "allowClass2Sensors": false,
   "login": {
     "loginRequestURL": "https://mycompany.com/auth/pwd"
   },

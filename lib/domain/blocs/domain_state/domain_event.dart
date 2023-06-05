@@ -1,6 +1,7 @@
 // Copyright © 2022 Nevis Security AG. All rights reserved.
 
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/authenticator/authenticator_item.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/operation_type.dart';
 
 abstract class DomainEvent {}
@@ -20,21 +21,19 @@ class SelectAccountEvent extends DomainEvent {
 class TransactionConfirmationEvent extends DomainEvent {
   final String transactionData;
   final Account? selectedAccount;
-  final Set<Authenticator>? authenticators;
 
   TransactionConfirmationEvent({
     required this.transactionData,
     this.selectedAccount,
-    this.authenticators,
   });
 }
 
 class SelectAuthenticatorEvent extends DomainEvent {
-  final Set<Authenticator> authenticators;
+  final Set<AuthenticatorItem> authenticatorItems;
   final OperationType? operationType;
 
   SelectAuthenticatorEvent({
-    required this.authenticators,
+    required this.authenticatorItems,
     this.operationType,
   });
 }

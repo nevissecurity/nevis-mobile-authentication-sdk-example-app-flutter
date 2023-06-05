@@ -33,7 +33,7 @@ class AuthenticateUseCaseImpl implements AuthenticateUseCase {
 
   AuthenticateUseCaseImpl(
     this._clientProvider,
-    this._authenticatorSelector,
+    @Named("auth_selector_auth") this._authenticatorSelector,
     this._biometricUserVerifier,
     this._fingerprintUserVerifier,
     this._pinUserVerifier,

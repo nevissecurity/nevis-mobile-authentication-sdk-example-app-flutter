@@ -38,7 +38,7 @@ class RegistrationUseCaseImpl implements RegistrationUseCase {
   RegistrationUseCaseImpl(
     this._clientProvider,
     this._createDeviceInformationUseCase,
-    this._authenticatorSelector,
+    @Named("auth_selector_reg") this._authenticatorSelector,
     this._pinEnroller,
     this._biometricUserVerifier,
     this._fingerprintUserVerifier,

@@ -4,14 +4,17 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/authenticator/authenticator_item.dart';
 
 class AuthenticatorListTile extends StatelessWidget {
-  final Authenticator authenticator;
+  final AuthenticatorItem item;
   final GestureTapCallback? onTap;
 
-  const AuthenticatorListTile(
-      {Key? key, required this.authenticator, this.onTap})
-      : super(key: key);
+  const AuthenticatorListTile({
+    Key? key,
+    required this.item,
+    this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,27 +35,19 @@ class AuthenticatorListTile extends StatelessWidget {
       });
     }
 
-    final descriptions = {
-      Aaid.pin.rawValue: localization.authenticatorDescriptionPin,
-    };
-
-    if (Platform.isAndroid) {
-      descriptions.addAll({
-        Aaid.fingerprint.rawValue:
-            localization.authenticatorDescriptionFingerprint,
-        Aaid.biometric.rawValue: localization.authenticatorDescriptionBiometric,
-      });
-    } else if (Platform.isIOS) {
-      descriptions.addAll({
-        Aaid.fingerprint.rawValue: localization.authenticatorDescriptionTouchID,
-        Aaid.biometric.rawValue: localization.authenticatorDescriptionFaceID,
-      });
+    String subTitle = "";
+    if (!item.isEnabled()) {
+      if (!item.isPolicyCompliant) {
+        subTitle =
+            localization.selectAuthenticatorAuthenticatorIsNotPolicyCompliant;
+      } else if (!item.isUserEnrolled) {
+        subTitle = localization.selectAuthenticatorAuthenticatorIsNotEnrolled;
+      }
     }
 
     return ListTile(
-      title: Text(
-          titles[authenticator.aaid] ?? 'Unknown AAID: ${authenticator.aaid}'),
-      subtitle: Text(descriptions[authenticator.aaid] ?? 'N/A'),
+      title: Text(titles[item.aaid] ?? 'Unknown AAID: ${item.aaid}'),
+      subtitle: Text(subTitle),
       onTap: onTap,
     );
   }

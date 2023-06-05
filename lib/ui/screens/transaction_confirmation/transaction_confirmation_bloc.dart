@@ -55,7 +55,7 @@ class TransactionConfirmationBloc
     } else {
       _globalNavigationManager.pushSelectAuthenticator(
         SelectAuthenticatorParameter(
-          authenticators: _parameter.authenticators!,
+          authenticatorItems: {}, // authenticators will be received through domain event
           operationType: OperationType.authentication,
         ),
       );
