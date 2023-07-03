@@ -28,12 +28,14 @@ class LoginDataSourceImpl implements LoginDataSource {
       : dio = Dio(),
         cookieJar = CookieJar() {
     dio.interceptors.add(CookieManager(cookieJar));
-    (dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
-        (HttpClient client) {
-      client.badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-      return client;
-    };
+    dio.httpClientAdapter = IOHttpClientAdapter(
+      createHttpClient: () {
+        final client = HttpClient();
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true;
+        return client;
+      },
+    );
   }
 
   @override
