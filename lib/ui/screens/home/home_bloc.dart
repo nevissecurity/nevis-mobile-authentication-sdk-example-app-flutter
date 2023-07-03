@@ -234,7 +234,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       final parameter = PinParameter.credentialChange(
         username: eligibleAccounts.first.username,
       );
-      _changePinUseCase.execute(username: eligibleAccounts.first.username);
+      _changePinUseCase
+          .execute(username: eligibleAccounts.first.username)
+          .catchError((error) {
+        _errorHandler.handle(error);
+      });
       _globalNavigationManager.pushPin(parameter);
     } else {
       _errorHandler.handle(BusinessException.accountsNotFound());

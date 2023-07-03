@@ -1,6 +1,6 @@
 name: nevis_mobile_authentication_sdk_example_app_flutter
 description: A new Flutter project.
-version: 3.2.0+1
+version: 3.3.0+1
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -30,11 +30,11 @@ dependencies:
   mobile_scanner: ^2.1.0
   device_info_plus: ^8.1.0
   json_annotation: ^4.7.0
-  dio: ^5.1.1
-  dio_cookie_manager: ^2.1.3
+  dio: ^5.2.1
+  dio_cookie_manager: ^2.1.4
   cookie_jar: ^3.0.1
   permission_handler: ^10.2.0
-  nevis_mobile_authentication_sdk: ^3.2.0
+  nevis_mobile_authentication_sdk: ^3.3.0
 
 dev_dependencies:
   flutter_test:
