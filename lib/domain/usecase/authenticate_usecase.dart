@@ -60,19 +60,14 @@ class AuthenticateUseCaseImpl implements AuthenticateUseCase {
         .pinUserVerifier(_pinUserVerifier)
         .onSuccess((AuthorizationProvider? authorizationProvider) {
       debugPrint('In-band authentication succeeded.');
-      if (authorizationProvider is CookieAuthorizationProvider) {
-        for (final container in authorizationProvider.cookieContainers) {
-          debugPrint("Received cookie: ${container.cookie.toString()}");
-        }
-      } else if (authorizationProvider is JwtAuthorizationProvider) {
-        debugPrint("Received JWT is ${authorizationProvider.jwt}");
-      }
+      _printAuthorizationInfo(authorizationProvider);
       _domainBloc.add(AuthenticationSucceededEvent(
         operation: operationType,
         authorizationProvider: authorizationProvider,
       ));
     }).onError((error) {
       debugPrint('In-band authentication failed: ${error.runtimeType}');
+      _printSessionInfo(error.sessionProvider);
       _errorHandler.handle(error);
     });
 
@@ -81,5 +76,25 @@ class AuthenticateUseCaseImpl implements AuthenticateUseCase {
     }
 
     return await authentication.execute();
+  }
+
+  void _printAuthorizationInfo(AuthorizationProvider? authorizationProvider) {
+    if (authorizationProvider is CookieAuthorizationProvider) {
+      for (final container in authorizationProvider.cookieContainers) {
+        debugPrint("Received cookie: ${container.cookie.toString()}");
+      }
+    } else if (authorizationProvider is JwtAuthorizationProvider) {
+      debugPrint("Received JWT is ${authorizationProvider.jwt}");
+    }
+  }
+
+  void _printSessionInfo(SessionProvider? sessionProvider) {
+    if (sessionProvider is CookieSessionProvider) {
+      for (final container in sessionProvider.cookieContainers) {
+        debugPrint("Received cookie: ${container.cookie.toString()}");
+      }
+    } else if (sessionProvider is JwtSessionProvider) {
+      debugPrint("Received JWT is ${sessionProvider.jwt}");
+    }
   }
 }
