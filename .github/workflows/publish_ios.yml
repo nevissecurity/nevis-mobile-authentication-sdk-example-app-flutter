@@ -39,14 +39,14 @@ on:
 
 env:
   FLUTTER_VERSION: '3.0.1'
-  XCODE_VERSION: '14.1'
+  XCODE_VERSION: '14.3.1'
   RUBY_VERSION: '3.0'
   CURRENT_BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
 jobs:
   publish:
     name: Publish
-    runs-on: macos-latest
+    runs-on: macos-13
 
     steps:
       # Checkout the repository under $GITHUB_WORKSPACE
