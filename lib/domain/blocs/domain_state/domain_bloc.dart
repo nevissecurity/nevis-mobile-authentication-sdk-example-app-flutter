@@ -26,6 +26,7 @@ class DomainBloc extends Bloc<DomainEvent, DomainState>
     on<PinUserVerificationEvent>(_handlePinVerification);
     on<FingerPrintUserVerificationEvent>(_handleFingerPrintVerify);
     on<BiometricUserVerificationEvent>(_handleBiometricVerify);
+    on<DevicePasscodeUserVerificationEvent>(_handleDevicePasscodeVerify);
     on<PinChangeEvent>(_handlePinChange);
     on<AuthenticationSucceededEvent>(_handleAuthenticationSucceeded);
   }
@@ -102,6 +103,13 @@ class DomainBloc extends Bloc<DomainEvent, DomainState>
     Emitter<DomainState> emit,
   ) async {
     emit(DomainVerifyBiometricState());
+  }
+
+  Future<void> _handleDevicePasscodeVerify(
+    DevicePasscodeUserVerificationEvent event,
+    Emitter<DomainState> emit,
+  ) async {
+    emit(DomainVerifyDevicePasscodeState());
   }
 
   Future<void> _handlePinChange(

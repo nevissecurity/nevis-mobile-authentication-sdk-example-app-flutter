@@ -96,3 +96,5 @@ class PinChangeEvent extends PinEvent {
 class FingerPrintUserVerificationEvent extends DomainEvent {}
 
 class BiometricUserVerificationEvent extends DomainEvent {}
+
+class DevicePasscodeUserVerificationEvent extends DomainEvent {}
