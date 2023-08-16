@@ -25,6 +25,7 @@ class AuthenticateUseCaseImpl implements AuthenticateUseCase {
   final ClientProvider _clientProvider;
   final AuthenticatorSelector _authenticatorSelector;
   final BiometricUserVerifier _biometricUserVerifier;
+  final DevicePasscodeUserVerifier _devicePasscodeUserVerifier;
   final FingerprintUserVerifier _fingerprintUserVerifier;
   final PinUserVerifier _pinUserVerifier;
   final DomainBloc _domainBloc;
@@ -35,6 +36,7 @@ class AuthenticateUseCaseImpl implements AuthenticateUseCase {
     this._clientProvider,
     @Named("auth_selector_auth") this._authenticatorSelector,
     this._biometricUserVerifier,
+    this._devicePasscodeUserVerifier,
     this._fingerprintUserVerifier,
     this._pinUserVerifier,
     this._domainBloc,
@@ -53,6 +55,7 @@ class AuthenticateUseCaseImpl implements AuthenticateUseCase {
         .username(username)
         .authenticatorSelector(_authenticatorSelector)
         .biometricUserVerifier(_biometricUserVerifier)
+        .devicePasscodeUserVerifier(_devicePasscodeUserVerifier)
         .fingerprintUserVerifier(_fingerprintUserVerifier)
         .pinUserVerifier(_pinUserVerifier)
         .onSuccess((AuthorizationProvider? authorizationProvider) {

@@ -28,6 +28,7 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
   final AuthenticatorSelector _authenticationAuthenticatorSelector;
   final PinEnroller _pinEnroller;
   final BiometricUserVerifier _biometricUserVerifier;
+  final DevicePasscodeUserVerifier _devicePasscodeUserVerifier;
   final PinUserVerifier _pinUserVerifier;
   final FingerprintUserVerifier _fingerprintUserVerifier;
   final DomainBloc _domainBloc;
@@ -45,6 +46,7 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
     @Named("auth_selector_auth") this._authenticationAuthenticatorSelector,
     this._pinEnroller,
     this._biometricUserVerifier,
+    this._devicePasscodeUserVerifier,
     this._pinUserVerifier,
     this._fingerprintUserVerifier,
     this._domainBloc,
@@ -107,6 +109,7 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
         .authenticatorSelector(_registrationAuthenticatorSelector)
         .pinEnroller(_pinEnroller)
         .biometricUserVerifier(_biometricUserVerifier)
+        .devicePasscodeUserVerifier(_devicePasscodeUserVerifier)
         .fingerprintUserVerifier(_fingerprintUserVerifier)
         .onSuccess(() {
       debugPrint('Out of band registration succeeded.');
@@ -130,6 +133,7 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
         .pinUserVerifier(_pinUserVerifier)
         .fingerprintUserVerifier(_fingerprintUserVerifier)
         .biometricUserVerifier(_biometricUserVerifier)
+        .devicePasscodeUserVerifier(_devicePasscodeUserVerifier)
         .onSuccess((authorizationProvider) {
       debugPrint('Out of band authentication succeeded.');
       _operationTypeRepository.save(OperationType.authentication);

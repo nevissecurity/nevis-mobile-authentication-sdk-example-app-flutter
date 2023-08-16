@@ -44,6 +44,11 @@ class AppScaffoldContent extends StatelessWidget {
             description: localization.biometricPopUpDescription,
             cancelButtonText: localization.popUpNegativeButtonText,
           ));
+        } else if (state is VerifyDevicePasscodeState) {
+          bloc.add(UserDevicePasscodeEvent(
+            title: localization.devicePasscodePopUpTitle,
+            description: localization.devicePasscodePopUpDescription,
+          ));
         } else if (state is VerifyPinState &&
             currentScreen(context) != PinRoute.pin) {
           bloc.add(UserPinEvent(

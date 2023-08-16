@@ -28,6 +28,7 @@ class AuthCloudApiRegisterUseCaseImpl implements AuthCloudApiRegisterUseCase {
   final AuthenticatorSelector _authenticatorSelector;
   final PinEnroller _pinEnroller;
   final BiometricUserVerifier _biometricUserVerifier;
+  final DevicePasscodeUserVerifier _devicePasscodeUserVerifier;
   final FingerprintUserVerifier _fingerprintUserVerifier;
   final DomainBloc _domainBloc;
   final StateRepository<UserInteractionOperationState>
@@ -41,6 +42,7 @@ class AuthCloudApiRegisterUseCaseImpl implements AuthCloudApiRegisterUseCase {
       @Named("auth_selector_reg") this._authenticatorSelector,
       this._pinEnroller,
       this._biometricUserVerifier,
+      this._devicePasscodeUserVerifier,
       this._fingerprintUserVerifier,
       this._domainBloc,
       this._userInteractionOperationStateRepository,
@@ -60,6 +62,7 @@ class AuthCloudApiRegisterUseCaseImpl implements AuthCloudApiRegisterUseCase {
         .authenticatorSelector(_authenticatorSelector)
         .pinEnroller(_pinEnroller)
         .biometricUserVerifier(_biometricUserVerifier)
+        .devicePasscodeUserVerifier(_devicePasscodeUserVerifier)
         .fingerprintUserVerifier(_fingerprintUserVerifier)
         .onSuccess(() {
       debugPrint('Auth Cloud API registration succeeded.');
