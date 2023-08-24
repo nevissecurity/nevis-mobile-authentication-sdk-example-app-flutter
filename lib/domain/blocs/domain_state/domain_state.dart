@@ -39,6 +39,8 @@ class DomainVerifyFingerPrintState extends DomainVerifyState {}
 
 class DomainVerifyBiometricState extends DomainVerifyState {}
 
+class DomainVerifyDevicePasscodeState extends DomainVerifyState {}
+
 class DomainSelectAuthenticatorState extends DomainState {
   final OperationType? operationType;
   final Set<AuthenticatorItem> authenticatorItems;

@@ -35,6 +35,9 @@ class AuthenticatorListTile extends StatelessWidget {
       });
     }
 
+    titles[Aaid.devicePasscode.rawValue] =
+        localization.authenticatorTitleDevicePasscode;
+
     String subTitle = "";
     if (!item.isEnabled()) {
       if (!item.isPolicyCompliant) {

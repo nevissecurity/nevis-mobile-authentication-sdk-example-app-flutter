@@ -16,6 +16,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/authenticators_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/biometric_listen_for_os_credentials_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/deregister_usecase.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/device_passcode_listen_for_os_credentials_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/fingerprint_listen_for_os_credentials_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/navigation/global_navigation_manager.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/app_state/app_event.dart';
@@ -32,6 +33,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       _fingerPrintListenForOsCredentialsUseCase;
   final BiometricListenForOsCredentialsUseCase
       _biometricListenForOsCredentialsUseCase;
+  final DevicePasscodeListenForOsCredentialsUseCase
+      _devicePasscodeListenForOsCredentialsUseCase;
   final AuthenticatorsUseCase _authenticatorsUseCase;
   final DeregisterUseCase _deregisterUseCase;
   final ConfigurationLoader _configurationLoader;
@@ -43,6 +46,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc(
     this._fingerPrintListenForOsCredentialsUseCase,
     this._biometricListenForOsCredentialsUseCase,
+    this._devicePasscodeListenForOsCredentialsUseCase,
     this._authenticatorsUseCase,
     this._deregisterUseCase,
     this._configurationLoader,
@@ -55,6 +59,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     });
     on<AppDomainEvent>(_handleDomainEvent);
     on<UserBiometricEvent>(_handleUserBiometricEvent);
+    on<UserDevicePasscodeEvent>(_handleUserDevicePasscodeEvent);
     on<UserFingerPrintEvent>(_handleUserFingerPrintEvent);
     on<UserPinEvent>(_handleUserPinEvent);
   }
@@ -111,6 +116,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       emit(VerifyFingerPrintState());
     } else if (state is DomainVerifyBiometricState) {
       emit(VerifyBiometricState());
+    } else if (state is DomainVerifyDevicePasscodeState) {
+      emit(VerifyDevicePasscodeState());
     }
   }
 
@@ -134,6 +141,22 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       title: event.title,
       description: event.description,
       cancelButtonText: event.cancelButtonText,
+    ))
+        .then((_) {
+      emit(InitialState());
+    }).catchError((error) {
+      _errorHandler.handle(error);
+    });
+  }
+
+  Future<void> _handleUserDevicePasscodeEvent(
+    UserDevicePasscodeEvent event,
+    Emitter<AppState> emit,
+  ) async {
+    await _devicePasscodeListenForOsCredentialsUseCase
+        .execute(DevicePasscodePromptOptions(
+      title: event.title,
+      description: event.description,
     ))
         .then((_) {
       emit(InitialState());
