@@ -36,7 +36,7 @@ class AuthenticateUseCaseImpl implements AuthenticateUseCase {
     this._clientProvider,
     @Named("auth_selector_auth") this._authenticatorSelector,
     this._biometricUserVerifier,
-      this._devicePasscodeUserVerifier,
+    this._devicePasscodeUserVerifier,
     this._fingerprintUserVerifier,
     this._pinUserVerifier,
     this._domainBloc,
