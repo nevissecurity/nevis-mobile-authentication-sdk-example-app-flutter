@@ -1,6 +1,7 @@
 {
   "appTitle": "Nevis Mobile Authentication Flutter Plugin Example",
   "authenticatorTitleBiometric": "Face/Fingerprint",
+  "authenticatorTitleDevicePasscode": "Device Passcode",
   "authenticatorTitleFaceID": "Face ID",
   "authenticatorTitleFingerprint": "Fingerprint",
   "authenticatorTitleTouchID": "Touch ID",
@@ -86,6 +87,8 @@
   "pinPopUpErrorWrongCredentials": "Wrong credentials",
   "biometricPopUpTitle": "Biometric authentication required",
   "biometricPopUpDescription": "Please use the default biometric method to identify yourself.",
+  "devicePasscodePopUpTitle": "Passcode required",
+  "devicePasscodePopUpDescription": "Please provide the device passcode.",
   "pinScreenTitleEnrollment": "Create PIN",
   "pinScreenTitleVerification": "Verify PIN",
   "pinScreenTitleCredentialChange": "Change PIN",

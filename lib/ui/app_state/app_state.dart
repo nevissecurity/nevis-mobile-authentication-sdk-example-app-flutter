@@ -17,6 +17,8 @@ class VerifyFingerPrintState extends VerifyState {}
 
 class VerifyBiometricState extends VerifyState {}
 
+class VerifyDevicePasscodeState extends VerifyState {}
+
 class VerifyPinState extends VerifyState {
   final PinAuthenticatorProtectionStatus? protectionStatus;
   final RecoverableError? lastRecoverableError;

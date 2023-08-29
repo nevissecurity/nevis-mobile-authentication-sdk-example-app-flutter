@@ -25,6 +25,16 @@ class UserBiometricEvent extends AppEvent {
   });
 }
 
+class UserDevicePasscodeEvent extends AppEvent {
+  final String title;
+  final String description;
+
+  UserDevicePasscodeEvent({
+    required this.title,
+    required this.description,
+  });
+}
+
 class UserPinEvent extends AppEvent {
   final PinAuthenticatorProtectionStatus? protectionStatus;
   final RecoverableError? lastRecoverableError;
