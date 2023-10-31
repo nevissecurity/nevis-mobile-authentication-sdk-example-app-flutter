@@ -13,7 +13,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/a
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/authenticator_list_tile.dart';
 
 class SelectAuthenticatorScreen extends StatelessWidget {
-  const SelectAuthenticatorScreen({Key? key}) : super(key: key);
+  const SelectAuthenticatorScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class SelectAuthenticatorScreen extends StatelessWidget {
 }
 
 class SelectAuthenticatorContent extends StatelessWidget {
-  const SelectAuthenticatorContent({Key? key}) : super(key: key);
+  const SelectAuthenticatorContent({super.key});
 
   @override
   Widget build(BuildContext context) {

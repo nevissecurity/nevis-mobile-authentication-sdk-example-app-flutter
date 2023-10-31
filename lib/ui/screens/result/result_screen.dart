@@ -15,7 +15,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/b
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/util/localization_utils.dart';
 
 class ResultScreen extends StatelessWidget {
-  const ResultScreen({Key? key}) : super(key: key);
+  const ResultScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class ResultScreen extends StatelessWidget {
 }
 
 class ResultContent extends StatelessWidget {
-  const ResultContent({Key? key}) : super(key: key);
+  const ResultContent({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -7,10 +7,10 @@ class Button extends StatelessWidget {
   final GestureTapCallback onPressed;
 
   const Button.outlined({
-    Key? key,
+    super.key,
     required this.text,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

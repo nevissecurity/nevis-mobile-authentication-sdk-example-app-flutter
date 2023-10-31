@@ -12,7 +12,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/a
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/qr_scanner_overlay.dart';
 
 class ReadQrCodeScreen extends StatefulWidget {
-  const ReadQrCodeScreen({Key? key}) : super(key: key);
+  const ReadQrCodeScreen({super.key});
 
   @override
   State<StatefulWidget> createState() => _ReadQrCodeScreenState();
@@ -57,6 +57,7 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen> {
 
   Widget _mobileScannerContent(AppLocalizations localization) {
     _controller = MobileScannerController(
+      detectionSpeed: DetectionSpeed.noDuplicates,
       facing: CameraFacing.back,
       torchEnabled: false,
     );
@@ -67,11 +68,10 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen> {
           children: <Widget>[
             Expanded(
               child: MobileScanner(
-                  allowDuplicates: false,
                   controller: _controller,
-                  onDetect: (barcode, args) {
-                    if (barcode.rawValue != null) {
-                      final String code = barcode.rawValue!;
+                  onDetect: (barcode) {
+                    if (barcode.raw != null) {
+                      final String code = barcode.raw!;
                       final readQrCodeBloc = context.read<ReadQrCodeBloc>();
                       readQrCodeBloc.add(QrCodeScannedEvent(code));
                     }

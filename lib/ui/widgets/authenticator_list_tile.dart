@@ -11,10 +11,10 @@ class AuthenticatorListTile extends StatelessWidget {
   final GestureTapCallback? onTap;
 
   const AuthenticatorListTile({
-    Key? key,
+    super.key,
     required this.item,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

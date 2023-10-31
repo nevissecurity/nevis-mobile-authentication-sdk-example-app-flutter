@@ -13,7 +13,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/a
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/button.dart';
 
 class AuthCloudApiRegistrationScreen extends StatelessWidget {
-  const AuthCloudApiRegistrationScreen({Key? key}) : super(key: key);
+  const AuthCloudApiRegistrationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class AuthCloudApiRegistrationScreen extends StatelessWidget {
 }
 
 class AuthCloudApiRegistrationContent extends StatefulWidget {
-  const AuthCloudApiRegistrationContent({Key? key}) : super(key: key);
+  const AuthCloudApiRegistrationContent({super.key});
 
   @override
   State<AuthCloudApiRegistrationContent> createState() =>

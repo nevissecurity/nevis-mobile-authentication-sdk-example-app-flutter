@@ -13,7 +13,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/a
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/button.dart';
 
 class LegacyLoginScreen extends StatelessWidget {
-  const LegacyLoginScreen({Key? key}) : super(key: key);
+  const LegacyLoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class LegacyLoginScreen extends StatelessWidget {
 }
 
 class LegacyLoginContent extends StatefulWidget {
-  const LegacyLoginContent({Key? key}) : super(key: key);
+  const LegacyLoginContent({super.key});
 
   @override
   State<LegacyLoginContent> createState() => _LegacyLoginContentState();

@@ -36,7 +36,7 @@ class CreateDeviceInformationUseCaseImpl
     } else if (Platform.isIOS) {
       final iosInfo = await _deviceInfoPlugin.iosInfo;
       osPrefix = 'iOS ';
-      deviceName = '${iosInfo.name}';
+      deviceName = iosInfo.name;
     }
     deviceName = deviceName?.trim();
     deviceName =

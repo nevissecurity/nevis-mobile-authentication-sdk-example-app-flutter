@@ -9,33 +9,31 @@ class AppText extends StatelessWidget {
   final Color textColor;
 
   const AppText({
-    Key? key,
+    super.key,
     required this.text,
     this.style = const TextStyle(),
     this.textAlign = TextAlign.start,
     this.textColor = Colors.black,
-  }) : super(key: key);
+  });
 
   const AppText.title(
     this.text, {
-    Key? key,
+    super.key,
     this.textColor = Colors.black,
   })  : style = const TextStyle(
           fontSize: 16.0,
           fontWeight: FontWeight.bold,
         ),
-        textAlign = TextAlign.center,
-        super(key: key);
+        textAlign = TextAlign.center;
 
   const AppText.body(
     this.text, {
-    Key? key,
+    super.key,
     this.textColor = Colors.black,
   })  : style = const TextStyle(
           fontSize: 14.0,
         ),
-        textAlign = TextAlign.center,
-        super(key: key);
+        textAlign = TextAlign.center;
 
   @override
   Widget build(BuildContext context) {

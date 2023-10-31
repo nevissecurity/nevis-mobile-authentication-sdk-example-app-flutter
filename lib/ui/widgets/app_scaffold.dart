@@ -11,7 +11,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/p
 class AppScaffold extends StatelessWidget {
   final Widget body;
 
-  const AppScaffold({Key? key, required this.body}) : super(key: key);
+  const AppScaffold({super.key, required this.body});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class AppScaffold extends StatelessWidget {
 class AppScaffoldContent extends StatelessWidget {
   final Widget body;
 
-  const AppScaffoldContent({Key? key, required this.body}) : super(key: key);
+  const AppScaffoldContent({super.key, required this.body});
 
   @override
   Widget build(BuildContext context) {

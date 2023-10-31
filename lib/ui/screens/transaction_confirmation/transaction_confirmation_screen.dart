@@ -14,7 +14,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/b
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/scrollable_column.dart';
 
 class TransactionConfirmationScreen extends StatelessWidget {
-  const TransactionConfirmationScreen({Key? key}) : super(key: key);
+  const TransactionConfirmationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class TransactionConfirmationScreen extends StatelessWidget {
 }
 
 class TransactionConfirmationContent extends StatelessWidget {
-  const TransactionConfirmationContent({Key? key}) : super(key: key);
+  const TransactionConfirmationContent({super.key});
 
   @override
   Widget build(BuildContext context) {

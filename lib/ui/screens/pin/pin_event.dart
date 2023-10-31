@@ -44,31 +44,25 @@ class PinEnrollmentEvent extends PinDomainEvent {
   final RecoverableError? lastRecoverableError;
 
   PinEnrollmentEvent({
-    PinAuthenticatorProtectionStatus? protectionStatus,
+    super.protectionStatus,
     this.lastRecoverableError,
-  }) : super(
-          protectionStatus: protectionStatus,
-        );
+  });
 }
 
 class PinUserVerificationEvent extends PinDomainEvent {
   final RecoverableError? lastRecoverableError;
 
   PinUserVerificationEvent({
-    PinAuthenticatorProtectionStatus? protectionStatus,
+    super.protectionStatus,
     this.lastRecoverableError,
-  }) : super(
-          protectionStatus: protectionStatus,
-        );
+  });
 }
 
 class PinChangeEvent extends PinDomainEvent {
   final RecoverableError? lastRecoverableError;
 
   PinChangeEvent({
-    PinAuthenticatorProtectionStatus? protectionStatus,
+    super.protectionStatus,
     this.lastRecoverableError,
-  }) : super(
-          protectionStatus: protectionStatus,
-        );
+  });
 }
