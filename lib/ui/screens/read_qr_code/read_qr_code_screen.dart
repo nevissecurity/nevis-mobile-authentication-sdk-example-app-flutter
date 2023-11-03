@@ -70,8 +70,9 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen> {
               child: MobileScanner(
                   controller: _controller,
                   onDetect: (barcode) {
-                    if (barcode.raw != null) {
-                      final String code = barcode.raw!;
+                    if (barcode.barcodes.isNotEmpty &&
+                        barcode.barcodes.first.rawValue != null) {
+                      final String code = barcode.barcodes.first.rawValue!;
                       final readQrCodeBloc = context.read<ReadQrCodeBloc>();
                       readQrCodeBloc.add(QrCodeScannedEvent(code));
                     }

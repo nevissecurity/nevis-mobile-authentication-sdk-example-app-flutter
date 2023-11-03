@@ -54,13 +54,13 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/inter
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/interaction/registration_authenticator_selector.dart'
     as _i45;
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/operation_type.dart'
-    as _i10;
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/pin_change_state.dart'
-    as _i9;
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/pin_enrollment_state.dart'
-    as _i8;
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/user_interaction_operation_state.dart'
     as _i6;
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/pin_change_state.dart'
+    as _i10;
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/pin_enrollment_state.dart'
+    as _i9;
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/user_interaction_operation_state.dart'
+    as _i8;
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/deep_link_repository.dart'
     as _i14;
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/login_repository.dart'
@@ -168,18 +168,18 @@ _i1.GetIt $initGetIt(
   );
   gh.factory<_i3.AccountValidator>(() => _i3.AccountValidatorImpl());
   gh.singleton<_i4.AppNavigation>(_i4.AppNavigation());
-  gh.singleton<_i5.Cache<_i6.UserInteractionOperationState>>(
+  gh.singleton<_i5.Cache<_i6.OperationType>>(_i7.OperationTypeCacheImpl());
+  gh.singleton<_i5.Cache<_i8.UserInteractionOperationState>>(
       _i7.UserInteractionOperationStateCacheImpl());
-  gh.singleton<_i5.Cache<_i8.EnrollPinState>>(_i7.EnrollPinStateCacheImpl());
-  gh.singleton<_i5.Cache<_i9.PinChangeState>>(_i7.ChangePinStateCacheImpl());
-  gh.singleton<_i5.Cache<_i10.OperationType>>(_i7.OperationTypeCacheImpl());
-  gh.singleton<_i11.ConfigurationLoader>(
-    _i11.AuthenticationCloudConfigurationLoader(),
-    registerFor: {_authenticationCloud},
-  );
+  gh.singleton<_i5.Cache<_i9.EnrollPinState>>(_i7.EnrollPinStateCacheImpl());
+  gh.singleton<_i5.Cache<_i10.PinChangeState>>(_i7.ChangePinStateCacheImpl());
   gh.singleton<_i11.ConfigurationLoader>(
     _i11.IdentitySuiteConfigurationLoader(),
     registerFor: {_identitySuite},
+  );
+  gh.singleton<_i11.ConfigurationLoader>(
+    _i11.AuthenticationCloudConfigurationLoader(),
+    registerFor: {_authenticationCloud},
   );
   gh.factory<_i12.CreateDeviceInformationUseCase>(
       () => _i12.CreateDeviceInformationUseCaseImpl());
@@ -192,77 +192,77 @@ _i1.GetIt $initGetIt(
       () => _i19.LoginRepositoryImpl(gh<_i17.LoginDataSource>()));
   gh.factory<_i20.LoginUseCase>(
       () => _i20.LoginUseCaseImpl(gh<_i18.LoginRepository>()));
-  gh.factory<_i21.StateRepository<_i10.OperationType>>(() =>
-      _i22.OperationTypeRepositoryImpl(gh<_i5.Cache<_i10.OperationType>>()));
-  gh.factory<_i21.StateRepository<_i9.PinChangeState>>(() =>
-      _i22.ChangePinStateRepositoryImpl(gh<_i5.Cache<_i9.PinChangeState>>()));
-  gh.factory<_i21.StateRepository<_i8.EnrollPinState>>(() =>
-      _i22.EnrollPinStateRepositoryImpl(gh<_i5.Cache<_i8.EnrollPinState>>()));
-  gh.factory<_i21.StateRepository<_i6.UserInteractionOperationState>>(() =>
+  gh.factory<_i21.StateRepository<_i10.PinChangeState>>(() =>
+      _i22.ChangePinStateRepositoryImpl(gh<_i5.Cache<_i10.PinChangeState>>()));
+  gh.factory<_i21.StateRepository<_i9.EnrollPinState>>(() =>
+      _i22.EnrollPinStateRepositoryImpl(gh<_i5.Cache<_i9.EnrollPinState>>()));
+  gh.factory<_i21.StateRepository<_i8.UserInteractionOperationState>>(() =>
       _i22.UserInteractionOperationStateRepositoryImpl(
-          gh<_i5.Cache<_i6.UserInteractionOperationState>>()));
+          gh<_i5.Cache<_i8.UserInteractionOperationState>>()));
+  gh.factory<_i21.StateRepository<_i6.OperationType>>(() =>
+      _i22.OperationTypeRepositoryImpl(gh<_i5.Cache<_i6.OperationType>>()));
   gh.factory<_i23.VerifyPinUseCase>(() => _i23.VerifyPinUseCaseImpl(
-      gh<_i21.StateRepository<_i6.UserInteractionOperationState>>()));
+      gh<_i21.StateRepository<_i8.UserInteractionOperationState>>()));
   gh.factory<_i24.BiometricListenForOsCredentialsUseCase>(() =>
       _i24.BiometricListenForOsCredentialsUseCaseImpl(
-          gh<_i21.StateRepository<_i6.UserInteractionOperationState>>()));
+          gh<_i21.StateRepository<_i8.UserInteractionOperationState>>()));
   gh.factory<_i25.CancelPinOperationUseCase>(
       () => _i25.CancelPinOperationUseCaseImpl(
-            gh<_i21.StateRepository<_i8.EnrollPinState>>(),
-            gh<_i21.StateRepository<_i9.PinChangeState>>(),
+            gh<_i21.StateRepository<_i9.EnrollPinState>>(),
+            gh<_i21.StateRepository<_i10.PinChangeState>>(),
           ));
   gh.factory<_i26.CancelUserInteractionOperationUseCase>(() =>
       _i26.CancelUserInteractionOperationUseCaseImpl(
-          gh<_i21.StateRepository<_i6.UserInteractionOperationState>>()));
+          gh<_i21.StateRepository<_i8.UserInteractionOperationState>>()));
   gh.factory<_i27.DevicePasscodeListenForOsCredentialsUseCase>(() =>
       _i27.DevicePasscodeListenForOsCredentialsUseCaseImpl(
-          gh<_i21.StateRepository<_i6.UserInteractionOperationState>>()));
+          gh<_i21.StateRepository<_i8.UserInteractionOperationState>>()));
   gh.singleton<_i28.DomainBloc>(_i28.DomainBloc(
-      gh<_i21.StateRepository<_i6.UserInteractionOperationState>>()));
+      gh<_i21.StateRepository<_i8.UserInteractionOperationState>>()));
   gh.factory<_i29.ErrorHandler>(() => _i29.ErrorHandlerImpl(
         gh<_i16.GlobalNavigationManager>(),
-        gh<_i21.StateRepository<_i6.UserInteractionOperationState>>(),
+        gh<_i21.StateRepository<_i8.UserInteractionOperationState>>(),
       ));
   gh.factory<_i30.FingerPrintListenForOsCredentialsUseCase>(() =>
       _i30.FingerPrintListenForOsCredentialsUseCaseImpl(
-          gh<_i21.StateRepository<_i6.UserInteractionOperationState>>()));
+          gh<_i21.StateRepository<_i8.UserInteractionOperationState>>()));
   gh.factory<_i31.FingerprintUserVerifier>(
       () => _i32.FingerprintUserVerifierImpl(
             gh<_i28.DomainBloc>(),
             gh<_i29.ErrorHandler>(),
-            gh<_i21.StateRepository<_i6.UserInteractionOperationState>>(),
+            gh<_i21.StateRepository<_i8.UserInteractionOperationState>>(),
           ));
   gh.factory<_i33.PauseListeningUseCase>(() => _i33.PauseListeningUseCaseImpl(
-      gh<_i21.StateRepository<_i6.UserInteractionOperationState>>()));
+      gh<_i21.StateRepository<_i8.UserInteractionOperationState>>()));
   gh.factory<_i31.PinChanger>(() => _i34.PinChangerImpl(
         gh<_i28.DomainBloc>(),
-        gh<_i21.StateRepository<_i9.PinChangeState>>(),
+        gh<_i21.StateRepository<_i10.PinChangeState>>(),
       ));
   gh.factory<_i31.PinEnroller>(() => _i35.PinEnrollerImpl(
-        gh<_i21.StateRepository<_i8.EnrollPinState>>(),
+        gh<_i21.StateRepository<_i9.EnrollPinState>>(),
         gh<_i28.DomainBloc>(),
       ));
   gh.factory<_i31.PinUserVerifier>(() => _i36.PinUserVerifierImpl(
         gh<_i28.DomainBloc>(),
         gh<_i29.ErrorHandler>(),
-        gh<_i21.StateRepository<_i6.UserInteractionOperationState>>(),
+        gh<_i21.StateRepository<_i8.UserInteractionOperationState>>(),
       ));
   gh.factory<_i37.ProvidedPinsUseCase>(() => _i37.ProvidedPinsUseCaseImpl(
-        gh<_i21.StateRepository<_i9.PinChangeState>>(),
+        gh<_i21.StateRepository<_i10.PinChangeState>>(),
         gh<_i29.ErrorHandler>(),
       ));
   gh.factory<_i38.ResetUserInteractionStateUseCase>(() =>
       _i38.ResetUserInteractionStateUseCaseImpl(
-          gh<_i21.StateRepository<_i6.UserInteractionOperationState>>()));
+          gh<_i21.StateRepository<_i8.UserInteractionOperationState>>()));
   gh.factory<_i39.ResumeListeningUseCase>(() => _i39.ResumeListeningUseCaseImpl(
-      gh<_i21.StateRepository<_i6.UserInteractionOperationState>>()));
+      gh<_i21.StateRepository<_i8.UserInteractionOperationState>>()));
   gh.factory<_i40.SelectAccountUseCase>(() => _i40.SelectAccountUseCaseImpl(
-      gh<_i21.StateRepository<_i6.UserInteractionOperationState>>()));
+      gh<_i21.StateRepository<_i8.UserInteractionOperationState>>()));
   gh.factory<_i41.SelectAuthenticatorUseCase>(() =>
       _i41.SelectAuthenticatorUseCaseImpl(
-          gh<_i21.StateRepository<_i6.UserInteractionOperationState>>()));
+          gh<_i21.StateRepository<_i8.UserInteractionOperationState>>()));
   gh.factory<_i42.SetPinUseCase>(() =>
-      _i42.SetPinUseCaseImpl(gh<_i21.StateRepository<_i8.EnrollPinState>>()));
+      _i42.SetPinUseCaseImpl(gh<_i21.StateRepository<_i9.EnrollPinState>>()));
   gh.factory<_i43.TransactionConfirmationBloc>(
       () => _i43.TransactionConfirmationBloc(
             gh<_i29.ErrorHandler>(),
@@ -273,14 +273,14 @@ _i1.GetIt $initGetIt(
   gh.factory<_i31.AccountSelector>(() => _i44.AccountSelectorImpl(
         gh<_i28.DomainBloc>(),
         gh<_i29.ErrorHandler>(),
-        gh<_i21.StateRepository<_i6.UserInteractionOperationState>>(),
+        gh<_i21.StateRepository<_i8.UserInteractionOperationState>>(),
         gh<_i3.AccountValidator>(),
       ));
   gh.factory<_i31.AuthenticatorSelector>(
     () => _i45.RegistrationAuthenticatorSelectorImpl(
       gh<_i28.DomainBloc>(),
       gh<_i11.ConfigurationLoader>(),
-      gh<_i21.StateRepository<_i6.UserInteractionOperationState>>(),
+      gh<_i21.StateRepository<_i8.UserInteractionOperationState>>(),
     ),
     instanceName: 'auth_selector_reg',
   );
@@ -288,7 +288,7 @@ _i1.GetIt $initGetIt(
     () => _i46.AuthenticationAuthenticatorSelectorImpl(
       gh<_i28.DomainBloc>(),
       gh<_i11.ConfigurationLoader>(),
-      gh<_i21.StateRepository<_i6.UserInteractionOperationState>>(),
+      gh<_i21.StateRepository<_i8.UserInteractionOperationState>>(),
     ),
     instanceName: 'auth_selector_auth',
   );
@@ -299,19 +299,19 @@ _i1.GetIt $initGetIt(
   gh.factory<_i31.BiometricUserVerifier>(() => _i48.BiometricUserVerifierImpl(
         gh<_i28.DomainBloc>(),
         gh<_i29.ErrorHandler>(),
-        gh<_i21.StateRepository<_i6.UserInteractionOperationState>>(),
+        gh<_i21.StateRepository<_i8.UserInteractionOperationState>>(),
       ));
   gh.factory<_i49.ClientProvider>(() => _i49.ClientProviderImpl(
-        gh<_i21.StateRepository<_i10.OperationType>>(),
+        gh<_i21.StateRepository<_i6.OperationType>>(),
         gh<_i29.ErrorHandler>(),
       ));
   gh.factory<_i50.DeregisterAllUseCase>(() => _i50.DeregisterAllUseCaseImpl(
         gh<_i49.ClientProvider>(),
-        gh<_i21.StateRepository<_i10.OperationType>>(),
+        gh<_i21.StateRepository<_i6.OperationType>>(),
       ));
   gh.factory<_i51.DeregisterUseCase>(() => _i51.DeregisterUseCaseImpl(
         gh<_i49.ClientProvider>(),
-        gh<_i21.StateRepository<_i10.OperationType>>(),
+        gh<_i21.StateRepository<_i6.OperationType>>(),
       ));
   gh.factory<_i52.DeviceInformationUseCase>(
       () => _i52.DeviceInformationUseCaseImpl(gh<_i49.ClientProvider>()));
@@ -319,7 +319,7 @@ _i1.GetIt $initGetIt(
       () => _i53.DevicePasscodeUserVerifierImpl(
             gh<_i28.DomainBloc>(),
             gh<_i29.ErrorHandler>(),
-            gh<_i21.StateRepository<_i6.UserInteractionOperationState>>(),
+            gh<_i21.StateRepository<_i8.UserInteractionOperationState>>(),
           ));
   gh.singleton<_i54.LocalDataBloc>(_i54.LocalDataBloc(
     gh<_i49.ClientProvider>(),
@@ -328,7 +328,7 @@ _i1.GetIt $initGetIt(
   gh.factory<_i55.OobPayloadDecodeUseCase>(
       () => _i55.OobPayloadDecodeUseCaseImpl(
             gh<_i49.ClientProvider>(),
-            gh<_i21.StateRepository<_i10.OperationType>>(),
+            gh<_i21.StateRepository<_i6.OperationType>>(),
             gh<_i29.ErrorHandler>(),
           ));
   gh.factory<_i56.OobProcessUseCase>(() => _i56.OobProcessUseCaseImpl(
@@ -344,8 +344,8 @@ _i1.GetIt $initGetIt(
         gh<_i31.PinUserVerifier>(),
         gh<_i31.FingerprintUserVerifier>(),
         gh<_i28.DomainBloc>(),
-        gh<_i21.StateRepository<_i6.UserInteractionOperationState>>(),
-        gh<_i21.StateRepository<_i10.OperationType>>(),
+        gh<_i21.StateRepository<_i8.UserInteractionOperationState>>(),
+        gh<_i21.StateRepository<_i6.OperationType>>(),
         gh<_i29.ErrorHandler>(),
       ));
   gh.factory<_i57.PinBloc>(() => _i57.PinBloc(
@@ -372,14 +372,14 @@ _i1.GetIt $initGetIt(
         gh<_i31.DevicePasscodeUserVerifier>(),
         gh<_i31.FingerprintUserVerifier>(),
         gh<_i28.DomainBloc>(),
-        gh<_i21.StateRepository<_i6.UserInteractionOperationState>>(),
-        gh<_i21.StateRepository<_i10.OperationType>>(),
+        gh<_i21.StateRepository<_i8.UserInteractionOperationState>>(),
+        gh<_i21.StateRepository<_i6.OperationType>>(),
         gh<_i29.ErrorHandler>(),
       ));
   gh.factory<_i61.ResultBloc>(() => _i61.ResultBloc(
         gh<_i16.GlobalNavigationManager>(),
         gh<_i54.LocalDataBloc>(),
-        gh<_i21.StateRepository<_i10.OperationType>>(),
+        gh<_i21.StateRepository<_i6.OperationType>>(),
       ));
   gh.factory<_i62.SelectAuthenticatorBloc>(() => _i62.SelectAuthenticatorBloc(
         gh<_i41.SelectAuthenticatorUseCase>(),
@@ -396,8 +396,8 @@ _i1.GetIt $initGetIt(
             gh<_i31.DevicePasscodeUserVerifier>(),
             gh<_i31.FingerprintUserVerifier>(),
             gh<_i28.DomainBloc>(),
-            gh<_i21.StateRepository<_i6.UserInteractionOperationState>>(),
-            gh<_i21.StateRepository<_i10.OperationType>>(),
+            gh<_i21.StateRepository<_i8.UserInteractionOperationState>>(),
+            gh<_i21.StateRepository<_i6.OperationType>>(),
             gh<_i29.ErrorHandler>(),
           ));
   gh.factory<_i64.AuthCloudApiRegistrationBloc>(
@@ -414,7 +414,7 @@ _i1.GetIt $initGetIt(
         gh<_i31.FingerprintUserVerifier>(),
         gh<_i31.PinUserVerifier>(),
         gh<_i28.DomainBloc>(),
-        gh<_i21.StateRepository<_i10.OperationType>>(),
+        gh<_i21.StateRepository<_i6.OperationType>>(),
         gh<_i29.ErrorHandler>(),
       ));
   gh.factory<_i66.AuthenticatorsUseCase>(
@@ -422,7 +422,7 @@ _i1.GetIt $initGetIt(
   gh.factory<_i67.ChangeDeviceInformationUseCase>(
       () => _i67.ChangeDeviceInformationUseCaseImpl(
             gh<_i49.ClientProvider>(),
-            gh<_i21.StateRepository<_i10.OperationType>>(),
+            gh<_i21.StateRepository<_i6.OperationType>>(),
             gh<_i28.DomainBloc>(),
             gh<_i29.ErrorHandler>(),
           ));
@@ -430,8 +430,8 @@ _i1.GetIt $initGetIt(
         gh<_i49.ClientProvider>(),
         gh<_i31.PinChanger>(),
         gh<_i28.DomainBloc>(),
-        gh<_i21.StateRepository<_i10.OperationType>>(),
-        gh<_i21.StateRepository<_i9.PinChangeState>>(),
+        gh<_i21.StateRepository<_i6.OperationType>>(),
+        gh<_i21.StateRepository<_i10.PinChangeState>>(),
         gh<_i29.ErrorHandler>(),
       ));
   gh.factory<_i69.HomeBloc>(() => _i69.HomeBloc(
