@@ -70,9 +70,9 @@ class PinEnrollmentEvent extends PinEvent {
   final PinEnrollmentError? lastRecoverableError;
 
   PinEnrollmentEvent({
-    required PinAuthenticatorProtectionStatus? protectionStatus,
+    required super.protectionStatus,
     this.lastRecoverableError,
-  }) : super(protectionStatus: protectionStatus);
+  });
 }
 
 class PinUserVerificationEvent extends PinEvent {

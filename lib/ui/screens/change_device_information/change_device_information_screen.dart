@@ -11,7 +11,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/a
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/button.dart';
 
 class ChangeDeviceInformationScreen extends StatefulWidget {
-  const ChangeDeviceInformationScreen({Key? key}) : super(key: key);
+  const ChangeDeviceInformationScreen({super.key});
 
   @override
   State<ChangeDeviceInformationScreen> createState() =>

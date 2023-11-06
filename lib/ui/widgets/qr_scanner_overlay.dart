@@ -7,10 +7,10 @@ class QrScannerOverlay extends StatelessWidget {
   final double opacity;
 
   const QrScannerOverlay({
-    Key? key,
+    super.key,
     this.color = Colors.black,
     this.opacity = 0.4,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

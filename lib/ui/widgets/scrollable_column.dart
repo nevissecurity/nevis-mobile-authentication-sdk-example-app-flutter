@@ -13,7 +13,7 @@ class ScrollableColumn extends StatelessWidget {
   final bool flex;
 
   const ScrollableColumn({
-    Key? key,
+    super.key,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.max,
     this.crossAxisAlignment = CrossAxisAlignment.center,
@@ -22,7 +22,7 @@ class ScrollableColumn extends StatelessWidget {
     this.textBaseline,
     this.children = const <Widget>[],
     this.flex = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

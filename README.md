@@ -35,7 +35,7 @@ Your development setup has to meet the following prerequisites:
 * Gradle 7.4 or later
 * Android Gradle Plugin `com.android.tools.build:gradle` 7.0.0 or later
 * Kotlin Gradle Plugin `org.jetbrains.kotlin:kotlin-gradle-plugin` 1.8.0 or later
-* Flutter SDK 3.0.x, stable channel
+* Flutter SDK 3.x, stable channel
 
 ### Initialization
 

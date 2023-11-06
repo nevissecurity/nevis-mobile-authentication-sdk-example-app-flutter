@@ -18,7 +18,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/b
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/util/localization_utils.dart';
 
 class PinScreen extends StatelessWidget {
-  const PinScreen({Key? key}) : super(key: key);
+  const PinScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class PinScreen extends StatelessWidget {
 }
 
 class PinScreenContent extends StatefulWidget {
-  const PinScreenContent({Key? key}) : super(key: key);
+  const PinScreenContent({super.key});
 
   @override
   State<PinScreenContent> createState() => _PinScreenContentState();

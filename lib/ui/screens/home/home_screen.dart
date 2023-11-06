@@ -12,7 +12,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/b
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/scrollable_column.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
