@@ -208,8 +208,6 @@ There are cases when specific information is to be presented to the user during 
 
 The [DeregisterUseCase](lib/domain/usecase/deregister_usecase.dart) and [DeregisterAllUseCase](lib/domain/usecase/deregister_all_usecase.dart) classes is responsible for deregistering either a user or all of the registered users from the device.
 
-## TODO
-
 ### Other operations
 
 #### Change PIN
