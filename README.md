@@ -145,4 +145,83 @@ Now that the Flutter example app is up and running, it's time to try it out!
 
 Check out our [Quickstart Guide](https://docs.nevis.net/mobilesdk/quickstart).
 
+## Used Components, Concepts
+
+### Nevis Mobile Authentication SDK Flutter Plugin
+
+The most important component/dependency of the example application is the [Nevis Mobile Authentication SDK Flutter Plugin](https://pub.dev/packages/nevis_mobile_authentication_sdk). It provides the Flutter/Dart API for the native [Nevis Mobile Authentication SDK](https://docs.nevis.net/mobilesdk/) implementations.
+
+### Flutter Bloc
+
+[Flutter Bloc](https://pub.dev/packages/flutter_bloc) is used to implement `BLoC` Design Pattern (Business Logic Component).
+
+### GetIt
+
+[GetIt](https://pub.dev/packages/get_it) **Service Locator** is used to ease accessing use-cases/providers/BLoCs from Flutter Views.
+
+## Integration Notes
+
+In this section you can find hints about how the Nevis Mobile Authentication SDK is integrated into the example app.
+
+* `MobileAuthenticationClient` initialization (which is the entry point to the SDK) is implemented in [ClientProvider](lib/domain/client_provider/client_provider.dart) class.
+* All SDK operation invocation is implemented in the corresponding use-case class in [usecase](lib/domain/usecase) folder.
+* All SDK specific user interaction related interface implementation can be found in the [interaction](lib/domain/interaction) folder.
+
+### Initialization
+
+The [HomeBloc](lib/ui/screens/home/home_bloc.dart) class is responsible for creating and initializing a `MobileAuthenticationClient` instance (which is the entry point to the SDK) by calling the init method of [ClientProvider](lib/domain/client_provider/client_provider.dart) class. Later this `MobileAuthenticationClient` instance can be used to start the different operations, it is accessible as the `client` property of the [ClientProvider](lib/domain/client_provider/client_provider.dart) class.
+The default implementation of [ClientProvider](lib/domain/client_provider/client_provider.dart) is [ClientProviderImpl](lib/domain/client_provider/client_provider.dart), it is injected into all use-case, user interaction related interface implementation where it is needed.
+
+### Registration
+
+Before being able to authenticate using the Nevis Mobile Authentication SDK, go through the registration process. Depending on the use case, there are two types of registration: [in-app registration](#in-app-registration) and [out-of-band registration](#out-of-band-registration).
+
+#### In-app registration
+
+If the application is using a backend using the Nevis Authentication Cloud, the [AuthCloudApiRegisterUseCase](lib/domain/usecase/auth_cloud_api_register_usecase.dart) class will be used by passing the `enrollResponse` response or an `appLinkUri`.
+
+When the backend used by the application does not use the Nevis Authentication Cloud the [RegistrationUseCase](lib/domain/usecase/registration_usecase.dart) class will be used. If authorization is required by the backend to register, provide an `AuthorizationProvider`.  
+In the example app a `CookieAuthorizationProvider` is used from the [Credentials](lib/domain/model/login/credentials.dart) object returned by the `execute` method of [LoginUseCase](lib/domain/usecase/login_usecase.dart). Behind the scenes it is created from the cookies obtained by the [LoginDataSource](lib/data/datasource/login/login_datasource.dart) class.  
+To see the whole process check [LegacyLoginBloc](lib/ui/screens/legacy_login/legacy_login_bloc.dart) implementation.
+
+#### Out-of-band registration
+
+When the registration is initiated in another device or application, the information required to process the operation is transmitted through a QR code or a link. After the payload obtained from the QR code or the link the [OobProcessUseCase](lib/domain/usecase/oob_process_usecase.dart) is used to start the out-of-band operation. Behind the scenes before calling the out-of-band operation [OobPayloadDecodeUseCase](lib/domain/usecase/oob_payload_decode_usecase.dart) is used to decode the `OutOfBandPayload` object from the received payload data.
+
+### Authentication
+
+Using the authentication operation, you can verify the identity of the user using an already registered authenticator. Depending on the use case, there are two types of authentication: [in-app authentication](#in-app-authentication) and [out-of-band authentication](#out-of-band-authentication).
+
+#### In-app authentication
+
+For the application to trigger the authentication, the name of the user is provided to the [AuthenticateUseCase](lib/domain/usecase/authenticate_usecase.dart) class.
+
+#### Out-of-band authentication
+
+When the authentication is initiated in another device or application, the information required to process the operation is transmitted through a QR code or a link. After the payload obtained from the QR code or the link the [OobProcessUseCase](lib/domain/usecase/oob_process_usecase.dart) is used to start the out-of-band operation. Behind the scenes before calling the out-of-band operation [OobPayloadDecodeUseCase](lib/domain/usecase/oob_payload_decode_usecase.dart) is used to decode the `OutOfBandPayload` object from the received payload data.
+
+#### Transaction confirmation
+
+There are cases when specific information is to be presented to the user during the user verification process, known as transaction confirmation. The `AuthenticatorSelectionContext` and the `AccountSelectionContext` contain a byte array with the information. In the example app it is handled in the [AccountSelectorImpl](lib/domain/interaction/account_selector.dart) class.
+
+### Deregistration
+
+The [DeregisterUseCase](lib/domain/usecase/deregister_usecase.dart) and [DeregisterAllUseCase](lib/domain/usecase/deregister_all_usecase.dart) classes is responsible for deregistering either a user or all of the registered users from the device.
+
+## TODO
+
+### Other operations
+
+#### Change PIN
+
+With the change PIN operation you can modify the PIN of a registered PIN authenticator for a given user. It is implemented in the [ChangePinUseCase](lib/domain/usecase/change_pin_usecase.dart) class.
+
+#### Decode out-of-band payload
+
+Out-of-band operations occur when a message is delivered to the application through an alternate channel like a push notification, a QR code, or a deep link. With the help of the [OobPayloadDecodeUseCase](lib/domain/usecase/oob_payload_decode_usecase.dart) class the application can create an `OutOfBandPayload` either from a JSON or a Base64 URL encoded String. The `OutOfBandPayload` is then used to start an `OutOfBandOperation`, see chapters [Out-of-Band Registration](#out-of-band-registration) and [Out-of-Band Authentication](#out-of-band-authentication).
+
+#### Change device information
+
+During registration, the device information can be provided that contains the name identifying your device, and also the Firebase Cloud Messaging registration token. Updating both the name and the token is implemented in the [ChangeDeviceInformationUseCase](lib/domain/usecase/change_device_information_usecase.dart) class.
+
 © 2023 made with ❤ by Nevis
