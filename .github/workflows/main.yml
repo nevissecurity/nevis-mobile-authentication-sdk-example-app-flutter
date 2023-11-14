@@ -42,7 +42,6 @@ jobs:
       build-number: ${{ needs.versioning.outputs.build }}
     secrets:
       HOST_NAME: ${{ secrets.HOST_NAME }}
-      ANDROID_FACET_ID: ${{ secrets.ANDROID_FACET_ID }}
       KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
       SIGNING_CONFIGS: ${{ secrets.SIGNING_CONFIGS }}
       GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}

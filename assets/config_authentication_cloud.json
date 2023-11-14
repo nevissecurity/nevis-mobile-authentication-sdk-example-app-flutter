@@ -5,6 +5,7 @@
   },
   "sdk": {
     "hostname": "myinstance.mauth.nevis.cloud",
+    "facetId": "android:apk-key-hash:ch.nevis.mobile.authentication.sdk.flutter.example",
     "networkTimeoutInSeconds": "60",
     "authenticationMaxRetries": 3,
     "authenticationRetryIntervalInSeconds": "1",
