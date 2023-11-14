@@ -71,7 +71,6 @@ Before being able to use the example app with your Authentication Cloud instance
 
 Edit the `assets/config_authentication_cloud.json` file and replace
 - the host name information with your Authentication Cloud instance
-- the FacetId with your Android FacetId
 
 ```json
 {
@@ -80,7 +79,6 @@ Edit the `assets/config_authentication_cloud.json` file and replace
   },
   "sdk": {
     "hostname": "<YOUR INSTANCE>.mauth.nevis.cloud",
-    "facetId": "<YOUR ANDROID FACET_ID>",
      ...
   }
 }

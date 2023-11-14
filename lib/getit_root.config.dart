@@ -38,7 +38,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/error
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/interaction/account_selector.dart'
     as _i44;
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/interaction/authentication_authenticator_selector.dart'
-    as _i45;
+    as _i46;
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/interaction/biometric_user_verifier.dart'
     as _i48;
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/interaction/device_passcode_user_verifier.dart'
@@ -52,7 +52,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/inter
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/interaction/pin_user_verifier.dart'
     as _i36;
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/interaction/registration_authenticator_selector.dart'
-    as _i46;
+    as _i45;
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/operation_type.dart'
     as _i6;
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/pin_change_state.dart'
@@ -194,8 +194,6 @@ _i1.GetIt $initGetIt(
       () => _i19.LoginRepositoryImpl(gh<_i17.LoginDataSource>()));
   gh.factory<_i20.LoginUseCase>(
       () => _i20.LoginUseCaseImpl(gh<_i18.LoginRepository>()));
-  gh.factory<_i21.StateRepository<_i6.OperationType>>(() =>
-      _i22.OperationTypeRepositoryImpl(gh<_i5.Cache<_i6.OperationType>>()));
   gh.factory<_i21.StateRepository<_i8.PinChangeState>>(() =>
       _i22.ChangePinStateRepositoryImpl(gh<_i5.Cache<_i8.PinChangeState>>()));
   gh.factory<_i21.StateRepository<_i9.EnrollPinState>>(() =>
@@ -203,6 +201,8 @@ _i1.GetIt $initGetIt(
   gh.factory<_i21.StateRepository<_i10.UserInteractionOperationState>>(() =>
       _i22.UserInteractionOperationStateRepositoryImpl(
           gh<_i5.Cache<_i10.UserInteractionOperationState>>()));
+  gh.factory<_i21.StateRepository<_i6.OperationType>>(() =>
+      _i22.OperationTypeRepositoryImpl(gh<_i5.Cache<_i6.OperationType>>()));
   gh.factory<_i23.VerifyPinUseCase>(() => _i23.VerifyPinUseCaseImpl(
       gh<_i21.StateRepository<_i10.UserInteractionOperationState>>()));
   gh.factory<_i24.BiometricListenForOsCredentialsUseCase>(() =>
@@ -279,20 +279,20 @@ _i1.GetIt $initGetIt(
         gh<_i3.AccountValidator>(),
       ));
   gh.factory<_i31.AuthenticatorSelector>(
-    () => _i45.AuthenticationAuthenticatorSelectorImpl(
-      gh<_i28.DomainBloc>(),
-      gh<_i11.ConfigurationLoader>(),
-      gh<_i21.StateRepository<_i10.UserInteractionOperationState>>(),
-    ),
-    instanceName: 'auth_selector_auth',
-  );
-  gh.factory<_i31.AuthenticatorSelector>(
-    () => _i46.RegistrationAuthenticatorSelectorImpl(
+    () => _i45.RegistrationAuthenticatorSelectorImpl(
       gh<_i28.DomainBloc>(),
       gh<_i11.ConfigurationLoader>(),
       gh<_i21.StateRepository<_i10.UserInteractionOperationState>>(),
     ),
     instanceName: 'auth_selector_reg',
+  );
+  gh.factory<_i31.AuthenticatorSelector>(
+    () => _i46.AuthenticationAuthenticatorSelectorImpl(
+      gh<_i28.DomainBloc>(),
+      gh<_i11.ConfigurationLoader>(),
+      gh<_i21.StateRepository<_i10.UserInteractionOperationState>>(),
+    ),
+    instanceName: 'auth_selector_auth',
   );
   gh.factory<_i47.BatchCall>(() => _i47.BatchCallImpl(
         gh<_i28.DomainBloc>(),

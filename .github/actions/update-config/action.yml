@@ -5,9 +5,6 @@ inputs:
   host-name:
     description: 'The host name to update'
     required: true
-  android-facet-id:
-    description: 'The android facet id to update'
-    required: false
 
 runs:
   using: composite
@@ -25,11 +22,3 @@ runs:
         file: assets/config_authentication_cloud.json
         field: sdk.hostname
         value: "${{ inputs.host-name }}.mauth.nevis.cloud"
-
-    - name: Update Configuration (facetId)
-      if: ${{ inputs.android-facet-id }}
-      uses: jossef/action-set-json-field@v2.1
-      with:
-        file: assets/config_authentication_cloud.json
-        field: sdk.facetId
-        value: "${{ inputs.android-facet-id }}"

@@ -16,8 +16,6 @@ on:
     secrets:
       HOST_NAME:
         required: true
-      ANDROID_FACET_ID:
-        required: true
       KEYSTORE_FILE:
         required: true
       SIGNING_CONFIGS:
@@ -54,7 +52,6 @@ jobs:
         uses: './.github/actions/update-config'
         with:
           host-name: ${{ secrets.HOST_NAME }}
-          android-facet-id: ${{ secrets.ANDROID_FACET_ID }}
 
         # Make sure the stable version of Flutter is available
       - name: Setup Flutter
