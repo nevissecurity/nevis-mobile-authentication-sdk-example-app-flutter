@@ -76,6 +76,7 @@
   "pinChange": "PIN Change",
   "changeDeviceInformation": "Change Device Information",
   "authCloudApiRegistration": "Auth Cloud Api Registration",
+  "deleteAuthenticators": "Delete Authenticators",
   "inBandRegister": "In-Band Register",
   "cameraAccessDenied": "Please allow access to camera.",
   "cameraAccessPermanentlyDenied": "Camera access is denied. Please go to settings and allow it.",
@@ -126,7 +127,7 @@
       }
     }
   },
-  "operationSucceededResultTitle": "{operation} successful!",
+  "operationSucceededResultTitle": "{operation} succeeded!",
   "@operationSucceededResultTitle": {
     "placeholders": {
       "operation": {
@@ -142,6 +143,7 @@
   "operationTypePinChange": "Pin change",
   "operationTypeDeviceInformationChange": "Device information change",
   "operationTypePayloadDecode": "Payload decode",
+  "operationTypeLocalData": "Local Data operation",
   "operationTypeUnknown": "Operation",
   "registrationScreenTitle": "In-Band Registration",
   "registrationUsernameTitle": "Username",

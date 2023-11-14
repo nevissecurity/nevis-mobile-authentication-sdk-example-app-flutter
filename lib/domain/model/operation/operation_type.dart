@@ -9,5 +9,6 @@ enum OperationType {
   deviceInformationChange,
   payloadDecode,
   pinChange,
+  localData,
   unknown,
 }

@@ -16,6 +16,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/deep_link_repository.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/authenticators_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/change_pin_usecase.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/delete_authenticators_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/deregister_all_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/oob_process_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/registered_accounts_usecase.dart';
@@ -35,6 +36,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final DeregisterAllUseCase _deregisterAllUseCase;
   final AuthenticatorsUseCase _authenticatorsUseCase;
   final ChangePinUseCase _changePinUseCase;
+  final DeleteAuthenticatorsUseCase _deleteAuthenticatorsUseCase;
   final LocalDataBloc _localDataBloc;
   final ErrorHandler _errorHandler;
   final GlobalNavigationManager _globalNavigationManager;
@@ -53,6 +55,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     this._deregisterAllUseCase,
     this._authenticatorsUseCase,
     this._changePinUseCase,
+    this._deleteAuthenticatorsUseCase,
     this._localDataBloc,
     this._errorHandler,
     this._globalNavigationManager,
@@ -76,6 +79,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<PinChangeEvent>(_handlePinChange);
     on<ChangeDeviceInformationEvent>(_handleChangeDeviceInformation);
     on<AuthCloudApiRegistrationEvent>(_handleAuthCloudApiRegistration);
+    on<DeleteAuthenticatorsEvent>(_handleDeleteAuthenticators);
     on<LocalDataEvent>(_handleLocalData);
   }
 
@@ -257,6 +261,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Emitter<HomeState> emit,
   ) async {
     _globalNavigationManager.pushAuthCloudApiRegistration();
+  }
+
+  Future<void> _handleDeleteAuthenticators(
+    DeleteAuthenticatorsEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    if (_registeredAccounts.isEmpty) {
+      return _errorHandler
+          .handle(BusinessException.registeredAccountsNotFound());
+    }
+
+    await _deleteAuthenticatorsUseCase
+        .execute(
+      accounts: _registeredAccounts,
+    )
+        .catchError((error) {
+      _errorHandler.handle(error);
+    });
   }
 
   Future<void> _handleLocalData(
