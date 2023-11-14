@@ -54,7 +54,7 @@ Open a terminal and run the `flutter pub get` command in the root directory to g
 
 2. Synchronize your [android](/android) project if opened in Android Studio.
 
-> **Warning**  
+> [!WARNING]
 > The package repository only exposes the `debug` flavor. To use the `release` flavor contact us on [sales@nevis.net](mailto:sales@nevis.net).
 
 </details>
@@ -90,7 +90,7 @@ Edit the `assets/config_authentication_cloud.json` file and replace
 
 The example apps are supporting two kinds of configuration: `authenticationCloud` and `identitySuite`.
 
-> **Note**  
+> [!NOTE]
 > Only *build-time* configuration change is supported.
 
 
@@ -119,7 +119,7 @@ You start the application by running:
 flutter run
 ```
 
-> **Note**  
+> [!NOTE]
 > Running the app on an iOS device required codesign setup.
 
 #### Troubleshooting

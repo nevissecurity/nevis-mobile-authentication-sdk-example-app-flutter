@@ -24,6 +24,8 @@ extension OperationTypeLocalizationExtension on OperationType {
         return localizations.operationTypeDeviceInformationChange;
       case OperationType.payloadDecode:
         return localizations.operationTypePayloadDecode;
+      case OperationType.localData:
+        return localizations.operationTypeLocalData;
       case OperationType.unknown:
         return localizations.operationTypeUnknown;
     }

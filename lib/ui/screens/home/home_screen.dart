@@ -77,6 +77,11 @@ class HomeScreen extends StatelessWidget {
                           onPressed: () {
                             homeBloc.add(AuthCloudApiRegistrationEvent());
                           }),
+                      Button.outlined(
+                          text: localization.deleteAuthenticators,
+                          onPressed: () {
+                            homeBloc.add(DeleteAuthenticatorsEvent());
+                          }),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: Text(localization.homeIdentitySuiteOnly),
