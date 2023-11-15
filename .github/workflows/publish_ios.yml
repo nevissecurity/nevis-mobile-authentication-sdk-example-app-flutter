@@ -39,7 +39,7 @@ on:
 
 env:
   FLUTTER_VERSION: '3.0.1'
-  XCODE_VERSION: '14.3.1'
+  XCODE_VERSION: '15.0.1'
   RUBY_VERSION: '3.0'
   CURRENT_BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
