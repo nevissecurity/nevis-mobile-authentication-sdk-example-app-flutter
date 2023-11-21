@@ -29,6 +29,8 @@ Build and distribute the application
 
  * **`build_number`**: The build number of the application.
 
+ * **`host_name`**: The host name to be used in AndroidManifest.xml for deep link configuration.
+
 
 
 ----

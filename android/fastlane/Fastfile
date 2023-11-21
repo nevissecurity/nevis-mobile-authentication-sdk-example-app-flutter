@@ -53,8 +53,8 @@ platform :android do
 			host_name = options[:host_name]
 			modify_file(
 				file_path: android_manifest,
-				old_value: "<data android:host=\"myinstance.mauth.nevis.cloud\" />",
-				new_value: "<data android:host=\"#{host_name}.mauth.nevis.cloud\" />"
+				old_value: "android:host=\"myinstance.mauth.nevis.cloud\"",
+				new_value: "android:host=\"#{host_name}.mauth.nevis.cloud\""
 			)
 
 			sh("echo \"#{ENV["SIGNING_CONFIGS"]}\" > #{signing_configs_gradle}")
