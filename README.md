@@ -95,6 +95,44 @@ The example apps are supporting two kinds of configuration: `authenticationCloud
 To change the configuration open the [getit_root.dart](lib/getit_root.dart) file which describes the dependency injection related configuration using the `get_it` dart package.
 The `environment` parameter should be changed to one of the values already mentioned.
 
+#### Android Manifest XML
+
+The example applications handle deep links and web links those contain a valid `dispatchTokenResponse` query parameter of an out-of-band operation. The related configuration located in the [AndroidManifest.xml](android/app/src/main/AndroidManifest.xml) for [MainActivity](android/app/src/main/kotlin/ch/nevis/nevis_mobile_authentication_sdk_example_app_flutter/MainActivity.kt) with action `android.intent.action.VIEW`.
+
+##### Web links
+
+Change the `myinstance.mauth.nevis.cloud` host value in the following `intent-filter` with the right host information of your environment.
+
+```xml
+<intent-filter>
+    <action android:name="android.intent.action.VIEW" />
+
+    <category android:name="android.intent.category.DEFAULT" />
+    <category android:name="android.intent.category.BROWSABLE" />
+
+    <data android:scheme="https" />
+    <data android:host="myinstance.mauth.nevis.cloud" />
+</intent-filter>
+```
+
+##### Deep links
+
+Change the `nevisaccess` scheme value in the following `intent-filter` with the right scheme information of your environment.
+
+```xml
+<intent-filter>
+    <action android:name="android.intent.action.VIEW" />
+
+    <category android:name="android.intent.category.DEFAULT" />
+    <category android:name="android.intent.category.BROWSABLE" />
+
+    <data android:scheme="nevisaccess" />
+</intent-filter>
+```
+
+> [!NOTE]
+> For more information about deep links, web links visit the official [Android guide](https://developer.android.com/training/app-links).
+
 ### Build
 
 Now you're ready to build the example app by running:

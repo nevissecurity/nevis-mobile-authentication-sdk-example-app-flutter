@@ -9,6 +9,8 @@ root_dir = File.expand_path(File.join(File.dirname(__FILE__), "../"))
 signing_configs_gradle = File.join(root_dir, "app/signing_configs.gradle")
 apk_path = File.join(root_dir, "../build/app/outputs/flutter-apk/app-debug.apk")
 display_name = "Nevis Mobile Authentication SDK Example App Flutter Android"
+android_manifest = File.join(root_dir, "app/src/main/AndroidManifest.xml")
+build_gradle = File.join(root_dir, "app/build.gradle")
 
 def report_on_success(message)
 	slack(
@@ -37,37 +39,47 @@ end
 
 platform :android do
 	desc "Build and distribute the application"
-    desc "#### Options"
-    desc " * **`version`**: The version of the application."
-    desc " * **`build_number`**: The build number of the application."
-    desc ""
+	desc "#### Options"
+	desc " * **`version`**: The version of the application."
+	desc " * **`build_number`**: The build number of the application."
+	desc " * **`host_name`**: The host name to be used in AndroidManifest.xml for deep link configuration."
+	desc ""
 	lane :main do |options|
 		begin
-    		version = options[:version]
-	    	build_number = options[:build_number]
+			version = options[:version]
+			build_number = options[:build_number]
 			UI.message("Distributing #{display_name} #{version} (#{build_number}) 📦")
+
+			host_name = options[:host_name]
+			modify_file(
+				file_path: android_manifest,
+				old_value: "<data android:host=\"myinstance.mauth.nevis.cloud\" />",
+				new_value: "<data android:host=\"#{host_name}.mauth.nevis.cloud\" />"
+			)
 
 			sh("echo \"#{ENV["SIGNING_CONFIGS"]}\" > #{signing_configs_gradle}")
 
-            modify_gradle_file(
-                constant: "signingConfig",
-                value: "signingConfigs.signing",
-            )
+			modify_file(
+				file_path: build_gradle,
+				old_value: "signingConfig signingConfigs.debug",
+				new_value: "signingConfig signingConfigs.signing",
+			)
 
-            modify_gradle_file(
-                constant: "apply plugin: 'kotlin-android'",
-                value: "apply from: 'signing_configs.gradle'",
-                mode: 'append'
-            )
+			modify_file(
+				file_path: build_gradle,
+				old_value: "android {",
+				new_value: "apply from: 'signing_configs.gradle'\n",
+				mode: 'prepend'
+			)
 
-            sh('flutter build apk --debug')
+			sh('flutter build apk --debug')
 
-            firebase_app_distribution(
-                app: ENV["FIREBASE_APP_ID_ANDROID"],
-                apk_path: apk_path,
-                groups: 'developers, internal-testers, presales'
-            )
-            report_on_success("#{display_name} build is completed: #{version} (#{build_number}) ✅")
+			firebase_app_distribution(
+				app: ENV["FIREBASE_APP_ID_ANDROID"],
+				apk_path: apk_path,
+				groups: 'developers, internal-testers, presales'
+			)
+			report_on_success("#{display_name} build is completed: #{version} (#{build_number}) ✅")
 		rescue => exception
 			report_on_error("#{display_name} build failed ❌", exception)
 		end

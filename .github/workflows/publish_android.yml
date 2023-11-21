@@ -110,5 +110,6 @@ jobs:
           lane: 'main'
           subdirectory: 'android'
           options: '{ "version": "${{ inputs.version }}",
-                      "build_number": "${{ inputs.build-number }}"
+                      "build_number": "${{ inputs.build-number }}",
+                      "host_name": "${{ secrets.HOST_NAME }}"
                     }'
