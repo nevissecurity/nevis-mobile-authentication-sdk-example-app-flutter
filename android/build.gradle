@@ -18,16 +18,24 @@ buildscript {
 }
 
 ext.getConfig = { String name ->
-    def env = System.getenv(name)
-    if (env != null) {
-        return env
+    File localPropertiesFile = project.file('local.properties')
+    if (localPropertiesFile?.exists()) {
+        Properties localProperties = new Properties()
+        localProperties.load(localPropertiesFile.newDataInputStream())
+        if (localProperties.containsKey(name)) {
+            return localProperties.getProperty(name)
+        }
+    }
+    if (project.hasProperty(name)) {
+        return project.getProperty(name)
     }
     def prop = System.getProperty(name)
     if (prop != null) {
         return prop
     }
-    if (project.hasProperty(name)) {
-        return project.getProperty(name)
+    def env = System.getenv(name)
+    if (env != null) {
+        return env
     }
 
     println("Getting env variable failed, returning empty: set $name as environment variable or as system property in your ~/.gradle/gradle.properties")
