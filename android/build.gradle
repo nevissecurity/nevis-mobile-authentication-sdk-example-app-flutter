@@ -26,16 +26,16 @@ ext.getConfig = { String name ->
             return localProperties.getProperty(name)
         }
     }
-    if (project.hasProperty(name)) {
-        return project.getProperty(name)
+    def env = System.getenv(name)
+    if (env != null) {
+        return env
     }
     def prop = System.getProperty(name)
     if (prop != null) {
         return prop
     }
-    def env = System.getenv(name)
-    if (env != null) {
-        return env
+    if (project.hasProperty(name)) {
+        return project.getProperty(name)
     }
 
     println("Getting env variable failed, returning empty: set $name as environment variable or as system property in your ~/.gradle/gradle.properties")
