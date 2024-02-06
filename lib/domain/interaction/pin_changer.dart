@@ -33,7 +33,8 @@ class PinChangerImpl extends PinChanger {
   }
 
 //  You can add custom PIN policy by overriding the `pinPolicy` getter
-//  The default is `PinPolicy(maxLength: 6, minLength: 6)`
+//  The default minimum and maximum PIN length is 6 without any validation during PIN enrollment or change.
+//
 //  @override
-//  PinPolicy get pinPolicy => PinPolicy(maxLength: 8, minLength: 4);
+//  PinPolicy get pinPolicy => CustomPinPolicyImpl(maxLength: 8, minLength: 4);
 }
