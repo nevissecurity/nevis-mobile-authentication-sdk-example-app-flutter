@@ -21,6 +21,7 @@ class ReadQrCodeScreen extends StatefulWidget {
 class _ReadQrCodeScreenState extends State<ReadQrCodeScreen> {
   MobileScannerController? _controller;
   PermissionStatus _permissionStatus = PermissionStatus.denied;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -37,7 +38,9 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen> {
   Widget build(BuildContext context) {
     final localization = AppLocalizations.of(context)!;
     Widget content;
-    if (_permissionStatus == PermissionStatus.granted) {
+    if (_isLoading) {
+      content = const Center(child: CircularProgressIndicator());
+    } else if (_permissionStatus == PermissionStatus.granted) {
       content = _mobileScannerContent(localization);
     } else if (_permissionStatus == PermissionStatus.denied) {
       content = _textContent(
@@ -75,6 +78,7 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen> {
                       final String code = barcode.barcodes.first.rawValue!;
                       final readQrCodeBloc = context.read<ReadQrCodeBloc>();
                       readQrCodeBloc.add(QrCodeScannedEvent(code));
+                      setState(() => _isLoading = true);
                     }
                   }),
             ),
