@@ -23,7 +23,7 @@ class TransactionConfirmationScreen extends StatelessWidget {
         final params = ModalRoute.of(context)!.settings.arguments
             as TransactionConfirmationParameter;
         return GetIt.I.get<TransactionConfirmationBloc>()
-          ..add(TransactionConfirmationScreenCreatedEvent(params));
+          ..add(TransactionConfirmationCreatedEvent(params));
       },
       child: const TransactionConfirmationContent(),
     );
@@ -47,13 +47,13 @@ class TransactionConfirmationContent extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: AppText.title(
                       localization.transactionConfirmationScreenTitle),
                 ),
                 Expanded(child: _data(state)),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

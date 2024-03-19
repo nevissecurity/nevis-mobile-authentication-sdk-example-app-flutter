@@ -1,11 +1,13 @@
 {
-  "appTitle": "Nevis Mobile Authentication Flutter Plugin Example",
+  "appTitle": "Nevis Example App",
   "authenticatorTitleBiometric": "Face/Fingerprint",
   "authenticatorTitleDevicePasscode": "Device Passcode",
   "authenticatorTitleFaceID": "Face ID",
   "authenticatorTitleFingerprint": "Fingerprint",
   "authenticatorTitleTouchID": "Touch ID",
   "authenticatorTitlePin": "PIN",
+  "authenticatorNotPolicyCompliant": "This authentication method cannot be used with your application",
+  "authenticatorNotEnrolled": "Before using the authenticator, enroll it in the phone System Settings",
   "cancelButtonTitle": "Cancel",
   "confirmButtonTitle": "Ok",
   "errorType": "Latest error: {errorType}",
@@ -35,33 +37,9 @@
   "businessErrorTypeMissingOpenSettingsOperationForUser": "No open settings operation found for the given user.",
   "businessErrorTypePinAuthenticatorNotFound": "Pin authenticator not found.",
   "businessErrorTypeRegisteredAccountsNotFound": "There are no registered accounts.",
-  "initStepName": "Init step",
-  "initFail": "Init failed",
-  "initSuccess": "Init was successful",
-  "numberOfRegisteredAccounts": "Number of registered accounts: {numberOfRegisteredAccounts}",
-  "@numberOfRegisteredAccounts": {
-    "placeholders": {
-      "numberOfRegisteredAccounts": {
-        "type": "int",
-        "example": "0"
-      }
-    }
-  },
-  "oobDeepLink": "Redirect from: {redirectUrl}",
-  "@oobDeepLink": {
-    "placeholders": {
-      "redirectUrl": {
-        "type": "String"
-      }
-    }
-  },
-  "oobDeepLinkActionName": "Start process",
   "selectAccountScreenTitle": "Select an account",
-  "selectAccountSelectAllAccounts": "Select all",
   "selectAuthenticatorScreenTitle": "Select an Authentication Method",
-  "selectAuthenticatorAuthenticatorIsNotPolicyCompliant": "This authentication method cannot be used with your application",
-  "selectAuthenticatorAuthenticatorIsNotEnrolled": "Before using the authenticator, enroll it in the phone System Settings",
-  "homeRegisteredAccounts": "Registered accounts {accountNumber}",
+  "homeRegisteredAccounts": "Registered accounts: {accountNumber}",
   "@homeRegisteredAccounts": {
     "placeholders": {
       "accountNumber": {
@@ -82,10 +60,6 @@
   "cameraAccessPermanentlyDenied": "Camera access is denied. Please go to settings and allow it.",
   "cameraInitializationFailed": "Failed to initialize camera.",
   "readQrCodeScreenTitle": "Read Qr Code",
-  "popUpNegativeButtonText": "Cancel",
-  "pinPopUpLabel": "PIN",
-  "pinPopUpTitle": "Pin authentication required",
-  "pinPopUpErrorWrongCredentials": "Wrong credentials",
   "biometricPopUpTitle": "Biometric authentication required",
   "biometricPopUpDescription": "Please use the default biometric method to identify yourself.",
   "devicePasscodePopUpTitle": "Passcode required",
@@ -117,8 +91,16 @@
   },
   "pinProtectionStatusDescriptionLocked": "Authenticator is locked.",
   "pinErrorEqualPins": "Equal PINs entered.",
-  "pinConfirmButtonTitle": "Confirm",
   "transactionConfirmationScreenTitle": "Transaction confirmation",
+  "confirmationScreenDescription": "Authenticate using {authenticator}",
+  "@confirmationScreenDescription": {
+    "placeholders": {
+      "authenticator": {
+        "type": "String"
+      }
+    }
+  },
+  "confirmationScreenDescriptionFingerprintVerification": "Use Fingerprint sensor to authenticate.",
   "operationFailedResultTitle": "{operation} failed!",
   "@operationFailedResultTitle": {
     "placeholders": {
@@ -150,8 +132,6 @@
   "registrationUsernamePlaceholder": "Enter username",
   "registrationPasswordTitle": "Password",
   "registrationPasswordPlaceholder": "Enter password",
-  "registrationConfirmButtonTitle": "Confirm",
-  "registrationCancelButtonTitle": "Cancel",
   "changeDeviceInformationTitle": "Change Device Information",
   "changeDeviceInformationCurrentName": "Current name: {currentName}",
   "@changeDeviceInformationCurrentName": {

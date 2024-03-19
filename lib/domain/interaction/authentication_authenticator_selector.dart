@@ -1,5 +1,6 @@
 // Copyright © 2022 Nevis Security AG. All rights reserved.
 
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/configuration/configuration_loader.dart';
@@ -29,6 +30,8 @@ class AuthenticationAuthenticatorSelectorImpl implements AuthenticatorSelector {
     AuthenticatorSelectionContext context,
     AuthenticatorSelectionHandler handler,
   ) async {
+    debugPrint('Please select one of the received available authenticators!');
+
     final username = context.account.username;
     List<Authenticator> authenticators = context.authenticators
         .where((a) =>

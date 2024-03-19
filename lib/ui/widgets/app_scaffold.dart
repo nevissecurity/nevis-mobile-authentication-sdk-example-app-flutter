@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/app_state/app_bloc.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/app_state/app_event.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/app_state/app_state.dart';
@@ -24,11 +23,13 @@ class AppScaffold extends StatelessWidget {
 class AppScaffoldContent extends StatelessWidget {
   final Widget body;
 
-  const AppScaffoldContent({super.key, required this.body});
+  const AppScaffoldContent({
+    super.key,
+    required this.body,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalizations.of(context)!;
     final bloc = context.read<AppBloc>();
     return BlocConsumer<AppBloc, AppState>(
       listenWhen: (oldState, newState) =>
@@ -36,21 +37,7 @@ class AppScaffoldContent extends StatelessWidget {
       buildWhen: (oldState, newState) =>
           _isCurrent(context) && !newState.isListenable,
       listener: (ctx, state) async {
-        if (state is VerifyFingerPrintState) {
-          bloc.add(UserFingerPrintEvent());
-        } else if (state is VerifyBiometricState) {
-          bloc.add(UserBiometricEvent(
-            title: localization.biometricPopUpTitle,
-            description: localization.biometricPopUpDescription,
-            cancelButtonText: localization.popUpNegativeButtonText,
-          ));
-        } else if (state is VerifyDevicePasscodeState) {
-          bloc.add(UserDevicePasscodeEvent(
-            title: localization.devicePasscodePopUpTitle,
-            description: localization.devicePasscodePopUpDescription,
-          ));
-        } else if (state is VerifyPinState &&
-            currentScreen(context) != PinRoute.pin) {
+        if (state is VerifyPinState && currentScreen(context) != PinRoute.pin) {
           bloc.add(UserPinEvent(
             protectionStatus: state.protectionStatus,
             lastRecoverableError: state.lastRecoverableError,

@@ -41,9 +41,11 @@ class _ChangeDeviceInformationScreenState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AppText.title(_localization.changeDeviceInformationTitle),
+                  _titleLabel(),
                   _nameLabel(state),
+                  const SizedBox(height: 16),
                   _nameField(),
+                  const SizedBox(height: 16),
                   _confirmButton(),
                   const SizedBox(height: 16),
                   _cancelButton(),
@@ -51,6 +53,15 @@ class _ChangeDeviceInformationScreenState
               )),
         );
       },
+    );
+  }
+
+  Widget _titleLabel() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: AppText.title(_localization.changeDeviceInformationTitle),
+      ),
     );
   }
 
@@ -73,7 +84,6 @@ class _ChangeDeviceInformationScreenState
   Widget _nameField() {
     return Column(
       children: [
-        const SizedBox(height: 16),
         TextFormField(
           controller: _nameController,
           keyboardType: TextInputType.text,
@@ -96,7 +106,6 @@ class _ChangeDeviceInformationScreenState
   Widget _confirmButton() {
     return Column(
       children: [
-        const SizedBox(height: 16),
         Button.outlined(
           text: _localization.confirmButtonTitle,
           onPressed: () {

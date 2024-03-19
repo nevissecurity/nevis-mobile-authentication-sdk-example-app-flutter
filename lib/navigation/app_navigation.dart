@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/auth_cloud_api_registration/navigation/auth_cloud_api_registration_route.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/change_device_information/navigation/change_device_information_route.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/confirmation/navigation/confirmation_route.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/navigation/home_route.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/legacy_login/navigation/legacy_login_route.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/pin/navigation/pin_route.dart';
@@ -21,10 +22,11 @@ class AppNavigation {
     ..addAll(HomeRoute().routes)
     ..addAll(ReadQrCodeRoute().routes)
     ..addAll(PinRoute().routes)
-    ..addAll(ResultRoute().routes)
     ..addAll(SelectAuthenticatorRoute().routes)
     ..addAll(SelectAccountRoute().routes)
     ..addAll(TransactionConfirmationRoute().routes)
+    ..addAll(ConfirmationRoute().routes)
+    ..addAll(ResultRoute().routes)
     ..addAll(LegacyLoginRoute().routes)
     ..addAll(ChangeDeviceInformationRoute().routes)
     ..addAll(AuthCloudApiRegistrationRoute().routes);

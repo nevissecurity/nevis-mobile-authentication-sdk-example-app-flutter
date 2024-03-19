@@ -24,15 +24,14 @@ class FingerprintUserVerifierImpl implements FingerprintUserVerifier {
   );
 
   @override
-  void onValidCredentialsProvided() {
-    debugPrint('onValidCredentialsProvided');
-  }
-
-  @override
   void verifyFingerprint(
     FingerprintUserVerificationContext context,
     FingerprintUserVerificationHandler handler,
   ) {
+    debugPrint(context.lastRecoverableError != null
+        ? 'Fingerprint user verification failed. Please try again. Error: ${context.lastRecoverableError?.description}'
+        : 'Please start fingerprint user verification.');
+
     final state = _userInteractionOperationStateRepository.state;
     if (state == null) {
       _errorHandler.handle(BusinessException.invalidState());
@@ -46,5 +45,10 @@ class FingerprintUserVerifierImpl implements FingerprintUserVerifier {
       ),
     );
     _domainBloc.add(FingerPrintUserVerificationEvent());
+  }
+
+  @override
+  void onValidCredentialsProvided() {
+    debugPrint('Valid fingerprint credentials provided.');
   }
 }

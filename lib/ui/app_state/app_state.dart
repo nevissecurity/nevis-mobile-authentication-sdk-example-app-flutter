@@ -13,15 +13,12 @@ abstract class VerifyState extends AppState {
   bool get isListenable => true;
 }
 
-class VerifyFingerPrintState extends VerifyState {}
-
-class VerifyBiometricState extends VerifyState {}
-
-class VerifyDevicePasscodeState extends VerifyState {}
-
 class VerifyPinState extends VerifyState {
   final PinAuthenticatorProtectionStatus? protectionStatus;
   final RecoverableError? lastRecoverableError;
 
-  VerifyPinState({required this.protectionStatus, this.lastRecoverableError});
+  VerifyPinState({
+    required this.protectionStatus,
+    this.lastRecoverableError,
+  });
 }

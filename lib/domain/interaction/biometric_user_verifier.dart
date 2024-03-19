@@ -24,13 +24,12 @@ class BiometricUserVerifierImpl implements BiometricUserVerifier {
   );
 
   @override
-  void onValidCredentialsProvided() {
-    debugPrint('onValidCredentialsProvided');
-  }
+  void verifyBiometric(
+    BiometricUserVerificationContext context,
+    BiometricUserVerificationHandler handler,
+  ) {
+    debugPrint('Please start biometric user verification.');
 
-  @override
-  void verifyBiometric(BiometricUserVerificationContext context,
-      BiometricUserVerificationHandler handler) {
     final state = _userInteractionOperationStateRepository.state;
     if (state == null) {
       _errorHandler.handle(BusinessException.invalidState());
@@ -44,5 +43,10 @@ class BiometricUserVerifierImpl implements BiometricUserVerifier {
       ),
     );
     _domainBloc.add(BiometricUserVerificationEvent());
+  }
+
+  @override
+  void onValidCredentialsProvided() {
+    debugPrint('Valid biometric credentials provided.');
   }
 }

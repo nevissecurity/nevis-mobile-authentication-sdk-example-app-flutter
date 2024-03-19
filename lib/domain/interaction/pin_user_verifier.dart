@@ -24,19 +24,14 @@ class PinUserVerifierImpl implements PinUserVerifier {
   );
 
   @override
-  void onValidCredentialsProvided() {
-    debugPrint('onValidCredentialsProvided');
-  }
-
-  @override
   void verifyPin(
     PinUserVerificationContext context,
     PinUserVerificationHandler handler,
   ) {
-    if (context.lastRecoverableError != null) {
-      debugPrint(
-          'There was a recoverable error: ${context.lastRecoverableError.runtimeType} ${context.lastRecoverableError?.description}');
-    }
+    debugPrint(context.lastRecoverableError != null
+        ? 'PIN user verification failed. Please try again. Error: ${context.lastRecoverableError?.description}'
+        : 'Please start PIN user verification.');
+
     final state = _userInteractionOperationStateRepository.state;
     if (state == null) {
       _errorHandler.handle(BusinessException.invalidState());
@@ -54,5 +49,10 @@ class PinUserVerifierImpl implements PinUserVerifier {
       protectionStatus: context.authenticatorProtectionStatus,
     );
     _domainBloc.add(event);
+  }
+
+  @override
+  void onValidCredentialsProvided() {
+    debugPrint('Valid PIN credentials provided.');
   }
 }

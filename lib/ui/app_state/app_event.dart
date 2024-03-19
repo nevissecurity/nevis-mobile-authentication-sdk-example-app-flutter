@@ -11,30 +11,6 @@ class AppDomainEvent extends AppEvent {
   AppDomainEvent(this.domainState);
 }
 
-class UserFingerPrintEvent extends AppEvent {}
-
-class UserBiometricEvent extends AppEvent {
-  final String title;
-  final String description;
-  final String cancelButtonText;
-
-  UserBiometricEvent({
-    required this.title,
-    required this.description,
-    required this.cancelButtonText,
-  });
-}
-
-class UserDevicePasscodeEvent extends AppEvent {
-  final String title;
-  final String description;
-
-  UserDevicePasscodeEvent({
-    required this.title,
-    required this.description,
-  });
-}
-
 class UserPinEvent extends AppEvent {
   final PinAuthenticatorProtectionStatus? protectionStatus;
   final RecoverableError? lastRecoverableError;

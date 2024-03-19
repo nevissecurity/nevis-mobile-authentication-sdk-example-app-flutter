@@ -17,10 +17,10 @@ class PinEnrollerImpl extends PinEnroller {
 
   @override
   void enrollPin(PinEnrollmentContext context, PinEnrollmentHandler handler) {
-    if (context.lastRecoverableError != null) {
-      debugPrint(
-          'There was a recoverable error: ${context.lastRecoverableError.runtimeType} ${context.lastRecoverableError?.description}');
-    }
+    debugPrint(context.lastRecoverableError != null
+        ? 'PIN enrollment failed. Please try again. Error: ${context.lastRecoverableError?.description}'
+        : 'Please start PIN enrollment.');
+
     _stateRepository.save(EnrollPinState(context, handler));
     final event = PinEnrollmentEvent(
       lastRecoverableError: context.lastRecoverableError,
@@ -31,7 +31,7 @@ class PinEnrollerImpl extends PinEnroller {
 
   @override
   void onValidCredentialsProvided() {
-    debugPrint('onValidCredentialsProvided');
+    debugPrint('Valid PIN credentials provided.');
   }
 
 //  You can add custom PIN policy by overriding the `pinPolicy` getter

@@ -2,8 +2,8 @@
 
 abstract class ChangeDeviceInformationEvent {}
 
-class ChangeDeviceInformationScreenCreated
-    extends ChangeDeviceInformationEvent {}
+class ChangeDeviceInformationCreatedEvent extends ChangeDeviceInformationEvent {
+}
 
 class ChangeConfirmedEvent extends ChangeDeviceInformationEvent {
   final String newName;

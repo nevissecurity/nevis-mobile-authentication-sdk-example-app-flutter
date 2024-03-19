@@ -40,7 +40,7 @@ class SelectAccountContent extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: AppText.title(localization.selectAccountScreenTitle),
                 ),
                 if (state is SelectAccountInitialState)

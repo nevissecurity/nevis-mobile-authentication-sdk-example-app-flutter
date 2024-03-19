@@ -58,10 +58,7 @@ class _LegacyLoginContentState extends State<LegacyLoginContent> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: AppText.title(_localization.registrationScreenTitle),
-                  ),
+                  _titleLabel(),
                   _usernameField(),
                   _passwordField(),
                   _confirmButton(),
@@ -70,6 +67,15 @@ class _LegacyLoginContentState extends State<LegacyLoginContent> {
               )),
         );
       },
+    );
+  }
+
+  Widget _titleLabel() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: AppText.title(_localization.registrationScreenTitle),
+      ),
     );
   }
 
@@ -113,7 +119,7 @@ class _LegacyLoginContentState extends State<LegacyLoginContent> {
       children: [
         const SizedBox(height: 16),
         Button.outlined(
-          text: _localization.registrationConfirmButtonTitle,
+          text: _localization.confirmButtonTitle,
           onPressed: () {
             final event = ConfirmEvent(
               username: usernameController.text,
@@ -131,7 +137,7 @@ class _LegacyLoginContentState extends State<LegacyLoginContent> {
       children: [
         const SizedBox(height: 16),
         Button.outlined(
-          text: _localization.registrationCancelButtonTitle,
+          text: _localization.cancelButtonTitle,
           onPressed: () {
             _globalNavigationManager.popUntilHome();
           },

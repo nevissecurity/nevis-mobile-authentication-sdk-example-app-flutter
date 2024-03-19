@@ -11,7 +11,7 @@ class AppText extends StatelessWidget {
   const AppText({
     super.key,
     required this.text,
-    this.style = const TextStyle(),
+    this.style = const TextStyle(fontSize: 17.0),
     this.textAlign = TextAlign.start,
     this.textColor = Colors.black,
   });
@@ -21,7 +21,7 @@ class AppText extends StatelessWidget {
     super.key,
     this.textColor = Colors.black,
   })  : style = const TextStyle(
-          fontSize: 16.0,
+          fontSize: 22.0,
           fontWeight: FontWeight.bold,
         ),
         textAlign = TextAlign.center;
@@ -30,9 +30,7 @@ class AppText extends StatelessWidget {
     this.text, {
     super.key,
     this.textColor = Colors.black,
-  })  : style = const TextStyle(
-          fontSize: 14.0,
-        ),
+  })  : style = const TextStyle(fontSize: 17.0),
         textAlign = TextAlign.center;
 
   @override

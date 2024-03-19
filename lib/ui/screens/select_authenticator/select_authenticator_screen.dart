@@ -46,9 +46,10 @@ class SelectAuthenticatorContent extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(16.0),
                           child: AppText.title(
-                              localization.selectAuthenticatorScreenTitle),
+                            localization.selectAuthenticatorScreenTitle,
+                          ),
                         ),
                         Expanded(
                           child: ListView.builder(
@@ -61,11 +62,11 @@ class SelectAuthenticatorContent extends StatelessWidget {
                                   item: item,
                                   onTap: () {
                                     if (item.isEnabled()) {
-                                      final bloc = context
-                                          .read<SelectAuthenticatorBloc>();
-                                      bloc.add(
-                                        AuthenticatorSelectedEvent(item.aaid),
-                                      );
+                                      context
+                                          .read<SelectAuthenticatorBloc>()
+                                          .add(AuthenticatorSelectedEvent(
+                                            item.aaid,
+                                          ));
                                     }
                                   },
                                 );

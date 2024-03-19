@@ -42,7 +42,7 @@ class ResultContent extends StatelessWidget {
         return AppScaffold(
           body: (state is ResultLoadedState)
               ? Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -51,10 +51,17 @@ class ResultContent extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              AppText.title(_title(localization, state)),
+                              Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 16.0,
+                                  ),
+                                  child: AppText.title(
+                                    _title(localization, state),
+                                  )),
                               if (state.errorType != null)
                                 AppText.body(
-                                    state.errorType!.resolve(localization)),
+                                  state.errorType!.resolve(localization),
+                                ),
                               if (state.description != null)
                                 AppText.body(state.description!),
                             ]),

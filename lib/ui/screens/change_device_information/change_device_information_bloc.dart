@@ -27,13 +27,13 @@ class ChangeDeviceInformationBloc
     this._deviceInformationUseCase,
     this._errorHandler,
   ) : super(ChangeDeviceInformationInitial()) {
-    on<ChangeDeviceInformationScreenCreated>(_handleCreated);
+    on<ChangeDeviceInformationCreatedEvent>(_handleCreated);
     on<ChangeConfirmedEvent>(_handleConfirm);
     on<ChangeCancelledEvent>(_handleCancel);
   }
 
   void _handleCreated(
-    ChangeDeviceInformationScreenCreated event,
+    ChangeDeviceInformationCreatedEvent event,
     Emitter<ChangeDeviceInformationState> emit,
   ) async {
     _deviceInformation = await _deviceInformationUseCase.execute();

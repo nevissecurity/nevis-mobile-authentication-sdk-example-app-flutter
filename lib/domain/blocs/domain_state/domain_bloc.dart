@@ -50,8 +50,9 @@ class DomainBloc extends Bloc<DomainEvent, DomainState>
   ) async {
     emit(
       DomainSelectAuthenticatorState(
-          authenticatorItems: event.authenticatorItems,
-          operationType: event.operationType),
+        authenticatorItems: event.authenticatorItems,
+        operationType: event.operationType,
+      ),
     );
   }
 
