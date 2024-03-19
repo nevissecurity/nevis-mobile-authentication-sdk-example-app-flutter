@@ -78,11 +78,8 @@ class _PinScreenContentState extends State<PinScreenContent> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: AppText.title(_title(state.mode)),
-                        ),
-                        Text(_description(state.mode)),
+                        _titleLabel(state.mode),
+                        AppText(text: _description(state.mode)),
                         if (state.mode == PinMode.credentialChange)
                           _oldPinField(),
                         _pinField(state.mode),
@@ -112,6 +109,15 @@ class _PinScreenContentState extends State<PinScreenContent> {
       case PinMode.credentialChange:
         return _localization.pinScreenTitleCredentialChange;
     }
+  }
+
+  Widget _titleLabel(PinMode mode) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: AppText.title(_title(mode)),
+      ),
+    );
   }
 
   String _description(PinMode mode) {
@@ -211,7 +217,7 @@ class _PinScreenContentState extends State<PinScreenContent> {
       children: [
         const SizedBox(height: 16),
         Button.outlined(
-          text: _localization.pinConfirmButtonTitle,
+          text: _localization.confirmButtonTitle,
           onPressed: () {
             _confirmPin(mode);
           },
@@ -222,7 +228,7 @@ class _PinScreenContentState extends State<PinScreenContent> {
 
   Widget _cancelButton(PinMode mode) {
     return Button.outlined(
-      text: _localization.popUpNegativeButtonText,
+      text: _localization.cancelButtonTitle,
       onPressed: () {
         context.read<PinBloc>().add(UserCancelledEvent(mode));
       },

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/auth_cloud_api_registration/navigation/auth_cloud_api_registration_route.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/change_device_information/navigation/change_device_information_route.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/confirmation/navigation/confirmation_parameter.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/confirmation/navigation/confirmation_route.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/navigation/home_route.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/legacy_login/navigation/legacy_login_route.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/pin/navigation/pin_parameter.dart';
@@ -46,42 +48,60 @@ class GlobalNavigationManager {
   }
 
   Future<dynamic>? pushPin(PinParameter parameter) {
-    return _navigatorKey?.currentState
-        ?.pushNamed(PinRoute.pin, arguments: parameter);
+    return _navigatorKey?.currentState?.pushNamed(
+      PinRoute.pin,
+      arguments: parameter,
+    );
   }
 
   Future<dynamic>? pushSelectAccount(SelectAccountParameter parameter) {
-    return _navigatorKey?.currentState
-        ?.pushNamed(SelectAccountRoute.selectAccount, arguments: parameter);
+    return _navigatorKey?.currentState?.pushNamed(
+      SelectAccountRoute.selectAccount,
+      arguments: parameter,
+    );
   }
 
   Future<dynamic>? pushSelectAuthenticator(
-      SelectAuthenticatorParameter parameter) {
+    SelectAuthenticatorParameter parameter,
+  ) {
     return _navigatorKey?.currentState?.pushNamed(
-        SelectAuthenticatorRoute.selectAuthenticator,
-        arguments: parameter);
+      SelectAuthenticatorRoute.selectAuthenticator,
+      arguments: parameter,
+    );
   }
 
-  Future<dynamic>? pushTransactionData(
-      TransactionConfirmationParameter parameter) {
+  Future<dynamic>? pushTransactionConfirmation(
+    TransactionConfirmationParameter parameter,
+  ) {
     return _navigatorKey?.currentState?.pushNamed(
       TransactionConfirmationRoute.transactionConfirmation,
       arguments: parameter,
     );
   }
 
+  Future<dynamic>? pushConfirmation(ConfirmationParameter parameter) {
+    return _navigatorKey?.currentState?.pushNamed(
+      ConfirmationRoute.confirmation,
+      arguments: parameter,
+    );
+  }
+
   Future<dynamic>? pushResult(ResultParameter parameter) {
-    return _navigatorKey?.currentState
-        ?.pushNamed(ResultRoute.result, arguments: parameter);
+    return _navigatorKey?.currentState?.pushNamed(
+      ResultRoute.result,
+      arguments: parameter,
+    );
   }
 
   Future<dynamic>? pushChangeDeviceInformation() {
-    return _navigatorKey?.currentState
-        ?.pushNamed(ChangeDeviceInformationRoute.changeDeviceInformation);
+    return _navigatorKey?.currentState?.pushNamed(
+      ChangeDeviceInformationRoute.changeDeviceInformation,
+    );
   }
 
   Future<dynamic>? pushAuthCloudApiRegistration() {
-    return _navigatorKey?.currentState
-        ?.pushNamed(AuthCloudApiRegistrationRoute.authCloudApiRegistration);
+    return _navigatorKey?.currentState?.pushNamed(
+      AuthCloudApiRegistrationRoute.authCloudApiRegistration,
+    );
   }
 }

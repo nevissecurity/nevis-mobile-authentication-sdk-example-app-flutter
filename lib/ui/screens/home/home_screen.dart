@@ -26,23 +26,26 @@ class HomeScreen extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 )
               : Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: ScrollableColumn(
                     flex: true,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: AppText.title(localization.appTitle),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                          child: AppText.title(localization.appTitle),
+                        ),
                       ),
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(
-                              top: 8.0, right: 0.0, left: 0.0, bottom: 64.0),
-                          child: Text(
+                              top: 16.0, right: 0.0, left: 0.0, bottom: 64.0),
+                          child: AppText.body(
                             localization.homeRegisteredAccounts(
-                                state.registeredAccounts),
+                              state.registeredAccounts,
+                            ),
                           ),
                         ),
                       ),
@@ -84,7 +87,7 @@ class HomeScreen extends StatelessWidget {
                           }),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text(localization.homeIdentitySuiteOnly),
+                        child: AppText.body(localization.homeIdentitySuiteOnly),
                       ),
                       Button.outlined(
                           text: localization.inBandRegister,

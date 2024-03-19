@@ -2,6 +2,7 @@
 
 import 'dart:io' show Platform;
 
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/configuration/configuration_loader.dart';
@@ -32,6 +33,8 @@ class RegistrationAuthenticatorSelectorImpl implements AuthenticatorSelector {
     AuthenticatorSelectionContext context,
     AuthenticatorSelectionHandler handler,
   ) async {
+    debugPrint('Please select one of the received available authenticators!');
+
     Set<Authenticator> authenticators =
         await whereAsync(context.authenticators, (authenticator) async {
       return _mustDisplayForRegistration(authenticator, context);
@@ -73,8 +76,7 @@ class RegistrationAuthenticatorSelectorImpl implements AuthenticatorSelector {
       final isBiometricRegistered = await anyAsync(
         authenticators,
         (Authenticator a) => Future.value(
-          authenticator.aaid.isBiometric &&
-              a.registration.isRegistered(username),
+          a.aaid.isBiometric && a.registration.isRegistered(username),
         ),
       );
       final canRegisterBiometric =

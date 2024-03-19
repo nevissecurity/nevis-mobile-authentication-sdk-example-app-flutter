@@ -28,18 +28,20 @@ class TransactionConfirmationBloc
     this._cancelUserInteractionOperationUseCase,
     this._globalNavigationManager,
   ) : super(TransactionConfirmationInitialState("")) {
-    on<TransactionConfirmationScreenCreatedEvent>(_handleScreenCreated);
+    on<TransactionConfirmationCreatedEvent>(_handleCreated);
     on<TransactionConfirmationUserAcceptedEvent>(_handleUserAccepted);
     on<TransactionConfirmationUserCancelledEvent>(_handleUserCancelled);
   }
 
-  void _handleScreenCreated(
-    TransactionConfirmationScreenCreatedEvent event,
+  void _handleCreated(
+    TransactionConfirmationCreatedEvent event,
     Emitter<TransactionConfirmationState> emit,
   ) {
     _parameter = event.parameter;
     emit(
-      TransactionConfirmationInitialState(event.parameter.transactionData),
+      TransactionConfirmationInitialState(
+        event.parameter.transactionData,
+      ),
     );
   }
 

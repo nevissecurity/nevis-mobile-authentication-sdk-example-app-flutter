@@ -1,10 +1,9 @@
 // Copyright © 2022 Nevis Security AG. All rights reserved.
 
-import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/authenticator/authenticator_item.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/util/localization_utils.dart';
 
 class AuthenticatorListTile extends StatelessWidget {
   final AuthenticatorItem item;
@@ -18,39 +17,11 @@ class AuthenticatorListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalizations.of(context)!;
-    final titles = {
-      Aaid.pin.rawValue: localization.authenticatorTitlePin,
-    };
-
-    if (Platform.isAndroid) {
-      titles.addAll({
-        Aaid.fingerprint.rawValue: localization.authenticatorTitleFingerprint,
-        Aaid.biometric.rawValue: localization.authenticatorTitleBiometric,
-      });
-    } else if (Platform.isIOS) {
-      titles.addAll({
-        Aaid.fingerprint.rawValue: localization.authenticatorTitleTouchID,
-        Aaid.biometric.rawValue: localization.authenticatorTitleFaceID,
-      });
-    }
-
-    titles[Aaid.devicePasscode.rawValue] =
-        localization.authenticatorTitleDevicePasscode;
-
-    String subTitle = "";
-    if (!item.isEnabled()) {
-      if (!item.isPolicyCompliant) {
-        subTitle =
-            localization.selectAuthenticatorAuthenticatorIsNotPolicyCompliant;
-      } else if (!item.isUserEnrolled) {
-        subTitle = localization.selectAuthenticatorAuthenticatorIsNotEnrolled;
-      }
-    }
+    final localizations = AppLocalizations.of(context)!;
 
     return ListTile(
-      title: Text(titles[item.aaid] ?? 'Unknown AAID: ${item.aaid}'),
-      subtitle: Text(subTitle),
+      title: Text(item.aaid.resolve(localizations)),
+      subtitle: Text(item.resolveDetails(localizations)),
       onTap: onTap,
     );
   }

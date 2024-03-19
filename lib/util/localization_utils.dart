@@ -1,9 +1,53 @@
 // Copyright © 2022 Nevis Security AG. All rights reserved.
 
+import 'dart:io' show Platform;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/authenticator/authenticator_item.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/error/error_message_types.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/operation_type.dart';
+
+extension AuthenticatorLocalizationExtension on String {
+  String resolve(AppLocalizations localizations) {
+    if (this == Aaid.pin.rawValue) {
+      return localizations.authenticatorTitlePin;
+    } else if (this == Aaid.biometric.rawValue) {
+      if (Platform.isAndroid) {
+        return localizations.authenticatorTitleBiometric;
+      } else if (Platform.isIOS) {
+        return localizations.authenticatorTitleFaceID;
+      }
+    } else if (this == Aaid.fingerprint.rawValue) {
+      if (Platform.isAndroid) {
+        return localizations.authenticatorTitleFingerprint;
+      } else if (Platform.isIOS) {
+        return localizations.authenticatorTitleTouchID;
+      }
+    } else if (this == Aaid.devicePasscode.rawValue) {
+      return localizations.authenticatorTitleDevicePasscode;
+    }
+
+    return 'Unknown AAID: ${this}';
+  }
+}
+
+extension AuthenticatorItemLocalizationExtension on AuthenticatorItem {
+  String resolveDetails(AppLocalizations localizations) {
+    if (isEnabled()) {
+      return '';
+    }
+
+    if (!isPolicyCompliant) {
+      return localizations.authenticatorNotPolicyCompliant;
+    }
+
+    if (!isUserEnrolled) {
+      return localizations.authenticatorNotEnrolled;
+    }
+
+    return '';
+  }
+}
 
 extension OperationTypeLocalizationExtension on OperationType {
   String resolve(AppLocalizations localizations) {

@@ -52,7 +52,7 @@ class SelectAccountBloc extends Bloc<SelectAccountEvent, SelectAccountState> {
   ) async {
     // first check the existence of transaction confirmation data that can be received during an OOB auth
     if (_parameter.transactionConfirmationData != null) {
-      _globalNavigationManager.pushTransactionData(
+      _globalNavigationManager.pushTransactionConfirmation(
         TransactionConfirmationParameter(
           transactionData: _parameter.transactionConfirmationData!,
           selectedAccount: event.account,

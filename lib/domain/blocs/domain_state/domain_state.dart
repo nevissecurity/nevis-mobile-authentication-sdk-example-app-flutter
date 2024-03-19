@@ -12,7 +12,11 @@ abstract class DomainState {}
 class DomainInitialState extends DomainState {}
 
 @immutable
-abstract class DomainVerifyState extends DomainState {}
+abstract class DomainVerifyState extends DomainState {
+  final String aaid;
+
+  DomainVerifyState({required this.aaid});
+}
 
 class DomainPinState extends DomainVerifyState {
   final PinMode mode;
@@ -22,24 +26,33 @@ class DomainPinState extends DomainVerifyState {
   DomainPinState.enrollment({
     required this.protectionStatus,
     this.lastRecoverableError,
-  }) : mode = PinMode.enrollment;
+  })  : mode = PinMode.enrollment,
+        super(aaid: Aaid.pin.rawValue);
 
   DomainPinState.verification({
     required this.protectionStatus,
     this.lastRecoverableError,
-  }) : mode = PinMode.verification;
+  })  : mode = PinMode.verification,
+        super(aaid: Aaid.pin.rawValue);
 
   DomainPinState.pinChange({
     required this.protectionStatus,
     this.lastRecoverableError,
-  }) : mode = PinMode.credentialChange;
+  })  : mode = PinMode.credentialChange,
+        super(aaid: Aaid.pin.rawValue);
 }
 
-class DomainVerifyFingerPrintState extends DomainVerifyState {}
+class DomainVerifyFingerPrintState extends DomainVerifyState {
+  DomainVerifyFingerPrintState() : super(aaid: Aaid.fingerprint.rawValue);
+}
 
-class DomainVerifyBiometricState extends DomainVerifyState {}
+class DomainVerifyBiometricState extends DomainVerifyState {
+  DomainVerifyBiometricState() : super(aaid: Aaid.biometric.rawValue);
+}
 
-class DomainVerifyDevicePasscodeState extends DomainVerifyState {}
+class DomainVerifyDevicePasscodeState extends DomainVerifyState {
+  DomainVerifyDevicePasscodeState() : super(aaid: Aaid.devicePasscode.rawValue);
+}
 
 class DomainSelectAuthenticatorState extends DomainState {
   final OperationType? operationType;

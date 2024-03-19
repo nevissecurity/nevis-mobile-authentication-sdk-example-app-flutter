@@ -20,10 +20,10 @@ class PinChangerImpl extends PinChanger {
 
   @override
   void changePin(PinChangeContext context, PinChangeHandler handler) {
-    if (context.lastRecoverableError != null) {
-      debugPrint(
-          'There was a recoverable error: ${context.lastRecoverableError.runtimeType} ${context.lastRecoverableError?.description}');
-    }
+    debugPrint(context.lastRecoverableError != null
+        ? 'PIN change failed. Please try again. Error: ${context.lastRecoverableError?.description}'
+        : 'Please start PIN change.');
+
     _stateRepository.save(PinChangeState(context, handler));
     final event = PinChangeEvent(
       lastRecoverableError: context.lastRecoverableError,

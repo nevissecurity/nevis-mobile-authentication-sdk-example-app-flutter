@@ -26,7 +26,7 @@ class Button extends StatelessWidget {
           style: const TextStyle(
             fontWeight: FontWeight.w500,
             fontStyle: FontStyle.normal,
-            fontSize: 16.0,
+            fontSize: 17.0,
             height: 1.25,
             color: Colors.black,
           ),
@@ -37,9 +37,11 @@ class Button extends StatelessWidget {
 
   ButtonStyle _buttonStyle(BuildContext context) {
     return OutlinedButton.styleFrom(
-      side: const BorderSide(width: 1.0, color: Colors.black),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        side: const BorderSide(width: 1.0, color: Colors.black),
+      ),
       minimumSize: Size(MediaQuery.of(context).size.width, 36),
-      // minimumSize: const Size(64, 32),
     );
   }
 }

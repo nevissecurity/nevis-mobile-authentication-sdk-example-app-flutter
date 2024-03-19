@@ -99,7 +99,7 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen> {
           alignment: Alignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: AppText.title(
                 localization.readQrCodeScreenTitle,
                 textColor: color,

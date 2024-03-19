@@ -1,5 +1,6 @@
 // Copyright © 2022 Nevis Security AG. All rights reserved.
 
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/blocs/domain_state/domain_bloc.dart';
@@ -32,6 +33,8 @@ class AccountSelectorImpl implements AccountSelector {
     AccountSelectionHandler handler,
   ) async {
     try {
+      debugPrint('Please select one of the received available accounts!');
+
       _userInteractionOperationStateRepository.save(
         UserInteractionOperationState(
           accountSelectionHandler: handler,

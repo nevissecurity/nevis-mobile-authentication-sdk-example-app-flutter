@@ -24,15 +24,12 @@ class DevicePasscodeUserVerifierImpl implements DevicePasscodeUserVerifier {
   );
 
   @override
-  void onValidCredentialsProvided() {
-    debugPrint('onValidCredentialsProvided');
-  }
-
-  @override
   void verifyDevicePasscode(
     DevicePasscodeUserVerificationContext context,
     DevicePasscodeUserVerificationHandler handler,
   ) {
+    debugPrint('Please start device passcode user verification.');
+
     final state = _userInteractionOperationStateRepository.state;
     if (state == null) {
       _errorHandler.handle(BusinessException.invalidState());
@@ -46,5 +43,10 @@ class DevicePasscodeUserVerifierImpl implements DevicePasscodeUserVerifier {
       ),
     );
     _domainBloc.add(DevicePasscodeUserVerificationEvent());
+  }
+
+  @override
+  void onValidCredentialsProvided() {
+    debugPrint('Valid device passcode credentials provided.');
   }
 }
