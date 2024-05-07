@@ -1,5 +1,7 @@
 // Copyright © 2022 Nevis Security AG. All rights reserved.
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -69,11 +71,19 @@ class ResultContent extends StatelessWidget {
                       Button.outlined(
                         text: localization.confirmButtonTitle,
                         onPressed: () {
-                          final event = NavigateToHomeEvent(
-                            resultType: state.type,
-                            operationType: state.operationType,
-                          );
-                          context.read<ResultBloc>().add(event);
+                          // On Android the application must be closed when a fatal result
+                          // type is received. At this moment only initialization errors are
+                          // treated as fatal results.
+                          if (Platform.isAndroid &&
+                              state.type == OperationResultType.fatal) {
+                            exit(-1);
+                          } else {
+                            final event = NavigateToHomeEvent(
+                              resultType: state.type,
+                              operationType: state.operationType,
+                            );
+                            context.read<ResultBloc>().add(event);
+                          }
                         },
                       ),
                       const SizedBox(height: 16.0),
@@ -92,6 +102,7 @@ class ResultContent extends StatelessWidget {
       case OperationResultType.success:
         return localizations.operationSucceededResultTitle(
             state.operationType.resolve(localizations));
+      case OperationResultType.fatal:
       case OperationResultType.failure:
         return localizations.operationFailedResultTitle(
             state.operationType.resolve(localizations));

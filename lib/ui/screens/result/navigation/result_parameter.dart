@@ -17,4 +17,9 @@ class ResultParameter {
     this.errorType,
     this.description,
   }) : type = OperationResultType.failure;
+
+  ResultParameter.fatal({
+    this.errorType,
+    this.description,
+  }) : type = OperationResultType.fatal;
 }
