@@ -52,7 +52,7 @@ class ClientProviderImpl implements ClientProvider {
 
       // The SDK removes all the data when a rooted device or tampering
       // is detected
-      if (Platform.isAndroid && _isNonRootedDeviceTamperingError(error)) {
+      if (Platform.isAndroid && _isGenericDeviceProtectionError(error)) {
         // On Android the application must be closed when a generic device
         // protection error is received (i.e. it is a checksum, debugger,
         // emulator or instrumentation guard error)
@@ -63,12 +63,12 @@ class ClientProviderImpl implements ClientProvider {
     }).execute();
   }
 
-  bool _isNonRootedDeviceTamperingError(
+  bool _isGenericDeviceProtectionError(
     InitializationError initializationError,
   ) {
-    // Return true if this is a tampering error different than rooted device
-    // error occurred (i.e. this is a checksum, debugger, emulator or
-    // instrumentation guard error).
+    // Return true if this is a generic tampering error different than
+    // rooted device error occurred (i.e. this is a checksum, debugger,
+    // emulator or instrumentation guard error).
     return initializationError is InitializationDeviceProtectionError &&
         initializationError is! InitializationRootedError &&
         initializationError is! InitializationHardwareError &&
