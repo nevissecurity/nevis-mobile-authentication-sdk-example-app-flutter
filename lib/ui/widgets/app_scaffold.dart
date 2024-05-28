@@ -45,8 +45,8 @@ class AppScaffoldContent extends StatelessWidget {
         }
       },
       builder: (ctx, state) {
-        return PopScope(
-          canPop: false,
+        return WillPopScope(
+          onWillPop: () async => false,
           child: SafeArea(
             child: Scaffold(
               resizeToAvoidBottomInset: false,
