@@ -75,6 +75,7 @@ yarn-error.log
 .pub/
 /build/
 **/.fvm
+**/.fvmrc
 
 # Fastlane
 **/fastlane/report.xml
