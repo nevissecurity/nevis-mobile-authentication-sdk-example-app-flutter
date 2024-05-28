@@ -68,24 +68,26 @@ class ResultContent extends StatelessWidget {
                                 AppText.body(state.description!),
                             ]),
                       ),
-                      Button.outlined(
-                        text: localization.confirmButtonTitle,
-                        onPressed: () {
-                          // On Android the application must be closed when a fatal result
-                          // type is received. At this moment only initialization errors are
-                          // treated as fatal results.
-                          if (Platform.isAndroid &&
-                              state.type == OperationResultType.fatal) {
-                            exit(-1);
-                          } else {
-                            final event = NavigateToHomeEvent(
-                              resultType: state.type,
-                              operationType: state.operationType,
-                            );
-                            context.read<ResultBloc>().add(event);
-                          }
-                        },
-                      ),
+                      if (!Platform.isIOS ||
+                          state.type != OperationResultType.fatal)
+                        Button.outlined(
+                          text: localization.confirmButtonTitle,
+                          onPressed: () {
+                            // On Android the application must be closed when a fatal result
+                            // type is received. At this moment only initialization errors are
+                            // treated as fatal results.
+                            if (Platform.isAndroid &&
+                                state.type == OperationResultType.fatal) {
+                              exit(-1);
+                            } else {
+                              final event = NavigateToHomeEvent(
+                                resultType: state.type,
+                                operationType: state.operationType,
+                              );
+                              context.read<ResultBloc>().add(event);
+                            }
+                          },
+                        ),
                       const SizedBox(height: 16.0),
                     ],
                   ))
