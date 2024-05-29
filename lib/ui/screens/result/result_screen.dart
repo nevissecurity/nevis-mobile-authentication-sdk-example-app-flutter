@@ -68,16 +68,19 @@ class ResultContent extends StatelessWidget {
                                 AppText.body(state.description!),
                             ]),
                       ),
-                      if (!Platform.isIOS ||
+                      // On Android platform the confirm button is always shown,
+                      // on iOS platform it is hidden in case of fatal result type.
+                      if (Platform.isAndroid ||
                           state.type != OperationResultType.fatal)
                         Button.outlined(
                           text: localization.confirmButtonTitle,
                           onPressed: () {
+                            // In case of fatal result type we can be sure the application
+                            // is running on Android platform as this button is hidden on iOS.
                             // On Android the application must be closed when a fatal result
                             // type is received. At this moment only initialization errors are
                             // treated as fatal results.
-                            if (Platform.isAndroid &&
-                                state.type == OperationResultType.fatal) {
+                            if (state.type == OperationResultType.fatal) {
                               exit(-1);
                             } else {
                               final event = NavigateToHomeEvent(
