@@ -68,7 +68,7 @@ class ErrorHandlerImpl extends ErrorHandler {
     MobileAuthenticationClientError error,
   ) {
     if (error is InitializationError) {
-      return ResultParameter.failure(description: error.description);
+      return ResultParameter.fatal(description: error.description);
     } else if (error is OperationFidoError) {
       return ResultParameter.failure(description: error.errorCode.description);
     }

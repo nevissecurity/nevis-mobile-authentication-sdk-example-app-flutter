@@ -1,6 +1,7 @@
 // Copyright © 2022 Nevis Security AG. All rights reserved.
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
@@ -47,8 +48,31 @@ class ClientProviderImpl implements ClientProvider {
       onSuccess.call();
       _operationTypeRepository.reset();
     }).onError((error) {
-      debugPrint('Client initialization failed: ${error.runtimeType}.');
+      debugPrint('Client initialization failed: ${error.description}.');
+
+      // The SDK removes all the data when a rooted device or tampering
+      // is detected
+      if (Platform.isAndroid && _isGenericDeviceProtectionError(error)) {
+        // On Android the application must be closed when a generic device
+        // protection error is received (i.e. it is a checksum, debugger,
+        // emulator or instrumentation guard error)
+        exit(-1);
+      }
+
       _errorHandler.handle(error);
     }).execute();
+  }
+
+  bool _isGenericDeviceProtectionError(
+    InitializationError initializationError,
+  ) {
+    // Return true if this is a generic tampering error different than
+    // rooted device error occurred (i.e. this is a checksum, debugger,
+    // emulator or instrumentation guard error).
+    return initializationError is InitializationDeviceProtectionError &&
+        initializationError is! InitializationRootedError &&
+        initializationError is! InitializationHardwareError &&
+        initializationError is! InitializationNoDeviceLockError &&
+        initializationError is! InitializationLockScreenHasChangedError;
   }
 }
