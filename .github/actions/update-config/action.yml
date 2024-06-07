@@ -5,6 +5,12 @@ inputs:
   host-name:
     description: 'The host name to update'
     required: true
+  private-dart-repository:
+    description: 'The URL of the private Dart repository'
+    required: false
+  version:
+    description: 'The version of the dart plugin in the private repository'
+    required: false
 
 runs:
   using: composite
@@ -22,3 +28,16 @@ runs:
         file: assets/config_authentication_cloud.json
         field: sdk.hostname
         value: "${{ inputs.host-name }}.mauth.nevis.cloud"
+
+    - name: Update plugin dependency in the pubspec
+      if: ${{ inputs.private-dart-repository }}
+      uses: fjogeleit/yaml-update-action@main
+      with:
+        valueFile: "pubspec.yaml"
+        changes: |
+          {
+            "dependencies.nevis_mobile_authentication_sdk": "",
+            "dependencies.nevis_mobile_authentication_sdk.hosted": "${{ inputs.private-dart-repository }}",
+            "dependencies.nevis_mobile_authentication_sdk.version": "^${{ inputs.version }}"
+          }
+        commitChange: false

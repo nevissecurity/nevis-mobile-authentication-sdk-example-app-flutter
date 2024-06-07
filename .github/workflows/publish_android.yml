@@ -13,6 +13,10 @@ on:
         description: "The current build number"
         required: true
         type: string
+      build-on:
+        description: "The branch the build is executed on, which determines the current build type"
+        required: true
+        type: string
     secrets:
       HOST_NAME:
         required: true
@@ -29,6 +33,12 @@ on:
       FIREBASE_APP_ID_ANDROID:
         required: true
       SLACK_WEBHOOK_URL:
+        required: true
+      PRIVATE_DART_REPOSITORY:
+        required: false
+      PRIVATE_NATIVE_REPOSITORY:
+        required: false
+      PRIVATE_REPOSITORY_API_KEY:
         required: true
 
 env:
@@ -52,8 +62,10 @@ jobs:
         uses: './.github/actions/update-config'
         with:
           host-name: ${{ secrets.HOST_NAME }}
+          private-dart-repository: ${{ secrets.PRIVATE_DART_REPOSITORY }}
+          version: ${{ inputs.version }}
 
-        # Make sure the stable version of Flutter is available
+      # Make sure the stable version of Flutter is available
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -78,7 +90,9 @@ jobs:
 
       # Resolve Flutter packages
       - name: Resolve Flutter packages
-        run: flutter pub get
+        run: |
+          echo '${{ secrets.PRIVATE_REPOSITORY_API_KEY }}' | dart pub token add ${{ secrets.PRIVATE_DART_REPOSITORY }}
+          flutter pub get
 
       # Ensure correct Java version is installed
       - name: Setup Java JDK
@@ -105,11 +119,13 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           FIREBASE_APP_ID_ANDROID: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          PRIVATE_NATIVE_REPOSITORY: ${{ secrets.PRIVATE_NATIVE_REPOSITORY }}
         uses: maierj/fastlane-action@v3.0.0
         with:
-          lane: 'main'
+          lane: '${{ inputs.build-on }}'
           subdirectory: 'android'
-          options: '{ "version": "${{ inputs.version }}",
-                      "build_number": "${{ inputs.build-number }}",
-                      "host_name": "${{ secrets.HOST_NAME }}"
-                    }'
+          options: |
+            { 
+              "version": "${{ inputs.version }}",
+              "build_number": "${{ inputs.build-number }}"
+            }

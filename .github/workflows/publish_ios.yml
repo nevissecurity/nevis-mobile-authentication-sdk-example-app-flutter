@@ -13,6 +13,10 @@ on:
         description: "The current build number"
         required: true
         type: string
+      build-on:
+        description: "The branch the build is executed on, which determines the current build type"
+        required: true
+        type: string
     secrets:
       HOST_NAME:
         required: true
@@ -36,6 +40,12 @@ on:
         required: true
       SLACK_WEBHOOK_URL:
         required: true
+      PRIVATE_DART_REPOSITORY:
+        required: false
+      PRIVATE_NATIVE_REPOSITORY:
+        required: false
+      PRIVATE_REPOSITORY_API_KEY:
+        required: true
 
 env:
   FLUTTER_VERSION: '3.0.1'
@@ -58,8 +68,10 @@ jobs:
         uses: './.github/actions/update-config'
         with:
           host-name: ${{ secrets.HOST_NAME }}
+          private-dart-repository: ${{ secrets.PRIVATE_DART_REPOSITORY }}
+          version: ${{ inputs.version }}
 
-        # Make sure the stable version of Flutter is available
+      # Make sure the stable version of Flutter is available
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -84,7 +96,9 @@ jobs:
 
       # Resolve Flutter packages
       - name: Resolve Flutter Packages
-        run: flutter pub get
+        run: |
+          echo '${{ secrets.PRIVATE_REPOSITORY_API_KEY }}' | dart pub token add ${{ secrets.PRIVATE_DART_REPOSITORY }}
+          flutter pub get
 
       # Ensure correct Xcode version is installed
       - name: Setup Xcode
@@ -110,10 +124,13 @@ jobs:
           FIREBASE_APP_ID_IOS: ${{ secrets.FIREBASE_APP_ID_IOS }}
           TEMP_KEYCHAIN_NAME: ${{ secrets.TEMP_KEYCHAIN_NAME }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          PRIVATE_NATIVE_REPOSITORY: ${{ secrets.PRIVATE_NATIVE_REPOSITORY }}
         uses: maierj/fastlane-action@v3.0.0
         with:
-          lane: 'main'
+          lane: '${{ inputs.build-on }}'
           subdirectory: 'ios'
-          options: '{ "version": "${{ inputs.version }}",
-                      "build_number": "${{ inputs.build-number }}"
-                    }'
+          options: |
+            { 
+              "version": "${{ inputs.version }}",
+              "build_number": "${{ inputs.build-number }}"
+            }

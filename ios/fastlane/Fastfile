@@ -58,16 +58,48 @@ def report_on_error(message, exception)
 	UI.user_error!("#{exception}")
 end
 
+def prepare_podfile(private_pod_repository)
+	filename = File.join('./../Podfile')
+	File.open(filename, 'r') do |original_lines|
+		File.unlink(filename)
+		File.open(filename, 'w') do |new_lines|
+			new_lines.write "source '#{private_pod_repository}'\n"
+			new_lines.write(original_lines.read())
+		end
+	end
+end
+
 platform :ios do
-	desc "Build and distribute the application"
-    desc "#### Options"
-    desc " * **`version`**: The version of the application."
-    desc " * **`build_number`**: The build number of the application."
-    desc ""
+	desc "Continuous build"
+	desc "#### Options"
+	desc " * **`version`**: The version of the application."
+	desc " * **`build_number`**: The build number of the application."
+	desc ""
+	lane :develop do |options|
+		private_pod_repository = ENV["PRIVATE_NATIVE_REPOSITORY"]
+		prepare_podfile(private_pod_repository)
+
+		build_and_distribute(options)
+	end
+
+	desc "Release build"
+	desc "#### Options"
+	desc " * **`version`**: The version of the application."
+	desc " * **`build_number`**: The build number of the application."
+	desc ""
 	lane :main do |options|
+		build_and_distribute(options)
+	end
+
+	desc "Build and distribute the application"
+	desc "#### Options"
+	desc " * **`version`**: The version of the application."
+	desc " * **`build_number`**: The build number of the application."
+	desc ""
+	private_lane :build_and_distribute do |options|
 		begin
-    		version = options[:version]
-	    	build_number = options[:build_number]
+			version = options[:version]
+			build_number = options[:build_number]
 
 			keychain_name = ENV["TEMP_KEYCHAIN_NAME"]
 			ensure_temp_keychain(
