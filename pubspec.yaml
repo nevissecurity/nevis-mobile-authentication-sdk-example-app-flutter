@@ -28,7 +28,8 @@ dependencies:
   get_it: ^7.7.0
   injectable: ^2.4.2
   mobile_scanner: ^5.1.1
-  device_info_plus: ^10.1.0
+  # Don't upgrade! Newer versions are using Java 17.
+  device_info_plus: ^9.1.2
   json_annotation: ^4.9.0
   dio: ^5.4.3+1
   dio_cookie_manager: ^3.1.1
