@@ -13,6 +13,10 @@ on:
         description: "The current build number"
         required: true
         type: string
+      build-category:
+        description: "The build category, which will be the 1st part of the tag name"
+        required: true
+        type: string
 
 jobs:
   tag:
@@ -27,7 +31,7 @@ jobs:
       - name: Create Tag
         uses: actions/github-script@v6
         env:
-          TAG_NAME: release/${{ inputs.version }}/${{ inputs.build-number }}
+          TAG_NAME: ${{ inputs.build-category }}/${{ inputs.version }}/${{ inputs.build-number }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |

@@ -15,13 +15,13 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## Android
 
-### android main
+### android develop
 
 ```sh
-[bundle exec] fastlane android main
+[bundle exec] fastlane android develop
 ```
 
-Build and distribute the application
+Continuous build
 
 #### Options
 
@@ -29,7 +29,21 @@ Build and distribute the application
 
  * **`build_number`**: The build number of the application.
 
- * **`host_name`**: The host name to be used in AndroidManifest.xml for deep link configuration.
+
+
+### android main
+
+```sh
+[bundle exec] fastlane android main
+```
+
+Release build
+
+#### Options
+
+ * **`version`**: The version of the application.
+
+ * **`build_number`**: The build number of the application.
 
 
 

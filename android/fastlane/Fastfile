@@ -10,7 +10,9 @@ signing_configs_gradle = File.join(root_dir, "app/signing_configs.gradle")
 apk_path = File.join(root_dir, "../build/app/outputs/flutter-apk/app-debug.apk")
 display_name = "Nevis Mobile Authentication SDK Example App Flutter Android"
 android_manifest = File.join(root_dir, "app/src/main/AndroidManifest.xml")
-build_gradle = File.join(root_dir, "app/build.gradle")
+app_build_gradle = File.join(root_dir, "app/build.gradle")
+build_gradle = File.join(root_dir, "build.gradle")
+public_maven_repository = "https://maven.pkg.github.com/nevissecurity/nevis-mobile-authentication-sdk-android-package"
 
 def report_on_success(message)
 	slack(
@@ -38,35 +40,52 @@ def report_on_error(message, exception)
 end
 
 platform :android do
+	desc "Continuous build"
+	desc "#### Options"
+	desc " * **`version`**: The version of the application."
+	desc " * **`build_number`**: The build number of the application."
+	desc ""
+	lane :develop do |options|
+		private_maven_repository = ENV["PRIVATE_NATIVE_REPOSITORY"]
+		modify_file(
+			file_path: build_gradle,
+			old_value: "url \"#{public_maven_repository}\"",
+			new_value: "url \"#{private_maven_repository}\"",
+		)
+
+		build_and_distribute(options)
+	end
+
+	desc "Release build"
+	desc "#### Options"
+	desc " * **`version`**: The version of the application."
+	desc " * **`build_number`**: The build number of the application."
+	desc ""
+	lane :main do |options|
+		build_and_distribute(options)
+	end
+
 	desc "Build and distribute the application"
 	desc "#### Options"
 	desc " * **`version`**: The version of the application."
 	desc " * **`build_number`**: The build number of the application."
-	desc " * **`host_name`**: The host name to be used in AndroidManifest.xml for deep link configuration."
 	desc ""
-	lane :main do |options|
+	private_lane :build_and_distribute do |options|
 		begin
 			version = options[:version]
 			build_number = options[:build_number]
 			UI.message("Distributing #{display_name} #{version} (#{build_number}) 📦")
 
-			host_name = options[:host_name]
-			modify_file(
-				file_path: android_manifest,
-				old_value: "android:host=\"myinstance.mauth.nevis.cloud\"",
-				new_value: "android:host=\"#{host_name}.mauth.nevis.cloud\""
-			)
-
 			sh("echo \"#{ENV["SIGNING_CONFIGS"]}\" > #{signing_configs_gradle}")
 
 			modify_file(
-				file_path: build_gradle,
+				file_path: app_build_gradle,
 				old_value: "signingConfig signingConfigs.debug",
 				new_value: "signingConfig signingConfigs.signing",
 			)
 
 			modify_file(
-				file_path: build_gradle,
+				file_path: app_build_gradle,
 				old_value: "android {",
 				new_value: "apply from: 'signing_configs.gradle'\n",
 				mode: 'prepend'
