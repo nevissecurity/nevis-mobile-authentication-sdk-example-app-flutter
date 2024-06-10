@@ -1,5 +1,7 @@
 // Copyright © 2022 Nevis Security AG. All rights reserved.
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -18,14 +20,27 @@ class ReadQrCodeScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _ReadQrCodeScreenState();
 }
 
-class _ReadQrCodeScreenState extends State<ReadQrCodeScreen> {
-  MobileScannerController? _controller;
+class _ReadQrCodeScreenState extends State<ReadQrCodeScreen>
+    with WidgetsBindingObserver {
+  final MobileScannerController _controller = MobileScannerController(
+    formats: [BarcodeFormat.qrCode],
+    detectionSpeed: DetectionSpeed.noDuplicates,
+    facing: CameraFacing.back,
+    torchEnabled: false,
+  );
+
+  StreamSubscription<Object?>? _subscription;
   PermissionStatus _permissionStatus = PermissionStatus.denied;
   bool _isLoading = false;
+  bool _isBarcodeFound = false;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _subscription = _controller.barcodes.listen(_handleBarcode);
+    unawaited(_controller.start());
+
     _listenForPermissionStatus();
   }
 
@@ -44,13 +59,19 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen> {
       content = _mobileScannerContent(localization);
     } else if (_permissionStatus == PermissionStatus.denied) {
       content = _textContent(
-          localization, Colors.black, localization.cameraAccessDenied);
+        localization,
+        Colors.black,
+        localization.cameraAccessDenied,
+      );
     } else if (_permissionStatus == PermissionStatus.permanentlyDenied) {
       content = _textContent(localization, Colors.black,
           localization.cameraAccessPermanentlyDenied);
     } else {
       content = _textContent(
-          localization, Colors.black, localization.cameraInitializationFailed);
+        localization,
+        Colors.black,
+        localization.cameraInitializationFailed,
+      );
     }
 
     return AppScaffold(
@@ -59,28 +80,13 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen> {
   }
 
   Widget _mobileScannerContent(AppLocalizations localization) {
-    _controller = MobileScannerController(
-      detectionSpeed: DetectionSpeed.noDuplicates,
-      facing: CameraFacing.back,
-      torchEnabled: false,
-    );
     return Stack(
       alignment: AlignmentDirectional.topCenter,
       children: [
         Column(
           children: <Widget>[
             Expanded(
-              child: MobileScanner(
-                  controller: _controller,
-                  onDetect: (barcode) {
-                    if (barcode.barcodes.isNotEmpty &&
-                        barcode.barcodes.first.rawValue != null) {
-                      final String code = barcode.barcodes.first.rawValue!;
-                      final readQrCodeBloc = context.read<ReadQrCodeBloc>();
-                      readQrCodeBloc.add(QrCodeScannedEvent(code));
-                      setState(() => _isLoading = true);
-                    }
-                  }),
+              child: MobileScanner(controller: _controller),
             ),
           ],
         ),
@@ -130,9 +136,33 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen> {
     );
   }
 
+  void _handleBarcode(BarcodeCapture barcodes) {
+    if (_isBarcodeFound) {
+      // Listener call twice on barcode detect
+      // See: https://github.com/juliansteenbakker/mobile_scanner/issues/1079
+      return;
+    }
+
+    if (mounted) {
+      setState(() {
+        if (barcodes.barcodes.isNotEmpty &&
+            barcodes.barcodes.first.rawValue != null) {
+          _isBarcodeFound = true;
+          final String code = barcodes.barcodes.first.rawValue!;
+          final readQrCodeBloc = context.read<ReadQrCodeBloc>();
+          readQrCodeBloc.add(QrCodeScannedEvent(code));
+          setState(() => _isLoading = true);
+        }
+      });
+    }
+  }
+
   @override
-  void dispose() {
-    _controller?.dispose();
+  Future<void> dispose() async {
+    WidgetsBinding.instance.removeObserver(this);
+    unawaited(_subscription?.cancel());
+    _subscription = null;
     super.dispose();
+    await _controller.dispose();
   }
 }

@@ -48,7 +48,7 @@ on:
         required: true
 
 env:
-  FLUTTER_VERSION: '3.13.0'
+  FLUTTER_VERSION: '3.19.0'
   XCODE_VERSION: '15.0.1'
   RUBY_VERSION: '3.0'
   CURRENT_BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
