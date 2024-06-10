@@ -27,7 +27,7 @@ extension AuthenticatorLocalizationExtension on String {
       return localizations.authenticatorTitleDevicePasscode;
     }
 
-    return 'Unknown AAID: ${this}';
+    return 'Unknown AAID: $this';
   }
 }
 
