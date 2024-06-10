@@ -78,6 +78,7 @@ platform :ios do
 	lane :develop do |options|
 		private_pod_repository = ENV["PRIVATE_NATIVE_REPOSITORY"]
 		prepare_podfile(private_pod_repository)
+		prepare_for_archive(is_release: false)
 
 		build_and_distribute(options)
 	end
@@ -88,7 +89,26 @@ platform :ios do
 	desc " * **`build_number`**: The build number of the application."
 	desc ""
 	lane :main do |options|
+		prepare_for_archive(is_release: true)
+
 		build_and_distribute(options)
+	end
+
+	desc "Prepares for archiving"
+	desc "#### Options"
+	desc " * **`is_release`**: Determines the build type."
+	desc ""
+	private_lane :prepare_for_archive do |options|
+		is_release = options[:is_release] || false
+
+		build_type = is_release ? "--release" : ""
+
+		UI.message("Archive Preparation")
+		Dir.chdir("..") do
+			Actions.sh("flutter build ios #{build_type} --no-codesign", error_callback: -> (result) {
+				raise "❌ Archive Preparation failed failed! Result: #{result}"
+			})
+		end
 	end
 
 	desc "Build and distribute the application"
