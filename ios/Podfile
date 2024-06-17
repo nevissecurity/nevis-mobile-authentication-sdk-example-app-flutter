@@ -7,8 +7,8 @@ platform :ios, deployment_target
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
 project 'Runner', {
-'Debug' => :debug,
-	'Profile' => :release,
+	'Debug' => :debug,
+	'Profile' => :debug,
 	'Release' => :release,
 }
 
@@ -33,7 +33,7 @@ target 'Runner' do
 	use_frameworks!
 	use_modular_headers!
 
-	pod 'NevisMobileAuthentication-Debug', '~> 3.7.0', :configurations => ['Debug']
+	pod 'NevisMobileAuthentication-Debug', '~> 3.7.0', :configurations => ['Debug', 'Profile']
 	pod 'NevisMobileAuthentication', '~> 3.7.0', :configurations => ['Release']
 
 	flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))

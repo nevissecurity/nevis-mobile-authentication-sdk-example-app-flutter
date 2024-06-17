@@ -70,17 +70,22 @@ def prepare_podfile(private_pod_repository)
 end
 
 platform :ios do
+	desc "Pull request build"
+	desc ""
+	lane :pr do |options|
+		utilize_private_repos
+		build(is_release: false)
+	end
+
 	desc "Continuous build"
 	desc "#### Options"
 	desc " * **`version`**: The version of the application."
 	desc " * **`build_number`**: The build number of the application."
 	desc ""
 	lane :develop do |options|
-		private_pod_repository = ENV["PRIVATE_NATIVE_REPOSITORY"]
-		prepare_podfile(private_pod_repository)
-		prepare_for_archive(is_release: false)
-
-		build_and_distribute(options)
+		utilize_private_repos
+		build(is_release: false)
+		distribute(options)
 	end
 
 	desc "Release build"
@@ -89,16 +94,26 @@ platform :ios do
 	desc " * **`build_number`**: The build number of the application."
 	desc ""
 	lane :main do |options|
-		prepare_for_archive(is_release: true)
-
-		build_and_distribute(options)
+		build(is_release: true)
+		distribute(options)
 	end
 
-	desc "Prepares for archiving"
+	####
+	#### Private lanes
+	####
+
+	desc "Utilize private repositories"
+	desc ""
+	private_lane :utilize_private_repos do
+		private_pod_repository = ENV["PRIVATE_NATIVE_REPOSITORY"]
+		prepare_podfile(private_pod_repository)
+	end
+
+	desc "Build the application"
 	desc "#### Options"
 	desc " * **`is_release`**: Determines the build type."
 	desc ""
-	private_lane :prepare_for_archive do |options|
+	private_lane :build do |options|
 		is_release = options[:is_release] || false
 
 		build_type = is_release ? "--release" : ""
@@ -111,12 +126,12 @@ platform :ios do
 		end
 	end
 
-	desc "Build and distribute the application"
+	desc "Distribute the application"
 	desc "#### Options"
 	desc " * **`version`**: The version of the application."
 	desc " * **`build_number`**: The build number of the application."
 	desc ""
-	private_lane :build_and_distribute do |options|
+	private_lane :distribute do |options|
 		begin
 			version = options[:version]
 			build_number = options[:build_number]
