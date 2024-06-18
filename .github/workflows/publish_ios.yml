@@ -63,14 +63,6 @@ jobs:
       - name: Checkout Project
         uses: actions/checkout@v3
 
-      # Update the Auth Cloud configuration
-      - name: Update Configuration
-        uses: './.github/actions/update-config'
-        with:
-          host-name: ${{ secrets.HOST_NAME }}
-          private-dart-repository: ${{ secrets.PRIVATE_DART_REPOSITORY }}
-          version: ${{ inputs.version }}
-
       # Make sure the stable version of Flutter is available
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -88,6 +80,15 @@ jobs:
           bundler-cache: true
           working-directory: 'ios'
 
+      # Update the dependencies and the Auth Cloud configuration
+      - name: Update Configuration
+        uses: './.github/actions/update-config'
+        with:
+          host-name: ${{ secrets.HOST_NAME }}
+          private-dart-repository: ${{ secrets.PRIVATE_DART_REPOSITORY }}
+          private-repository-api-key: ${{ secrets.PRIVATE_REPOSITORY_API_KEY }}
+          version: ${{ inputs.version }}
+
       # Increment build number in the pubspec.yaml file
       - name: Increment Build Number
         run: |
@@ -96,9 +97,7 @@ jobs:
 
       # Resolve Flutter packages
       - name: Resolve Flutter Packages
-        run: |
-          echo '${{ secrets.PRIVATE_REPOSITORY_API_KEY }}' | dart pub token add ${{ secrets.PRIVATE_DART_REPOSITORY }}
-          flutter pub get
+        run: flutter pub get
 
       # Ensure correct Xcode version is installed
       - name: Setup Xcode

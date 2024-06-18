@@ -40,20 +40,21 @@ def report_on_error(message, exception)
 end
 
 platform :android do
+	desc "Pull request build"
+	desc ""
+	lane :pr do |options|
+		utilize_private_repos
+		build
+	end
+
 	desc "Continuous build"
 	desc "#### Options"
 	desc " * **`version`**: The version of the application."
 	desc " * **`build_number`**: The build number of the application."
 	desc ""
 	lane :develop do |options|
-		private_maven_repository = ENV["PRIVATE_NATIVE_REPOSITORY"]
-		modify_file(
-			file_path: build_gradle,
-			old_value: "url \"#{public_maven_repository}\"",
-			new_value: "url \"#{private_maven_repository}\"",
-		)
-
-		build_and_distribute(options)
+		utilize_private_repos
+		distribute(options)
 	end
 
 	desc "Release build"
@@ -62,15 +63,36 @@ platform :android do
 	desc " * **`build_number`**: The build number of the application."
 	desc ""
 	lane :main do |options|
-		build_and_distribute(options)
+		distribute(options)
 	end
 
-	desc "Build and distribute the application"
+	####
+	#### Private lanes
+	####
+
+	desc "Utilize private repositories"
+	desc ""
+	private_lane :utilize_private_repos do
+		private_maven_repository = ENV["PRIVATE_NATIVE_REPOSITORY"]
+		modify_file(
+			file_path: build_gradle,
+			old_value: "url \"#{public_maven_repository}\"",
+			new_value: "url \"#{private_maven_repository}\"",
+		)
+	end
+
+	desc "Build the application"
+	desc ""
+	private_lane :build do
+		sh('flutter build apk --debug')
+	end
+
+	desc "Distribute the application"
 	desc "#### Options"
 	desc " * **`version`**: The version of the application."
 	desc " * **`build_number`**: The build number of the application."
 	desc ""
-	private_lane :build_and_distribute do |options|
+	private_lane :distribute do |options|
 		begin
 			version = options[:version]
 			build_number = options[:build_number]
@@ -91,7 +113,7 @@ platform :android do
 				mode: 'prepend'
 			)
 
-			sh('flutter build apk --debug')
+			build
 
 			firebase_app_distribution(
 				app: ENV["FIREBASE_APP_ID_ANDROID"],

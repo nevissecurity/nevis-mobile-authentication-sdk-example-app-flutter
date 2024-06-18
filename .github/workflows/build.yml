@@ -15,16 +15,29 @@ on:
         default: false
         required: false
         type: boolean
+      version:
+        description: "The current version number"
+        required: false
+        type: string
     secrets:
       GITHUB_USERNAME:
         required: false
       GITHUB_PERSONAL_ACCESS_TOKEN:
+        required: false
+      PRIVATE_DART_REPOSITORY:
+        required: false
+      PRIVATE_NATIVE_REPOSITORY:
+        required: false
+      PRIVATE_REPOSITORY_API_KEY:
         required: false
 
 env:
   FLUTTER_VERSION: '3.19.0'
   XCODE_VERSION: '15.0.1'
   JAVA_VERSION: '11'
+  RUBY_VERSION: '3.0'
+  PRIVATE_DART_REPOSITORY: ${{ secrets.PRIVATE_DART_REPOSITORY }}
+  PRIVATE_REPOSITORY_API_KEY: ${{ secrets.PRIVATE_REPOSITORY_API_KEY }}
 
 jobs:
   build_app:
@@ -45,6 +58,15 @@ jobs:
           cache: true
           cache-key: ${{ runner.os }}-flutter-cache-${{ env.FLUTTER_VERSION }}
 
+      # Update the private dependencies
+      - name: Update Configuration
+        if: ${{ env.PRIVATE_DART_REPOSITORY && env.PRIVATE_REPOSITORY_API_KEY && inputs.version }}
+        uses: './.github/actions/update-config'
+        with:
+          private-dart-repository: ${{ secrets.PRIVATE_DART_REPOSITORY }}
+          private-repository-api-key: ${{ secrets.PRIVATE_REPOSITORY_API_KEY }}
+          version: ${{ inputs.version }}
+
       # Resolve Flutter packages
       - name: Resolve Flutter Packages
         run: flutter pub get
@@ -60,10 +82,24 @@ jobs:
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
 
-      # Build iOS App
+      # Set Ruby version and Cache RubyGem dependencies
+      - name: Cache RubyGem Dependencies
+        if: ${{ inputs.build-ios }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+          working-directory: 'ios'
+
+      # Build the iOS app
       - name: Build iOS App
         if: ${{ inputs.build-ios }}
-        run: flutter build ios --no-codesign
+        env:
+          PRIVATE_NATIVE_REPOSITORY: ${{ secrets.PRIVATE_NATIVE_REPOSITORY }}
+        uses: maierj/fastlane-action@v3.0.0
+        with:
+          lane: 'pr'
+          subdirectory: 'ios'
 
       #####################################
       # Build Android Example (if needed) #
@@ -77,10 +113,23 @@ jobs:
           distribution: 'zulu'
           java-version: ${{ env.JAVA_VERSION }}
 
-      # Build Android App
+      # Set Ruby version and Cache RubyGem dependencies
+      - name: Cache RubyGem Dependencies
+        if: ${{ inputs.build-android }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+          working-directory: 'android'
+
+      # Build the Android app
       - name: Build Android App
         if: ${{ inputs.build-android }}
-        run: flutter build apk --debug
         env:
+          PRIVATE_NATIVE_REPOSITORY: ${{ secrets.PRIVATE_NATIVE_REPOSITORY }}
           GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
           GITHUB_PERSONAL_ACCESS_TOKEN: ${{ secrets.GITHUB_PERSONAL_ACCESS_TOKEN }}
+        uses: maierj/fastlane-action@v3.0.0
+        with:
+          lane: 'pr'
+          subdirectory: 'android'

@@ -1,0 +1,47 @@
+name: Verify Development Pull Request
+
+on:
+  pull_request:
+    branches: [ 'develop' ]
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  versioning:
+    name: Versioning
+    uses: ./.github/workflows/versioning.yml
+
+  validation:
+    name: Validate Flutter
+    needs: versioning
+    uses: ./.github/workflows/validation.yml
+    with:
+      version: ${{ needs.versioning.outputs.version }}
+    secrets:
+      PRIVATE_DART_REPOSITORY: ${{ secrets.PRIVATE_DART_REPOSITORY }}
+      PRIVATE_REPOSITORY_API_KEY: ${{ secrets.PRIVATE_REPOSITORY_API_KEY }}
+
+  build_ios:
+    name: iOS
+    needs: [versioning, validation]
+    uses: ./.github/workflows/build.yml
+    with:
+      build-ios: true
+      version: ${{ needs.versioning.outputs.version }}
+    secrets:
+      PRIVATE_DART_REPOSITORY: ${{ secrets.PRIVATE_DART_REPOSITORY }}
+      PRIVATE_NATIVE_REPOSITORY: ${{ secrets.PRIVATE_NATIVE_IOS_REPOSITORY }}
+      PRIVATE_REPOSITORY_API_KEY: ${{ secrets.PRIVATE_REPOSITORY_API_KEY }}
+
+  build_android:
+    name: Android
+    needs: [versioning, validation]
+    uses: ./.github/workflows/build.yml
+    with:
+      build-android: true
+      version: ${{ needs.versioning.outputs.version }}
+    secrets:
+      GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
+      GITHUB_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+      PRIVATE_DART_REPOSITORY: ${{ secrets.PRIVATE_DART_REPOSITORY }}
+      PRIVATE_NATIVE_REPOSITORY: ${{ secrets.PRIVATE_NATIVE_ANDROID_REPOSITORY }}
+      PRIVATE_REPOSITORY_API_KEY: ${{ secrets.PRIVATE_REPOSITORY_API_KEY }}
