@@ -86,6 +86,7 @@ class _AuthCloudApiRegistrationContentState
           },
           onEditingComplete: () =>
               FocusManager.instance.primaryFocus?.unfocus(),
+          onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
           decoration: InputDecoration(
             labelText: _localization.authCloudApiRegistrationEnrollResponse,
             hintText: _localization.authCloudApiRegistrationEnrollResponse,
@@ -109,6 +110,7 @@ class _AuthCloudApiRegistrationContentState
           },
           onEditingComplete: () =>
               FocusManager.instance.primaryFocus?.unfocus(),
+          onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
           decoration: InputDecoration(
             labelText: _localization.authCloudApiRegistrationAppLinkUri,
             hintText: _localization.authCloudApiRegistrationAppLinkUri,

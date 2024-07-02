@@ -87,6 +87,7 @@ class _LegacyLoginContentState extends State<LegacyLoginContent> {
           controller: usernameController,
           keyboardType: TextInputType.text,
           textInputAction: TextInputAction.next,
+          onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
           decoration: InputDecoration(
             labelText: _localization.registrationUsernameTitle,
             hintText: _localization.registrationUsernamePlaceholder,
@@ -105,6 +106,7 @@ class _LegacyLoginContentState extends State<LegacyLoginContent> {
           controller: passwordController,
           keyboardType: TextInputType.text,
           textInputAction: TextInputAction.done,
+          onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
           decoration: InputDecoration(
             labelText: _localization.registrationPasswordTitle,
             hintText: _localization.registrationPasswordPlaceholder,
