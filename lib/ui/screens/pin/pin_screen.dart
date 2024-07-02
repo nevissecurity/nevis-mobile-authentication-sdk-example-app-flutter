@@ -140,6 +140,7 @@ class _PinScreenContentState extends State<PinScreenContent> {
           controller: oldPinController,
           keyboardType: TextInputType.number,
           textInputAction: TextInputAction.next,
+          onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
           decoration: InputDecoration(
             labelText: _localization.pinOldPinTitle,
             hintText: _localization.pinOldPinPlaceholder,
@@ -160,6 +161,7 @@ class _PinScreenContentState extends State<PinScreenContent> {
           textInputAction: (mode == PinMode.verification)
               ? TextInputAction.done
               : TextInputAction.next,
+          onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
           decoration: InputDecoration(
             labelText: (mode == PinMode.credentialChange)
                 ? _localization.pinNewPinTitle
