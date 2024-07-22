@@ -147,11 +147,5 @@
   "authCloudApiRegistrationEnrollResponse": "Enroll response",
   "authCloudApiRegistrationAppLinkUri": "App Link Uri",
   "authCloudApiRegistrationErrorMissingData": "Either the response or the appLinkUri is required.",
-  "authCloudApiRegistrationErrorWrongData": "You cannot provide both the response and the appLinkUri.",
-  "pinUserVerificationInvalidPinError": "Invalid PIN.",
-  "pinChangeRecoverableInvalidPin": "Invalid PIN.",
-  "pinChangeRecoverableInvalidPinFormat": "The PIN must be at least 6 characters long. It may contain only numeric characters.",
-  "pinChangeRecoverableOldPinEqualsNewPin": "The new and the old PIN cannot be the same.",
-  "fingerprintUserVerificationError": "User verification has failed.",
-  "pinEnrollmentInvalidPinFormat": "The PIN must be at least 6 characters long. It may contain only numeric characters."
+  "authCloudApiRegistrationErrorWrongData": "You cannot provide both the response and the appLinkUri."
 }
