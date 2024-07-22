@@ -35,7 +35,7 @@ dependencies:
   dio_cookie_manager: ^3.1.1
   cookie_jar: ^4.0.8
   permission_handler: ^11.3.1
-  nevis_mobile_authentication_sdk: ^3.7.0
+  nevis_mobile_authentication_sdk: '>=3.7.0 <3.8.0'
 
 dev_dependencies:
   flutter_test:
