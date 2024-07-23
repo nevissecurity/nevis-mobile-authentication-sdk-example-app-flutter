@@ -101,22 +101,3 @@ extension BusinessErrorTypeLocalizationExtension on BusinessErrorType {
     }
   }
 }
-
-extension RecoverableErrorTypeExtension on RecoverableError {
-  String? resolve(AppLocalizations localizations) {
-    if (this is PinUserVerificationInvalidPinError) {
-      return localizations.pinUserVerificationInvalidPinError;
-    } else if (this is PinChangeRecoverableInvalidPin) {
-      return localizations.pinChangeRecoverableInvalidPin;
-    } else if (this is PinChangeRecoverableInvalidPinFormat) {
-      return localizations.pinChangeRecoverableInvalidPinFormat;
-    } else if (this is PinChangeRecoverableOldPinEqualsNewPin) {
-      return localizations.pinChangeRecoverableOldPinEqualsNewPin;
-    } else if (this is FingerprintUserVerificationError) {
-      return localizations.fingerprintUserVerificationError;
-    } else if (this is PinEnrollmentInvalidPinFormat) {
-      return localizations.pinEnrollmentInvalidPinFormat;
-    }
-    return null;
-  }
-}

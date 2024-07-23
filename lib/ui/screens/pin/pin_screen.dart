@@ -7,7 +7,6 @@ import 'package:get_it/get_it.dart';
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/pin/pin_mode.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/pin/model/pin_credentials.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/pin/model/pin_validation_error.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/pin/navigation/pin_parameter.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/pin/pin_bloc.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/pin/pin_event.dart';
@@ -15,7 +14,6 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/p
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/app_scaffold.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/app_text.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/button.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/util/localization_utils.dart';
 
 class PinScreen extends StatelessWidget {
   const PinScreen({super.key});
@@ -48,7 +46,6 @@ class _PinScreenContentState extends State<PinScreenContent> {
   final pinController = TextEditingController();
   final oldPinController = TextEditingController();
   late AppLocalizations _localization;
-  String? _errorMessage;
 
   @override
   void dispose() {
@@ -67,10 +64,9 @@ class _PinScreenContentState extends State<PinScreenContent> {
             state.mode != state.previousMode) {
           pinController.clear();
           oldPinController.clear();
-          _errorMessage = null;
         }
 
-        _errorMessage = _errorMessage ?? _extractErrorMessage(state);
+        final errorMessage = _extractErrorMessage(state);
         return (state is PinUpdatedState)
             ? AppScaffold(
                 body: Padding(
@@ -83,7 +79,8 @@ class _PinScreenContentState extends State<PinScreenContent> {
                         if (state.mode == PinMode.credentialChange)
                           _oldPinField(),
                         _pinField(state.mode),
-                        if (_errorMessage != null) _errorMessageWidget(),
+                        if (errorMessage != null)
+                          _errorMessageWidget(errorMessage),
                         if (state.protectionStatus
                             is! PinProtectionStatusLockedOut)
                           _infoMessageWidget(state),
@@ -175,12 +172,12 @@ class _PinScreenContentState extends State<PinScreenContent> {
     );
   }
 
-  Widget _errorMessageWidget() {
+  Widget _errorMessageWidget(String errorMessage) {
     return Column(
       children: [
         const SizedBox(height: 5),
         Text(
-          _errorMessage!,
+          errorMessage,
           style: const TextStyle(color: Colors.red),
         ),
       ],
@@ -239,35 +236,10 @@ class _PinScreenContentState extends State<PinScreenContent> {
 
   void _confirmPin(PinMode mode) {
     FocusManager.instance.primaryFocus?.unfocus();
-    switch (_validatePin(mode)) {
-      case PinValidationError.none:
-        setState(() {
-          _errorMessage = null;
-        });
-
-        context.read<PinBloc>().add(PinEnterEvent(
-              mode: mode,
-              credentials: _makeCredentials(mode),
-            ));
-        break;
-      case PinValidationError.equalPins:
-        setState(() {
-          _errorMessage = _localization.pinErrorEqualPins;
-        });
-        break;
-    }
-  }
-
-  PinValidationError _validatePin(PinMode mode) {
-    switch (mode) {
-      case PinMode.credentialChange:
-        if (pinController.text == oldPinController.text) {
-          return PinValidationError.equalPins;
-        }
-        return PinValidationError.none;
-      default:
-        return PinValidationError.none;
-    }
+    context.read<PinBloc>().add(PinEnterEvent(
+          mode: mode,
+          credentials: _makeCredentials(mode),
+        ));
   }
 
   PinCredentials _makeCredentials(PinMode mode) {
@@ -288,9 +260,11 @@ class _PinScreenContentState extends State<PinScreenContent> {
 
   String? _extractErrorMessage(PinState state) {
     if (state is PinUpdatedState) {
-      final type = state.lastRecoverableError;
-      final text = type?.resolve(_localization);
-      return text ?? state.lastRecoverableError?.description;
+      var text = state.lastRecoverableError?.description;
+      if (state.lastRecoverableError?.cause != null) {
+        text = "$text ${state.lastRecoverableError?.cause}";
+      }
+      return text;
     }
     return null;
   }
