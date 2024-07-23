@@ -15,10 +15,6 @@ on:
         default: false
         required: false
         type: boolean
-      version:
-        description: "The current version number"
-        required: false
-        type: string
     secrets:
       GITHUB_USERNAME:
         required: false
@@ -60,12 +56,11 @@ jobs:
 
       # Update the private dependencies
       - name: Update Configuration
-        if: ${{ env.PRIVATE_DART_REPOSITORY && env.PRIVATE_REPOSITORY_API_KEY && inputs.version }}
+        if: ${{ env.PRIVATE_DART_REPOSITORY && env.PRIVATE_REPOSITORY_API_KEY }}
         uses: './.github/actions/update-config'
         with:
           private-dart-repository: ${{ secrets.PRIVATE_DART_REPOSITORY }}
           private-repository-api-key: ${{ secrets.PRIVATE_REPOSITORY_API_KEY }}
-          version: ${{ inputs.version }}
 
       # Resolve Flutter packages
       - name: Resolve Flutter Packages

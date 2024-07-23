@@ -11,9 +11,6 @@ inputs:
   private-repository-api-key:
     description: 'The API key used for access to the private Dart repository'
     required: false
-  version:
-    description: 'The version of the dart plugin in the private repository'
-    required: false
 
 runs:
   using: composite
@@ -34,8 +31,17 @@ runs:
         field: sdk.hostname
         value: "${{ inputs.host-name }}.mauth.nevis.cloud"
 
+    # Get SDK version number
+    - name: Get Version Number
+      id: get_sdk_version_number
+      shell: bash
+      run: |
+        SDK_VERSION=`cat pubspec.yaml | grep -o "nevis_mobile_authentication_sdk: '[^']*'" | cut -f2 -d"'" | xargs`
+        echo "sdk-version=$(echo $SDK_VERSION)" >> $GITHUB_OUTPUT
+        echo SDK Version number is "$SDK_VERSION"
+
     - name: Update plugin dependency in the pubspec
-      if: ${{ inputs.private-dart-repository && inputs.version }}
+      if: ${{ inputs.private-dart-repository }}
       uses: fjogeleit/yaml-update-action@main
       with:
         valueFile: "pubspec.yaml"
@@ -43,7 +49,7 @@ runs:
           {
             "dependencies.nevis_mobile_authentication_sdk": "",
             "dependencies.nevis_mobile_authentication_sdk.hosted": "${{ inputs.private-dart-repository }}",
-            "dependencies.nevis_mobile_authentication_sdk.version": "^${{ inputs.version }}"
+            "dependencies.nevis_mobile_authentication_sdk.version": "${{ steps.get_sdk_version_number.outputs.sdk-version }}"
           }
         commitChange: false
 
