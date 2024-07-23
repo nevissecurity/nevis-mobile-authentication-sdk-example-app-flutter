@@ -1,7 +1,6 @@
-// Copyright © 2022 Nevis Security AG. All rights reserved.
+// Copyright © 2024 Nevis Security AG. All rights reserved.
 
 import 'package:flutter/foundation.dart';
-import 'package:injectable/injectable.dart';
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/configuration/configuration_loader.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/blocs/domain_state/domain_bloc.dart';
@@ -10,20 +9,20 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/exten
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/authenticator/authenticator_item.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/user_interaction_operation_state.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/state_repository.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/validation/authenticator_validator.dart';
 
-@Named("auth_selector_auth")
-@Injectable(as: AuthenticatorSelector)
-class AuthenticationAuthenticatorSelectorImpl implements AuthenticatorSelector {
-  final DomainBloc _domainBloc;
-  final ConfigurationLoader _configurationLoader;
-  final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+enum Operation {
+  registration,
+  authentication,
+}
 
-  AuthenticationAuthenticatorSelectorImpl(
-    this._domainBloc,
-    this._configurationLoader,
-    this._userInteractionOperationStateRepository,
-  );
+abstract class AuthenticatorSelectorImpl implements AuthenticatorSelector {
+  DomainBloc get domainBloc;
+  ConfigurationLoader get configurationLoader;
+  AuthenticatorValidator get authenticatorValidator;
+  StateRepository<UserInteractionOperationState>
+      get userInteractionOperationStateRepository;
+  Operation get operation;
 
   @override
   void selectAuthenticator(
@@ -32,16 +31,28 @@ class AuthenticationAuthenticatorSelectorImpl implements AuthenticatorSelector {
   ) async {
     debugPrint('Please select one of the received available authenticators!');
 
-    final username = context.account.username;
-    List<Authenticator> authenticators = context.authenticators
-        .where((a) =>
-            // Do not display:
-            //   - non-registered authenticators
-            //   - not hardware supported authenticators
-            a.registration.isRegistered(username) && a.isSupportedByHardware)
-        .toList();
+    final configuration = await configurationLoader.load();
+    Set<Authenticator> authenticators = {};
+    switch (operation) {
+      case Operation.registration:
+        authenticators = await authenticatorValidator.validateForRegistration(
+          context,
+          configuration.authenticatorAllowlist,
+        );
+      case Operation.authentication:
+        authenticators = authenticatorValidator.validateForAuthentication(
+          context,
+          configuration.authenticatorAllowlist,
+        );
+    }
 
-    final configuration = await _configurationLoader.load();
+    if (authenticators.isEmpty) {
+      debugPrint(
+        'No available authenticators found. Cancelling authenticator selection.',
+      );
+      return handler.cancel();
+    }
+
     Set<AuthenticatorItem> authenticatorItems = {};
     for (final item in authenticators) {
       authenticatorItems.add(
@@ -49,21 +60,21 @@ class AuthenticationAuthenticatorSelectorImpl implements AuthenticatorSelector {
           aaid: item.aaid,
           isPolicyCompliant: await context.isPolicyCompliant(item.aaid),
           isUserEnrolled: item.isEnrolled(
-            username,
+            context.account.username,
             configuration.allowClass2Sensors,
           ),
         ),
       );
     }
 
-    _userInteractionOperationStateRepository.save(
+    userInteractionOperationStateRepository.save(
       UserInteractionOperationState(
         authenticatorSelectionContext: context,
         authenticatorSelectionHandler: handler,
       ),
     );
 
-    _domainBloc.add(SelectAuthenticatorEvent(
+    domainBloc.add(SelectAuthenticatorEvent(
       authenticatorItems: authenticatorItems,
     ));
   }
