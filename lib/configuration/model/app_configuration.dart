@@ -26,6 +26,8 @@ class AppConfiguration {
   /// in some Samsung devices.
   bool allowClass2Sensors;
 
+  List<String> authenticatorAllowlist;
+
   @JsonKey(name: "login")
   LoginConfiguration loginConfiguration;
 
@@ -34,6 +36,7 @@ class AppConfiguration {
 
   AppConfiguration({
     required this.allowClass2Sensors,
+    required this.authenticatorAllowlist,
     required this.loginConfiguration,
     required this.sdkConfiguration,
   });
