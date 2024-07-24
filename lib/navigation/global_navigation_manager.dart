@@ -6,10 +6,10 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/a
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/change_device_information/navigation/change_device_information_route.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/confirmation/navigation/confirmation_parameter.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/confirmation/navigation/confirmation_route.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/navigation/credential_parameter.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/navigation/credential_route.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/navigation/home_route.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/legacy_login/navigation/legacy_login_route.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/pin/navigation/pin_parameter.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/pin/navigation/pin_route.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/read_qr_code/navigation/read_qr_code_route.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/result/navigation/result_parameter.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/result/navigation/result_route.dart';
@@ -47,9 +47,9 @@ class GlobalNavigationManager {
     return _navigatorKey?.currentState?.pushNamed(LegacyLoginRoute.legacyLogin);
   }
 
-  Future<dynamic>? pushPin(PinParameter parameter) {
+  Future<dynamic>? pushCredential(CredentialParameter parameter) {
     return _navigatorKey?.currentState?.pushNamed(
-      PinRoute.pin,
+      CredentialRoute.credential,
       arguments: parameter,
     );
   }

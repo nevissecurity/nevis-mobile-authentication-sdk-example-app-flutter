@@ -27,9 +27,11 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
   final AuthenticatorSelector _registrationAuthenticatorSelector;
   final AuthenticatorSelector _authenticationAuthenticatorSelector;
   final PinEnroller _pinEnroller;
+  final PasswordEnroller _passwordEnroller;
+  final PinUserVerifier _pinUserVerifier;
+  final PasswordUserVerifier _passwordUserVerifier;
   final BiometricUserVerifier _biometricUserVerifier;
   final DevicePasscodeUserVerifier _devicePasscodeUserVerifier;
-  final PinUserVerifier _pinUserVerifier;
   final FingerprintUserVerifier _fingerprintUserVerifier;
   final DomainBloc _domainBloc;
   final StateRepository<UserInteractionOperationState>
@@ -45,9 +47,11 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
     @Named("auth_selector_reg") this._registrationAuthenticatorSelector,
     @Named("auth_selector_auth") this._authenticationAuthenticatorSelector,
     this._pinEnroller,
+    this._passwordEnroller,
+    this._pinUserVerifier,
+    this._passwordUserVerifier,
     this._biometricUserVerifier,
     this._devicePasscodeUserVerifier,
-    this._pinUserVerifier,
     this._fingerprintUserVerifier,
     this._domainBloc,
     this._userInteractionOperationStateRepository,
@@ -108,6 +112,7 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
         .deviceInformation(deviceInformation)
         .authenticatorSelector(_registrationAuthenticatorSelector)
         .pinEnroller(_pinEnroller)
+        .passwordEnroller(_passwordEnroller)
         .biometricUserVerifier(_biometricUserVerifier)
         .devicePasscodeUserVerifier(_devicePasscodeUserVerifier)
         .fingerprintUserVerifier(_fingerprintUserVerifier)
@@ -131,9 +136,10 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
         .accountSelector(_accountSelector)
         .authenticatorSelector(_authenticationAuthenticatorSelector)
         .pinUserVerifier(_pinUserVerifier)
-        .fingerprintUserVerifier(_fingerprintUserVerifier)
+        .passwordUserVerifier(_passwordUserVerifier)
         .biometricUserVerifier(_biometricUserVerifier)
         .devicePasscodeUserVerifier(_devicePasscodeUserVerifier)
+        .fingerprintUserVerifier(_fingerprintUserVerifier)
         .onSuccess((authorizationProvider) {
       debugPrint('Out of band authentication succeeded.');
       _operationTypeRepository.save(OperationType.authentication);

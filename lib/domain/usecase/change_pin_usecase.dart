@@ -44,11 +44,11 @@ class ChangePinUseCaseImpl implements ChangePinUseCase {
         .username(username)
         .pinChanger(_pinChanger)
         .onSuccess(() {
-      debugPrint('Pin change succeeded.');
+      debugPrint('PIN change succeeded.');
       _domainBloc.add(ResultEvent());
       _pinChangeStateRepository.reset();
     }).onError((error) {
-      debugPrint('Pin change failed: ${error.description}');
+      debugPrint('PIN change failed: ${error.description}');
       _errorHandler.handle(error);
       _pinChangeStateRepository.reset();
     }).execute();

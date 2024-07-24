@@ -3,12 +3,12 @@
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/simple_base_state.dart';
 
-class EnrollPinState
+class PinEnrollmentState
     extends SimpleBaseState<PinEnrollmentContext, PinEnrollmentHandler> {
   final PinEnrollmentContext _context;
   final PinEnrollmentHandler _handler;
 
-  EnrollPinState(this._context, this._handler);
+  PinEnrollmentState(this._context, this._handler);
 
   @override
   PinEnrollmentContext get context => _context;

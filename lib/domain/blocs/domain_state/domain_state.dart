@@ -3,8 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/authenticator/authenticator_item.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/credential/credential_kind.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/credential/credential_mode.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/operation_type.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/pin/pin_mode.dart';
 
 @immutable
 abstract class DomainState {}
@@ -15,31 +16,41 @@ class DomainInitialState extends DomainState {}
 abstract class DomainVerifyState extends DomainState {
   final String aaid;
 
-  DomainVerifyState({required this.aaid});
+  DomainVerifyState({
+    required this.aaid,
+  });
 }
 
-class DomainPinState extends DomainVerifyState {
-  final PinMode mode;
+class DomainCredentialState extends DomainVerifyState {
+  final CredentialMode mode;
+  final CredentialKind kind;
+  final PinAuthenticatorProtectionStatus? pinProtectionStatus;
+  final PasswordAuthenticatorProtectionStatus? passwordProtectionStatus;
   final RecoverableError? lastRecoverableError;
-  final PinAuthenticatorProtectionStatus? protectionStatus;
 
-  DomainPinState.enrollment({
-    required this.protectionStatus,
+  DomainCredentialState.enrollment({
+    required super.aaid,
+    required this.kind,
+    this.pinProtectionStatus,
+    this.passwordProtectionStatus,
     this.lastRecoverableError,
-  })  : mode = PinMode.enrollment,
-        super(aaid: Aaid.pin.rawValue);
+  }) : mode = CredentialMode.enrollment;
 
-  DomainPinState.verification({
-    required this.protectionStatus,
+  DomainCredentialState.verification({
+    required super.aaid,
+    required this.kind,
+    this.pinProtectionStatus,
+    this.passwordProtectionStatus,
     this.lastRecoverableError,
-  })  : mode = PinMode.verification,
-        super(aaid: Aaid.pin.rawValue);
+  }) : mode = CredentialMode.verification;
 
-  DomainPinState.pinChange({
-    required this.protectionStatus,
+  DomainCredentialState.change({
+    required super.aaid,
+    required this.kind,
+    this.pinProtectionStatus,
+    this.passwordProtectionStatus,
     this.lastRecoverableError,
-  })  : mode = PinMode.credentialChange,
-        super(aaid: Aaid.pin.rawValue);
+  }) : mode = CredentialMode.change;
 }
 
 class DomainVerifyFingerPrintState extends DomainVerifyState {

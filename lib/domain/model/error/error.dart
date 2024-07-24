@@ -26,8 +26,8 @@ class BusinessException implements Exception {
   BusinessException.missingOpenSettingsOperationForUser()
       : type = BusinessErrorType.missingOpenSettingsOperationForUser;
 
-  BusinessException.pinAuthenticatorNotFound()
-      : type = BusinessErrorType.pinAuthenticatorNotFound;
+  BusinessException.credentialAuthenticatorNotFound()
+      : type = BusinessErrorType.credentialAuthenticatorNotFound;
 
   BusinessException.registeredAccountsNotFound()
       : type = BusinessErrorType.registeredAccountsNotFound;

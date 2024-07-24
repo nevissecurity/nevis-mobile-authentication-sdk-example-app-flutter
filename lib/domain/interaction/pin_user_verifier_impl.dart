@@ -44,9 +44,10 @@ class PinUserVerifierImpl implements PinUserVerifier {
         userVerificationHandler: handler,
       ),
     );
-    final event = PinUserVerificationEvent(
+    final event = CredentialUserVerificationEvent(
+      aaid: Aaid.pin.rawValue,
+      pinProtectionStatus: context.authenticatorProtectionStatus,
       lastRecoverableError: context.lastRecoverableError,
-      protectionStatus: context.authenticatorProtectionStatus,
     );
     _domainBloc.add(event);
   }

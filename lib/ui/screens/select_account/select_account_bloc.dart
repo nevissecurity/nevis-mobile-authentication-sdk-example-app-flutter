@@ -5,10 +5,11 @@ import 'package:injectable/injectable.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/error/error_handler.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/operation_type.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/authenticate_usecase.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/change_password_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/change_pin_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/select_account_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/navigation/global_navigation_manager.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/pin/navigation/pin_parameter.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/navigation/credential_parameter.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/select_account/navigation/select_account_parameter.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/select_account/select_account_event.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/select_account/select_account_state.dart';
@@ -20,6 +21,7 @@ class SelectAccountBloc extends Bloc<SelectAccountEvent, SelectAccountState> {
   final AuthenticateUseCase _authenticateUseCase;
   final SelectAccountUseCase _selectAccountUseCase;
   final ChangePinUseCase _changePinUseCase;
+  final ChangePasswordUseCase _changePasswordUseCase;
   final ErrorHandler _errorHandler;
   final GlobalNavigationManager _globalNavigationManager;
 
@@ -27,6 +29,7 @@ class SelectAccountBloc extends Bloc<SelectAccountEvent, SelectAccountState> {
     this._authenticateUseCase,
     this._selectAccountUseCase,
     this._changePinUseCase,
+    this._changePasswordUseCase,
     this._errorHandler,
     this._globalNavigationManager,
   ) : super(SelectAccountInitialState(accounts: const {})) {
@@ -72,11 +75,25 @@ class SelectAccountBloc extends Bloc<SelectAccountEvent, SelectAccountState> {
         _errorHandler.handle(error);
       });
     } else if (_parameter.operationType == OperationType.pinChange) {
-      final parameter = PinParameter.credentialChange(
+      final parameter = CredentialParameter.pinChange(
         username: event.account.username,
       );
-      _changePinUseCase.execute(username: event.account.username);
-      _globalNavigationManager.pushPin(parameter);
+      _changePinUseCase
+          .execute(username: event.account.username) //
+          .catchError((error) {
+        _errorHandler.handle(error);
+      });
+      _globalNavigationManager.pushCredential(parameter);
+    } else if (_parameter.operationType == OperationType.passwordChange) {
+      final parameter = CredentialParameter.passwordChange(
+        username: event.account.username,
+      );
+      _changePasswordUseCase
+          .execute(username: event.account.username) //
+          .catchError((error) {
+        _errorHandler.handle(error);
+      });
+      _globalNavigationManager.pushCredential(parameter);
     } else {
       // simple account selection (e.g. during usernameless oob auth)
       await _selectAccountUseCase

@@ -24,6 +24,8 @@ class InBandRegisterEvent extends HomeEvent {}
 
 class PinChangeEvent extends HomeEvent {}
 
+class PasswordChangeEvent extends HomeEvent {}
+
 class ChangeDeviceInformationEvent extends HomeEvent {}
 
 class AuthCloudApiRegistrationEvent extends HomeEvent {}

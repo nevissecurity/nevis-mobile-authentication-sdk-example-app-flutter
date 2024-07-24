@@ -72,45 +72,37 @@ class AuthenticatorValidatorImpl implements AuthenticatorValidator {
     AuthenticatorSelectionContext context,
     Authenticator authenticator,
   ) async {
-    if (Platform.isIOS) {
+    if (Platform.isIOS || !authenticator.aaid.isFingerprint) {
       return Future.value(true);
     }
 
-    final authenticators = context.authenticators;
-    final isBiometricRegistered = await anyAsync(
-      authenticators,
-      (Authenticator a) => Future.value(
-        a.aaid.isBiometric &&
-            a.registration.isRegistered(context.account.username),
-      ),
-    );
-    final canRegisterBiometric =
-        await anyAsync(authenticators, (Authenticator a) async {
-      return Future.value(
-        a.aaid.isBiometric &&
-            await context.isPolicyCompliant(a.aaid) &&
-            a.isSupportedByHardware,
-      );
-    });
-    final canRegisterFingerprint =
-        await anyAsync(authenticators, (Authenticator a) async {
-      return Future.value(
-        a.aaid.isFingerprint &&
-            await context.isPolicyCompliant(a.aaid) &&
-            a.isSupportedByHardware,
-      );
-    });
+    var isBiometricsRegistered = false;
+    var canRegisterBiometrics = false;
+    var canRegisterFingerprint = false;
+    for (final authenticator in context.authenticators) {
+      if (authenticator.aaid.isBiometric &&
+          authenticator.registration.isRegistered(context.account.username)) {
+        isBiometricsRegistered = true;
+      }
+
+      if (authenticator.aaid.isBiometric &&
+          authenticator.isSupportedByHardware &&
+          await context.isPolicyCompliant(authenticator.aaid)) {
+        canRegisterBiometrics = true;
+      }
+
+      if (authenticator.aaid.isFingerprint &&
+          authenticator.isSupportedByHardware &&
+          await context.isPolicyCompliant(authenticator.aaid)) {
+        canRegisterFingerprint = true;
+      }
+    }
 
     // If biometric can be registered (or is already registered), or if we
     // cannot register fingerprint, do not propose to register fingerprint
     // (we favor biometric over fingerprint).
-    if ((canRegisterBiometric ||
-            isBiometricRegistered ||
-            !canRegisterFingerprint) &&
-        authenticator.aaid.isFingerprint) {
-      return Future.value(false);
-    }
-
-    return Future.value(true);
+    return !isBiometricsRegistered &&
+        !canRegisterBiometrics &&
+        canRegisterFingerprint;
   }
 }
