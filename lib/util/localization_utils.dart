@@ -11,6 +11,8 @@ extension AuthenticatorLocalizationExtension on String {
   String resolve(AppLocalizations localizations) {
     if (this == Aaid.pin.rawValue) {
       return localizations.authenticatorTitlePin;
+    } else if (this == Aaid.password.rawValue) {
+      return localizations.authenticatorTitlePassword;
     } else if (this == Aaid.biometric.rawValue) {
       if (Platform.isAndroid) {
         return localizations.authenticatorTitleBiometric;
@@ -64,6 +66,8 @@ extension OperationTypeLocalizationExtension on OperationType {
         return localizations.operationTypeDeregistration;
       case OperationType.pinChange:
         return localizations.operationTypePinChange;
+      case OperationType.passwordChange:
+        return localizations.operationTypePasswordChange;
       case OperationType.deviceInformationChange:
         return localizations.operationTypeDeviceInformationChange;
       case OperationType.payloadDecode:
@@ -94,8 +98,8 @@ extension BusinessErrorTypeLocalizationExtension on BusinessErrorType {
       case BusinessErrorType.missingOpenSettingsOperationForUser:
         return localizations
             .businessErrorTypeMissingOpenSettingsOperationForUser;
-      case BusinessErrorType.pinAuthenticatorNotFound:
-        return localizations.businessErrorTypePinAuthenticatorNotFound;
+      case BusinessErrorType.credentialAuthenticatorNotFound:
+        return localizations.businessErrorTypeCredentialAuthenticatorNotFound;
       case BusinessErrorType.registeredAccountsNotFound:
         return localizations.businessErrorTypeRegisteredAccountsNotFound;
     }

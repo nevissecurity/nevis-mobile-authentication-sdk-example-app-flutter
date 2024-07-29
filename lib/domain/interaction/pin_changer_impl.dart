@@ -25,9 +25,10 @@ class PinChangerImpl extends PinChanger {
         : 'Please start PIN change.');
 
     _stateRepository.save(PinChangeState(context, handler));
-    final event = PinChangeEvent(
+    final event = CredentialChangeEvent(
+      aaid: Aaid.pin.rawValue,
+      pinProtectionStatus: context.authenticatorProtectionStatus,
       lastRecoverableError: context.lastRecoverableError,
-      protectionStatus: context.authenticatorProtectionStatus,
     );
     _domainBloc.add(event);
   }

@@ -22,12 +22,12 @@ class DomainBloc extends Bloc<DomainEvent, DomainState>
     on<SelectAuthenticatorEvent>(_handleSelectAuthenticator);
     on<TransactionConfirmationEvent>(_handleTransactionConfirmation);
     on<ResultEvent>(_handleResult);
-    on<PinEnrollmentEvent>(_handlePinEnrollment);
-    on<PinUserVerificationEvent>(_handlePinVerification);
-    on<FingerPrintUserVerificationEvent>(_handleFingerPrintVerify);
-    on<BiometricUserVerificationEvent>(_handleBiometricVerify);
-    on<DevicePasscodeUserVerificationEvent>(_handleDevicePasscodeVerify);
-    on<PinChangeEvent>(_handlePinChange);
+    on<CredentialEnrollmentEvent>(_handleCredentialEnrollment);
+    on<CredentialUserVerificationEvent>(_handleCredentialVerification);
+    on<FingerPrintUserVerificationEvent>(_handleFingerPrintVerification);
+    on<BiometricUserVerificationEvent>(_handleBiometricVerification);
+    on<DevicePasscodeUserVerificationEvent>(_handleDevicePasscodeVerification);
+    on<CredentialChangeEvent>(_handleCredentialChange);
     on<AuthenticationSucceededEvent>(_handleAuthenticationSucceeded);
   }
 
@@ -68,59 +68,68 @@ class DomainBloc extends Bloc<DomainEvent, DomainState>
     );
   }
 
-  Future<void> _handlePinEnrollment(
-    PinEnrollmentEvent event,
+  Future<void> _handleCredentialEnrollment(
+    CredentialEnrollmentEvent event,
     Emitter<DomainState> emit,
   ) async {
     emit(
-      DomainPinState.enrollment(
+      DomainCredentialState.enrollment(
+        aaid: event.aaid,
+        kind: event.kind,
+        pinProtectionStatus: event.pinProtectionStatus,
+        passwordProtectionStatus: event.passwordProtectionStatus,
         lastRecoverableError: event.lastRecoverableError,
-        protectionStatus: event.protectionStatus,
       ),
     );
   }
 
-  Future<void> _handlePinVerification(
-    PinUserVerificationEvent event,
+  Future<void> _handleCredentialVerification(
+    CredentialUserVerificationEvent event,
     Emitter<DomainState> emit,
   ) async {
     emit(
-      DomainPinState.verification(
+      DomainCredentialState.verification(
+        aaid: event.aaid,
+        kind: event.kind,
+        pinProtectionStatus: event.pinProtectionStatus,
+        passwordProtectionStatus: event.passwordProtectionStatus,
         lastRecoverableError: event.lastRecoverableError,
-        protectionStatus: event.protectionStatus,
       ),
     );
   }
 
-  Future<void> _handleFingerPrintVerify(
+  Future<void> _handleFingerPrintVerification(
     FingerPrintUserVerificationEvent event,
     Emitter<DomainState> emit,
   ) async {
     emit(DomainVerifyFingerPrintState());
   }
 
-  Future<void> _handleBiometricVerify(
+  Future<void> _handleBiometricVerification(
     BiometricUserVerificationEvent event,
     Emitter<DomainState> emit,
   ) async {
     emit(DomainVerifyBiometricState());
   }
 
-  Future<void> _handleDevicePasscodeVerify(
+  Future<void> _handleDevicePasscodeVerification(
     DevicePasscodeUserVerificationEvent event,
     Emitter<DomainState> emit,
   ) async {
     emit(DomainVerifyDevicePasscodeState());
   }
 
-  Future<void> _handlePinChange(
-    PinChangeEvent event,
+  Future<void> _handleCredentialChange(
+    CredentialChangeEvent event,
     Emitter<DomainState> emit,
   ) async {
     emit(
-      DomainPinState.pinChange(
+      DomainCredentialState.change(
+        aaid: event.aaid,
+        kind: event.kind,
+        pinProtectionStatus: event.pinProtectionStatus,
+        passwordProtectionStatus: event.passwordProtectionStatus,
         lastRecoverableError: event.lastRecoverableError,
-        protectionStatus: event.protectionStatus,
       ),
     );
   }

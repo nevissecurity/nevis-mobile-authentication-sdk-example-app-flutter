@@ -9,17 +9,18 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/configuratio
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/blocs/domain_state/domain_bloc.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/blocs/domain_state/domain_state.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/error/error_handler.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/credential/credential_kind.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/credential/credential_mode.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/credential/credential_verification_data.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/error/error.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/operation_type.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/pin/pin_mode.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/pin/pin_verification_data.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/authenticators_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/deregister_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/navigation/global_navigation_manager.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/app_state/app_event.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/app_state/app_state.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/confirmation/navigation/confirmation_parameter.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/pin/navigation/pin_parameter.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/navigation/credential_parameter.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/result/navigation/result_parameter.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/select_account/navigation/select_account_parameter.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/select_authenticator/navigation/select_authenticator_parameter.dart';
@@ -47,7 +48,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       add(AppDomainEvent(state));
     });
     on<AppDomainEvent>(_handleDomainEvent);
-    on<UserPinEvent>(_handleUserPinEvent);
+    on<VerifyUserCredentialEvent>(_handleUserCredentialsEvent);
   }
 
   void _handleDomainEvent(
@@ -94,10 +95,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     DomainVerifyState state,
     Emitter<AppState> emit,
   ) {
-    if (state is DomainPinState && state.mode == PinMode.verification) {
+    if (state is DomainCredentialState &&
+        state.mode == CredentialMode.verification) {
       emit(
-        VerifyPinState(
-          protectionStatus: state.protectionStatus,
+        VerifyCredentialState(
+          kind: state.kind,
+          pinProtectionStatus: state.pinProtectionStatus,
+          passwordProtectionStatus: state.passwordProtectionStatus,
           lastRecoverableError: state.lastRecoverableError,
         ),
       );
@@ -110,18 +114,29 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
   }
 
-  Future<void> _handleUserPinEvent(
-    UserPinEvent event,
+  Future<void> _handleUserCredentialsEvent(
+    VerifyUserCredentialEvent event,
     Emitter<AppState> emit,
   ) async {
-    _globalNavigationManager.pushPin(
-      PinParameter.verification(
-        pinVerificationData: PinVerificationData(
-          protectionStatus: event.protectionStatus,
-          lastRecoverableError: event.lastRecoverableError,
-        ),
-      ),
-    );
+    final CredentialParameter parameter;
+    switch (event.kind) {
+      case CredentialKind.pin:
+        parameter = CredentialParameter.pinVerification(
+          verificationData: CredentialVerificationData(
+            pinProtectionStatus: event.pinProtectionStatus,
+            lastRecoverableError: event.lastRecoverableError,
+          ),
+        );
+      case CredentialKind.password:
+        parameter = CredentialParameter.passwordVerification(
+          verificationData: CredentialVerificationData(
+            passwordProtectionStatus: event.passwordProtectionStatus,
+            lastRecoverableError: event.lastRecoverableError,
+          ),
+        );
+    }
+
+    _globalNavigationManager.pushCredential(parameter);
   }
 
   Future<void> _handleAuthenticationSucceeded(

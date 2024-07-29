@@ -2,6 +2,7 @@
 
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/blocs/domain_state/domain_state.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/credential/credential_kind.dart';
 
 abstract class AppEvent {}
 
@@ -11,9 +12,16 @@ class AppDomainEvent extends AppEvent {
   AppDomainEvent(this.domainState);
 }
 
-class UserPinEvent extends AppEvent {
-  final PinAuthenticatorProtectionStatus? protectionStatus;
+class VerifyUserCredentialEvent extends AppEvent {
+  final CredentialKind kind;
+  final PinAuthenticatorProtectionStatus? pinProtectionStatus;
+  final PasswordAuthenticatorProtectionStatus? passwordProtectionStatus;
   final RecoverableError? lastRecoverableError;
 
-  UserPinEvent({this.protectionStatus, this.lastRecoverableError});
+  VerifyUserCredentialEvent({
+    required this.kind,
+    this.pinProtectionStatus,
+    this.passwordProtectionStatus,
+    this.lastRecoverableError,
+  });
 }

@@ -15,15 +15,16 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/operation_type.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/deep_link_repository.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/authenticators_usecase.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/change_password_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/change_pin_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/delete_authenticators_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/deregister_all_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/oob_process_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/registered_accounts_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/navigation/global_navigation_manager.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/navigation/credential_parameter.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_event.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_state.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/pin/navigation/pin_parameter.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/select_account/navigation/select_account_parameter.dart';
 
 @injectable
@@ -36,6 +37,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final DeregisterAllUseCase _deregisterAllUseCase;
   final AuthenticatorsUseCase _authenticatorsUseCase;
   final ChangePinUseCase _changePinUseCase;
+  final ChangePasswordUseCase _changePasswordUseCase;
   final DeleteAuthenticatorsUseCase _deleteAuthenticatorsUseCase;
   final LocalDataBloc _localDataBloc;
   final ErrorHandler _errorHandler;
@@ -55,6 +57,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     this._deregisterAllUseCase,
     this._authenticatorsUseCase,
     this._changePinUseCase,
+    this._changePasswordUseCase,
     this._deleteAuthenticatorsUseCase,
     this._localDataBloc,
     this._errorHandler,
@@ -77,6 +80,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<InBandAuthenticationEvent>(_handleInBandAuthentication);
     on<InBandRegisterEvent>(_handleInBandRegister);
     on<PinChangeEvent>(_handlePinChange);
+    on<PasswordChangeEvent>(_handlePasswordChange);
     on<ChangeDeviceInformationEvent>(_handleChangeDeviceInformation);
     on<AuthCloudApiRegistrationEvent>(_handleAuthCloudApiRegistration);
     on<DeleteAuthenticatorsEvent>(_handleDeleteAuthenticators);
@@ -214,36 +218,57 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     PinChangeEvent event,
     Emitter<HomeState> emit,
   ) async {
-    // we should only pass the accounts to the account selection that already have a pin enrollment
-    final filteredAuthenticators =
-        _authenticators.where((element) => element.aaid.isPin);
-    if (filteredAuthenticators.isEmpty) {
-      return _errorHandler.handle(BusinessException.pinAuthenticatorNotFound());
+    // we should only pass the accounts to the account selection that already
+    // have a pin enrollment
+    Set<Account> eligibleAccounts = {};
+    for (final account in _registeredAccounts) {
+      if (_isEnrolled(account.username, Aaid.pin)) {
+        eligibleAccounts.add(account);
+      }
     }
-    final userEnrollment = _authenticators.first.userEnrollment;
-    final eligibleAccounts = _registeredAccounts
-        .where((element) => userEnrollment.isEnrolled(element.username))
-        .toSet();
-    // in case that there are multiple eligible accounts then we have to show the account selection screen
-    // in case that there is only one account, then we can select it automatically
+
     if (eligibleAccounts.length > 1) {
+      // in case that there are multiple eligible accounts then we have to show
+      // the account selection screen
       _globalNavigationManager.pushSelectAccount(
         SelectAccountParameter(
           accounts: eligibleAccounts,
           operationType: OperationType.pinChange,
-          transactionConfirmationData: null,
         ),
       );
     } else if (eligibleAccounts.length == 1) {
-      final parameter = PinParameter.credentialChange(
-        username: eligibleAccounts.first.username,
+      // in case that there is only one account, then we can select it automatically
+      _startPinChange(eligibleAccounts.first.username);
+    } else {
+      _errorHandler.handle(BusinessException.accountsNotFound());
+    }
+  }
+
+  Future<void> _handlePasswordChange(
+    PasswordChangeEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    // we should only pass the accounts to the account selection that already
+    // have a password enrollment
+    Set<Account> eligibleAccounts = {};
+    for (final account in _registeredAccounts) {
+      if (_isEnrolled(account.username, Aaid.password)) {
+        eligibleAccounts.add(account);
+      }
+    }
+
+    if (eligibleAccounts.length > 1) {
+      // in case that there are multiple eligible accounts then we have to show
+      // the account selection screen
+      _globalNavigationManager.pushSelectAccount(
+        SelectAccountParameter(
+          accounts: eligibleAccounts,
+          operationType: OperationType.passwordChange,
+        ),
       );
-      _changePinUseCase
-          .execute(username: eligibleAccounts.first.username)
-          .catchError((error) {
-        _errorHandler.handle(error);
-      });
-      _globalNavigationManager.pushPin(parameter);
+    } else if (eligibleAccounts.length == 1) {
+      // in case that there is only one account, then we can select it automatically
+      _startPasswordChange(eligibleAccounts.first.username);
     } else {
       _errorHandler.handle(BusinessException.accountsNotFound());
     }
@@ -268,14 +293,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Emitter<HomeState> emit,
   ) async {
     if (_registeredAccounts.isEmpty) {
-      return _errorHandler
-          .handle(BusinessException.registeredAccountsNotFound());
+      return _errorHandler.handle(
+        BusinessException.registeredAccountsNotFound(),
+      );
     }
 
     await _deleteAuthenticatorsUseCase
-        .execute(
-      accounts: _registeredAccounts,
-    )
+        .execute(accounts: _registeredAccounts)
         .catchError((error) {
       _errorHandler.handle(error);
     });
@@ -291,6 +315,40 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       _authenticators = state.authenticators;
       _yieldBasedOnCurrentState(emit);
     }
+  }
+
+  Future<void> _startPinChange(String username) async {
+    final parameter = CredentialParameter.pinChange(
+      username: username,
+    );
+    _changePinUseCase
+        .execute(username: username) //
+        .catchError((error) {
+      _errorHandler.handle(error);
+    });
+    _globalNavigationManager.pushCredential(parameter);
+  }
+
+  Future<void> _startPasswordChange(String username) async {
+    final parameter = CredentialParameter.passwordChange(
+      username: username,
+    );
+    _changePasswordUseCase
+        .execute(username: username) //
+        .catchError((error) {
+      _errorHandler.handle(error);
+    });
+    _globalNavigationManager.pushCredential(parameter);
+  }
+
+  bool _isEnrolled(String username, Aaid aaid) {
+    final authenticators =
+        _authenticators.where((element) => element.aaid == aaid.rawValue);
+    if (authenticators.isEmpty) {
+      return false;
+    }
+
+    return authenticators.first.userEnrollment.isEnrolled(username);
   }
 
   @override

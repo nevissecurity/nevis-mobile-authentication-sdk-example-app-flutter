@@ -11,7 +11,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repos
 @Injectable(as: PinEnroller)
 class PinEnrollerImpl extends PinEnroller {
   final DomainBloc _domainBloc;
-  final StateRepository<EnrollPinState> _stateRepository;
+  final StateRepository<PinEnrollmentState> _stateRepository;
 
   PinEnrollerImpl(this._stateRepository, this._domainBloc);
 
@@ -21,10 +21,10 @@ class PinEnrollerImpl extends PinEnroller {
         ? 'PIN enrollment failed. Please try again. Error: ${context.lastRecoverableError?.description}'
         : 'Please start PIN enrollment.');
 
-    _stateRepository.save(EnrollPinState(context, handler));
-    final event = PinEnrollmentEvent(
+    _stateRepository.save(PinEnrollmentState(context, handler));
+    final event = CredentialEnrollmentEvent(
+      aaid: Aaid.pin.rawValue,
       lastRecoverableError: context.lastRecoverableError,
-      protectionStatus: null,
     );
     _domainBloc.add(event);
   }

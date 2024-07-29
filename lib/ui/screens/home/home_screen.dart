@@ -71,6 +71,11 @@ class HomeScreen extends StatelessWidget {
                             homeBloc.add(PinChangeEvent());
                           }),
                       Button.outlined(
+                          text: localization.passwordChange,
+                          onPressed: () {
+                            homeBloc.add(PasswordChangeEvent());
+                          }),
+                      Button.outlined(
                           text: localization.changeDeviceInformation,
                           onPressed: () {
                             homeBloc.add(ChangeDeviceInformationEvent());

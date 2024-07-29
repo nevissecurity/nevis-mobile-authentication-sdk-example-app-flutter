@@ -26,13 +26,17 @@ class SelectAuthenticatorUseCaseImpl implements SelectAuthenticatorUseCase {
     if (state == null) {
       throw BusinessException.invalidState();
     }
-    final authenticatorSelectionContext = state.authenticatorSelectionContext;
-    if (authenticatorSelectionContext == null) {
+    final context = state.authenticatorSelectionContext;
+    if (context == null) {
       throw BusinessException.invalidState();
     }
 
-    if (aaid.isPin && !_isPinEnrolled(authenticatorSelectionContext)) {
-      onNotEnrolled.call(authenticatorSelectionContext.account.username);
+    final isPinSelectedButNotEnrolled =
+        aaid.isPin && !_isEnrolled(context, Aaid.pin.rawValue);
+    final isPasswordSelectedButNotEnrolled =
+        aaid.isPassword && !_isEnrolled(context, Aaid.password.rawValue);
+    if (isPinSelectedButNotEnrolled || isPasswordSelectedButNotEnrolled) {
+      onNotEnrolled.call(context.account.username);
     }
     final authenticatorSelectionHandler = state.authenticatorSelectionHandler;
     if (authenticatorSelectionHandler == null) {
@@ -47,9 +51,10 @@ class SelectAuthenticatorUseCaseImpl implements SelectAuthenticatorUseCase {
     );
   }
 
-  bool _isPinEnrolled(AuthenticatorSelectionContext context) {
-    var filteredAuthenticators =
-        context.authenticators.where((e) => e.aaid.isPin);
+  bool _isEnrolled(AuthenticatorSelectionContext context, String aaid) {
+    var filteredAuthenticators = context.authenticators.where(
+      (e) => e.aaid == aaid,
+    );
     if (filteredAuthenticators.isNotEmpty) {
       return filteredAuthenticators.first.userEnrollment
           .isEnrolled(context.account.username);

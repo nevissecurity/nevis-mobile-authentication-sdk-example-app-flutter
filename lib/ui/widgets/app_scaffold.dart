@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/app_state/app_bloc.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/app_state/app_event.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/app_state/app_state.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/pin/navigation/pin_route.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/navigation/credential_route.dart';
 
 class AppScaffold extends StatelessWidget {
   final Widget body;
@@ -37,9 +37,12 @@ class AppScaffoldContent extends StatelessWidget {
       buildWhen: (oldState, newState) =>
           _isCurrent(context) && !newState.isListenable,
       listener: (ctx, state) async {
-        if (state is VerifyPinState && currentScreen(context) != PinRoute.pin) {
-          bloc.add(UserPinEvent(
-            protectionStatus: state.protectionStatus,
+        if (state is VerifyCredentialState &&
+            currentScreen(context) != CredentialRoute.credential) {
+          bloc.add(VerifyUserCredentialEvent(
+            kind: state.kind,
+            pinProtectionStatus: state.pinProtectionStatus,
+            passwordProtectionStatus: state.passwordProtectionStatus,
             lastRecoverableError: state.lastRecoverableError,
           ));
         }

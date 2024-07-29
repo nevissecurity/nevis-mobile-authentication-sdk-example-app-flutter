@@ -2,6 +2,7 @@
 
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/authenticator/authenticator_item.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/credential/credential_kind.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/operation_type.dart';
 
 abstract class DomainEvent {}
@@ -58,39 +59,46 @@ class AuthenticationSucceededEvent extends DomainEvent {
   });
 }
 
-abstract class PinEvent extends DomainEvent {
-  final PinAuthenticatorProtectionStatus? protectionStatus;
+abstract class CredentialEvent extends DomainEvent {
+  final String aaid;
+  final CredentialKind kind;
+  final PinAuthenticatorProtectionStatus? pinProtectionStatus;
+  final PasswordAuthenticatorProtectionStatus? passwordProtectionStatus;
+  final RecoverableError? lastRecoverableError;
 
-  PinEvent({
-    required this.protectionStatus,
+  CredentialEvent({
+    required this.aaid,
+    this.pinProtectionStatus,
+    this.passwordProtectionStatus,
+    this.lastRecoverableError,
+  }) : kind = aaid.isPin ? CredentialKind.pin : CredentialKind.password;
+}
+
+class CredentialEnrollmentEvent extends CredentialEvent {
+  CredentialEnrollmentEvent({
+    required super.aaid,
+    super.pinProtectionStatus,
+    super.passwordProtectionStatus,
+    super.lastRecoverableError,
   });
 }
 
-class PinEnrollmentEvent extends PinEvent {
-  final PinEnrollmentError? lastRecoverableError;
-
-  PinEnrollmentEvent({
-    required super.protectionStatus,
-    this.lastRecoverableError,
+class CredentialUserVerificationEvent extends CredentialEvent {
+  CredentialUserVerificationEvent({
+    required super.aaid,
+    super.pinProtectionStatus,
+    super.passwordProtectionStatus,
+    super.lastRecoverableError,
   });
 }
 
-class PinUserVerificationEvent extends PinEvent {
-  final PinUserVerificationError? lastRecoverableError;
-
-  PinUserVerificationEvent({
-    required PinAuthenticatorProtectionStatus protectionStatus,
-    this.lastRecoverableError,
-  }) : super(protectionStatus: protectionStatus);
-}
-
-class PinChangeEvent extends PinEvent {
-  final PinChangeRecoverableError? lastRecoverableError;
-
-  PinChangeEvent({
-    required PinAuthenticatorProtectionStatus protectionStatus,
-    this.lastRecoverableError,
-  }) : super(protectionStatus: protectionStatus);
+class CredentialChangeEvent extends CredentialEvent {
+  CredentialChangeEvent({
+    required super.aaid,
+    super.pinProtectionStatus,
+    super.passwordProtectionStatus,
+    super.lastRecoverableError,
+  });
 }
 
 class FingerPrintUserVerificationEvent extends DomainEvent {}
