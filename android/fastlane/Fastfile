@@ -78,7 +78,7 @@ platform :android do
 			file_path: build_gradle,
 			old_value: "url \"#{public_maven_repository}\"",
 			new_value: "url \"#{private_maven_repository}\"",
-		)
+		) if private_maven_repository
 	end
 
 	desc "Build the application"
