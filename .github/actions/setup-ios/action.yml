@@ -4,13 +4,11 @@ description: Sets up the environment for iOS
 runs:
   using: composite
   steps:
-    # Ensure correct Xcode version is installed.
     - name: Setup Xcode
       uses: maxim-lobanov/setup-xcode@v1
       with:
         xcode-version: ${{ env.XCODE_VERSION }}
 
-    # Set Ruby version and Cache RubyGem dependencies
     - name: Cache RubyGem Dependencies
       uses: ruby/setup-ruby@v1
       with:

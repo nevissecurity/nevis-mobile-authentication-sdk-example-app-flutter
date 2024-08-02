@@ -4,12 +4,10 @@ description: Validates Flutter code by running formatter and the analyzer
 runs:
   using: composite
   steps:
-    # Run Dart Format to ensure formatting is valid
     - name: Run Dart Format
       shell: bash
       run: dart format --set-exit-if-changed .
 
-    # Run Flutter Analyzer
     - name: Run Flutter Analyzer
       shell: bash
       run: flutter analyze

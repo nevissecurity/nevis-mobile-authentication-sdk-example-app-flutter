@@ -9,7 +9,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Update plugin dependency in the pubspec
+    - name: Update Plugin Dependency In The Pubspec
       if: ${{ env.BUILD_TYPE == 'SNAPSHOT' }}
       uses: fjogeleit/yaml-update-action@main
       with:
@@ -22,7 +22,7 @@ runs:
           }
         commitChange: false
 
-    - name: Setup pub credentials
+    - name: Setup Pub Credentials
       if: ${{ env.BUILD_TYPE == 'SNAPSHOT' }}
       uses: ./.github/actions/setup-pub-credentials
 

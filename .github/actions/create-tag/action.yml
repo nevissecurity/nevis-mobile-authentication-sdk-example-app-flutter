@@ -1,4 +1,4 @@
-name: Create tag
+name: Create Tag
 description: Creates a tag
 
 inputs:
@@ -15,7 +15,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Create tag
+    - name: Create Tag
       uses: actions/github-script@v6
       env:
         TAG_NAME: ${{ inputs.build-category }}/${{ inputs.app-version }}/${{ inputs.build-number }}

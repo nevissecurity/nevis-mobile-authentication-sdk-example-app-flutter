@@ -1,11 +1,6 @@
 name: Update Config
 description: 'Updates the configuration'
 
-inputs:
-  host-name:
-    description: 'The host name to update'
-    required: true
-
 runs:
   using: composite
   steps:
@@ -14,11 +9,11 @@ runs:
       with:
         file: assets/config_authentication_cloud.json
         field: login.loginRequestURL
-        value: "https://${{ inputs.host-name }}.mauth.nevis.cloud/_app/auth/pwd"
+        value: "https://${{ env.HOST_NAME }}.mauth.nevis.cloud/_app/auth/pwd"
 
     - name: Update Configuration (hostname)
       uses: jossef/action-set-json-field@v2.1
       with:
         file: assets/config_authentication_cloud.json
         field: sdk.hostname
-        value: "${{ inputs.host-name }}.mauth.nevis.cloud"
+        value: "${{ env.HOST_NAME }}.mauth.nevis.cloud"
