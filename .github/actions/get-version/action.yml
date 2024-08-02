@@ -1,0 +1,41 @@
+name: Get Version
+description: Retrieves the App and SDK versions and the build number for the application
+
+outputs:
+  app-version:
+    description: The current version of the Application
+    value: ${{ steps.get_app_version_number.outputs.version }}
+  sdk-version:
+    description: The current version of the used SDK
+    value: ${{ steps.get_sdk_version_number.outputs.sdk-version }}
+  build-number:
+    description: The generated build number
+    value: ${{ steps.get_build_number.outputs.build }}
+
+runs:
+  using: composite
+  steps:
+    # Get version number from the pubspec file
+    - name: Get App Version Number
+      id: get_app_version_number
+      shell: bash
+      run: |
+        VERSION=`cat pubspec.yaml | grep -o 'version:[^:].*' | cut -f2 -d":" | cut -f1 -d"+" | xargs`
+        echo "version=$(echo $VERSION)" >> $GITHUB_OUTPUT
+        echo Version number is $VERSION
+
+    # Get SDK version number from the pubspec file
+    - name: Get SDK Version Number
+      id: get_sdk_version_number
+      shell: bash
+      run: |
+        SDK_VERSION=`cat pubspec.yaml | grep -o "nevis_mobile_authentication_sdk: '[^']*'" | cut -f2 -d"'" | xargs`
+        echo "sdk-version=$(echo $SDK_VERSION)" >> $GITHUB_OUTPUT
+        echo SDK Version number is "$SDK_VERSION"
+
+    # Generate build number
+    - name: Generate Build Number
+      id: get_build_number
+      uses: onyxmueller/build-tag-number@v1
+      with:
+        token: ${{env.GITHUB_TOKEN}}

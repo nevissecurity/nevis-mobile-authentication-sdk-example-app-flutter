@@ -1,0 +1,30 @@
+name: Create tag
+description: Creates a tag
+
+inputs:
+  app-version:
+    description: The current version of the Application
+    required: true
+  build-number:
+    description: The current build-number of the Application
+    required: true
+  build-category:
+    description: The category of the tag to be created
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Create tag
+      uses: actions/github-script@v6
+      env:
+        TAG_NAME: ${{ inputs.build-category }}/${{ inputs.app-version }}/${{ inputs.build-number }}
+      with:
+        github-token: ${{ env.GITHUB_TOKEN }}
+        script: |
+          await github.rest.git.createRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: "refs/tags/" + process.env.TAG_NAME,
+            sha: context.sha
+          })

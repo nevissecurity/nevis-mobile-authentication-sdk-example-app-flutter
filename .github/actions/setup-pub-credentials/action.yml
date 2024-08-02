@@ -1,0 +1,11 @@
+name: Setup Pub Credentials
+description: Sets up Pub Credentials
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Pub Credentials
+      shell: bash
+      run: |
+        echo Setting up Pub credentials...
+        echo '${{ env.PRIVATE_REPOSITORY_API_KEY }}' | dart pub token add ${{ env.PRIVATE_DART_REPOSITORY }}

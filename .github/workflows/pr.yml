@@ -1,0 +1,114 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches: [ 'main', 'develop', 'release/*', 'hotfix/*', 'feature/*' ]
+  workflow_dispatch:
+
+env:
+  BUILD_TYPE: 'SNAPSHOT' # Allowed values: 'SNAPSHOT', 'RELEASE', 'RELEASE_CANDIDATE', 'HOTFIX'
+  FLUTTER_VERSION: '3.19.0'
+  XCODE_VERSION: '15.4'
+  JAVA_VERSION: '11'
+  RUBY_VERSION: '3.1'
+  HOST_NAME: ${{ secrets.HOST_NAME }}
+  PRIVATE_REPOSITORY_API_KEY: ${{ secrets.PRIVATE_REPOSITORY_API_KEY }}
+  PRIVATE_DART_REPOSITORY: ${{ secrets.PRIVATE_DART_REPOSITORY }}
+  PRIVATE_NATIVE_IOS_REPOSITORY: ${{ secrets.PRIVATE_NATIVE_IOS_REPOSITORY }}
+  PRIVATE_NATIVE_ANDROID_REPOSITORY: ${{ secrets.PRIVATE_NATIVE_ANDROID_REPOSITORY }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
+  GITHUB_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+  CURRENT_BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+jobs:
+  flutter-validation:
+    name: Validate Flutter
+    runs-on: ubuntu-latest
+    outputs:
+      sdk-version: ${{ steps.get-versions.outputs.sdk-version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch SDK version
+        id: get-versions
+        uses: ./.github/actions/get-version
+
+      - name: Setup Flutter
+        uses: ./.github/actions/setup-flutter
+
+      - name: Update Flutter dependencies
+        uses: ./.github/actions/update-flutter-dependencies
+        with:
+          sdk-version: ${{ steps.get-versions.outputs.sdk-version }}
+
+      - name: Validate Flutter
+        uses: ./.github/actions/validate-flutter
+
+  ios-build:
+    name: Building iOS App
+    runs-on: self-hosted
+    needs: [flutter-validation]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update Configuration
+        uses: ./.github/actions/update-config
+        with:
+          host-name: ${{ env.HOST_NAME }}
+
+      - name: Setup Flutter
+        uses: ./.github/actions/setup-flutter
+
+      - name: Update Flutter dependencies
+        uses: ./.github/actions/update-flutter-dependencies
+        with:
+          sdk-version: ${{ needs.flutter-validation.outputs.sdk-version }}
+
+      - name: Setup iOS environment
+        uses: ./.github/actions/setup-ios
+
+      - name: Build iOS Example App
+        env:
+          PRIVATE_NATIVE_REPOSITORY: ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY }}
+        uses: maierj/fastlane-action@v3.0.0
+        with:
+          lane: 'pr'
+          subdirectory: 'ios'
+
+  android-build:
+    name: Building Android App
+    runs-on: ubuntu-latest
+    needs: [flutter-validation]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update Configuration
+        uses: ./.github/actions/update-config
+        with:
+          host-name: ${{ env.HOST_NAME }}
+
+      - name: Setup Flutter
+        uses: ./.github/actions/setup-flutter
+
+      - name: Update Flutter dependencies
+        uses: ./.github/actions/update-flutter-dependencies
+        with:
+          sdk-version: ${{ needs.flutter-validation.outputs.sdk-version }}
+
+      - name: Setup Android environment
+        uses: ./.github/actions/setup-android
+
+      - name: Build Android Example App
+        env:
+          PRIVATE_NATIVE_REPOSITORY: ${{ env.PRIVATE_NATIVE_ANDROID_REPOSITORY }}
+          GITHUB_USERNAME: ${{ env.GITHUB_USERNAME }}
+          GITHUB_PERSONAL_ACCESS_TOKEN: ${{ env.GITHUB_PERSONAL_ACCESS_TOKEN }}
+          CURRENT_BUILD_URL: ${{ env.CURRENT_BUILD_URL }}
+        uses: maierj/fastlane-action@v3.0.0
+        with:
+          lane: 'pr'
+          subdirectory: 'android'

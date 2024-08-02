@@ -4,19 +4,12 @@ description: 'Updates the configuration'
 inputs:
   host-name:
     description: 'The host name to update'
-    required: false
-  private-dart-repository:
-    description: 'The URL of the private Dart repository'
-    required: false
-  private-repository-api-key:
-    description: 'The API key used for access to the private Dart repository'
-    required: false
+    required: true
 
 runs:
   using: composite
   steps:
     - name: Update Configuration (loginRequestURL)
-      if: ${{ inputs.host-name }}
       uses: jossef/action-set-json-field@v2.1
       with:
         file: assets/config_authentication_cloud.json
@@ -24,37 +17,8 @@ runs:
         value: "https://${{ inputs.host-name }}.mauth.nevis.cloud/_app/auth/pwd"
 
     - name: Update Configuration (hostname)
-      if: ${{ inputs.host-name }}
       uses: jossef/action-set-json-field@v2.1
       with:
         file: assets/config_authentication_cloud.json
         field: sdk.hostname
         value: "${{ inputs.host-name }}.mauth.nevis.cloud"
-
-    # Get SDK version number
-    - name: Get Version Number
-      id: get_sdk_version_number
-      shell: bash
-      run: |
-        SDK_VERSION=`cat pubspec.yaml | grep -o "nevis_mobile_authentication_sdk: '[^']*'" | cut -f2 -d"'" | xargs`
-        echo "sdk-version=$(echo $SDK_VERSION)" >> $GITHUB_OUTPUT
-        echo SDK Version number is "$SDK_VERSION"
-
-    - name: Update plugin dependency in the pubspec
-      if: ${{ inputs.private-dart-repository }}
-      uses: fjogeleit/yaml-update-action@main
-      with:
-        valueFile: "pubspec.yaml"
-        changes: |
-          {
-            "dependencies.nevis_mobile_authentication_sdk": "",
-            "dependencies.nevis_mobile_authentication_sdk.hosted": "${{ inputs.private-dart-repository }}",
-            "dependencies.nevis_mobile_authentication_sdk.version": "${{ steps.get_sdk_version_number.outputs.sdk-version }}"
-          }
-        commitChange: false
-
-    - name: Add API key to access the private repository
-      if: ${{ inputs.private-dart-repository && inputs.private-repository-api-key }}
-      shell: bash
-      run: |
-        echo '${{ inputs.private-repository-api-key }}' | dart pub token add ${{ inputs.private-dart-repository }}

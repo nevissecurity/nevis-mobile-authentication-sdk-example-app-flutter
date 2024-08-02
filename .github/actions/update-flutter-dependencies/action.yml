@@ -1,0 +1,31 @@
+name: Update Flutter Dependencies
+description: Updates the Flutter dependencies
+
+inputs:
+  sdk-version:
+    description: The version of the used Mobile Authentication SDK
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - name: Update plugin dependency in the pubspec
+      if: ${{ env.BUILD_TYPE == 'SNAPSHOT' }}
+      uses: fjogeleit/yaml-update-action@main
+      with:
+        valueFile: "pubspec.yaml"
+        changes: |
+          {
+            "dependencies.nevis_mobile_authentication_sdk": "",
+            "dependencies.nevis_mobile_authentication_sdk.hosted": "${{ env.PRIVATE_DART_REPOSITORY }}",
+            "dependencies.nevis_mobile_authentication_sdk.version": "${{ inputs.sdk-version }}"
+          }
+        commitChange: false
+
+    - name: Setup pub credentials
+      if: ${{ env.BUILD_TYPE == 'SNAPSHOT' }}
+      uses: ./.github/actions/setup-pub-credentials
+
+    - name: Resolve Flutter Packages
+      shell: bash
+      run: flutter pub get

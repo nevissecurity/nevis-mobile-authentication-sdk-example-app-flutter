@@ -5,61 +5,163 @@ on:
     branches: [ 'develop' ]
   workflow_dispatch:
 
+env:
+  BUILD_TYPE: 'SNAPSHOT' # Allowed values: 'SNAPSHOT', 'RELEASE', 'RELEASE_CANDIDATE', 'HOTFIX'
+  FLUTTER_VERSION: '3.19.0'
+  XCODE_VERSION: '15.4'
+  JAVA_VERSION: '11'
+  RUBY_VERSION: '3.1'
+  HOST_NAME: ${{ secrets.HOST_NAME }}
+  PRIVATE_REPOSITORY_API_KEY: ${{ secrets.PRIVATE_REPOSITORY_API_KEY }}
+  PRIVATE_DART_REPOSITORY: ${{ secrets.PRIVATE_DART_REPOSITORY }}
+  PRIVATE_NATIVE_IOS_REPOSITORY: ${{ secrets.PRIVATE_NATIVE_IOS_REPOSITORY }}
+  PRIVATE_NATIVE_ANDROID_REPOSITORY: ${{ secrets.PRIVATE_NATIVE_ANDROID_REPOSITORY }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
+  GITHUB_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+  FIREBASE_APP_ID_IOS: ${{ secrets.FIREBASE_APP_ID_IOS }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  MATCH_GIT_AUTHORIZATION: ${{ secrets.MATCH_GIT_AUTHORIZATION }}
+  MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+  MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+  DEVELOPER_PORTAL_TEAM_ID: ${{ secrets.DEVELOPER_PORTAL_TEAM_ID }}
+  CODE_SIGNING_IDENTITY: ${{ secrets.CODE_SIGNING_IDENTITY }}
+  PROVISIONING_PROFILE_SPECIFIER: ${{ secrets.PROVISIONING_PROFILE_SPECIFIER }}
+  TEMP_KEYCHAIN_NAME: ${{ secrets.TEMP_KEYCHAIN_NAME }}
+  KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
+  CURRENT_BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
 jobs:
   versioning:
-    name: Versioning
-    uses: ./.github/workflows/versioning.yml
+    name: Fetch versions
+    runs-on: ubuntu-latest
+    outputs:
+      sdk-version: ${{ steps.get-versions.outputs.sdk-version }}
+      app-version: ${{ steps.get-versions.outputs.sdk-version }}
+      build-number:  ${{ steps.get-versions.outputs.build-number }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-  publish_ios:
-    name: iOS
-    needs: versioning
-    uses: ./.github/workflows/publish_ios.yml
-    with:
-      version: ${{ needs.versioning.outputs.version }}
-      build-number: ${{ needs.versioning.outputs.build }}
-      build-on: "develop"
-    secrets:
-      HOST_NAME: ${{ secrets.HOST_NAME }}
-      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      FIREBASE_APP_ID_IOS: ${{ secrets.FIREBASE_APP_ID_IOS }}
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      MATCH_GIT_AUTHORIZATION: ${{ secrets.MATCH_GIT_AUTHORIZATION }}
-      MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
-      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-      DEVELOPER_PORTAL_TEAM_ID: ${{ secrets.DEVELOPER_PORTAL_TEAM_ID }}
-      CODE_SIGNING_IDENTITY: ${{ secrets.CODE_SIGNING_IDENTITY }}
-      PROVISIONING_PROFILE_SPECIFIER: ${{ secrets.PROVISIONING_PROFILE_SPECIFIER }}
-      TEMP_KEYCHAIN_NAME: ${{ secrets.TEMP_KEYCHAIN_NAME }}
-      PRIVATE_DART_REPOSITORY: ${{ secrets.PRIVATE_DART_REPOSITORY }}
-      PRIVATE_NATIVE_REPOSITORY: ${{ secrets.PRIVATE_NATIVE_IOS_REPOSITORY }}
-      PRIVATE_REPOSITORY_API_KEY: ${{ secrets.PRIVATE_REPOSITORY_API_KEY }}
+      - name: Fetch SDK version
+        id: get-versions
+        uses: ./.github/actions/get-version
 
-  publish_android:
-    name: Android
-    needs: versioning
-    uses: ./.github/workflows/publish_android.yml
-    with:
-      version: ${{ needs.versioning.outputs.version }}
-      build-number: ${{ needs.versioning.outputs.build }}
-      build-on: "develop"
-    secrets:
-      HOST_NAME: ${{ secrets.HOST_NAME }}
-      KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
-      SIGNING_CONFIGS: ${{ secrets.SIGNING_CONFIGS }}
-      GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
-      GITHUB_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      FIREBASE_APP_ID_ANDROID: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      PRIVATE_DART_REPOSITORY: ${{ secrets.PRIVATE_DART_REPOSITORY }}
-      PRIVATE_NATIVE_REPOSITORY: ${{ secrets.PRIVATE_NATIVE_ANDROID_REPOSITORY }}
-      PRIVATE_REPOSITORY_API_KEY: ${{ secrets.PRIVATE_REPOSITORY_API_KEY }}
+  publish-ios:
+    name: Publishing iOS App
+    needs: [versioning]
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update Configuration
+        uses: ./.github/actions/update-config
+        with:
+          host-name: ${{ env.HOST_NAME }}
+
+      - name: Setup Flutter
+        uses: ./.github/actions/setup-flutter
+
+      - name: Increment Build Number
+        uses: ./.github/actions/increment-build-number
+        with:
+          build-number: ${{ needs.versioning.outputs.build-number }}
+
+      - name: Update Flutter dependencies
+        uses: ./.github/actions/update-flutter-dependencies
+        with:
+          sdk-version: ${{ needs.versioning.outputs.sdk-version }}
+
+      - name: Setup iOS environment
+        uses: ./.github/actions/setup-ios
+
+      - name: Build and distribute the iOS Example App
+        env:
+          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+          MATCH_GIT_AUTHORIZATION: ${{ env.MATCH_GIT_AUTHORIZATION }}
+          MATCH_GIT_URL: ${{ env.MATCH_GIT_URL }}
+          MATCH_PASSWORD: ${{ env.MATCH_PASSWORD }}
+          DEVELOPER_PORTAL_TEAM_ID: ${{ env.DEVELOPER_PORTAL_TEAM_ID }}
+          CODE_SIGNING_IDENTITY: ${{ env.CODE_SIGNING_IDENTITY }}
+          PROVISIONING_PROFILE_SPECIFIER: ${{ env.PROVISIONING_PROFILE_SPECIFIER }}
+          FIREBASE_TOKEN: ${{ env.FIREBASE_TOKEN }}
+          FIREBASE_APP_ID_IOS: ${{ env.FIREBASE_APP_ID_IOS }}
+          TEMP_KEYCHAIN_NAME: ${{ env.TEMP_KEYCHAIN_NAME }}
+          SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
+          PRIVATE_NATIVE_REPOSITORY: ${{ env.PRIVATE_NATIVE_REPOSITORY }}
+          CURRENT_BUILD_URL: ${{ env.CURRENT_BUILD_URL }}
+        uses: maierj/fastlane-action@v3.0.0
+        with:
+          lane: 'develop'
+          subdirectory: 'ios'
+          options: |
+            {
+              "version": "${{ needs.versioning.outputs.app-version }}",
+              "build_number": "${{ needs.versioning.outputs.build-number }}"
+            }
+
+  publish-android:
+    name: Publishing Android App
+    needs: [versioning]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update Configuration
+        uses: ./.github/actions/update-config
+        with:
+          host-name: ${{ env.HOST_NAME }}
+
+      - name: Setup Flutter
+        uses: ./.github/actions/setup-flutter
+
+      - name: Increment Build Number
+        uses: ./.github/actions/increment-build-number
+        with:
+          build-number: ${{ needs.versioning.outputs.build-number }}
+
+      - name: Update Flutter dependencies
+        uses: ./.github/actions/update-flutter-dependencies
+        with:
+          sdk-version: ${{ needs.versioning.outputs.sdk-version }}
+
+      - name: Setup Android environment
+        uses: ./.github/actions/setup-android
+
+      - name: Build and distribute the Android Example App
+        env:
+          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+          SIGNING_CONFIGS: ${{ env.SIGNING_CONFIGS }}
+          GITHUB_USERNAME: ${{ env.SIGNING_CONFIGS }}
+          GITHUB_PERSONAL_ACCESS_TOKEN: ${{ env.GITHUB_PERSONAL_ACCESS_TOKEN }}
+          FIREBASE_TOKEN: ${{ env.FIREBASE_TOKEN }}
+          FIREBASE_APP_ID_ANDROID: ${{ env.FIREBASE_APP_ID_ANDROID }}
+          SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
+          PRIVATE_NATIVE_REPOSITORY: ${{ env.PRIVATE_NATIVE_REPOSITORY }}
+        uses: maierj/fastlane-action@v3.0.0
+        with:
+          lane: 'develop'
+          subdirectory: 'android'
+          options: |
+            {
+              "version": "${{ needs.versioning.outputs.app-version }}",
+              "build_number": "${{ needs.versioning.outputs.build-number }}"
+            }
 
   tag:
-    name: Tag
-    needs: [versioning, publish_ios, publish_android]
-    uses: ./.github/workflows/tagging.yml
-    with:
-      version: ${{ needs.versioning.outputs.version }}
-      build-number: ${{ needs.versioning.outputs.build }}
-      build-category: "build"
+    name: Tagging
+    needs: [versioning, publish-ios, publish-android]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v3
+
+      - name: Create Tag
+        uses: ./.github/actions/create-tag
+        with:
+          build-category: 'build'
+          app-version: ${{ needs.versioning.outputs.app-version }}
+          build-number: ${{ needs.versioning.outputs.build-number }}
