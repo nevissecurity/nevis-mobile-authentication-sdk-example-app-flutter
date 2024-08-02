@@ -4,14 +4,12 @@ description: Sets up the environment for Android
 runs:
   using: composite
   steps:
-    # Ensure correct Java version is installed
     - name: Setup Java JDK
       uses: actions/setup-java@v3
       with:
         distribution: 'zulu'
         java-version: ${{ env.JAVA_VERSION }}
 
-    # Set Ruby version and Cache RubyGem dependencies
     - name: Cache RubyGem Dependencies
       uses: ruby/setup-ruby@v1
       with:
@@ -19,7 +17,6 @@ runs:
         bundler-cache: true
         working-directory: 'android'
 
-    # Move the Java keystore to its place
     - name: Decode Keystore
       if: ${{ env.KEYSTORE_FILE != '' }}
       uses: timheuer/base64-to-file@v1

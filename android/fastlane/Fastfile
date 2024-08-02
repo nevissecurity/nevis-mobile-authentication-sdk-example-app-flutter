@@ -15,27 +15,27 @@ build_gradle = File.join(root_dir, "build.gradle")
 public_maven_repository = "https://maven.pkg.github.com/nevissecurity/nevis-mobile-authentication-sdk-android-package"
 
 def report_on_success(message)
-	slack(
-		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
-		slack_url: ENV['SLACK_WEBHOOK_URL']
-	) if ENV['SLACK_WEBHOOK_URL']
+# 	slack(
+# 		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
+# 		slack_url: ENV['SLACK_WEBHOOK_URL']
+# 	) if ENV['SLACK_WEBHOOK_URL']
 end
 
 def report_on_error(message, exception)
-	slack(
-		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
-		slack_url: ENV['SLACK_WEBHOOK_URL'],
-		success: false,
-		attachment_properties: {
-			fields: [
-				{
-					title: "Error message",
-					value: exception.to_s,
-					short: false
-				}
-			]
-		}
-	) if ENV['SLACK_WEBHOOK_URL']
+# 	slack(
+# 		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
+# 		slack_url: ENV['SLACK_WEBHOOK_URL'],
+# 		success: false,
+# 		attachment_properties: {
+# 			fields: [
+# 				{
+# 					title: "Error message",
+# 					value: exception.to_s,
+# 					short: false
+# 				}
+# 			]
+# 		}
+# 	) if ENV['SLACK_WEBHOOK_URL']
 	UI.user_error!("#{exception}")
 end
 
@@ -78,7 +78,7 @@ platform :android do
 			file_path: build_gradle,
 			old_value: "url \"#{public_maven_repository}\"",
 			new_value: "url \"#{private_maven_repository}\"",
-		)
+		) if private_maven_repository
 	end
 
 	desc "Build the application"

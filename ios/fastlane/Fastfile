@@ -106,7 +106,7 @@ platform :ios do
 	desc ""
 	private_lane :utilize_private_repos do
 		private_pod_repository = ENV["PRIVATE_NATIVE_REPOSITORY"]
-		prepare_podfile(private_pod_repository)
+		prepare_podfile(private_pod_repository) if private_pod_repository
 	end
 
 	desc "Build the application"

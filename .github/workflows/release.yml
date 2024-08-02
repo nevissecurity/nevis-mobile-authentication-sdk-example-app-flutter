@@ -2,20 +2,16 @@ name: Pull Request
 
 on:
   pull_request:
-    branches: [ 'develop' ]
+    branches: [ 'main', 'feature/NEVISACCESSAPP-6100*' ]
   workflow_dispatch:
 
 env:
-  BUILD_TYPE: 'SNAPSHOT' # Allowed values: 'SNAPSHOT', 'RELEASE', 'RELEASE_CANDIDATE'
+  BUILD_TYPE: 'RELEASE_CANDIDATE' # Allowed values: 'SNAPSHOT', 'RELEASE', 'RELEASE_CANDIDATE'
   FLUTTER_VERSION: '3.19.0'
   XCODE_VERSION: '15.4'
   JAVA_VERSION: '11'
   RUBY_VERSION: '3.1'
   HOST_NAME: ${{ secrets.HOST_NAME }}
-  PRIVATE_REPOSITORY_API_KEY: ${{ secrets.PRIVATE_REPOSITORY_API_KEY }}
-  PRIVATE_DART_REPOSITORY: ${{ secrets.PRIVATE_DART_REPOSITORY }}
-  PRIVATE_NATIVE_IOS_REPOSITORY: ${{ secrets.PRIVATE_NATIVE_IOS_REPOSITORY }}
-  PRIVATE_NATIVE_ANDROID_REPOSITORY: ${{ secrets.PRIVATE_NATIVE_ANDROID_REPOSITORY }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
   GITHUB_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
@@ -38,10 +34,8 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
 
-      - name: Update Flutter dependencies
+      - name: Update Flutter Dependencies
         uses: ./.github/actions/update-flutter-dependencies
-        with:
-          sdk-version: ${{ steps.get-versions.outputs.sdk-version }}
 
       - name: Validate Flutter
         uses: ./.github/actions/validate-flutter
@@ -59,15 +53,11 @@ jobs:
 
       - name: Update Flutter Dependencies
         uses: ./.github/actions/update-flutter-dependencies
-        with:
-          sdk-version: ${{ needs.flutter-validation.outputs.sdk-version }}
 
       - name: Setup iOS Environment
         uses: ./.github/actions/setup-ios
 
       - name: Build iOS Example App
-        env:
-          PRIVATE_NATIVE_REPOSITORY: ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY }}
         uses: maierj/fastlane-action@v3.0.0
         with:
           lane: 'pr'
@@ -86,15 +76,11 @@ jobs:
 
       - name: Update Flutter Dependencies
         uses: ./.github/actions/update-flutter-dependencies
-        with:
-          sdk-version: ${{ needs.flutter-validation.outputs.sdk-version }}
 
       - name: Setup Android Environment
         uses: ./.github/actions/setup-android
 
       - name: Build Android Example App
-        env:
-          PRIVATE_NATIVE_REPOSITORY: ${{ env.PRIVATE_NATIVE_ANDROID_REPOSITORY }}
         uses: maierj/fastlane-action@v3.0.0
         with:
           lane: 'pr'
