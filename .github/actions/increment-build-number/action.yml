@@ -1,0 +1,16 @@
+name: Increment build number
+description: Increments the build number of the App
+
+inputs:
+  build-number:
+    description: The new build number of the application
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Increment Build Number
+      shell: bash
+      run: |
+        dart pub global activate cider
+        cider bump build --build=${{ inputs.build-number }}
