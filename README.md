@@ -2,8 +2,10 @@
 
 # Nevis Mobile Authentication SDK Flutter Example App
 
+[![Pull Request](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-flutter/actions/workflows/pr.yml/badge.svg)](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-flutter/actions/workflows/pr.yml)
+[![Develop Branch Commit](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-flutter/actions/workflows/develop.yml/badge.svg)](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-flutter/actions/workflows/develop.yml)
+[![Release Candidate Build](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-flutter/actions/workflows/release.yml/badge.svg)](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-flutter/actions/workflows/release.yml)
 [![Main Branch Commit](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-flutter/actions/workflows/main.yml/badge.svg)](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-flutter/actions/workflows/main.yml)
-[![Verify Pull Request](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-flutter/actions/workflows/pr.yml/badge.svg)](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-flutter/actions/workflows/pr.yml)
 
 This repository contains the example app demonstrating how to use the Nevis Mobile Authentication SDK Flutter plugin in a Flutter app.
 The Nevis Mobile Authentication SDK allows you to integrate passwordless authentication to your existing mobile app, backed by FIDO UAF 1.1. 
@@ -29,13 +31,13 @@ Before you can actually start compiling and using the example applications pleas
 Your development setup has to meet the following prerequisites:
 
 * iOS 12 or later
-* Xcode 14.x, including Swift 5.7 or later
+* Xcode 15.x, including Swift 5.7 or later
 * Android 6 or later, with API level 23 -or-
 * Android 10 or later, with API level 29, for the biometric authenticator to work
 * Gradle 7.4 or later
 * Android Gradle Plugin `com.android.tools.build:gradle` 7.0.0 or later
 * Kotlin Gradle Plugin `org.jetbrains.kotlin:kotlin-gradle-plugin` 1.8.0 or later
-* Flutter SDK 3.x, stable channel
+* Dart SDK 3.3.0 or later
 
 ### Initialization
 

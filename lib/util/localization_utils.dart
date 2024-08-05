@@ -11,6 +11,8 @@ extension AuthenticatorLocalizationExtension on String {
   String resolve(AppLocalizations localizations) {
     if (this == Aaid.pin.rawValue) {
       return localizations.authenticatorTitlePin;
+    } else if (this == Aaid.password.rawValue) {
+      return localizations.authenticatorTitlePassword;
     } else if (this == Aaid.biometric.rawValue) {
       if (Platform.isAndroid) {
         return localizations.authenticatorTitleBiometric;
@@ -27,7 +29,7 @@ extension AuthenticatorLocalizationExtension on String {
       return localizations.authenticatorTitleDevicePasscode;
     }
 
-    return 'Unknown AAID: ${this}';
+    return 'Unknown AAID: $this';
   }
 }
 
@@ -64,6 +66,8 @@ extension OperationTypeLocalizationExtension on OperationType {
         return localizations.operationTypeDeregistration;
       case OperationType.pinChange:
         return localizations.operationTypePinChange;
+      case OperationType.passwordChange:
+        return localizations.operationTypePasswordChange;
       case OperationType.deviceInformationChange:
         return localizations.operationTypeDeviceInformationChange;
       case OperationType.payloadDecode:
@@ -94,29 +98,10 @@ extension BusinessErrorTypeLocalizationExtension on BusinessErrorType {
       case BusinessErrorType.missingOpenSettingsOperationForUser:
         return localizations
             .businessErrorTypeMissingOpenSettingsOperationForUser;
-      case BusinessErrorType.pinAuthenticatorNotFound:
-        return localizations.businessErrorTypePinAuthenticatorNotFound;
+      case BusinessErrorType.credentialAuthenticatorNotFound:
+        return localizations.businessErrorTypeCredentialAuthenticatorNotFound;
       case BusinessErrorType.registeredAccountsNotFound:
         return localizations.businessErrorTypeRegisteredAccountsNotFound;
     }
-  }
-}
-
-extension RecoverableErrorTypeExtension on RecoverableError {
-  String? resolve(AppLocalizations localizations) {
-    if (this is PinUserVerificationInvalidPinError) {
-      return localizations.pinUserVerificationInvalidPinError;
-    } else if (this is PinChangeRecoverableInvalidPin) {
-      return localizations.pinChangeRecoverableInvalidPin;
-    } else if (this is PinChangeRecoverableInvalidPinFormat) {
-      return localizations.pinChangeRecoverableInvalidPinFormat;
-    } else if (this is PinChangeRecoverableOldPinEqualsNewPin) {
-      return localizations.pinChangeRecoverableOldPinEqualsNewPin;
-    } else if (this is FingerprintUserVerificationError) {
-      return localizations.fingerprintUserVerificationError;
-    } else if (this is PinEnrollmentInvalidPinFormat) {
-      return localizations.pinEnrollmentInvalidPinFormat;
-    }
-    return null;
   }
 }

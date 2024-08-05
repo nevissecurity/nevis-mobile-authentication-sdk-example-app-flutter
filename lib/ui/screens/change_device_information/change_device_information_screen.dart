@@ -94,6 +94,7 @@ class _ChangeDeviceInformationScreenState
           },
           onEditingComplete: () =>
               FocusManager.instance.primaryFocus?.unfocus(),
+          onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
           decoration: InputDecoration(
             labelText: _localization.changeDeviceInformationNewName,
             hintText: _localization.changeDeviceInformationNewName,

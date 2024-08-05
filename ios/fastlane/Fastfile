@@ -58,16 +58,83 @@ def report_on_error(message, exception)
 	UI.user_error!("#{exception}")
 end
 
+def prepare_podfile(private_pod_repository)
+	filename = File.join('./../Podfile')
+	File.open(filename, 'r') do |original_lines|
+		File.unlink(filename)
+		File.open(filename, 'w') do |new_lines|
+			new_lines.write "source '#{private_pod_repository}'\n"
+			new_lines.write(original_lines.read())
+		end
+	end
+end
+
 platform :ios do
-	desc "Build and distribute the application"
-    desc "#### Options"
-    desc " * **`version`**: The version of the application."
-    desc " * **`build_number`**: The build number of the application."
-    desc ""
+	desc "Pull request build"
+	desc ""
+	lane :pr do |options|
+		utilize_private_repos
+		build(is_release: false)
+	end
+
+	desc "Continuous build"
+	desc "#### Options"
+	desc " * **`version`**: The version of the application."
+	desc " * **`build_number`**: The build number of the application."
+	desc ""
+	lane :develop do |options|
+		utilize_private_repos
+		build(is_release: false)
+		distribute(options)
+	end
+
+	desc "Release build"
+	desc "#### Options"
+	desc " * **`version`**: The version of the application."
+	desc " * **`build_number`**: The build number of the application."
+	desc ""
 	lane :main do |options|
+		build(is_release: true)
+		distribute(options)
+	end
+
+	####
+	#### Private lanes
+	####
+
+	desc "Utilize private repositories"
+	desc ""
+	private_lane :utilize_private_repos do
+		private_pod_repository = ENV["PRIVATE_NATIVE_REPOSITORY"]
+		prepare_podfile(private_pod_repository) if private_pod_repository
+	end
+
+	desc "Build the application"
+	desc "#### Options"
+	desc " * **`is_release`**: Determines the build type."
+	desc ""
+	private_lane :build do |options|
+		is_release = options[:is_release] || false
+
+		build_type = is_release ? "--release" : ""
+
+		UI.message("Archive Preparation")
+		Dir.chdir("..") do
+			Actions.sh("flutter build ios #{build_type} --no-codesign", error_callback: -> (result) {
+				raise "❌ Archive Preparation failed failed! Result: #{result}"
+			})
+		end
+	end
+
+	desc "Distribute the application"
+	desc "#### Options"
+	desc " * **`version`**: The version of the application."
+	desc " * **`build_number`**: The build number of the application."
+	desc ""
+	private_lane :distribute do |options|
 		begin
-    		version = options[:version]
-	    	build_number = options[:build_number]
+			version = options[:version]
+			build_number = options[:build_number]
 
 			keychain_name = ENV["TEMP_KEYCHAIN_NAME"]
 			ensure_temp_keychain(

@@ -9,6 +9,9 @@ part of 'app_configuration.dart';
 AppConfiguration _$AppConfigurationFromJson(Map<String, dynamic> json) =>
     AppConfiguration(
       allowClass2Sensors: json['allowClass2Sensors'] as bool,
+      authenticatorAllowlist: (json['authenticatorAllowlist'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
       loginConfiguration:
           LoginConfiguration.fromJson(json['login'] as Map<String, dynamic>),
       sdkConfiguration:
@@ -18,6 +21,7 @@ AppConfiguration _$AppConfigurationFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$AppConfigurationToJson(AppConfiguration instance) =>
     <String, dynamic>{
       'allowClass2Sensors': instance.allowClass2Sensors,
+      'authenticatorAllowlist': instance.authenticatorAllowlist,
       'login': instance.loginConfiguration.toJson(),
       'sdk': instance.sdkConfiguration.toJson(),
     };

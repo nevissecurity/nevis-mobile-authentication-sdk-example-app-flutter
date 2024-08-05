@@ -27,6 +27,7 @@ class RegistrationUseCaseImpl implements RegistrationUseCase {
   final CreateDeviceInformationUseCase _createDeviceInformationUseCase;
   final AuthenticatorSelector _authenticatorSelector;
   final PinEnroller _pinEnroller;
+  final PasswordEnroller _passwordEnroller;
   final BiometricUserVerifier _biometricUserVerifier;
   final DevicePasscodeUserVerifier _devicePasscodeUserVerifier;
   final FingerprintUserVerifier _fingerprintUserVerifier;
@@ -41,6 +42,7 @@ class RegistrationUseCaseImpl implements RegistrationUseCase {
     this._createDeviceInformationUseCase,
     @Named("auth_selector_reg") this._authenticatorSelector,
     this._pinEnroller,
+    this._passwordEnroller,
     this._biometricUserVerifier,
     this._devicePasscodeUserVerifier,
     this._fingerprintUserVerifier,
@@ -67,6 +69,7 @@ class RegistrationUseCaseImpl implements RegistrationUseCase {
         .deviceInformation(deviceInformation)
         .authenticatorSelector(_authenticatorSelector)
         .pinEnroller(_pinEnroller)
+        .passwordEnroller(_passwordEnroller)
         .biometricUserVerifier(_biometricUserVerifier)
         .devicePasscodeUserVerifier(_devicePasscodeUserVerifier)
         .fingerprintUserVerifier(_fingerprintUserVerifier)

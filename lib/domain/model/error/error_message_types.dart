@@ -8,6 +8,6 @@ enum BusinessErrorType {
   missingCookie,
   missingDispatchTokenResponse,
   missingOpenSettingsOperationForUser,
-  pinAuthenticatorNotFound,
+  credentialAuthenticatorNotFound,
   registeredAccountsNotFound,
 }

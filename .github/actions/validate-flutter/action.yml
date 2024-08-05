@@ -1,0 +1,13 @@
+name: Validate Flutter
+description: Validates Flutter code by running formatter and the analyzer
+
+runs:
+  using: composite
+  steps:
+    - name: Run Dart Format
+      shell: bash
+      run: dart format --set-exit-if-changed .
+
+    - name: Run Flutter Analyzer
+      shell: bash
+      run: flutter analyze

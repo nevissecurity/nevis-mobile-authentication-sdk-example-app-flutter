@@ -13,7 +13,18 @@ class AuthenticatorItem {
     required this.isUserEnrolled,
   });
 
+  AuthenticatorItem.pin()
+      : aaid = Aaid.pin.rawValue,
+        isPolicyCompliant = true,
+        isUserEnrolled = true;
+
+  AuthenticatorItem.password()
+      : aaid = Aaid.password.rawValue,
+        isPolicyCompliant = true,
+        isUserEnrolled = true;
+
   bool isEnabled() {
-    return isPolicyCompliant && (aaid.isPin || isUserEnrolled);
+    return isPolicyCompliant &&
+        ((aaid.isPin || aaid.isPassword) || isUserEnrolled);
   }
 }

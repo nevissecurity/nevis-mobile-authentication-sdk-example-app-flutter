@@ -24,10 +24,11 @@ abstract class AuthenticateUseCase {
 class AuthenticateUseCaseImpl implements AuthenticateUseCase {
   final ClientProvider _clientProvider;
   final AuthenticatorSelector _authenticatorSelector;
+  final PinUserVerifier _pinUserVerifier;
+  final PasswordUserVerifier _passwordUserVerifier;
   final BiometricUserVerifier _biometricUserVerifier;
   final DevicePasscodeUserVerifier _devicePasscodeUserVerifier;
   final FingerprintUserVerifier _fingerprintUserVerifier;
-  final PinUserVerifier _pinUserVerifier;
   final DomainBloc _domainBloc;
   final StateRepository<OperationType> _operationTypeRepository;
   final ErrorHandler _errorHandler;
@@ -35,10 +36,11 @@ class AuthenticateUseCaseImpl implements AuthenticateUseCase {
   AuthenticateUseCaseImpl(
     this._clientProvider,
     @Named("auth_selector_auth") this._authenticatorSelector,
+    this._pinUserVerifier,
+    this._passwordUserVerifier,
     this._biometricUserVerifier,
     this._devicePasscodeUserVerifier,
     this._fingerprintUserVerifier,
-    this._pinUserVerifier,
     this._domainBloc,
     this._operationTypeRepository,
     this._errorHandler,
@@ -54,10 +56,11 @@ class AuthenticateUseCaseImpl implements AuthenticateUseCase {
     var authentication = _clientProvider.client.operations.authentication
         .username(username)
         .authenticatorSelector(_authenticatorSelector)
+        .pinUserVerifier(_pinUserVerifier)
+        .passwordUserVerifier(_passwordUserVerifier)
         .biometricUserVerifier(_biometricUserVerifier)
         .devicePasscodeUserVerifier(_devicePasscodeUserVerifier)
         .fingerprintUserVerifier(_fingerprintUserVerifier)
-        .pinUserVerifier(_pinUserVerifier)
         .onSuccess((AuthorizationProvider? authorizationProvider) {
       debugPrint('In-band authentication succeeded.');
       _printAuthorizationInfo(authorizationProvider);

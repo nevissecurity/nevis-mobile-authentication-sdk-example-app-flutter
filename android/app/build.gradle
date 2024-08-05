@@ -30,7 +30,7 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdk 33
+    compileSdkVersion 34
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
@@ -67,5 +67,5 @@ flutter {
 
 dependencies {
     //noinspection GradleDynamicVersion
-    debugImplementation 'ch.nevis:nevis-mobile-authentication-sdk-android-debug:3.6.+'
+    debugImplementation 'ch.nevis:nevis-mobile-authentication-sdk-android-debug:3.7.+'
 }
