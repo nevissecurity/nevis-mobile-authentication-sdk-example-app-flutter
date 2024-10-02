@@ -30,7 +30,8 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 34
+    namespace 'ch.nevis.nevis_mobile_authentication_sdk_example_app_flutter'
+    compileSdk 34
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
@@ -47,7 +48,8 @@ android {
     defaultConfig {
         applicationId "ch.nevis.nevis_mobile_authentication_sdk_example"
         minSdkVersion 23
-        targetSdkVersion flutter.targetSdkVersion
+        targetSdkVersion 34
+        multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
