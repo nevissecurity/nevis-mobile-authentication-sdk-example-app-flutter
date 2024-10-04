@@ -77,7 +77,7 @@ jobs:
       - name: Build iOS Example App
         env:
           PRIVATE_NATIVE_REPOSITORY: ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY }}
-        uses: maierj/fastlane-action@v3.0.0
+        uses: maierj/fastlane-action@v3.1.0
         with:
           lane: 'pr'
           subdirectory: 'ios'
@@ -104,7 +104,7 @@ jobs:
       - name: Build Android Example App
         env:
           PRIVATE_NATIVE_REPOSITORY: ${{ env.PRIVATE_NATIVE_ANDROID_REPOSITORY }}
-        uses: maierj/fastlane-action@v3.0.0
+        uses: maierj/fastlane-action@v3.1.0
         with:
           lane: 'pr'
           subdirectory: 'android'

@@ -89,7 +89,7 @@ jobs:
       - name: Build And Distribute The iOS Example App
         env:
           PRIVATE_NATIVE_REPOSITORY: ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY }}
-        uses: maierj/fastlane-action@v3.0.0
+        uses: maierj/fastlane-action@v3.1.0
         with:
           lane: 'develop'
           subdirectory: 'ios'
@@ -129,7 +129,7 @@ jobs:
       - name: Build And Distribute The Android Example App
         env:
           PRIVATE_NATIVE_REPOSITORY: ${{ env.PRIVATE_NATIVE_ANDROID_REPOSITORY }}
-        uses: maierj/fastlane-action@v3.0.0
+        uses: maierj/fastlane-action@v3.1.0
         with:
           lane: 'develop'
           subdirectory: 'android'
@@ -145,7 +145,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Project
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Create Tag
         uses: ./.github/actions/create-tag

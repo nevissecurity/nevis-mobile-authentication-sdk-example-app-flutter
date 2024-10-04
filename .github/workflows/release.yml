@@ -67,7 +67,7 @@ jobs:
         uses: ./.github/actions/setup-ios
 
       - name: Build iOS Example App
-        uses: maierj/fastlane-action@v3.0.0
+        uses: maierj/fastlane-action@v3.1.0
         with:
           lane: 'pr'
           subdirectory: 'ios'
@@ -90,7 +90,7 @@ jobs:
         uses: ./.github/actions/setup-android
 
       - name: Build Android Example App
-        uses: maierj/fastlane-action@v3.0.0
+        uses: maierj/fastlane-action@v3.1.0
         with:
           lane: 'pr'
           subdirectory: 'android'

@@ -16,7 +16,7 @@ runs:
   using: composite
   steps:
     - name: Create Tag
-      uses: actions/github-script@v6
+      uses: actions/github-script@v7
       env:
         TAG_NAME: ${{ inputs.build-category }}/${{ inputs.app-version }}/${{ inputs.build-number }}
       with:
