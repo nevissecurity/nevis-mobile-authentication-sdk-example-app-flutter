@@ -49,7 +49,7 @@ import 'domain/model/operation/user_interaction_operation_state.dart' as _i9;
 import 'domain/repository/deep_link_repository.dart' as _i38;
 import 'domain/repository/login_repository.dart' as _i17;
 import 'domain/repository/state_repository.dart' as _i12;
-import 'domain/usecase/auth_cloud_api_register_usecase.dart' as _i82;
+import 'domain/usecase/auth_cloud_api_register_usecase.dart' as _i81;
 import 'domain/usecase/authenticate_usecase.dart' as _i68;
 import 'domain/usecase/authenticators_usecase.dart' as _i67;
 import 'domain/usecase/biometric_listen_for_os_credentials_usecase.dart'
@@ -93,9 +93,9 @@ import 'ui/screens/change_device_information/change_device_information_bloc.dart
     as _i76;
 import 'ui/screens/confirmation/confirmation_bloc.dart' as _i59;
 import 'ui/screens/credential/credential_bloc.dart' as _i74;
-import 'ui/screens/home/home_bloc.dart' as _i79;
-import 'ui/screens/legacy_login/legacy_login_bloc.dart' as _i81;
-import 'ui/screens/read_qr_code/read_qr_code_bloc.dart' as _i80;
+import 'ui/screens/home/home_bloc.dart' as _i82;
+import 'ui/screens/legacy_login/legacy_login_bloc.dart' as _i80;
+import 'ui/screens/read_qr_code/read_qr_code_bloc.dart' as _i79;
 import 'ui/screens/result/result_bloc.dart' as _i73;
 import 'ui/screens/select_account/select_account_bloc.dart' as _i78;
 import 'ui/screens/select_authenticator/select_authenticator_bloc.dart' as _i56;
@@ -450,33 +450,18 @@ _i1.GetIt $initGetIt(
         gh<_i41.ErrorHandler>(),
         gh<_i3.GlobalNavigationManager>(),
       ));
-  gh.factory<_i79.HomeBloc>(() => _i79.HomeBloc(
-        gh<_i38.DeepLinkRepository>(),
-        gh<_i21.ConfigurationLoader>(),
-        gh<_i52.ClientProvider>(),
-        gh<_i75.OobProcessUseCase>(),
-        gh<_i54.RegisteredAccountsUseCase>(),
-        gh<_i63.DeregisterAllUseCase>(),
-        gh<_i67.AuthenticatorsUseCase>(),
-        gh<_i70.ChangePinUseCase>(),
-        gh<_i61.ChangePasswordUseCase>(),
-        gh<_i58.DeleteAuthenticatorsUseCase>(),
-        gh<_i62.LocalDataBloc>(),
-        gh<_i41.ErrorHandler>(),
-        gh<_i3.GlobalNavigationManager>(),
-      ));
-  gh.factory<_i80.ReadQrCodeBloc>(() => _i80.ReadQrCodeBloc(
+  gh.factory<_i79.ReadQrCodeBloc>(() => _i79.ReadQrCodeBloc(
         gh<_i75.OobProcessUseCase>(),
         gh<_i41.ErrorHandler>(),
       ));
-  gh.factory<_i81.LegacyLoginBloc>(() => _i81.LegacyLoginBloc(
+  gh.factory<_i80.LegacyLoginBloc>(() => _i80.LegacyLoginBloc(
         gh<_i21.ConfigurationLoader>(),
         gh<_i29.LoginUseCase>(),
         gh<_i72.RegistrationUseCase>(),
         gh<_i41.ErrorHandler>(),
       ));
-  gh.factory<_i82.AuthCloudApiRegisterUseCase>(
-      () => _i82.AuthCloudApiRegisterUseCaseImpl(
+  gh.factory<_i81.AuthCloudApiRegisterUseCase>(
+      () => _i81.AuthCloudApiRegisterUseCaseImpl(
             gh<_i52.ClientProvider>(),
             gh<_i71.CreateDeviceInformationUseCase>(),
             gh<_i15.AuthenticatorSelector>(instanceName: 'auth_selector_reg'),
@@ -490,10 +475,23 @@ _i1.GetIt $initGetIt(
             gh<_i12.StateRepository<_i6.OperationType>>(),
             gh<_i41.ErrorHandler>(),
           ));
+  gh.factory<_i82.HomeBloc>(() => _i82.HomeBloc(
+        gh<_i38.DeepLinkRepository>(),
+        gh<_i21.ConfigurationLoader>(),
+        gh<_i52.ClientProvider>(),
+        gh<_i75.OobProcessUseCase>(),
+        gh<_i63.DeregisterAllUseCase>(),
+        gh<_i70.ChangePinUseCase>(),
+        gh<_i61.ChangePasswordUseCase>(),
+        gh<_i58.DeleteAuthenticatorsUseCase>(),
+        gh<_i62.LocalDataBloc>(),
+        gh<_i41.ErrorHandler>(),
+        gh<_i3.GlobalNavigationManager>(),
+      ));
   gh.factory<_i83.AuthCloudApiRegistrationBloc>(
       () => _i83.AuthCloudApiRegistrationBloc(
             gh<_i3.GlobalNavigationManager>(),
-            gh<_i82.AuthCloudApiRegisterUseCase>(),
+            gh<_i81.AuthCloudApiRegisterUseCase>(),
             gh<_i41.ErrorHandler>(),
           ));
   return getIt;

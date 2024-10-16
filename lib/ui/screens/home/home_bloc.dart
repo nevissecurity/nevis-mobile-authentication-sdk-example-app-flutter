@@ -1,26 +1,27 @@
 // Copyright © 2022 Nevis Security AG. All rights reserved.
 
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/configuration/configuration_loader.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/configuration/model/app_environment.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/blocs/local_data/local_data_bloc.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/blocs/local_data/local_data_event.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/blocs/local_data/local_data_state.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/client_provider/client_provider.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/error/error_handler.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/error/error.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/operation_type.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/deep_link_repository.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/authenticators_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/change_password_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/change_pin_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/delete_authenticators_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/deregister_all_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/oob_process_usecase.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/registered_accounts_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/navigation/global_navigation_manager.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/navigation/credential_parameter.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_event.dart';
@@ -34,9 +35,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final ConfigurationLoader _configurationLoader;
   final ClientProvider _clientProvider;
   final OobProcessUseCase _oobProcessUseCase;
-  final RegisteredAccountsUseCase _registeredAccountsUseCase;
   final DeregisterAllUseCase _deregisterAllUseCase;
-  final AuthenticatorsUseCase _authenticatorsUseCase;
   final ChangePinUseCase _changePinUseCase;
   final ChangePasswordUseCase _changePasswordUseCase;
   final DeleteAuthenticatorsUseCase _deleteAuthenticatorsUseCase;
@@ -54,9 +53,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     this._configurationLoader,
     this._clientProvider,
     this._oobProcessUseCase,
-    this._registeredAccountsUseCase,
     this._deregisterAllUseCase,
-    this._authenticatorsUseCase,
     this._changePinUseCase,
     this._changePasswordUseCase,
     this._deleteAuthenticatorsUseCase,
@@ -71,7 +68,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
     _localDataSubscription =
         _localDataBloc.stream.listen((LocalDataState state) {
-      add(LocalDataEvent(state));
+      add(HomeLocalDataEvent(state));
     });
     on<HomeCreatedEvent>(_handleHomeCreated);
     on<ClientInitializedEvent>(_handleClientInitialized);
@@ -83,9 +80,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<PinChangeEvent>(_handlePinChange);
     on<PasswordChangeEvent>(_handlePasswordChange);
     on<ChangeDeviceInformationEvent>(_handleChangeDeviceInformation);
+    on<CheckAndSyncDeviceInformationEvent>(
+        _handleCheckAndSyncDeviceInformation);
+    on<RemoveAuthenticatorEvent>(_handleRemoveAuthenticator);
     on<AuthCloudApiRegistrationEvent>(_handleAuthCloudApiRegistration);
     on<DeleteAuthenticatorsEvent>(_handleDeleteAuthenticators);
-    on<LocalDataEvent>(_handleLocalData);
+    on<HomeLocalDataEvent>(_handleLocalData);
   }
 
   Future<void> _handleHomeCreated(
@@ -102,8 +102,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     //Checking application start by deep link
     final uri = await _deepLinkRepository.getStartUri();
     if (uri?.isNotEmpty ?? false) _onRedirected(emit, uri);
-    await _loadData();
-    _yieldBasedOnCurrentState(emit);
+    _localDataBloc.add(LoadAccountsEvent());
   }
 
   Future<void> _handleOOBRedirect(
@@ -131,19 +130,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }).catchError((error) {
       _yieldBasedOnCurrentState(emit);
       _errorHandler.handle(error);
-    });
-  }
-
-  Future<void> _loadData() async {
-    _registeredAccounts =
-        await _registeredAccountsUseCase.execute().catchError((error) {
-      _errorHandler.handle(error);
-      return Set<Account>.identity();
-    });
-    _authenticators =
-        await _authenticatorsUseCase.execute().catchError((error) {
-      _errorHandler.handle(error);
-      return Set<Authenticator>.identity();
     });
   }
 
@@ -285,6 +271,79 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     _globalNavigationManager.pushChangeDeviceInformation();
   }
 
+  Future<void> _handleCheckAndSyncDeviceInformation(
+    CheckAndSyncDeviceInformationEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    await _clientProvider.client.operations.deviceInformationCheck
+        .onResult((checkResult) async {
+          if (checkResult.mismatches.isNotEmpty) {
+            debugPrint('Mismatches found during device information check!');
+            for (var mismatch in checkResult.mismatches) {
+              _printMismatch(mismatch);
+            }
+            debugPrint('Start syncing device information mismatches...');
+            await _clientProvider.client.operations.deviceInformationSync
+                .mismatches(checkResult.mismatches)
+                .onResult((syncResult) {
+                  if (syncResult.errors.isEmpty) {
+                    debugPrint(
+                        'Syncing device information mismatches succeeded!');
+                    _localDataBloc.add(LoadAccountsEvent());
+                    return;
+                  }
+
+                  debugPrint('Failed to sync device information mismatches!');
+                  for (var error in syncResult.errors) {
+                    _printSyncError(error);
+                  }
+                })
+                .execute()
+                .catchError((error) {
+                  _errorHandler.handle(error);
+                });
+          } else if (checkResult.errors.isEmpty) {
+            debugPrint('No mismatches found during device information check!');
+          } else {
+            debugPrint('Failed to check device information mismatches!');
+            for (var error in checkResult.errors) {
+              _printCheckError(error);
+            }
+          }
+        })
+        .execute()
+        .catchError((error) {
+          _errorHandler.handle(error);
+        });
+  }
+
+  Future<void> _handleRemoveAuthenticator(
+    RemoveAuthenticatorEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    // for in-band authentication a username is needed, that's why the account selector screen will be displayed
+    if (_registeredAccounts.isEmpty) {
+      _errorHandler.handle(BusinessException.registeredAccountsNotFound());
+    } else {
+      final account = _registeredAccounts.first;
+      final authenticator = _authenticators
+          .where((element) => element.registration.isRegistered(
+                account.username,
+              ))
+          .first;
+      await _clientProvider.client.localData
+          .deleteAuthenticator(
+        username: account.username,
+        aaid: authenticator.aaid,
+      )
+          .catchError((error) {
+        _errorHandler.handle(error);
+      });
+      debugPrint(
+          'Deleted authenticator with AAID ${authenticator.aaid} for username ${account.username}');
+    }
+  }
+
   Future<void> _handleAuthCloudApiRegistration(
     AuthCloudApiRegistrationEvent event,
     Emitter<HomeState> emit,
@@ -310,13 +369,37 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _handleLocalData(
-    LocalDataEvent event,
+    HomeLocalDataEvent event,
     Emitter<HomeState> emit,
   ) async {
     final state = event.state;
     if (state is LocalDataLoaded) {
       _registeredAccounts = state.accounts;
+      if (_registeredAccounts.isEmpty) {
+        debugPrint("There are no registered accounts.");
+      } else {
+        debugPrint("Registered accounts:");
+        for (var account in _registeredAccounts) {
+          debugPrint("  ${jsonEncode(account.toJson())}");
+        }
+      }
+
       _authenticators = state.authenticators;
+      if (_authenticators.isEmpty) {
+        debugPrint("There are no available authenticators.");
+      } else {
+        debugPrint("Available authenticators:");
+        for (var authenticator in _authenticators) {
+          debugPrint("  ${jsonEncode(authenticator.toJson())}");
+        }
+      }
+
+      if (state.deviceInformation == null) {
+        debugPrint("There is no available device info.");
+      } else {
+        debugPrint("Available device info:");
+        debugPrint("  ${jsonEncode(state.deviceInformation?.toJson())}");
+      }
       _yieldBasedOnCurrentState(emit);
     }
   }
@@ -360,5 +443,68 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     _deepLinkRepositorySubscription.cancel();
     _localDataSubscription.cancel();
     return super.close();
+  }
+
+  void _printMismatch(DeviceInformationMismatch mismatch) {
+    if (mismatch is MissingAuthenticatorInMobileDevice) {
+      debugPrint(
+          "MissingAuthenticatorInMobileDevice (${mismatch.keyId}, ${mismatch.aaid}, server: ${mismatch.server.baseUrl})");
+    } else if (mismatch is MissingAuthenticatorInServer) {
+      debugPrint(
+          "MissingAuthenticatorInServer (${mismatch.keyId}, ${mismatch.aaid}, username: ${mismatch.account.username}, server: ${mismatch.account.server.baseUrl})");
+    } else if (mismatch is MissingDeviceInformationInMobileDevice) {
+      debugPrint(
+          "MissingDeviceInformationInMobileDevice (${mismatch.dispatchTargetId}, server: ${mismatch.server.baseUrl})");
+    } else if (mismatch is MissingDeviceInformationInServer) {
+      debugPrint(
+          "MissingDeviceInformationInServer ({${mismatch.idUsernamePair.username}, ${mismatch.idUsernamePair.identifier}}, server: ${mismatch.server.baseUrl})");
+    } else if (mismatch is DeviceNameMismatch) {
+      debugPrint(
+          "DeviceNameMismatch (${mismatch.nameInServer}, ${mismatch.nameInMobileDevice}, server: ${mismatch.server.baseUrl})");
+    } else if (mismatch is FcmRegistrationTokenMismatch) {
+      debugPrint(
+          "FcmRegistrationTokenMismatch (${mismatch.fcmRegistrationTokenInServer}, ${mismatch.fcmRegistrationTokenInMobileDevice}, server: ${mismatch.server.baseUrl})");
+    }
+  }
+
+  void _printCheckError(DeviceInformationCheckError error) {
+    if (error is DeviceInformationCheckClockSkewTooBig) {
+      debugPrint(
+          "DeviceInformationCheckClockSkewTooBig (${error.description}, ${error.cause}, server: ${error.server.baseUrl})");
+    } else if (error is DeviceInformationCheckForbidden) {
+      debugPrint(
+          "DeviceInformationCheckForbidden (${error.description}, ${error.cause}, server: ${error.server.baseUrl})");
+    } else if (error is DeviceInformationCheckNetworkError) {
+      debugPrint(
+          "DeviceInformationCheckNetworkError (${error.description}, ${error.cause}, server: ${error.server.baseUrl})");
+    } else if (error is DeviceInformationCheckNoDeviceLockError) {
+      debugPrint(
+          "DeviceInformationCheckNoDeviceLockError (${error.description}, ${error.cause})");
+    } else if (error is DeviceInformationCheckOperationNotSupportedByBackend) {
+      debugPrint(
+          "DeviceInformationCheckOperationNotSupportedByBackend (${error.description}, ${error.cause}, server: ${error.server.baseUrl})");
+    } else if (error is DeviceInformationCheckUnknownError) {
+      debugPrint(
+          "DeviceInformationCheckUnknownError (${error.description}, ${error.cause}, server: ${error.server?.baseUrl})");
+    }
+  }
+
+  void _printSyncError(DeviceInformationSyncError error) {
+    if (error is DeviceInformationSyncClockSkewTooBig) {
+      debugPrint(
+          "DeviceInformationSyncClockSkewTooBig (${error.description}, ${error.cause}, server: ${error.server.baseUrl})");
+    } else if (error is DeviceInformationSyncNetworkError) {
+      debugPrint(
+          "DeviceInformationSyncNetworkError (${error.description}, ${error.cause}, server: ${error.server.baseUrl})");
+    } else if (error is DeviceInformationSyncNoDeviceLockError) {
+      debugPrint(
+          "DeviceInformationSyncNoDeviceLockError (${error.description}, ${error.cause})");
+    } else if (error is DeviceInformationSyncOperationNotSupportedByBackend) {
+      debugPrint(
+          "DeviceInformationSyncOperationNotSupportedByBackend (${error.description}, ${error.cause}, server: ${error.server.baseUrl})");
+    } else if (error is DeviceInformationSyncUnknownError) {
+      debugPrint(
+          "DeviceInformationSyncUnknownError (${error.description}, ${error.cause}, server: ${error.server?.baseUrl})");
+    }
   }
 }

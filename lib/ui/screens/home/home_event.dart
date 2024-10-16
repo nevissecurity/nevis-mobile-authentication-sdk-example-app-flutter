@@ -28,12 +28,16 @@ class PasswordChangeEvent extends HomeEvent {}
 
 class ChangeDeviceInformationEvent extends HomeEvent {}
 
+class CheckAndSyncDeviceInformationEvent extends HomeEvent {}
+
+class RemoveAuthenticatorEvent extends HomeEvent {}
+
 class AuthCloudApiRegistrationEvent extends HomeEvent {}
 
 class DeleteAuthenticatorsEvent extends HomeEvent {}
 
-class LocalDataEvent extends HomeEvent {
+class HomeLocalDataEvent extends HomeEvent {
   final LocalDataState state;
 
-  LocalDataEvent(this.state);
+  HomeLocalDataEvent(this.state);
 }
