@@ -81,6 +81,16 @@ class HomeScreen extends StatelessWidget {
                             homeBloc.add(ChangeDeviceInformationEvent());
                           }),
                       Button.outlined(
+                          text: 'Check & Sync Device Information',
+                          onPressed: () {
+                            homeBloc.add(CheckAndSyncDeviceInformationEvent());
+                          }),
+                      Button.outlined(
+                          text: 'Remove an Authenticator',
+                          onPressed: () {
+                            homeBloc.add(RemoveAuthenticatorEvent());
+                          }),
+                      Button.outlined(
                           text: localization.authCloudApiRegistration,
                           onPressed: () {
                             homeBloc.add(AuthCloudApiRegistrationEvent());

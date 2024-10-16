@@ -12,5 +12,4 @@ final getIt = GetIt.instance;
   asExtension: false, // default
 )
 // acceptable values for environment parameter are authenticationCloud & identitySuite
-void configureDependencies() =>
-    $initGetIt(getIt, environment: 'authenticationCloud');
+void configureDependencies() => $initGetIt(getIt, environment: 'identitySuite');

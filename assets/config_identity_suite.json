@@ -1,10 +1,10 @@
 {
   "allowClass2Sensors": false,
   "login": {
-    "loginRequestURL": "https://mycompany.com/auth/pwd"
+    "loginRequestURL": "https://mauth2.e2e.azure.nevis.dev/auth/pwd"
   },
   "sdk": {
-    "baseUrl": "https://mycompany.com",
+    "baseUrl": "https://mauth2.e2e.azure.nevis.dev",
     "facetId": "android:apk-key-hash:ch.nevis.mobile.authentication.sdk.flutter.example",
     "registrationRequestPath": "/nevisfido/uaf/1.1/request/registration/",
     "registrationResponsePath": "/nevisfido/uaf/1.1/registration/",
@@ -12,6 +12,7 @@
     "authenticationResponsePath": "/auth/fidouaf/authenticationresponse/",
     "deregistrationRequestPath": "/nevisfido/uaf/1.1/request/deregistration/",
     "dispatchTargetResourcePath": "/nevisfido/token/dispatch/targets/",
+    "deviceResourcePath": "/nevisfido/devices/",
     "networkTimeoutInSeconds": "60",
     "authenticationMaxRetries": 3,
     "authenticationRetryIntervalInSeconds": "1",
