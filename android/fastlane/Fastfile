@@ -9,10 +9,9 @@ root_dir = File.expand_path(File.join(File.dirname(__FILE__), "../"))
 signing_configs_gradle = File.join(root_dir, "app/signing_configs.gradle")
 apk_path = File.join(root_dir, "../build/app/outputs/flutter-apk/app-debug.apk")
 display_name = "Nevis Mobile Authentication SDK Example App Flutter Android"
-android_manifest = File.join(root_dir, "app/src/main/AndroidManifest.xml")
 app_build_gradle = File.join(root_dir, "app/build.gradle")
 build_gradle = File.join(root_dir, "build.gradle")
-public_maven_repository = "https://maven.pkg.github.com/nevissecurity/nevis-mobile-authentication-sdk-android-package"
+public_maven_repository_url = "https://maven.pkg.github.com/nevissecurity/nevis-mobile-authentication-sdk-android-package"
 
 def report_on_success(message)
 	slack(
@@ -73,12 +72,12 @@ platform :android do
 	desc "Utilize private repositories"
 	desc ""
 	private_lane :utilize_private_repos do
-		private_maven_repository = ENV["PRIVATE_NATIVE_REPOSITORY"]
+		private_maven_repository_url = ENV["PRIVATE_NATIVE_REPOSITORY_URL"]
 		modify_file(
 			file_path: build_gradle,
-			old_value: "url \"#{public_maven_repository}\"",
-			new_value: "url \"#{private_maven_repository}\"",
-		) if private_maven_repository
+			old_value: "url \"#{public_maven_repository_url}\"",
+			new_value: "url \"#{private_maven_repository_url}\"",
+		) if private_maven_repository_url
 	end
 
 	desc "Build the application"

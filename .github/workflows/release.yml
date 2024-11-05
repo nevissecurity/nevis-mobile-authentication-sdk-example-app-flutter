@@ -30,15 +30,9 @@ jobs:
   flutter-validation:
     name: Validate Flutter
     runs-on: ubuntu-latest
-    outputs:
-      sdk-version: ${{ steps.get-versions.outputs.sdk-version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Fetch SDK Version
-        id: get-versions
-        uses: ./.github/actions/get-versions
 
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter

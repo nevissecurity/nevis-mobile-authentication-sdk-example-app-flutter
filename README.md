@@ -245,4 +245,4 @@ Out-of-band operations occur when a message is delivered to the application thro
 
 During registration, the device information can be provided that contains the name identifying your device, and also the Firebase Cloud Messaging registration token. Updating both the name and the token is implemented in the [ChangeDeviceInformationUseCase](lib/domain/usecase/change_device_information_usecase.dart) class.
 
-© 2023 made with ❤ by Nevis
+© 2024 made with ❤ by Nevis
