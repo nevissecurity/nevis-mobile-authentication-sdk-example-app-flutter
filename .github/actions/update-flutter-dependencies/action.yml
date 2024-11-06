@@ -17,7 +17,7 @@ runs:
         changes: |
           {
             "dependencies.nevis_mobile_authentication_sdk": "",
-            "dependencies.nevis_mobile_authentication_sdk.hosted": "${{ env.PRIVATE_DART_REPOSITORY }}",
+            "dependencies.nevis_mobile_authentication_sdk.hosted": "${{ env.PRIVATE_DART_REPOSITORY_URL }}",
             "dependencies.nevis_mobile_authentication_sdk.version": "${{ inputs.sdk-version }}"
           }
         commitChange: false
