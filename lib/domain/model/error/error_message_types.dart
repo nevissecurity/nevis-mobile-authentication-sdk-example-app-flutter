@@ -7,7 +7,7 @@ enum BusinessErrorType {
   invalidState,
   missingCookie,
   missingDispatchTokenResponse,
-  missingOpenSettingsOperationForUser,
   credentialAuthenticatorNotFound,
   registeredAccountsNotFound,
+  cameraAccessDenied,
 }

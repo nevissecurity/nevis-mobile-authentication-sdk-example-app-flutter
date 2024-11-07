@@ -26,6 +26,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/c
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_event.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_state.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/select_account/navigation/select_account_parameter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 @injectable
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
@@ -154,8 +155,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     ReadQrCodeEvent event,
     Emitter<HomeState> emit,
   ) async {
-    _globalNavigationManager.pushReadQrCode();
-    _yieldBasedOnCurrentState(emit);
+    if (await Permission.camera.request().isGranted) {
+      _globalNavigationManager.pushReadQrCode();
+    } else {
+      _errorHandler.handle(BusinessException.cameraAccessDenied());
+    }
   }
 
   Future<void> _handleDeregister(
