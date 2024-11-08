@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/read_qr_code/read_qr_code_bloc.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/read_qr_code/read_qr_code_event.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/app_scaffold.dart';
@@ -30,7 +29,6 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen>
   );
 
   StreamSubscription<Object?>? _subscription;
-  PermissionStatus _permissionStatus = PermissionStatus.denied;
   bool _isLoading = false;
   bool _isBarcodeFound = false;
 
@@ -40,13 +38,6 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen>
     WidgetsBinding.instance.addObserver(this);
     _subscription = _controller.barcodes.listen(_handleBarcode);
     unawaited(_controller.start());
-
-    _listenForPermissionStatus();
-  }
-
-  void _listenForPermissionStatus() async {
-    final status = await Permission.camera.request();
-    setState(() => _permissionStatus = status);
   }
 
   @override
@@ -55,23 +46,8 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen>
     Widget content;
     if (_isLoading) {
       content = const Center(child: CircularProgressIndicator());
-    } else if (_permissionStatus == PermissionStatus.granted) {
-      content = _mobileScannerContent(localization);
-    } else if (_permissionStatus == PermissionStatus.denied) {
-      content = _textContent(
-        localization,
-        Colors.black,
-        localization.cameraAccessDenied,
-      );
-    } else if (_permissionStatus == PermissionStatus.permanentlyDenied) {
-      content = _textContent(localization, Colors.black,
-          localization.cameraAccessPermanentlyDenied);
     } else {
-      content = _textContent(
-        localization,
-        Colors.black,
-        localization.cameraInitializationFailed,
-      );
+      content = _mobileScannerContent(localization);
     }
 
     return AppScaffold(
