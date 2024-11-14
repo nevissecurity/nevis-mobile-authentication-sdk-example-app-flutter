@@ -6,6 +6,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/device_information_usecase.dart';
 
 abstract class CreateDeviceInformationUseCase {
   Future<DeviceInformation> execute();
@@ -14,16 +15,20 @@ abstract class CreateDeviceInformationUseCase {
 @Injectable(as: CreateDeviceInformationUseCase)
 class CreateDeviceInformationUseCaseImpl
     implements CreateDeviceInformationUseCase {
+  final DeviceInformationUseCase _deviceInformationUseCase;
   final DeviceInfoPlugin _deviceInfoPlugin = DeviceInfoPlugin();
 
-  CreateDeviceInformationUseCaseImpl();
+  CreateDeviceInformationUseCaseImpl(
+    this._deviceInformationUseCase,
+  );
 
   @override
   Future<DeviceInformation> execute() async {
-    final deviceName = await _getDeviceName();
-    final formattedDate =
-        DateFormat('dd.MM.yyyy kk:mm:sss').format(DateTime.now());
-    return Future.value(DeviceInformation(name: '$deviceName-$formattedDate'));
+    // If there is a device name already set in the SDK then use that one,
+    // otherwise create a new one.
+    final deviceInformation = await _deviceInformationUseCase.execute();
+    final deviceName = deviceInformation?.name ?? await _getDeviceName();
+    return Future.value(DeviceInformation(name: deviceName));
   }
 
   Future<String> _getDeviceName() async {
@@ -31,16 +36,18 @@ class CreateDeviceInformationUseCaseImpl
     String osPrefix = '';
     if (Platform.isAndroid) {
       final androidInfo = await _deviceInfoPlugin.androidInfo;
-      osPrefix = 'Android ';
+      osPrefix = 'Android';
       deviceName = "${androidInfo.manufacturer} ${androidInfo.model}";
     } else if (Platform.isIOS) {
       final iosInfo = await _deviceInfoPlugin.iosInfo;
-      osPrefix = 'iOS ';
+      osPrefix = 'iOS';
       deviceName = iosInfo.name;
     }
     deviceName = deviceName?.trim();
     deviceName =
         deviceName == null || deviceName.isEmpty ? "Unknown" : deviceName;
-    return '$osPrefix$deviceName';
+    final dateFormat = DateFormat('dd.MM.yyyy kk:mm:sss');
+    final formattedDate = dateFormat.format(DateTime.now());
+    return '$osPrefix $deviceName-$formattedDate';
   }
 }
