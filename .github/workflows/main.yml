@@ -21,13 +21,9 @@ env:
   BUILD_TYPE: 'RELEASE' # Allowed values: 'SNAPSHOT', 'RELEASE', 'RELEASE_CANDIDATE'
   FLUTTER_VERSION: '3.19.0'
   XCODE_VERSION: '15.4'
-  JAVA_VERSION: '11'
+  JAVA_VERSION: '17'
   RUBY_VERSION: '3.1'
   HOST_NAME: ${{ secrets.HOST_NAME }}
-  PRIVATE_REPOSITORY_API_KEY: ${{ secrets.PRIVATE_REPOSITORY_API_KEY }}
-  PRIVATE_DART_REPOSITORY: ${{ secrets.PRIVATE_DART_REPOSITORY }}
-  PRIVATE_NATIVE_IOS_REPOSITORY: ${{ secrets.PRIVATE_NATIVE_IOS_REPOSITORY }}
-  PRIVATE_NATIVE_ANDROID_REPOSITORY: ${{ secrets.PRIVATE_NATIVE_ANDROID_REPOSITORY }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
   GITHUB_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
@@ -88,7 +84,7 @@ jobs:
         uses: ./.github/actions/setup-ios
 
       - name: Build And Distribute The iOS Example App
-        uses: maierj/fastlane-action@v3.0.0
+        uses: maierj/fastlane-action@v3.1.0
         with:
           lane: 'main'
           subdirectory: 'ios'
@@ -124,7 +120,7 @@ jobs:
         uses: ./.github/actions/setup-android
 
       - name: Build And Distribute The Android Example App
-        uses: maierj/fastlane-action@v3.0.0
+        uses: maierj/fastlane-action@v3.1.0
         with:
           lane: 'main'
           subdirectory: 'android'
@@ -140,7 +136,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Project
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Create Tag
         uses: ./.github/actions/create-tag

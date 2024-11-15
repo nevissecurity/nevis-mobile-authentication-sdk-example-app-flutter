@@ -33,8 +33,8 @@ target 'Runner' do
 	use_frameworks!
 	use_modular_headers!
 
-	pod 'NevisMobileAuthentication-Debug', '~> 3.7.0', :configurations => ['Debug', 'Profile']
-	pod 'NevisMobileAuthentication', '~> 3.7.0', :configurations => ['Release']
+	pod 'NevisMobileAuthentication-Debug', '~> 3.8.1', :configurations => ['Debug', 'Profile']
+	pod 'NevisMobileAuthentication', '~> 3.8.1', :configurations => ['Release']
 
 	flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end

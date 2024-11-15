@@ -5,14 +5,14 @@ runs:
   using: composite
   steps:
     - name: Update Configuration (loginRequestURL)
-      uses: jossef/action-set-json-field@v2.1
+      uses: jossef/action-set-json-field@v2.2
       with:
         file: assets/config_authentication_cloud.json
         field: login.loginRequestURL
         value: "https://${{ env.HOST_NAME }}.mauth.nevis.cloud/_app/auth/pwd"
 
     - name: Update Configuration (hostname)
-      uses: jossef/action-set-json-field@v2.1
+      uses: jossef/action-set-json-field@v2.2
       with:
         file: assets/config_authentication_cloud.json
         field: sdk.hostname

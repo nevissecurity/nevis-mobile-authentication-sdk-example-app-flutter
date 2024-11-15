@@ -8,4 +8,4 @@ runs:
       shell: bash
       run: |
         echo Setting up Pub credentials...
-        echo '${{ env.PRIVATE_REPOSITORY_API_KEY }}' | dart pub token add ${{ env.PRIVATE_DART_REPOSITORY }}
+        echo '${{ env.PRIVATE_REPOSITORY_API_KEY }}' | dart pub token add ${{ env.PRIVATE_DART_REPOSITORY_URL }}

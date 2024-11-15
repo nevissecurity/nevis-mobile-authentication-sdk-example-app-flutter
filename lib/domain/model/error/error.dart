@@ -23,14 +23,14 @@ class BusinessException implements Exception {
   BusinessException.missingDispatchTokenResponse()
       : type = BusinessErrorType.missingDispatchTokenResponse;
 
-  BusinessException.missingOpenSettingsOperationForUser()
-      : type = BusinessErrorType.missingOpenSettingsOperationForUser;
-
   BusinessException.credentialAuthenticatorNotFound()
       : type = BusinessErrorType.credentialAuthenticatorNotFound;
 
   BusinessException.registeredAccountsNotFound()
       : type = BusinessErrorType.registeredAccountsNotFound;
+
+  BusinessException.cameraAccessDenied()
+      : type = BusinessErrorType.cameraAccessDenied;
 }
 
 class PinNotEnrolledException implements Exception {

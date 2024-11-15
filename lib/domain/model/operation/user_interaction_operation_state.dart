@@ -26,8 +26,7 @@ class UserInteractionOperationState {
       UserInteractionOperationState(
         accountSelectionHandler: accountSelectionHandler,
         authenticatorSelectionContext: authenticatorSelectionContext,
-        authenticatorSelectionHandler:
-            authenticatorSelectionHandler ?? this.authenticatorSelectionHandler,
+        authenticatorSelectionHandler: authenticatorSelectionHandler,
         userVerificationHandler:
             userVerificationHandler ?? this.userVerificationHandler,
         osAuthenticationListenHandler:

@@ -12,6 +12,7 @@
     "authenticationResponsePath": "/auth/fidouaf/authenticationresponse/",
     "deregistrationRequestPath": "/nevisfido/uaf/1.1/request/deregistration/",
     "dispatchTargetResourcePath": "/nevisfido/token/dispatch/targets/",
+    "deviceResourcePath": "/nevisfido/devices/",
     "networkTimeoutInSeconds": "60",
     "authenticationMaxRetries": 3,
     "authenticationRetryIntervalInSeconds": "1",
