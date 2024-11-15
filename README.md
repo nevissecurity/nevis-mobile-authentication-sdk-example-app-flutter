@@ -34,10 +34,11 @@ Your development setup has to meet the following prerequisites:
 * Xcode 15.x, including Swift 5.7 or later
 * Android 6 or later, with API level 23 -or-
 * Android 10 or later, with API level 29, for the biometric authenticator to work
-* Gradle 7.4 or later
-* Android Gradle Plugin `com.android.tools.build:gradle` 7.0.0 or later
-* Kotlin Gradle Plugin `org.jetbrains.kotlin:kotlin-gradle-plugin` 1.8.0 or later
+* Gradle 8.4 or later
+* Android Gradle Plugin `com.android.tools.build:gradle` 8.3.0 or later
+* Kotlin Gradle Plugin `org.jetbrains.kotlin:kotlin-gradle-plugin` 1.8.22 or later
 * Dart SDK 3.3.0 or later
+* Java 17
 
 ### Initialization
 
@@ -244,4 +245,4 @@ Out-of-band operations occur when a message is delivered to the application thro
 
 During registration, the device information can be provided that contains the name identifying your device, and also the Firebase Cloud Messaging registration token. Updating both the name and the token is implemented in the [ChangeDeviceInformationUseCase](lib/domain/usecase/change_device_information_usecase.dart) class.
 
-© 2023 made with ❤ by Nevis
+© 2024 made with ❤ by Nevis

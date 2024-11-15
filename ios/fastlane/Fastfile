@@ -58,12 +58,12 @@ def report_on_error(message, exception)
 	UI.user_error!("#{exception}")
 end
 
-def prepare_podfile(private_pod_repository)
+def prepare_podfile(private_pod_repository_url)
 	filename = File.join('./../Podfile')
 	File.open(filename, 'r') do |original_lines|
 		File.unlink(filename)
 		File.open(filename, 'w') do |new_lines|
-			new_lines.write "source '#{private_pod_repository}'\n"
+			new_lines.write "source '#{private_pod_repository_url}'\n"
 			new_lines.write(original_lines.read())
 		end
 	end
@@ -105,8 +105,8 @@ platform :ios do
 	desc "Utilize private repositories"
 	desc ""
 	private_lane :utilize_private_repos do
-		private_pod_repository = ENV["PRIVATE_NATIVE_REPOSITORY"]
-		prepare_podfile(private_pod_repository) if private_pod_repository
+		private_pod_repository_url = ENV["PRIVATE_NATIVE_REPOSITORY_URL"]
+		prepare_podfile(private_pod_repository_url) if private_pod_repository_url
 	end
 
 	desc "Build the application"

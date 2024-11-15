@@ -88,20 +88,19 @@ extension BusinessErrorTypeLocalizationExtension on BusinessErrorType {
       case BusinessErrorType.authenticatorNotFound:
         return localizations.businessErrorTypeAuthenticatorNotFound;
       case BusinessErrorType.deviceInformationNotFound:
-        return localizations.businessErrorTypeDispatchTargetNotFound;
+        return localizations.businessErrorTypeDeviceInformationNotFound;
       case BusinessErrorType.invalidState:
         return localizations.businessErrorTypeInvalidState;
       case BusinessErrorType.missingCookie:
         return localizations.businessErrorTypeMissingCookie;
       case BusinessErrorType.missingDispatchTokenResponse:
         return localizations.businessErrorTypeMissingDispatchTokenResponse;
-      case BusinessErrorType.missingOpenSettingsOperationForUser:
-        return localizations
-            .businessErrorTypeMissingOpenSettingsOperationForUser;
       case BusinessErrorType.credentialAuthenticatorNotFound:
         return localizations.businessErrorTypeCredentialAuthenticatorNotFound;
       case BusinessErrorType.registeredAccountsNotFound:
         return localizations.businessErrorTypeRegisteredAccountsNotFound;
+      case BusinessErrorType.cameraAccessDenied:
+        return localizations.businessErrorTypeCameraAccessDenied;
     }
   }
 }
