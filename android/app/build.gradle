@@ -69,5 +69,5 @@ flutter {
 
 dependencies {
     //noinspection GradleDynamicVersion
-    debugImplementation 'ch.nevis:nevis-mobile-authentication-sdk-android-debug:3.8.+'
+    debugImplementation 'ch.nevis:nevis-mobile-authentication-sdk-android-debug:3.9.+'
 }
