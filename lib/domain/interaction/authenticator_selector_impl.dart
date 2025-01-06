@@ -31,18 +31,18 @@ abstract class AuthenticatorSelectorImpl implements AuthenticatorSelector {
   ) async {
     debugPrint('Please select one of the received available authenticators!');
 
-    final configuration = await configurationLoader.load();
+    final appConfiguration = await configurationLoader.appConfiguration();
     Set<Authenticator> authenticators = {};
     switch (operation) {
       case Operation.registration:
         authenticators = await authenticatorValidator.validateForRegistration(
           context,
-          configuration.authenticatorAllowlist,
+          appConfiguration.authenticatorAllowlist,
         );
       case Operation.authentication:
         authenticators = authenticatorValidator.validateForAuthentication(
           context,
-          configuration.authenticatorAllowlist,
+          appConfiguration.authenticatorAllowlist,
         );
     }
 
@@ -61,7 +61,7 @@ abstract class AuthenticatorSelectorImpl implements AuthenticatorSelector {
           isPolicyCompliant: await context.isPolicyCompliant(item.aaid),
           isUserEnrolled: item.isEnrolled(
             context.account.username,
-            configuration.allowClass2Sensors,
+            appConfiguration.allowClass2Sensors,
           ),
         ),
       );

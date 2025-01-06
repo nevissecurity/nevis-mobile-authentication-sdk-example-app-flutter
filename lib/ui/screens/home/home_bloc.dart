@@ -125,8 +125,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _initClient(Emitter<HomeState> emit) async {
-    final configuration = await _configurationLoader.load();
-    return await _clientProvider.init(configuration.sdkConfiguration, () async {
+    final sdkConfiguration = await _configurationLoader.sdkConfiguration();
+    return await _clientProvider.init(sdkConfiguration, () async {
       add(ClientInitializedEvent());
     }).catchError((error) {
       _yieldBasedOnCurrentState(emit);
