@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/configuration/model/app_configuration.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/configuration/model/app_environment.dart';
 
@@ -13,16 +14,55 @@ const identitySuite = Environment('identitySuite');
 
 abstract class ConfigurationLoader {
   AppEnvironment get environment;
-  AppConfiguration? configuration;
 
-  Future<AppConfiguration> load() async {
-    if (configuration != null) return Future.value(configuration);
+  AppConfiguration? _appConfiguration;
+  Configuration? _sdkConfiguration;
+
+  Future<AppConfiguration> appConfiguration() async {
+    if (_appConfiguration != null) {
+      return Future.value(_appConfiguration);
+    }
 
     final configFile = environment.configFileName;
     final jsonString = await rootBundle.loadString('assets/$configFile');
     final dynamic jsonMap = jsonDecode(jsonString);
-    configuration = AppConfiguration.fromJson(jsonMap);
-    return Future.value(configuration);
+    _appConfiguration = AppConfiguration.fromJson(jsonMap);
+    return Future.value(_appConfiguration);
+  }
+
+  Future<Configuration> sdkConfiguration() async {
+    if (_sdkConfiguration != null) {
+      return Future.value(_sdkConfiguration);
+    }
+
+    final appConfiguration = await this.appConfiguration();
+    switch (environment) {
+      case AppEnvironment.authenticationCloud:
+        _sdkConfiguration = Configuration.authCloudBuilder()
+            .hostname(appConfiguration.sdk.hostname!)
+            .facetId(appConfiguration.sdk.facetId!)
+            .build();
+      case AppEnvironment.identitySuite:
+        _sdkConfiguration = Configuration.builder()
+            .baseUrl(appConfiguration.sdk.baseUrl!)
+            .facetId(appConfiguration.sdk.facetId!)
+            .registrationRequestPath(
+                appConfiguration.sdk.registrationRequestPath!)
+            .registrationResponsePath(
+                appConfiguration.sdk.registrationResponsePath!)
+            .authenticationRequestPath(
+                appConfiguration.sdk.authenticationRequestPath!)
+            .authenticationResponsePath(
+                appConfiguration.sdk.authenticationResponsePath!)
+            .deregistrationRequestPath(
+                appConfiguration.sdk.deregistrationRequestPath!)
+            .dispatchTargetResourcePath(
+                appConfiguration.sdk.dispatchTargetResourcePath!)
+            .deviceResourcePath(appConfiguration.sdk.deviceResourcePath!)
+            .build();
+    }
+
+    return Future.value(_sdkConfiguration!);
   }
 }
 

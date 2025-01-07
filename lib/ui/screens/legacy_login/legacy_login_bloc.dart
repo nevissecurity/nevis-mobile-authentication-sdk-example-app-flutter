@@ -31,8 +31,8 @@ class LegacyLoginBloc extends Bloc<LegacyLoginEvent, LegacyLoginState> {
     ConfirmEvent event,
     Emitter<LegacyLoginState> emit,
   ) async {
-    final configuration = await _configurationLoader.load();
-    final uri = Uri.parse(configuration.loginConfiguration.loginRequestURL);
+    final appConfiguration = await _configurationLoader.appConfiguration();
+    final uri = Uri.parse(appConfiguration.loginConfiguration.loginRequestURL);
     final loginRequest = LoginRequest(
       username: event.username,
       password: event.password,

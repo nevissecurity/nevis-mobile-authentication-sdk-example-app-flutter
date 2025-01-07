@@ -142,24 +142,24 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   Future<void> _handleAuthenticationSucceeded(
     DomainAuthenticationSucceededState state,
   ) async {
-    // based on current backend configuration FIDO UAF authentication is needed for deregistration
-    // and dispatch target deletion in the Identity Suite environment.
-    // The result of the authentication is handled (username + auth provider) and based on the requested operation type
-    // the corresponding use case will be executed.
+    // based on current backend configuration FIDO UAF authentication is needed
+    // for deregistration and dispatch target deletion in the Identity Suite environment.
+    // The result of the authentication is handled (username + auth provider) and
+    // based on the requested operation type the corresponding use case will be executed.
     final username = state.username;
     AuthorizationProvider? authorizationProvider = state.authorizationProvider;
     if (authorizationProvider is CookieAuthorizationProvider) {
       // if a cookie auth provider is received, we need to fill in the correct uri
-      final configuration = await _configurationLoader.load();
+      final sdkConfiguration = await _configurationLoader.sdkConfiguration();
       String? path;
       if (state.operationType == OperationType.deregistration) {
-        path = configuration.sdkConfiguration.deregistrationRequestPath;
+        path = sdkConfiguration.deregistrationRequestPath;
       } else {
         _errorHandler.handle(BusinessException.invalidState());
         return;
       }
 
-      final uri = Uri.parse(configuration.sdkConfiguration.baseUrl + path);
+      final uri = Uri.parse(sdkConfiguration.baseUrl + path);
       for (CookieContainer container
           in authorizationProvider.cookieContainers) {
         container.uri = uri;

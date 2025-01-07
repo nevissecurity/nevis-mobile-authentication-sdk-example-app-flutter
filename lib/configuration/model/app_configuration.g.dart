@@ -14,8 +14,7 @@ AppConfiguration _$AppConfigurationFromJson(Map<String, dynamic> json) =>
           .toList(),
       loginConfiguration:
           LoginConfiguration.fromJson(json['login'] as Map<String, dynamic>),
-      sdkConfiguration:
-          Configuration.fromJson(json['sdk'] as Map<String, dynamic>),
+      sdk: SdkConfiguration.fromJson(json['sdk'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$AppConfigurationToJson(AppConfiguration instance) =>
@@ -23,5 +22,5 @@ Map<String, dynamic> _$AppConfigurationToJson(AppConfiguration instance) =>
       'allowClass2Sensors': instance.allowClass2Sensors,
       'authenticatorAllowlist': instance.authenticatorAllowlist,
       'login': instance.loginConfiguration.toJson(),
-      'sdk': instance.sdkConfiguration.toJson(),
+      'sdk': instance.sdk.toJson(),
     };
