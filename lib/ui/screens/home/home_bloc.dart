@@ -166,11 +166,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     DeregisterEvent event,
     Emitter<HomeState> emit,
   ) async {
+    if (_registeredAccounts.isEmpty) {
+      _errorHandler.handle(BusinessException.registeredAccountsNotFound());
+      return;
+    }
+
+    // NOTE: The de-registration process is executed differently for Authentication
+    // Cloud and Identity Suite environments.
+    // - In case of Authentication Cloud all of the registered accounts will be
+    // de-registered one by one.
+    // - In case of Identity Suite only one account can be de-registered at a time,
+    // this is the reason the user will be asked to select the account first.
     if (_configurationLoader.environment == AppEnvironment.identitySuite) {
-      // In the example app Identity Suite environment the deregistration endpoint is guarded,
-      // and as such we need to provide a cookie to the deregister call.
-      // Also on Identity Suite a deregistration has to be authenticated for every user,
-      // so batch deregistration is not really possible.
       await _globalNavigationManager.pushSelectAccount(
         SelectAccountParameter(
           operationType: OperationType.deregistration,
@@ -178,18 +185,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ),
       );
     } else {
-      if (_registeredAccounts.isEmpty) {
-        _errorHandler.handle(BusinessException.registeredAccountsNotFound());
-      } else {
-        await _deregisterAllUseCase
-            .execute(
-          accounts: _registeredAccounts,
-          authorizationProvider: null,
-        )
-            .catchError((error) {
-          _errorHandler.handle(error);
-        });
-      }
+      await _deregisterAllUseCase
+          .execute(
+        accounts: _registeredAccounts,
+        authorizationProvider: null,
+      )
+          .catchError((error) {
+        _errorHandler.handle(error);
+      });
     }
   }
 
@@ -197,17 +200,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     InBandAuthenticationEvent event,
     Emitter<HomeState> emit,
   ) async {
-    // for in-band authentication a username is needed, that's why the account selector screen will be displayed
     if (_registeredAccounts.isEmpty) {
       _errorHandler.handle(BusinessException.registeredAccountsNotFound());
-    } else {
-      _globalNavigationManager.pushSelectAccount(
-        SelectAccountParameter(
-          operationType: OperationType.authentication,
-          accounts: _registeredAccounts,
-        ),
-      );
+      return;
     }
+
+    // for in-band authentication a username is needed, this is the reason the
+    // user will be asked to select the account first.
+    _globalNavigationManager.pushSelectAccount(
+      SelectAccountParameter(
+        operationType: OperationType.authentication,
+        accounts: _registeredAccounts,
+      ),
+    );
   }
 
   Future<void> _handleInBandRegister(
