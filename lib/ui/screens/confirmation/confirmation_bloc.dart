@@ -8,6 +8,8 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/useca
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/cancel_user_interaction_operation_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/device_passcode_listen_for_os_credentials_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/fingerprint_listen_for_os_credentials_usecase.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/pause_listening_usecase.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/resume_listening_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/confirmation/confirmation_event.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/confirmation/confirmation_state.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/confirmation/navigation/confirmation_parameter.dart';
@@ -22,6 +24,8 @@ class ConfirmationBloc extends Bloc<ConfirmationEvent, ConfirmationState> {
       _devicePasscodeListenForOsCredentialsUseCase;
   final CancelUserInteractionOperationUseCase
       _cancelUserInteractionOperationUseCase;
+  final PauseListeningUseCase _pauseListeningUseCase;
+  final ResumeListeningUseCase _resumeListeningUseCase;
   final ErrorHandler _errorHandler;
   late ConfirmationParameter _parameter;
 
@@ -30,6 +34,8 @@ class ConfirmationBloc extends Bloc<ConfirmationEvent, ConfirmationState> {
     this._fingerPrintListenForOsCredentialsUseCase,
     this._devicePasscodeListenForOsCredentialsUseCase,
     this._cancelUserInteractionOperationUseCase,
+    this._pauseListeningUseCase,
+    this._resumeListeningUseCase,
     this._errorHandler,
   ) : super(ConfirmationInitialState()) {
     on<ConfirmationCreatedEvent>(_handleCreated);
@@ -38,6 +44,8 @@ class ConfirmationBloc extends Bloc<ConfirmationEvent, ConfirmationState> {
     on<ConfirmationBiometricEvent>(_handleBiometric);
     on<ConfirmationFingerPrintEvent>(_handleFingerPrint);
     on<ConfirmationDevicePasscodeEvent>(_handleDevicePasscode);
+    on<ConfirmationPauseListeningEvent>(_handlePauseListening);
+    on<ConfirmationResumeListeningEvent>(_handleResumeListening);
   }
 
   void _handleCreated(
@@ -119,6 +127,24 @@ class ConfirmationBloc extends Bloc<ConfirmationEvent, ConfirmationState> {
       ),
     )
         .catchError((error) {
+      _errorHandler.handle(error);
+    });
+  }
+
+  Future<void> _handlePauseListening(
+    ConfirmationPauseListeningEvent event,
+    Emitter<ConfirmationState> emit,
+  ) async {
+    await _pauseListeningUseCase.execute().catchError((error) {
+      _errorHandler.handle(error);
+    });
+  }
+
+  Future<void> _handleResumeListening(
+    ConfirmationResumeListeningEvent event,
+    Emitter<ConfirmationState> emit,
+  ) async {
+    await _resumeListeningUseCase.execute().catchError((error) {
       _errorHandler.handle(error);
     });
   }

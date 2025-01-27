@@ -18,10 +18,29 @@ class ResumeListeningUseCaseImpl extends ResumeListeningUseCase {
 
   @override
   Future<void> execute() async {
-    final osAuthenticationListenHandler =
-        _userInteractionOperationStateRepository
-            .state?.osAuthenticationListenHandler;
-    await osAuthenticationListenHandler?.resumeListening();
+    final state = _userInteractionOperationStateRepository.state;
+    if (state == null) {
+      debugPrint(
+          "User interaction state is missing, no need for resuming the listen handler.");
+      return;
+    }
+
+    final osAuthenticationListenHandler = state.osAuthenticationListenHandler;
+    if (osAuthenticationListenHandler == null) {
+      debugPrint(
+          "OS authentication listen handler does not exist, no need for resuming.");
+      return;
+    }
+
+    final handler = await osAuthenticationListenHandler.resumeListening();
+    _userInteractionOperationStateRepository.save(
+      state.copyWith(
+        accountSelectionHandler: null,
+        authenticatorSelectionHandler: null,
+        osAuthenticationListenHandler: handler,
+      ),
+    );
+
     debugPrint("Listening resumed.");
   }
 }
