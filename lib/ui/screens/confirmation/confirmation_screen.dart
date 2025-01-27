@@ -35,9 +35,35 @@ class ConfirmationContent extends StatefulWidget {
   State<ConfirmationContent> createState() => _ConfirmationContentState();
 }
 
-class _ConfirmationContentState extends State<ConfirmationContent> {
+class _ConfirmationContentState extends State<ConfirmationContent>
+    with WidgetsBindingObserver {
   late AppLocalizations _localization;
   late ConfirmationBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed) {
+      debugPrint(
+          "[ConfirmationScreen didChangeAppLifecycleState] State resumed.");
+      _bloc.add(ConfirmationResumeListeningEvent());
+    } else if (state == AppLifecycleState.paused) {
+      debugPrint(
+          "[ConfirmationScreen didChangeAppLifecycleState] State paused.");
+      _bloc.add(ConfirmationPauseListeningEvent());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
