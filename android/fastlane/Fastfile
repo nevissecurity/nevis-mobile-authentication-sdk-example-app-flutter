@@ -16,14 +16,14 @@ public_maven_repository_url = "https://maven.pkg.github.com/nevissecurity/nevis-
 def report_on_success(message)
 	slack(
 		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
-		slack_url: ENV['SLACK_WEBHOOK_URL']
-	) if ENV['SLACK_WEBHOOK_URL']
+		slack_url: ENV["SLACK_WEBHOOK_URL"]
+	) if ENV["SLACK_WEBHOOK_URL"]
 end
 
 def report_on_error(message, exception)
 	slack(
 		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
-		slack_url: ENV['SLACK_WEBHOOK_URL'],
+		slack_url: ENV["SLACK_WEBHOOK_URL"],
 		success: false,
 		attachment_properties: {
 			fields: [
@@ -34,14 +34,14 @@ def report_on_error(message, exception)
 				}
 			]
 		}
-	) if ENV['SLACK_WEBHOOK_URL']
-	UI.user_error!("#{exception}")
+	) if ENV["SLACK_WEBHOOK_URL"]
+	UI.user_error!(exception.to_s)
 end
 
 platform :android do
 	desc "Pull request build"
 	desc ""
-	lane :pr do |options|
+	lane :pr do
 		utilize_private_repos
 		build
 	end
@@ -83,7 +83,7 @@ platform :android do
 	desc "Build the application"
 	desc ""
 	private_lane :build do
-		sh('flutter build apk --debug')
+		sh("flutter build apk --debug")
 	end
 
 	desc "Distribute the application"
@@ -92,36 +92,34 @@ platform :android do
 	desc " * **`build_number`**: The build number of the application."
 	desc ""
 	private_lane :distribute do |options|
-		begin
-			version = options[:version]
-			build_number = options[:build_number]
-			UI.message("Distributing #{display_name} #{version} (#{build_number}) 📦")
+		version = options[:version]
+		build_number = options[:build_number]
+		UI.message("Distributing #{display_name} #{version} (#{build_number}) 📦")
 
-			sh("echo \"#{ENV["SIGNING_CONFIGS"]}\" > #{signing_configs_gradle}")
+		sh("echo \"#{ENV['SIGNING_CONFIGS']}\" > #{signing_configs_gradle}")
 
-			modify_file(
-				file_path: app_build_gradle,
-				old_value: "signingConfig signingConfigs.debug",
-				new_value: "signingConfig signingConfigs.signing",
-			)
+		modify_file(
+			file_path: app_build_gradle,
+			old_value: "signingConfig signingConfigs.debug",
+			new_value: "signingConfig signingConfigs.signing"
+		)
 
-			modify_file(
-				file_path: app_build_gradle,
-				old_value: "android {",
-				new_value: "apply from: 'signing_configs.gradle'\n",
-				mode: 'prepend'
-			)
+		modify_file(
+			file_path: app_build_gradle,
+			old_value: "android {",
+			new_value: "apply from: 'signing_configs.gradle'\n",
+			mode: "prepend"
+		)
 
-			build
+		build
 
-			firebase_app_distribution(
-				app: ENV["FIREBASE_APP_ID_ANDROID"],
-				apk_path: apk_path,
-				groups: 'developers, internal-testers, presales'
-			)
-			report_on_success("#{display_name} build is completed: #{version} (#{build_number}) ✅")
-		rescue => exception
-			report_on_error("#{display_name} build failed ❌", exception)
-		end
+		firebase_app_distribution(
+			app: ENV["FIREBASE_APP_ID_ANDROID"],
+			apk_path:,
+			groups: "developers, internal-testers, presales"
+		)
+		report_on_success("#{display_name} build is completed: #{version} (#{build_number}) ✅")
+	rescue => e
+		report_on_error("#{display_name} build failed ❌", e)
 	end
 end
