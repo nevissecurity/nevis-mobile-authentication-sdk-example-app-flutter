@@ -1,0 +1,80 @@
+inherit_gem:
+  team_fastlane-rubocop: default.yml
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.1
+  Exclude:
+    - "**/Flutter.podspec"
+    - "**/vendor/**/*"
+
+Rails:
+  Enabled: false
+
+Layout/IndentationStyle:
+  EnforcedStyle: tabs
+Layout/IndentationWidth:
+  Width: 1
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_first_argument
+Layout/FirstArgumentIndentation:
+  EnforcedStyle: consistent_relative_to_receiver
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: space
+  EnforcedStyleForEmptyBraces: no_space
+Layout/LineLength:
+  Max: 150
+
+Naming/PredicateName:
+  Enabled: false
+Naming/FileName:
+  Exclude:
+    - '*.podspec'
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+Style/TrailingCommaInArguments:
+  Enabled: false
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/FetchEnvVar:
+  Enabled: false
+Style/HashSyntax:
+  Exclude:
+    - '*.podspec'
+Style/WordArray:
+  EnforcedStyle: brackets
+Style/SymbolArray:
+  EnforcedStyle: brackets
+Style/MultilineIfModifier:
+  Enabled: false
+Style/RescueStandardError:
+  EnforcedStyle: implicit
+
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    - 'fastlane/Fastfile'
+Lint/UselessAssignment:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 51
+Metrics/BlockLength:
+  AllowedMethods: platform
+  Max: 60
+Metrics/ClassLength:
+  Max: 200
+Metrics/CyclomaticComplexity:
+  Max: 13
+Metrics/MethodLength:
+  Max: 70
+Metrics/PerceivedComplexity:
+  Max: 13
