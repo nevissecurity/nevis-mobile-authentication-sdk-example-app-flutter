@@ -20,10 +20,11 @@ env:
   XCODE_VERSION: '15.4'
   JAVA_VERSION: '17'
   RUBY_VERSION: '3.1'
-  HOST_NAME: ${{ secrets.HOST_NAME }}
+
+  HOST_NAME: ${{ vars.HOST_NAME }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
-  GITHUB_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+  GH_USERNAME: ${{ vars.GH_USERNAME }}
+  GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
   CURRENT_BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
 jobs:

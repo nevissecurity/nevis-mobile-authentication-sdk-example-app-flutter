@@ -51,8 +51,8 @@ Open a terminal and run the `flutter pub get` command in the root directory to g
     * as environment variables.
     * in `gradle.properties` in `GRADLE_USER_HOME` directory or in Gradle installation directory.
     ```properties
-    GITHUB_USERNAME=<YOUR USERNAME>
-    GITHUB_PERSONAL_ACCESS_TOKEN=<YOUR PERSONAL ACCESS TOKEN>
+    GH_USERNAME=<YOUR USERNAME>
+    GH_PERSONAL_ACCESS_TOKEN=<YOUR PERSONAL ACCESS TOKEN>
     ```  
 
 2. Synchronize your [android](/android) project if opened in Android Studio.

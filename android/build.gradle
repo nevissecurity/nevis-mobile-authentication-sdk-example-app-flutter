@@ -49,8 +49,8 @@ allprojects {
         maven {
             url "https://maven.pkg.github.com/nevissecurity/nevis-mobile-authentication-sdk-android-package"
             credentials {
-                username = getConfig("GITHUB_USERNAME")
-                password = getConfig("GITHUB_PERSONAL_ACCESS_TOKEN")
+                username = getConfig("GH_USERNAME")
+                password = getConfig("GH_PERSONAL_ACCESS_TOKEN")
             }
         }
     }
