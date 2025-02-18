@@ -146,7 +146,6 @@ platform :ios do
 			readonly: true,
 			app_identifier:,
 			git_url: ENV["MATCH_GIT_URL"],
-			git_basic_authorization: Base64.strict_encode64(ENV["MATCH_GIT_AUTHORIZATION"]),
 			git_branch: "main",
 			keychain_name:,
 			keychain_password:
