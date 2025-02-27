@@ -1,6 +1,6 @@
 # File options
 --exclude Pods
---swiftversion 5.9.2
+--swiftversion 6.0.3
 
 # Format options
 --allman false
