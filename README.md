@@ -31,7 +31,7 @@ Before you can actually start compiling and using the example applications pleas
 Your development setup has to meet the following prerequisites:
 
 * iOS 12 or later
-* Xcode 15.x, including Swift 5.7 or later
+* Xcode 16.2, including Swift 6.0.3 or later
 * Android 6 or later, with API level 23 -or-
 * Android 10 or later, with API level 29, for the biometric authenticator to work
 * Gradle 8.4 or later
