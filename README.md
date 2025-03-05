@@ -57,15 +57,20 @@ Open a terminal and run the `flutter pub get` command in the root directory to g
 
 2. Synchronize your [android](/android) project if opened in Android Studio.
 
-> [!WARNING]
-> The package repository only exposes the `debug` flavor. To use the `release` flavor contact us on [sales@nevis.net](mailto:sales@nevis.net).
+:warning: **Warning**\
+The package repository only exposes the `debug` flavor. To use the `release` flavor contact us on [sales@nevis.net](mailto:sales@nevis.net).
 
 </details>
 
 <details>
 <summary>iOS</summary>
 
-Run `pod install` in your [iOS](/ios) directory.
+Native iOS dependencies of this project (including the Nevis Mobile Authentication Client SDK for iOS) are provided via [Cocoapods](https://cocoapods.org/). Please install all dependencies by running the following command in your [iOS](/ios) directory:
+
+```bash
+pod install
+```
+
 </details>
 
 ### Configuration
@@ -81,8 +86,7 @@ Edit the `assets/config_authentication_cloud.json` file and replace
     "loginRequestURL": "https://<YOUR INSTANCE>.mauth.nevis.cloud/_app/auth/pwd"
   },
   "sdk": {
-    "hostname": "<YOUR INSTANCE>.mauth.nevis.cloud",
-     ...
+    "hostname": "<YOUR INSTANCE>.mauth.nevis.cloud"
   }
 }
 ```
@@ -225,7 +229,7 @@ When the authentication is initiated in another device or application, the infor
 
 #### Transaction confirmation
 
-There are cases when specific information is to be presented to the user during the user verification process, known as transaction confirmation. The `AuthenticatorSelectionContext` and the `AccountSelectionContext` contain a byte array with the information. In the example app it is handled in the [AccountSelectorImpl](lib/domain/interaction/account_selector.dart) class.
+There are cases when specific information is to be presented to the user during the user verification process, known as transaction confirmation. The `AuthenticatorSelectionContext` and the `AccountSelectionContext` contain a byte array with the information. In the example app it is handled in the [AccountSelectorImpl](lib/domain/interaction/account_selector_impl.dart) class.
 
 ### Deregistration
 
@@ -248,6 +252,9 @@ Out-of-band operations occur when a message is delivered to the application thro
 #### Change device information
 
 During registration, the device information can be provided that contains the name identifying your device, and also the Firebase Cloud Messaging registration token. Updating both the name and the token is implemented in the [ChangeDeviceInformationUseCase](lib/domain/usecase/change_device_information_usecase.dart) class.
+
+> [!NOTE]
+> Firebase Cloud Messaging is not supported in the example app.
 
 #### Get information
 
