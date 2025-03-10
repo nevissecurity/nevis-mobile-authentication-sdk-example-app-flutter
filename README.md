@@ -57,15 +57,20 @@ Open a terminal and run the `flutter pub get` command in the root directory to g
 
 2. Synchronize your [android](/android) project if opened in Android Studio.
 
-> [!WARNING]
-> The package repository only exposes the `debug` flavor. To use the `release` flavor contact us on [sales@nevis.net](mailto:sales@nevis.net).
+:warning: **Warning**\
+The package repository only exposes the `debug` flavor. To use the `release` flavor contact us on [sales@nevis.net](mailto:sales@nevis.net).
 
 </details>
 
 <details>
 <summary>iOS</summary>
 
-Run `pod install` in your [iOS](/ios) directory.
+Native iOS dependencies of this project (including the Nevis Mobile Authentication Client SDK for iOS) are provided via [Cocoapods](https://cocoapods.org/). Please install all dependencies by running the following command in your [iOS](/ios) directory:
+
+```bash
+pod install
+```
+
 </details>
 
 ### Configuration
@@ -81,8 +86,7 @@ Edit the `assets/config_authentication_cloud.json` file and replace
     "loginRequestURL": "https://<YOUR INSTANCE>.mauth.nevis.cloud/_app/auth/pwd"
   },
   "sdk": {
-    "hostname": "<YOUR INSTANCE>.mauth.nevis.cloud",
-     ...
+    "hostname": "<YOUR INSTANCE>.mauth.nevis.cloud"
   }
 }
 ```
@@ -225,7 +229,7 @@ When the authentication is initiated in another device or application, the infor
 
 #### Transaction confirmation
 
-There are cases when specific information is to be presented to the user during the user verification process, known as transaction confirmation. The `AuthenticatorSelectionContext` and the `AccountSelectionContext` contain a byte array with the information. In the example app it is handled in the [AccountSelectorImpl](lib/domain/interaction/account_selector.dart) class.
+There are cases when specific information is to be presented to the user during the user verification process, known as transaction confirmation. The `AuthenticatorSelectionContext` and the `AccountSelectionContext` contain a byte array with the information. In the example app it is handled in the [AccountSelectorImpl](lib/domain/interaction/account_selector_impl.dart) class.
 
 ### Deregistration
 
@@ -237,6 +241,10 @@ The [DeregisterUseCase](lib/domain/usecase/deregister_usecase.dart) and [Deregis
 
 With the change PIN operation you can modify the PIN of a registered PIN authenticator for a given user. It is implemented in the [ChangePinUseCase](lib/domain/usecase/change_pin_usecase.dart) class.
 
+#### Change password
+
+With the change password operation you can modify the password of a registered Password authenticator for a given user. It is implemented in the [ChangePasswordUseCase](lib/domain/usecase/change_password_usecase.dart) class.
+
 #### Decode out-of-band payload
 
 Out-of-band operations occur when a message is delivered to the application through an alternate channel like a push notification, a QR code, or a deep link. With the help of the [OobPayloadDecodeUseCase](lib/domain/usecase/oob_payload_decode_usecase.dart) class the application can create an `OutOfBandPayload` either from a JSON or a Base64 URL encoded String. The `OutOfBandPayload` is then used to start an `OutOfBandOperation`, see chapters [Out-of-Band Registration](#out-of-band-registration) and [Out-of-Band Authentication](#out-of-band-authentication).
@@ -244,5 +252,20 @@ Out-of-band operations occur when a message is delivered to the application thro
 #### Change device information
 
 During registration, the device information can be provided that contains the name identifying your device, and also the Firebase Cloud Messaging registration token. Updating both the name and the token is implemented in the [ChangeDeviceInformationUseCase](lib/domain/usecase/change_device_information_usecase.dart) class.
+
+> [!NOTE]
+> Firebase Cloud Messaging is not supported in the example app.
+
+#### Get information
+
+The following use cases are responsible for getting information with the help of `LocalData`:
+
+- The [RegisteredAccountsUseCase](lib/domain/usecase/registered_accounts_usecase.dart) class obtains the registered accounts.
+- The [AuthenticatorsUseCase](lib/domain/usecase/authenticators_usecase.dart) class obtains the authenticator information.
+- The [DeviceInformationUseCase](lib/domain/usecase/device_information_usecase.dart) class obtains the device information.
+
+### Error handling
+
+As this is an example app, we are directly showing the technical error occurring. Be aware that this is not to be considered best practice. Your own production app should handle the errors in a more appropriate manner such as providing translations for all your supported languages as well as simplifying the error message presented to the end-user in a way non-technical adverse people can understand and act upon them.
 
 © 2024 made with ❤ by Nevis

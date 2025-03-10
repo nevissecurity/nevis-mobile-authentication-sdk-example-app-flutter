@@ -19,6 +19,7 @@ runs:
     - name: Add Private Cocoapods Repo
       if: ${{ env.BUILD_TYPE == 'SNAPSHOT' }}
       shell: bash
+      working-directory: 'ios'
       run: |
-        pod repo remove ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_NAME }} &> /dev/null || true
-        pod repo add ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_NAME }} ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_URL }}
+        bundle exec pod repo remove ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_NAME }} &> /dev/null || true
+        bundle exec pod repo add ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_NAME }} ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_URL }}

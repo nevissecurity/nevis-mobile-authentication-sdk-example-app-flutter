@@ -17,7 +17,8 @@ abstract class ErrorHandler {
 
 @Injectable(as: ErrorHandler)
 class ErrorHandlerImpl extends ErrorHandler {
-  // Here we cannot use AppBlock for navigation because AppBlock also injects an instance of ErrorHandler, that would lead to circular dependency.
+  // Here we cannot use AppBlock for navigation because AppBlock also injects an
+  // instance of ErrorHandler, that would lead to circular dependency.
   final GlobalNavigationManager _globalNavigationManager;
   final StateRepository<UserInteractionOperationState>
       _userInteractionOperationStateRepository;
@@ -30,15 +31,21 @@ class ErrorHandlerImpl extends ErrorHandler {
   @override
   void handle(dynamic exception) {
     if (exception is MobileAuthenticationClientError) {
-      _navigateToResultWith(_processMobileAuthenticationClientError(exception));
+      _navigateToResultWith(
+        _processMobileAuthenticationClientError(exception),
+      );
     } else if (exception is PlatformSdkException) {
-      _navigateToResultWith(_processPlatformSdkException(exception));
+      _navigateToResultWith(
+        _processMobileAuthenticationClientError(exception.error),
+      );
     } else if (exception is BusinessException) {
-      _navigateToResultWith(ResultParameter.failure(errorType: exception.type));
+      _navigateToResultWith(
+        ResultParameter.failure(errorType: exception.type),
+      );
     } else {
-      _navigateToResultWith(ResultParameter.failure(
-        description: exception.toString(),
-      ));
+      _navigateToResultWith(
+        ResultParameter.failure(description: exception.toString()),
+      );
     }
   }
 
@@ -52,26 +59,26 @@ class ErrorHandlerImpl extends ErrorHandler {
     }
   }
 
-  ResultParameter _processPlatformSdkException(PlatformSdkException exception) {
-    MobileAuthenticationClientError error = exception.error;
-    String errorDescription = error.description;
-    if (exception is InitializationError) {
-      return ResultParameter.failure(description: errorDescription);
-    }
-    if (error is OperationFidoError) {
-      errorDescription = error.errorCode.description;
-    }
-    return ResultParameter.failure(description: errorDescription);
-  }
-
   ResultParameter _processMobileAuthenticationClientError(
     MobileAuthenticationClientError error,
   ) {
+    // As this is an example app, we are directly showing the technical error occurring.
+    // Be aware that this is not to be considered best practice. Your own production
+    // app should handle the errors in a more appropriate manner  such as providing
+    // translations for all your supported languages as well as simplifying the
+    // error message presented to the end-user in a way non-technical adverse
+    // people can understand and act upon them.
+    String errorDescription = error.description;
     if (error is InitializationError) {
-      return ResultParameter.fatal(description: error.description);
-    } else if (error is OperationFidoError) {
-      return ResultParameter.failure(description: error.errorCode.description);
+      return ResultParameter.fatal(description: errorDescription);
     }
-    return ResultParameter.failure(description: error.description);
+    if (error is OperationFidoError) {
+      errorDescription = error.errorCode.description;
+    } else if (error is AuthCloudApiFidoError) {
+      errorDescription = error.errorCode.description;
+    } else if (error is AuthenticationFidoError) {
+      errorDescription = error.errorCode.description;
+    }
+    return ResultParameter.failure(description: errorDescription);
   }
 }

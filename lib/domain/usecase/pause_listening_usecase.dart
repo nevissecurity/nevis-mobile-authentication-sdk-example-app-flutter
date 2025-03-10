@@ -20,10 +20,29 @@ class PauseListeningUseCaseImpl extends PauseListeningUseCase {
 
   @override
   Future<void> execute() async {
-    final osAuthenticationListenHandler =
-        _userInteractionOperationStateRepository
-            .state?.osAuthenticationListenHandler;
-    await osAuthenticationListenHandler?.pauseListening();
+    final state = _userInteractionOperationStateRepository.state;
+    if (state == null) {
+      debugPrint(
+          "User interaction state is missing, no need for resuming the listen handler.");
+      return;
+    }
+
+    final osAuthenticationListenHandler = state.osAuthenticationListenHandler;
+    if (osAuthenticationListenHandler == null) {
+      debugPrint(
+          "OS authentication listen handler does not exist, no need for pausing.");
+      return;
+    }
+
+    final handler = await osAuthenticationListenHandler.pauseListening();
+    _userInteractionOperationStateRepository.save(
+      state.copyWith(
+        accountSelectionHandler: null,
+        authenticatorSelectionHandler: null,
+        osAuthenticationListenHandler: handler,
+      ),
+    );
+
     debugPrint("Listening paused.");
   }
 }

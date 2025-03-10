@@ -1,0 +1,16 @@
+name: Run linter
+description: Run linter on the project
+
+inputs:
+  working-directory:
+    description: 'The working directory to run the linter in'
+    required: false
+    default: '.'
+
+runs:
+  using: composite
+  steps:
+    - name: Run Ruby Linter
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: bundle exec rubocop -c ${{ github.workspace }}/.rubocop.yml

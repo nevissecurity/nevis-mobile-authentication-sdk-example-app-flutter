@@ -1,8 +1,8 @@
 // Copyright © 2022 Nevis Security AG. All rights reserved.
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/configuration/model/login_configuration.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/configuration/model/sdk_configuration.dart';
 
 part 'app_configuration.g.dart';
 
@@ -32,13 +32,13 @@ class AppConfiguration {
   LoginConfiguration loginConfiguration;
 
   @JsonKey(name: "sdk")
-  Configuration sdkConfiguration;
+  SdkConfiguration sdk;
 
   AppConfiguration({
     required this.allowClass2Sensors,
     required this.authenticatorAllowlist,
     required this.loginConfiguration,
-    required this.sdkConfiguration,
+    required this.sdk,
   });
 
   factory AppConfiguration.fromJson(Map<String, dynamic> json) =>
