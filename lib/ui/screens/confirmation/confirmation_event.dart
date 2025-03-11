@@ -37,3 +37,7 @@ class ConfirmationDevicePasscodeEvent extends ConfirmationEvent {
     required this.description,
   });
 }
+
+class ConfirmationPauseListeningEvent extends ConfirmationEvent {}
+
+class ConfirmationResumeListeningEvent extends ConfirmationEvent {}

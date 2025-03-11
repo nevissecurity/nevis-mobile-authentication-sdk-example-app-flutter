@@ -34,8 +34,10 @@ class AuthenticatorValidatorImpl implements AuthenticatorValidator {
       // Do not display:
       //  - policy non-compliant authenticators (this includes already registered authenticators)
       //  - not hardware supported authenticators
+      //  - not OS supported authenticators
       //  - prefer Biometrics authenticator on Android
       return authenticator.isSupportedByHardware &&
+          authenticator.isSupportedByOs &&
           await context.isPolicyCompliant(authenticator.aaid) &&
           await _filterAndroidFingerprintIfNecessary(context, authenticator);
     });

@@ -3,7 +3,7 @@
 ## See https://docs.fastlane.tools
 ##
 
-require 'securerandom'
+require "securerandom"
 
 default_platform(:ios)
 
@@ -19,8 +19,8 @@ end
 
 def create_temp_keychain(name, password)
 	create_keychain(
-		name: name,
-		password: password,
+		name:,
+		password:,
 		unlock: true,
 		timeout: 0,
 		lock_when_sleeps: true
@@ -28,22 +28,20 @@ def create_temp_keychain(name, password)
 end
 
 def delete_temp_keychain(name)
-	delete_keychain(
-		name: name
-	) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
+	delete_keychain(name:) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
 end
 
 def report_on_success(message)
 	slack(
 		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
-		slack_url: ENV['SLACK_WEBHOOK_URL']
-	) if ENV['SLACK_WEBHOOK_URL']
+		slack_url: ENV["SLACK_WEBHOOK_URL"]
+	) if ENV["SLACK_WEBHOOK_URL"]
 end
 
 def report_on_error(message, exception)
 	slack(
 		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
-		slack_url: ENV['SLACK_WEBHOOK_URL'],
+		slack_url: ENV["SLACK_WEBHOOK_URL"],
 		success: false,
 		attachment_properties: {
 			fields: [
@@ -54,17 +52,17 @@ def report_on_error(message, exception)
 				}
 			]
 		}
-	) if ENV['SLACK_WEBHOOK_URL']
-	UI.user_error!("#{exception}")
+	) if ENV["SLACK_WEBHOOK_URL"]
+	UI.user_error!(exception.to_s)
 end
 
 def prepare_podfile(private_pod_repository_url)
-	filename = File.join('./../Podfile')
-	File.open(filename, 'r') do |original_lines|
+	filename = File.join("./../Podfile")
+	File.open(filename, "r") do |original_lines|
 		File.unlink(filename)
-		File.open(filename, 'w') do |new_lines|
+		File.open(filename, "w") do |new_lines|
 			new_lines.write "source '#{private_pod_repository_url}'\n"
-			new_lines.write(original_lines.read())
+			new_lines.write(original_lines.read)
 		end
 	end
 end
@@ -72,7 +70,7 @@ end
 platform :ios do
 	desc "Pull request build"
 	desc ""
-	lane :pr do |options|
+	lane :pr do
 		utilize_private_repos
 		build(is_release: false)
 	end
@@ -120,7 +118,7 @@ platform :ios do
 
 		UI.message("Archive Preparation")
 		Dir.chdir("..") do
-			Actions.sh("flutter build ios #{build_type} --no-codesign", error_callback: -> (result) {
+			Actions.sh("flutter build ios #{build_type} --no-codesign", error_callback: ->(result) {
 				raise "❌ Archive Preparation failed failed! Result: #{result}"
 			})
 		end
@@ -132,65 +130,63 @@ platform :ios do
 	desc " * **`build_number`**: The build number of the application."
 	desc ""
 	private_lane :distribute do |options|
-		begin
-			version = options[:version]
-			build_number = options[:build_number]
+		version = options[:version]
+		build_number = options[:build_number]
 
-			keychain_name = ENV["TEMP_KEYCHAIN_NAME"]
-			ensure_temp_keychain(
-				keychain_name,
-				keychain_password
-			)
+		keychain_name = ENV["TEMP_KEYCHAIN_NAME"]
+		ensure_temp_keychain(
+			keychain_name,
+			keychain_password
+		)
 
-			UI.message("Distributing #{display_name} #{version} (#{build_number}) 📦")
+		UI.message("Distributing #{display_name} #{version} (#{build_number}) 📦")
 
-			match(
-				type: "adhoc",
-				readonly: true,
-				app_identifier: app_identifier,
-				git_url: ENV["MATCH_GIT_URL"],
-				git_branch: "main",
-				keychain_name: keychain_name,
-				keychain_password: keychain_password
-			)
+		match(
+			type: "adhoc",
+			readonly: true,
+			app_identifier:,
+			git_url: ENV["MATCH_GIT_URL"],
+			git_branch: "main",
+			keychain_name:,
+			keychain_password:
+		)
 
-			profile_name = ENV["sigh_#{app_identifier}_adhoc_profile-name"]
-			update_code_signing_settings(
-				path: "Runner.xcodeproj",
-				build_configurations: ["Release"],
-				use_automatic_signing: false,
-				team_id: ENV["DEVELOPER_PORTAL_TEAM_ID"],
-				code_sign_identity: ENV["CODE_SIGNING_IDENTITY"],
-				profile_name: profile_name,
-			)
+		profile_name = ENV["sigh_#{app_identifier}_adhoc_profile-name"]
+		update_code_signing_settings(
+			path: "Runner.xcodeproj",
+			build_configurations: ["Release"],
+			use_automatic_signing: false,
+			team_id: ENV["DEVELOPER_PORTAL_TEAM_ID"],
+			code_sign_identity: ENV["CODE_SIGNING_IDENTITY"],
+			profile_name:,
+		)
 
-			gym(
-				workspace: "Runner.xcworkspace",
-				scheme: "Runner",
-				configuration: "Release",
-				clean: true,
-				skip_profile_detection: true,
-				skip_package_dependencies_resolution: true,
-				export_method: "ad-hoc",
-				export_options: {
-					provisioningProfiles: {
-						app_identifier => ENV["PROVISIONING_PROFILE_SPECIFIER"]
-					}
-				},
-				xcargs: "OTHER_CODE_SIGN_FLAGS=\"--keychain=#{keychain_name}\""
-			)
+		gym(
+			workspace: "Runner.xcworkspace",
+			scheme: "Runner",
+			configuration: "Release",
+			clean: true,
+			skip_profile_detection: true,
+			skip_package_dependencies_resolution: true,
+			export_method: "ad-hoc",
+			export_options: {
+				provisioningProfiles: {
+					app_identifier => ENV["PROVISIONING_PROFILE_SPECIFIER"]
+				}
+			},
+			xcargs: "OTHER_CODE_SIGN_FLAGS=\"--keychain=#{keychain_name}\""
+		)
 
-			firebase_app_distribution(
-				app: ENV["FIREBASE_APP_ID_IOS"],
-				ipa_path: "./Runner.ipa",
-				groups: "developers, internal-testers, presales"
-			)
+		firebase_app_distribution(
+			app: ENV["FIREBASE_APP_ID_IOS"],
+			ipa_path: "./Runner.ipa",
+			groups: "developers, internal-testers, presales"
+		)
 
-			delete_temp_keychain(keychain_name)
-			report_on_success("#{display_name} build is completed: #{version} (#{build_number}) ✅")
-		rescue => exception
-			delete_temp_keychain(keychain_name)
-			report_on_error("#{display_name} build failed ❌", exception)
-		end
+		delete_temp_keychain(keychain_name)
+		report_on_success("#{display_name} build is completed: #{version} (#{build_number}) ✅")
+	rescue => e
+		delete_temp_keychain(keychain_name)
+		report_on_error("#{display_name} build failed ❌", e)
 	end
 end
