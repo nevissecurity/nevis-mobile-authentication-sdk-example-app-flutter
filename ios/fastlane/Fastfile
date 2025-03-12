@@ -72,7 +72,7 @@ platform :ios do
 	desc ""
 	lane :pr do
 		utilize_private_repos
-		build(is_release: false)
+		build
 	end
 
 	desc "Continuous build"
@@ -82,7 +82,7 @@ platform :ios do
 	desc ""
 	lane :develop do |options|
 		utilize_private_repos
-		build(is_release: false)
+		build(is_release: true)
 		distribute(options)
 	end
 
@@ -109,12 +109,12 @@ platform :ios do
 
 	desc "Build the application"
 	desc "#### Options"
-	desc " * **`is_release`**: Determines the build type."
+	desc " * **`is_release`**: Determines the build type. Default value is false."
 	desc ""
 	private_lane :build do |options|
 		is_release = options[:is_release] || false
 
-		build_type = is_release ? "--release" : ""
+		build_type = is_release ? "--release" : "--debug"
 
 		UI.message("Archive Preparation")
 		Dir.chdir("..") do

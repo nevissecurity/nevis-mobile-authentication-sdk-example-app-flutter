@@ -3,7 +3,7 @@ description: Updates the Flutter dependencies
 
 inputs:
   sdk-version:
-    description: The version of the used Mobile Authentication SDK
+    description: The version of the used Mobile Authentication SDK Flutter plugin
     required: false
 
 runs:

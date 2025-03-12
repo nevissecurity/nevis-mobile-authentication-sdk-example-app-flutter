@@ -30,14 +30,14 @@ Before you can actually start compiling and using the example applications pleas
 
 Your development setup has to meet the following prerequisites:
 
-* iOS 12 or later
-* Xcode 16.2, including Swift 6.0.3 or later
+* iOS 15.5 or later
+* Xcode 16.2, including Swift 5.10 or later
 * Android 6 or later, with API level 23 -or-
 * Android 10 or later, with API level 29, for the biometric authenticator to work
 * Gradle 8.4 or later
 * Android Gradle Plugin `com.android.tools.build:gradle` 8.3.0 or later
 * Kotlin Gradle Plugin `org.jetbrains.kotlin:kotlin-gradle-plugin` 1.8.22 or later
-* Dart SDK 3.3.0 or later
+* Dart SDK 3.4.0 or later
 * Java 17
 
 ### Initialization
@@ -49,6 +49,7 @@ Open a terminal and run the `flutter pub get` command in the root directory to g
 
 1. The Nevis Mobile Authentication Client SDK for Android is published as a GitHub package. In order to be able to download it a valid GitHub account and a Personal Access Token is needed. Please define these in one of the following ways:
     * as environment variables.
+    * in `gradle.properties` or in `local.properties` in the project directory.
     * in `gradle.properties` in `GRADLE_USER_HOME` directory or in Gradle installation directory.
     ```properties
     GH_USERNAME=<YOUR USERNAME>
