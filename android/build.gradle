@@ -1,18 +1,3 @@
-buildscript {
-    ext.gradle_version = '8.3.0'
-    ext.kotlin_version = '1.8.22'
-
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath "com.android.tools.build:gradle:$gradle_version"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-
 ext.getConfig = { String name ->
     File localPropertiesFile = project.rootProject.file('local.properties')
     if (localPropertiesFile?.exists()) {
@@ -34,8 +19,7 @@ ext.getConfig = { String name ->
         return project.getProperty(name)
     }
 
-    println("Getting env variable failed, returning empty: set $name as environment variable or as system property in your ~/.gradle/gradle.properties")
-    return ""
+    throw new GradleException("Getting configuration with name $name failed! Set it as environment variable or as local/project/system property.")
 }
 
 allprojects {
@@ -52,14 +36,15 @@ allprojects {
     }
 }
 
-rootProject.buildDir = '../build'
+rootProject.layout.buildDirectory = file('../build')
 subprojects {
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    def directory = "${rootProject.layout.buildDirectory.get().asFile}/${project.name}"
+    project.layout.buildDirectory = file(directory)
 }
 subprojects {
     project.evaluationDependsOn(':app')
 }
 
 tasks.register("clean", Delete) {
-    delete rootProject.buildDir
+    delete rootProject.layout.buildDirectory
 }

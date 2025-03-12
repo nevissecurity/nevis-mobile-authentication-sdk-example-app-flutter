@@ -1,5 +1,5 @@
-name: Run linter
-description: Run linter on the project
+name: Lint Ruby
+description: Lints Ruby code running RuboCop
 
 inputs:
   working-directory:
