@@ -4,15 +4,8 @@
     "loginRequestURL": "https://mycompany.com/auth/pwd"
   },
   "sdk": {
-    "baseUrl": "https://mycompany.com",
-    "facetId": "android:apk-key-hash:ch.nevis.mobile.authentication.sdk.flutter.example",
-    "registrationRequestPath": "/nevisfido/uaf/1.1/request/registration/",
-    "registrationResponsePath": "/nevisfido/uaf/1.1/registration/",
-    "authenticationRequestPath": "/auth/fidouaf",
-    "authenticationResponsePath": "/auth/fidouaf/authenticationresponse/",
-    "deregistrationRequestPath": "/nevisfido/uaf/1.1/request/deregistration/",
-    "dispatchTargetResourcePath": "/nevisfido/token/dispatch/targets/",
-    "deviceResourcePath": "/nevisfido/devices/"
+    "hostname": "mycompany.com",
+    "facetId": "android:apk-key-hash:ch.nevis.mobile.authentication.sdk.flutter.example"
   },
   "authenticatorAllowlist": [
     "F1D0#0001",

@@ -10,6 +10,8 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/user_interaction_operation_state.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/state_repository.dart';
 
+// ignore_for_file: deprecated_member_use
+
 @Injectable(as: PinUserVerifier)
 class PinUserVerifierImpl implements PinUserVerifier {
   final DomainBloc _domainBloc;

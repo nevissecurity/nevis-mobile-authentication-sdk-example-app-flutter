@@ -72,6 +72,7 @@ platform :ios do
 	desc ""
 	lane :pr do
 		utilize_private_repos
+		setup
 		build
 	end
 
@@ -82,7 +83,8 @@ platform :ios do
 	desc ""
 	lane :develop do |options|
 		utilize_private_repos
-		build(is_release: true)
+		setup
+		build
 		distribute(options)
 	end
 
@@ -92,7 +94,8 @@ platform :ios do
 	desc " * **`build_number`**: The build number of the application."
 	desc ""
 	lane :main do |options|
-		build(is_release: true)
+		setup
+		build
 		distribute(options)
 	end
 
@@ -108,17 +111,11 @@ platform :ios do
 	end
 
 	desc "Build the application"
-	desc "#### Options"
-	desc " * **`is_release`**: Determines the build type. Default value is false."
 	desc ""
-	private_lane :build do |options|
-		is_release = options[:is_release] || false
-
-		build_type = is_release ? "--release" : "--debug"
-
+	private_lane :build do
 		UI.message("Archive Preparation")
 		Dir.chdir("..") do
-			Actions.sh("flutter build ios #{build_type} --no-codesign", error_callback: ->(result) {
+			Actions.sh("flutter build ios --no-codesign", error_callback: ->(result) {
 				raise "❌ Archive Preparation failed failed! Result: #{result}"
 			})
 		end
@@ -132,34 +129,9 @@ platform :ios do
 	private_lane :distribute do |options|
 		version = options[:version]
 		build_number = options[:build_number]
-
 		keychain_name = ENV["TEMP_KEYCHAIN_NAME"]
-		ensure_temp_keychain(
-			keychain_name,
-			keychain_password
-		)
 
 		UI.message("Distributing #{display_name} #{version} (#{build_number}) 📦")
-
-		match(
-			type: "adhoc",
-			readonly: true,
-			app_identifier:,
-			git_url: ENV["MATCH_GIT_URL"],
-			git_branch: "main",
-			keychain_name:,
-			keychain_password:
-		)
-
-		profile_name = ENV["sigh_#{app_identifier}_adhoc_profile-name"]
-		update_code_signing_settings(
-			path: "Runner.xcodeproj",
-			build_configurations: ["Release"],
-			use_automatic_signing: false,
-			team_id: ENV["DEVELOPER_PORTAL_TEAM_ID"],
-			code_sign_identity: ENV["CODE_SIGNING_IDENTITY"],
-			profile_name:,
-		)
 
 		gym(
 			workspace: "Runner.xcworkspace",
@@ -188,5 +160,35 @@ platform :ios do
 	rescue => e
 		delete_temp_keychain(keychain_name)
 		report_on_error("#{display_name} build failed ❌", e)
+	end
+
+	desc "Sets up code signing"
+	desc ""
+	private_lane :setup do
+		keychain_name = ENV["TEMP_KEYCHAIN_NAME"]
+		ensure_temp_keychain(
+			keychain_name,
+			keychain_password
+		)
+
+		match(
+			type: "adhoc",
+			readonly: true,
+			app_identifier:,
+			git_url: ENV["MATCH_GIT_URL"],
+			git_branch: "main",
+			keychain_name:,
+			keychain_password:
+		)
+
+		profile_name = ENV["sigh_#{app_identifier}_adhoc_profile-name"]
+		update_code_signing_settings(
+			path: "Runner.xcodeproj",
+			build_configurations: ["Release"],
+			use_automatic_signing: false,
+			team_id: ENV["DEVELOPER_PORTAL_TEAM_ID"],
+			code_sign_identity: ENV["CODE_SIGNING_IDENTITY"],
+			profile_name:,
+		)
 	end
 end
