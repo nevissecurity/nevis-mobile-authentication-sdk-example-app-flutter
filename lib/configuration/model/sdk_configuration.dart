@@ -6,28 +6,12 @@ part 'sdk_configuration.g.dart';
 
 @JsonSerializable()
 class SdkConfiguration {
-  String? baseUrl;
-  String? hostname;
-  String? facetId;
-  String? registrationRequestPath;
-  String? registrationResponsePath;
-  String? authenticationRequestPath;
-  String? authenticationResponsePath;
-  String? deregistrationRequestPath;
-  String? dispatchTargetResourcePath;
-  String? deviceResourcePath;
+  String hostname;
+  String facetId;
 
   SdkConfiguration(
-    this.baseUrl,
     this.hostname,
     this.facetId,
-    this.registrationRequestPath,
-    this.registrationResponsePath,
-    this.authenticationRequestPath,
-    this.authenticationResponsePath,
-    this.deregistrationRequestPath,
-    this.dispatchTargetResourcePath,
-    this.deviceResourcePath,
   );
 
   factory SdkConfiguration.fromJson(Map<String, dynamic> json) =>
