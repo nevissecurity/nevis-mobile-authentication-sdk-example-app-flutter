@@ -10,8 +10,6 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/user_interaction_operation_state.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/state_repository.dart';
 
-// ignore_for_file: deprecated_member_use
-
 @Injectable(as: PinUserVerifier)
 class PinUserVerifierImpl implements PinUserVerifier {
   final DomainBloc _domainBloc;
@@ -30,9 +28,16 @@ class PinUserVerifierImpl implements PinUserVerifier {
     PinUserVerificationContext context,
     PinUserVerificationHandler handler,
   ) {
-    debugPrint(context.lastRecoverableError != null
-        ? 'PIN user verification failed. Please try again. Error: ${context.lastRecoverableError?.description}'
-        : 'Please start PIN user verification.');
+    final status = context.authenticatorProtectionStatus;
+    if (status is PinProtectionStatusUnlocked) {
+      debugPrint('Please start PIN user verification.');
+    } else if (status is PinProtectionStatusLastAttemptFailed &&
+        status.remainingRetries > 0) {
+      debugPrint(
+          'Last PIN user verification attempt failed. Please try again.');
+    } else {
+      debugPrint('Last PIN user verification attempt failed.');
+    }
 
     final state = _userInteractionOperationStateRepository.state;
     if (state == null) {
@@ -49,7 +54,6 @@ class PinUserVerifierImpl implements PinUserVerifier {
     final event = CredentialUserVerificationEvent(
       aaid: Aaid.pin.rawValue,
       pinProtectionStatus: context.authenticatorProtectionStatus,
-      lastRecoverableError: context.lastRecoverableError,
     );
     _domainBloc.add(event);
   }

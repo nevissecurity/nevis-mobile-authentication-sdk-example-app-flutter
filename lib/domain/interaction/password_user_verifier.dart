@@ -10,8 +10,6 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/user_interaction_operation_state.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/state_repository.dart';
 
-// ignore_for_file: deprecated_member_use
-
 @Injectable(as: PasswordUserVerifier)
 class PasswordUserVerifierImpl implements PasswordUserVerifier {
   final DomainBloc _domainBloc;
@@ -30,9 +28,16 @@ class PasswordUserVerifierImpl implements PasswordUserVerifier {
     PasswordUserVerificationContext context,
     PasswordUserVerificationHandler handler,
   ) {
-    debugPrint(context.lastRecoverableError != null
-        ? 'Password user verification failed. Please try again. Error: ${context.lastRecoverableError?.description}'
-        : 'Please start password user verification.');
+    final status = context.authenticatorProtectionStatus;
+    if (status is PasswordProtectionStatusUnlocked) {
+      debugPrint('Please start password user verification.');
+    } else if (status is PasswordProtectionStatusLastAttemptFailed &&
+        status.remainingRetries > 0) {
+      debugPrint(
+          'Last password user verification attempt failed. Please try again.');
+    } else {
+      debugPrint('Last password user verification attempt failed.');
+    }
 
     final state = _userInteractionOperationStateRepository.state;
     if (state == null) {
@@ -49,7 +54,6 @@ class PasswordUserVerifierImpl implements PasswordUserVerifier {
     final event = CredentialUserVerificationEvent(
       aaid: Aaid.password.rawValue,
       passwordProtectionStatus: context.authenticatorProtectionStatus,
-      lastRecoverableError: context.lastRecoverableError,
     );
     _domainBloc.add(event);
   }
