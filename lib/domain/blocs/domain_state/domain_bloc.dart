@@ -93,7 +93,7 @@ class DomainBloc extends Bloc<DomainEvent, DomainState>
         kind: event.kind,
         pinProtectionStatus: event.pinProtectionStatus,
         passwordProtectionStatus: event.passwordProtectionStatus,
-        lastRecoverableError: event.lastRecoverableError,
+        lastRecoverableError: null,
       ),
     );
   }
