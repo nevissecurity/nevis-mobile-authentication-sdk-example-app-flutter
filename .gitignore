@@ -1,85 +1,163 @@
-# OSX
-#
-.DS_Store
+# Created by https://www.toptal.com/developers/gitignore/api/xcode,dotenv,android,flutter,fastlane,cocoapods
+# Edit at https://www.toptal.com/developers/gitignore?templates=xcode,dotenv,android,flutter,fastlane,cocoapods
 
-# XDE
-.expo/
-
-# VSCode
-.vscode/
-jsconfig.json
-
-# Xcode
-#
+### Android ###
+# Gradle files
+.gradle/
 build/
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-xcuserdata
-*.xccheckout
-*.moved-aside
-DerivedData
-*.hmap
-*.ipa
-*.xcuserstate
-*.xcworkspace
 
-# Android/IJ
-#
-.classpath
-.cxx
-.gradle
-.idea
-.project
-.settings
+# Local configuration file (sdk path, etc)
 local.properties
-*.iml
-ReadMe.html
-ReadMe.pdf
 
-# Cocoapods
-#
-/ios/Pods
-**/Podfile.lock
-
-# node.js
-#
-node_modules/
-npm-debug.log
-yarn-debug.log
-yarn-error.log
-
-# Expo
-.expo/*
-
-#environment
-**/.env
-
-# Flutter/Dart/Pub related
-**/pubspec.lock
-**/*.mocks.dart
+# Log/OS Files
 *.log
-**/doc
-**/untranslated.txt
-**/ios/Flutter/.last_build_id
+
+# Android Studio generated files and folders
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+output.json
+
+# IntelliJ
+*.iml
+.idea/
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
+
+# Keystore files
+*.jks
+*.keystore
+
+# Google Services (e.g. APIs or Firebase)
+google-services.json
+
+# Android Profiling
+*.hprof
+
+### Android Patch ###
+gen-external-apklibs
+
+# Replacement of .externalNativeBuild directories introduced
+# with Android Studio 3.5.
+
+### CocoaPods ###
+## CocoaPods GitIgnore Template
+
+# CocoaPods - Only use to conserve bandwidth / Save time on Pushing
+#           - Also handy if you have a large number of dependant pods
+#           - AS PER https://guides.cocoapods.org/using/using-cocoapods.html NEVER IGNORE THE LOCK FILE
+Pods/
+Podfile.lock
+
+### dotenv ###
+.env
+
+### fastlane ###
+# fastlane - A streamlined workflow tool for Cocoa deployment
+#
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/#source-control
+
+# fastlane specific
+**/fastlane/report.xml
+
+# deliver temporary files
+**/fastlane/Preview.html
+
+# snapshot generated screenshots
+**/fastlane/screenshots
+
+# scan temporary files
+**/fastlane/test_output
+
+# Fastlane.swift runner binary
+**/fastlane/FastlaneRunner
+
+### Flutter ###
+# Flutter/Dart/Pub related
+**/doc/api/
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
+.fvm/flutter_sdk
+.fvmrc
 .packages
 .pub-cache/
 .pub/
-/build/
-**/.fvm
-**/.fvmrc
+coverage/
+lib/generated_plugin_registrant.dart
+# For library packages, don’t commit the pubspec.lock file.
+# Regenerating the pubspec.lock file lets you test your package against the latest compatible versions of its dependencies.
+# See https://dart.dev/guides/libraries/private-files#pubspeclock
+pubspec.lock
 
-# Fastlane
-**/fastlane/report.xml
-**/fastlane/reports
-**/fastlane/output
-**/vendor/
-**/.bundle
+# Android related
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/key.properties
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+
+# iOS/XCode related
+**/ios/**/*.mode1v3
+**/ios/**/*.mode2v3
+**/ios/**/*.moved-aside
+**/ios/**/*.pbxuser
+**/ios/**/*.perspectivev3
+**/ios/**/*sync/
+**/ios/**/.sconsign.dblite
+**/ios/**/.tags*
+**/ios/**/.vagrant/
+**/ios/**/DerivedData/
+**/ios/**/Icon?
+**/ios/**/Pods/
+**/ios/**/.symlinks/
+**/ios/**/profile
+**/ios/**/xcuserdata
+**/ios/.generated/
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
+
+# Exceptions to above rules.
+!**/ios/**/default.mode1v3
+!**/ios/**/default.mode2v3
+!**/ios/**/default.pbxuser
+!**/ios/**/default.perspectivev3
+!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+
+### Xcode ###
+## User settings
+xcuserdata/
+
+## Xcode 8 and earlier
+*.xcscmblueprint
+*.xccheckout
+
+### Xcode Patch ###
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+/*.gcno
+**/xcshareddata/WorkspaceSettings.xcsettings
+
+# End of https://www.toptal.com/developers/gitignore/api/xcode,dotenv,android,flutter,fastlane,cocoapods
+
+untranslated.txt
