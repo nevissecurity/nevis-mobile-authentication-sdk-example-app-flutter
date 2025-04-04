@@ -73,7 +73,7 @@ platform :ios do
 	lane :pr do
 		utilize_private_repos
 		setup
-		build
+		build(clean: true)
 	end
 
 	desc "Continuous build"
@@ -111,14 +111,20 @@ platform :ios do
 	end
 
 	desc "Build the application"
+	desc "#### Options"
+	desc " * **`clean`**: Flag that tells whether the lane should perform a clean."
 	desc ""
-	private_lane :build do
+	private_lane :build do |options|
+		clean = options[:clean] || false
+
 		UI.message("Archive Preparation")
 		Dir.chdir("..") do
 			Actions.sh("flutter build ios --no-codesign", error_callback: ->(result) {
 				raise "❌ Archive Preparation failed failed! Result: #{result}"
 			})
 		end
+
+		delete_temp_keychain(ENV["TEMP_KEYCHAIN_NAME"]) if clean
 	end
 
 	desc "Distribute the application"
