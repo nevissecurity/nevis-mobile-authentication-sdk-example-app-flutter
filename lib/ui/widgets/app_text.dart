@@ -33,6 +33,16 @@ class AppText extends StatelessWidget {
   })  : style = const TextStyle(fontSize: 17.0),
         textAlign = TextAlign.center;
 
+  const AppText.footnote(
+    this.text, {
+    super.key,
+    this.textColor = Colors.black,
+  })  : style = const TextStyle(
+          fontSize: 13.0,
+          fontWeight: FontWeight.w400,
+        ),
+        textAlign = TextAlign.left;
+
   @override
   Widget build(BuildContext context) {
     return Text(

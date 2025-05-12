@@ -9,8 +9,17 @@ class HomeInitialState extends HomeState {}
 
 class HomeLoadedState extends HomeState {
   final int registeredAccounts;
+  final String? sdkVersion;
+  final String? additionalInfo;
 
-  HomeLoadedState.empty() : registeredAccounts = 0;
+  HomeLoadedState.empty()
+      : registeredAccounts = 0,
+        sdkVersion = "",
+        additionalInfo = "";
 
-  HomeLoadedState(this.registeredAccounts);
+  HomeLoadedState(
+    this.registeredAccounts,
+    this.sdkVersion,
+    this.additionalInfo,
+  );
 }

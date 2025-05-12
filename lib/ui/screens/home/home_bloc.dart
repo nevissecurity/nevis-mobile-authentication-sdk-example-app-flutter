@@ -1,6 +1,7 @@
 // Copyright © 2022 Nevis Security AG. All rights reserved.
 
 import 'dart:async';
+import 'dart:io' show Platform;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -26,6 +27,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/c
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_event.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_state.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/select_account/navigation/select_account_parameter.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/util/version_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 @injectable
@@ -48,6 +50,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Set<Account> _registeredAccounts = {};
   Set<Authenticator> _authenticators = {};
+  String? _sdkVersion;
+  String? _additionalInfo;
 
   HomeBloc(
     this._deepLinkRepository,
@@ -145,10 +149,26 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       _errorHandler.handle(error);
       return Set<Authenticator>.identity();
     });
+
+    if (Platform.isIOS) {
+      final metaData = await MetaData.iosMetaData;
+      _sdkVersion = metaData?.mobileAuthenticationVersion.formatted();
+      _additionalInfo = metaData?.applicationFacetId;
+    } else if (Platform.isAndroid) {
+      final metaData = await MetaData.androidMetaData;
+      _sdkVersion = metaData?.mobileAuthenticationVersion.formatted();
+      _additionalInfo = metaData?.signingCertificateSha256;
+    }
   }
 
   void _yieldBasedOnCurrentState(Emitter<HomeState> emit) {
-    emit(HomeLoadedState(_registeredAccounts.length));
+    emit(
+      HomeLoadedState(
+        _registeredAccounts.length,
+        _sdkVersion,
+        _additionalInfo,
+      ),
+    );
   }
 
   Future<void> _handleReadQrCode(

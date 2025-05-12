@@ -99,6 +99,36 @@ class HomeScreen extends StatelessWidget {
                           onPressed: () {
                             homeBloc.add(InBandRegisterEvent());
                           }),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AppText.body(
+                              localization.homeNevisMobileAuthenticationSdk,
+                            ),
+                            AppText.footnote(
+                              state.sdkVersion ??
+                                  localization.homeUnknownMetaData,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AppText.body(
+                              localization.homeAdditionalInformation,
+                            ),
+                            AppText.footnote(
+                              state.additionalInfo ??
+                                  localization.homeUnknownMetaData,
+                            ),
+                          ],
+                        ),
+                      ),
                       const SizedBox(
                         height: 16.0,
                       ),
