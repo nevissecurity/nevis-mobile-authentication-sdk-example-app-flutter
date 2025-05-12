@@ -49,6 +49,9 @@
     }
   },
   "homeIdentitySuiteOnly": "Identity Suite only",
+  "homeNevisMobileAuthenticationSdk": "Nevis Mobile Authentication SDK",
+  "homeAdditionalInformation": "Additional Information",
+  "homeUnknownMetaData": "Unknown",
   "readQrCode": "Read Qr Code",
   "inBandAuthenticate": "In-Band Authenticate",
   "deregister": "Deregister",
