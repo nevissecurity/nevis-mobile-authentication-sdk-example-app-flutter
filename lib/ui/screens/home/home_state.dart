@@ -10,16 +10,19 @@ class HomeInitialState extends HomeState {}
 class HomeLoadedState extends HomeState {
   final int registeredAccounts;
   final String? sdkVersion;
-  final String? additionalInfo;
+  final String? facetId;
+  final String? certificateFingerprint;
 
   HomeLoadedState.empty()
       : registeredAccounts = 0,
-        sdkVersion = "",
-        additionalInfo = "";
+        sdkVersion = null,
+        facetId = null,
+        certificateFingerprint = null;
 
   HomeLoadedState(
     this.registeredAccounts,
     this.sdkVersion,
-    this.additionalInfo,
+    this.facetId,
+    this.certificateFingerprint,
   );
 }
