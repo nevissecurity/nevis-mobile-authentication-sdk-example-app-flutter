@@ -7,11 +7,9 @@ part 'sdk_configuration.g.dart';
 @JsonSerializable()
 class SdkConfiguration {
   String hostname;
-  String facetId;
 
   SdkConfiguration(
     this.hostname,
-    this.facetId,
   );
 
   factory SdkConfiguration.fromJson(Map<String, dynamic> json) =>

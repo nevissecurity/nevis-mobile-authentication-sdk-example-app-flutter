@@ -4,8 +4,7 @@
     "loginRequestURL": "https://mycompany.com/auth/pwd"
   },
   "sdk": {
-    "hostname": "mycompany.com",
-    "facetId": "android:apk-key-hash:ch.nevis.mobile.authentication.sdk.flutter.example"
+    "hostname": "mycompany.com"
   },
   "authenticatorAllowlist": [
     "F1D0#0001",
