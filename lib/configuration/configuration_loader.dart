@@ -40,12 +40,10 @@ abstract class ConfigurationLoader {
       case AppEnvironment.authenticationCloud:
         _sdkConfiguration = Configuration.authCloudBuilder()
             .hostname(appConfiguration.sdk.hostname)
-            .facetId(appConfiguration.sdk.facetId)
             .build();
       case AppEnvironment.identitySuite:
         _sdkConfiguration = Configuration.admin4PatternBuilder()
             .hostname(appConfiguration.sdk.hostname)
-            .facetId(appConfiguration.sdk.facetId)
             .build();
     }
 
