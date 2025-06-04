@@ -264,11 +264,17 @@ abstract class AppLocalizations {
   /// **'Nevis Mobile Authentication SDK'**
   String get homeNevisMobileAuthenticationSdk;
 
-  /// No description provided for @homeAdditionalInformation.
+  /// No description provided for @homeFacetId.
   ///
   /// In en, this message translates to:
-  /// **'Additional Information'**
-  String get homeAdditionalInformation;
+  /// **'Facet Id'**
+  String get homeFacetId;
+
+  /// No description provided for @homeCertificateFingerprint.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate Fingerprint'**
+  String get homeCertificateFingerprint;
 
   /// No description provided for @homeUnknownMetaData.
   ///

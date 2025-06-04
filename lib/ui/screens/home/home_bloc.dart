@@ -51,7 +51,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Set<Account> _registeredAccounts = {};
   Set<Authenticator> _authenticators = {};
   String? _sdkVersion;
-  String? _additionalInfo;
+  String? _facetId;
+  String? _certificateFingerprint;
 
   HomeBloc(
     this._deepLinkRepository,
@@ -153,11 +154,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (Platform.isIOS) {
       final metaData = await MetaData.iosMetaData;
       _sdkVersion = metaData?.mobileAuthenticationVersion.formatted();
-      _additionalInfo = metaData?.applicationFacetId;
+      _facetId = metaData?.applicationFacetId;
     } else if (Platform.isAndroid) {
       final metaData = await MetaData.androidMetaData;
       _sdkVersion = metaData?.mobileAuthenticationVersion.formatted();
-      _additionalInfo = metaData?.signingCertificateSha256;
+      _facetId = metaData?.applicationFacetId;
+      _certificateFingerprint = metaData?.signingCertificateSha256;
     }
   }
 
@@ -166,7 +168,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       HomeLoadedState(
         _registeredAccounts.length,
         _sdkVersion,
-        _additionalInfo,
+        _facetId,
+        _certificateFingerprint,
       ),
     );
   }

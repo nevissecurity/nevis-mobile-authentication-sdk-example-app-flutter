@@ -111,7 +111,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Nevis Mobile Authentication SDK';
 
   @override
-  String get homeAdditionalInformation => 'Additional Information';
+  String get homeFacetId => 'Facet Id';
+
+  @override
+  String get homeCertificateFingerprint => 'Certificate Fingerprint';
 
   @override
   String get homeUnknownMetaData => 'Unknown';

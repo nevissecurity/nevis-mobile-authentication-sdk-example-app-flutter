@@ -120,15 +120,29 @@ class HomeScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             AppText.body(
-                              localization.homeAdditionalInformation,
+                              localization.homeFacetId,
                             ),
                             AppText.footnote(
-                              state.additionalInfo ??
-                                  localization.homeUnknownMetaData,
+                              state.facetId ?? localization.homeUnknownMetaData,
                             ),
                           ],
                         ),
                       ),
+                      if (state.certificateFingerprint != null)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppText.body(
+                                localization.homeCertificateFingerprint,
+                              ),
+                              AppText.footnote(
+                                state.certificateFingerprint!,
+                              ),
+                            ],
+                          ),
+                        ),
                       const SizedBox(
                         height: 16.0,
                       ),
