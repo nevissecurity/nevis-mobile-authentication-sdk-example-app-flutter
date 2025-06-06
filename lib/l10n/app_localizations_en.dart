@@ -120,6 +120,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeUnknownMetaData => 'Unknown';
 
   @override
+  String get homeSupportedAttestation =>
+      'FIDO UAF Attestation Supported by Device';
+
+  @override
+  String get homeSurrogateBasic => 'Surrogate basic';
+
+  @override
+  String get homeFullBasicDefault => 'Full basic default mode';
+
+  @override
+  String get homeFullBasicStrict => 'Full basic strict mode';
+
+  @override
   String get readQrCode => 'Read Qr Code';
 
   @override
