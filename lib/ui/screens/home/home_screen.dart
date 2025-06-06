@@ -6,6 +6,8 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/l10n/app_loc
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_bloc.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_event.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_state.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/widgets/attestation_information_section.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/widgets/meta_data_section.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/app_scaffold.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/app_text.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/button.dart';
@@ -99,48 +101,14 @@ class HomeScreen extends StatelessWidget {
                           onPressed: () {
                             homeBloc.add(InBandRegisterEvent());
                           }),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AppText.body(
-                              localization.homeNevisMobileAuthenticationSdk,
-                            ),
-                            AppText.footnote(
-                              state.sdkVersion ??
-                                  localization.homeUnknownMetaData,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AppText.body(
-                              localization.homeFacetId,
-                            ),
-                            AppText.footnote(
-                              state.facetId ?? localization.homeUnknownMetaData,
-                            ),
-                          ],
-                        ),
-                      ),
-                      if (state.certificateFingerprint != null)
+                      if (state.metaData != null)
+                        MetaDataSection(metaData: state.metaData!),
+                      if (state.attestationInformation != null)
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AppText.body(
-                                localization.homeCertificateFingerprint,
-                              ),
-                              AppText.footnote(
-                                state.certificateFingerprint!,
-                              ),
-                            ],
+                          child: AttestationInformationSection(
+                            attestationInformation:
+                                state.attestationInformation!,
                           ),
                         ),
                       const SizedBox(

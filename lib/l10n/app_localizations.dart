@@ -282,6 +282,30 @@ abstract class AppLocalizations {
   /// **'Unknown'**
   String get homeUnknownMetaData;
 
+  /// No description provided for @homeSupportedAttestation.
+  ///
+  /// In en, this message translates to:
+  /// **'FIDO UAF Attestation Supported by Device'**
+  String get homeSupportedAttestation;
+
+  /// No description provided for @homeSurrogateBasic.
+  ///
+  /// In en, this message translates to:
+  /// **'Surrogate basic'**
+  String get homeSurrogateBasic;
+
+  /// No description provided for @homeFullBasicDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Full basic default mode'**
+  String get homeFullBasicDefault;
+
+  /// No description provided for @homeFullBasicStrict.
+  ///
+  /// In en, this message translates to:
+  /// **'Full basic strict mode'**
+  String get homeFullBasicStrict;
+
   /// No description provided for @readQrCode.
   ///
   /// In en, this message translates to:
