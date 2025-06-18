@@ -30,7 +30,6 @@ class HomeScreen extends StatelessWidget {
               : Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: ScrollableColumn(
-                    flex: true,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -40,14 +39,12 @@ class HomeScreen extends StatelessWidget {
                           child: AppText.title(localization.appTitle),
                         ),
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 16.0, right: 0.0, left: 0.0, bottom: 64.0),
-                          child: AppText.body(
-                            localization.homeRegisteredAccounts(
-                              state.registeredAccounts,
-                            ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 16.0, right: 0.0, left: 0.0, bottom: 64.0),
+                        child: AppText.body(
+                          localization.homeRegisteredAccounts(
+                            state.registeredAccounts,
                           ),
                         ),
                       ),

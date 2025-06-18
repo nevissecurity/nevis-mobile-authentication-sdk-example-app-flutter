@@ -43,7 +43,6 @@ class TransactionConfirmationContent extends StatelessWidget {
         return AppScaffold(
           body: Center(
             child: ScrollableColumn(
-              flex: true,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
