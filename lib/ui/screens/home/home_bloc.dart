@@ -1,7 +1,9 @@
 // Copyright © 2022 Nevis Security AG. All rights reserved.
 
 import 'dart:async';
+import 'dart:io' show Platform;
 
+import 'package:flutter/cupertino.dart' hide MetaData;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
@@ -25,7 +27,10 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/navigation/g
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/navigation/credential_parameter.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_event.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_state.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/model/sdk_attestation_information.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/model/sdk_meta_data.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/select_account/navigation/select_account_parameter.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/util/version_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 @injectable
@@ -48,6 +53,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Set<Account> _registeredAccounts = {};
   Set<Authenticator> _authenticators = {};
+  SdkMetaData? _sdkMetaData;
+  SdkAttestationInformation? _sdkAttestationInformation;
 
   HomeBloc(
     this._deepLinkRepository,
@@ -145,10 +152,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       _errorHandler.handle(error);
       return Set<Authenticator>.identity();
     });
+
+    await _loadMetaData();
+    await _loadAttestationInformation();
+    debugPrint('Loading data finished.');
   }
 
   void _yieldBasedOnCurrentState(Emitter<HomeState> emit) {
-    emit(HomeLoadedState(_registeredAccounts.length));
+    emit(
+      HomeLoadedState(
+        _registeredAccounts.length,
+        _sdkMetaData,
+        _sdkAttestationInformation,
+      ),
+    );
   }
 
   Future<void> _handleReadQrCode(
@@ -358,6 +375,79 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
 
     return authenticators.first.userEnrollment.isEnrolled(username);
+  }
+
+  Future<void> _loadMetaData() async {
+    if (Platform.isIOS) {
+      final metaData = await MetaData.iosMetaData;
+      _sdkMetaData = SdkMetaData(
+        sdkVersion: metaData?.mobileAuthenticationVersion.formatted(),
+        facetId: metaData?.applicationFacetId,
+      );
+    } else if (Platform.isAndroid) {
+      final metaData = await MetaData.androidMetaData;
+      _sdkMetaData = SdkMetaData(
+        sdkVersion: metaData?.mobileAuthenticationVersion.formatted(),
+        facetId: metaData?.applicationFacetId,
+        certificateFingerprint: metaData?.signingCertificateSha256,
+      );
+    }
+  }
+
+  Future<void> _loadAttestationInformation() async {
+    if (!Platform.isAndroid) {
+      debugPrint('Getting FIDO UAF attestation information is not supported.');
+      return;
+    }
+
+    final Completer<void> completer = Completer();
+    await _clientProvider.client.deviceCapabilities.androidDeviceCapabilities
+        .fidoUafAttestationInformationGetter
+        .onSuccess((FidoUafAttestationInformation? information) {
+          debugPrint('Getting FIDO UAF attestation information succeeded.');
+          if (information == null) {
+            debugPrint('No attestation information received.');
+            if (!completer.isCompleted) {
+              completer.complete();
+            }
+            return;
+          }
+          if (information is OnlySurrogateBasicSupported) {
+            debugPrint('Only surrogate basic supported.');
+            if (information.cause != null) {
+              debugPrint('Cause: ${information.cause}');
+            }
+            _sdkAttestationInformation =
+                SdkAttestationInformation.onlySurrogateBasic();
+          } else if (information is OnlyDefaultMode) {
+            debugPrint('Full basic default mode supported.');
+            if (information.cause != null) {
+              debugPrint('Cause: ${information.cause}');
+            }
+            _sdkAttestationInformation =
+                SdkAttestationInformation.onlyDefault();
+          } else if (information is StrictMode) {
+            debugPrint('Full basic strict mode supported.');
+            _sdkAttestationInformation = SdkAttestationInformation.strict();
+          }
+          if (!completer.isCompleted) {
+            completer.complete();
+          }
+        })
+        .onError((error) {
+          debugPrint(
+              'Getting FIDO UAF attestation information failed. Error: ${error.runtimeType}');
+          if (!completer.isCompleted) {
+            completer.complete();
+          }
+        })
+        .execute()
+        .catchError((error) {
+          debugPrint(
+              'Getting FIDO UAF attestation information failed. Error: ${error.runtimeType}');
+        });
+
+    await completer.future;
   }
 
   @override

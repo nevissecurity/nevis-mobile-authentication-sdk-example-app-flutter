@@ -49,6 +49,14 @@
     }
   },
   "homeIdentitySuiteOnly": "Identity Suite only",
+  "homeNevisMobileAuthenticationSdk": "Nevis Mobile Authentication SDK",
+  "homeFacetId": "Facet Id",
+  "homeCertificateFingerprint": "Certificate Fingerprint",
+  "homeUnknownMetaData": "Unknown",
+  "homeSupportedAttestation": "FIDO UAF Attestation Supported by Device",
+  "homeSurrogateBasic": "Surrogate basic",
+  "homeFullBasicDefault": "Full basic default mode",
+  "homeFullBasicStrict": "Full basic strict mode",
   "readQrCode": "Read Qr Code",
   "inBandAuthenticate": "In-Band Authenticate",
   "deregister": "Deregister",
@@ -87,7 +95,7 @@
   "credentialPasswordTitle": "Password",
   "credentialPinPlaceholder": "Enter PIN",
   "credentialPasswordPlaceholder": "Enter Password",
-  "authenticatorProtectionStatusLastAttemptFailed": "Authenticator is unlocked. You have {retryCount} try left.\nPlease retry in {coolDown} seconds.",
+  "authenticatorProtectionStatusLastAttemptFailed": "Invalid credential was provided previously. Authenticator is unlocked. You have {retryCount} try left.\nPlease retry in {coolDown} seconds.",
   "@authenticatorProtectionStatusLastAttemptFailed": {
     "placeholders": {
       "retryCount": {

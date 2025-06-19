@@ -8,7 +8,7 @@
 [![Main Branch Commit](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-flutter/actions/workflows/main.yml/badge.svg)](https://github.com/nevissecurity/nevis-mobile-authentication-sdk-example-app-flutter/actions/workflows/main.yml)
 
 This repository contains the example app demonstrating how to use the Nevis Mobile Authentication SDK Flutter plugin in a Flutter app.
-The Nevis Mobile Authentication SDK allows you to integrate passwordless authentication to your existing mobile app, backed by FIDO UAF 1.1. 
+The Nevis Mobile Authentication SDK allows you to integrate passwordless authentication to your existing mobile app, backed by FIDO UAF 1.1.
 
 Some features demonstrated in this example app are:
 
@@ -30,14 +30,14 @@ Before you can actually start compiling and using the example applications pleas
 
 Your development setup has to meet the following prerequisites:
 
-* iOS 12 or later
-* Xcode 16.2, including Swift 6.0.3 or later
+* iOS 15.5 or later
+* Xcode 16.2, including Swift 5.10 or later
 * Android 6 or later, with API level 23 -or-
 * Android 10 or later, with API level 29, for the biometric authenticator to work
 * Gradle 8.4 or later
 * Android Gradle Plugin `com.android.tools.build:gradle` 8.3.0 or later
 * Kotlin Gradle Plugin `org.jetbrains.kotlin:kotlin-gradle-plugin` 1.8.22 or later
-* Dart SDK 3.3.0 or later
+* Dart SDK 3.4.0 or later
 * Java 17
 
 ### Initialization
@@ -49,6 +49,7 @@ Open a terminal and run the `flutter pub get` command in the root directory to g
 
 1. The Nevis Mobile Authentication Client SDK for Android is published as a GitHub package. In order to be able to download it a valid GitHub account and a Personal Access Token is needed. Please define these in one of the following ways:
     * as environment variables.
+    * in `gradle.properties` or in `local.properties` in the project directory.
     * in `gradle.properties` in `GRADLE_USER_HOME` directory or in Gradle installation directory.
     ```properties
     GH_USERNAME=<YOUR USERNAME>
@@ -102,12 +103,14 @@ The example apps are supporting two kinds of configuration: `authenticationCloud
 To change the configuration open the [getit_root.dart](lib/getit_root.dart) file which describes the dependency injection related configuration using the `get_it` dart package.
 The `environment` parameter should be changed to one of the values already mentioned.
 
-#### Android Manifest XML
+#### Deep links
 
-The example applications handle deep links those contain a valid `dispatchTokenResponse` query parameter of an out-of-band operation. The related configuration located in the [AndroidManifest.xml](android/app/src/main/AndroidManifest.xml) for [MainActivity](android/app/src/main/kotlin/ch/nevis/nevis_mobile_authentication_sdk_example_app_flutter/MainActivity.kt) with action `android.intent.action.VIEW`.
+The example applications handle deep links those contain a valid `dispatchTokenResponse` query parameter of an out-of-band operation.
 
-##### Deep links
+<details>
+<summary>Android</summary>
 
+The related configuration located in the [AndroidManifest.xml](android/app/src/main/AndroidManifest.xml) for [MainActivity](android/app/src/main/kotlin/ch/nevis/nevis_mobile_authentication_sdk_example_app_flutter/MainActivity.kt) with action `android.intent.action.VIEW`.
 Change the `nevisaccess` scheme value in the following `intent-filter` with the right scheme information of your environment.
 
 ```xml
@@ -121,8 +124,33 @@ Change the `nevisaccess` scheme value in the following `intent-filter` with the 
 </intent-filter>
 ```
 
-> [!NOTE]
-> For more information about deep links, visit the official [Android guide](https://developer.android.com/training/app-links).
+:information_source: **Note**\
+For more information about deep links, visit the official [Android guide](https://developer.android.com/training/app-links).
+
+</details>
+
+<details>
+<summary>iOS</summary>
+
+The related configuration located in the [Info.plist](ios/Runner/Resources/Info.plist) file in the `CFBundleURLSchemes` array.
+Change the `nevisaccess` scheme to the right scheme information of your environment.
+
+```
+<key>CFBundleURLTypes</key>
+<array>
+    <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <string>nevisaccess</string>
+        </array>
+    </dict>
+</array>
+```
+
+:information_source: **Note**\
+For more information about custom URL scheme, visit the official [Apple guide](https://developer.apple.com/documentation/xcode/defining-a-custom-url-scheme-for-your-app).
+
+</details>
 
 ### Build
 
@@ -166,7 +194,7 @@ The solution is to increase the internal memory. In Android Studio
 * Scroll down to the _Memory and Storage_ section and increase the amount of _Internal Storage_.
 * Finally, hit the _Finish_ button to apply the changes. Reboot the Android emulator to ensure everything will work as expected.
 
-### Try it out 
+### Try it out
 
 Now that the Flutter example app is up and running, it's time to try it out!
 

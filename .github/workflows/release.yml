@@ -16,7 +16,7 @@ on:
 
 env:
   BUILD_TYPE: 'RELEASE_CANDIDATE' # Allowed values: 'SNAPSHOT', 'RELEASE', 'RELEASE_CANDIDATE'
-  FLUTTER_VERSION: 3.19.0
+  FLUTTER_VERSION: 3.22.0
   XCODE_VERSION: 16.2
   JAVA_VERSION: 17
   RUBY_VERSION: 3.4.2
@@ -25,11 +25,48 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GH_USERNAME: ${{ vars.GH_USERNAME }}
   GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+  MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+  MATCH_GIT_URL: ${{ vars.MATCH_GIT_URL }}
+  MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+  DEVELOPER_PORTAL_TEAM_ID: ${{ secrets.DEVELOPER_PORTAL_TEAM_ID }}
+  CODE_SIGNING_IDENTITY: ${{ secrets.CODE_SIGNING_IDENTITY }}
+  TEMP_KEYCHAIN_NAME: ${{ vars.TEMP_KEYCHAIN_NAME }}
   CURRENT_BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
 jobs:
-  flutter-validation:
-    name: Validate Flutter
+  lint-ruby:
+    name: Lint Ruby
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve RubyGem Dependencies for Android
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+          working-directory: 'android'
+
+      - name: Lint Ruby for Android
+        uses: ./.github/actions/lint-ruby
+        with:
+          working-directory: 'android'
+
+      - name: Resolve RubyGem Dependencies for iOS
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+          working-directory: 'ios'
+
+      - name: Lint Ruby for iOS
+        uses: ./.github/actions/lint-ruby
+        with:
+          working-directory: 'ios'
+
+  lint-flutter:
+    name: Lint Flutter
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -41,13 +78,13 @@ jobs:
       - name: Update Flutter Dependencies
         uses: ./.github/actions/update-flutter-dependencies
 
-      - name: Validate Flutter
-        uses: ./.github/actions/validate-flutter
+      - name: Lint Flutter
+        uses: ./.github/actions/lint-flutter
 
   ios-build:
     name: Building iOS App
     runs-on: ${{ github.event.inputs.ios-runner-type || 'self-hosted' }}
-    needs: [flutter-validation]
+    needs: [lint-flutter, lint-ruby]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -70,7 +107,7 @@ jobs:
   android-build:
     name: Building Android App
     runs-on: ubuntu-latest
-    needs: [flutter-validation]
+    needs: [lint-flutter, lint-ruby]
     steps:
       - name: Checkout
         uses: actions/checkout@v4

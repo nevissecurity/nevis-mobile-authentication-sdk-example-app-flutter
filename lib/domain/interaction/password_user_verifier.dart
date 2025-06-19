@@ -28,9 +28,16 @@ class PasswordUserVerifierImpl implements PasswordUserVerifier {
     PasswordUserVerificationContext context,
     PasswordUserVerificationHandler handler,
   ) {
-    debugPrint(context.lastRecoverableError != null
-        ? 'Password user verification failed. Please try again. Error: ${context.lastRecoverableError?.description}'
-        : 'Please start password user verification.');
+    final status = context.authenticatorProtectionStatus;
+    if (status is PasswordProtectionStatusUnlocked) {
+      debugPrint('Please start password user verification.');
+    } else if (status is PasswordProtectionStatusLastAttemptFailed &&
+        status.remainingRetries > 0) {
+      debugPrint(
+          'Last password user verification attempt failed. Please try again.');
+    } else {
+      debugPrint('Last password user verification attempt failed.');
+    }
 
     final state = _userInteractionOperationStateRepository.state;
     if (state == null) {
@@ -47,7 +54,6 @@ class PasswordUserVerifierImpl implements PasswordUserVerifier {
     final event = CredentialUserVerificationEvent(
       aaid: Aaid.password.rawValue,
       passwordProtectionStatus: context.authenticatorProtectionStatus,
-      lastRecoverableError: context.lastRecoverableError,
     );
     _domainBloc.add(event);
   }

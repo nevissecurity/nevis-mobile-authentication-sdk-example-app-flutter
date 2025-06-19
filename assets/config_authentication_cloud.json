@@ -4,8 +4,7 @@
     "loginRequestURL": "https://myinstance.mauth.nevis.cloud/_app/auth/pwd"
   },
   "sdk": {
-    "hostname": "myinstance.mauth.nevis.cloud",
-    "facetId": "android:apk-key-hash:ch.nevis.mobile.authentication.sdk.flutter.example"
+    "hostname": "myinstance.mauth.nevis.cloud"
   },
   "authenticatorAllowlist": [
     "F1D0#0001",
