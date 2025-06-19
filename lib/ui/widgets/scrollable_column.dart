@@ -10,7 +10,6 @@ class ScrollableColumn extends StatelessWidget {
   final TextDirection? textDirection;
   final VerticalDirection verticalDirection;
   final TextBaseline? textBaseline;
-  final bool flex;
 
   const ScrollableColumn({
     super.key,
@@ -21,7 +20,6 @@ class ScrollableColumn extends StatelessWidget {
     this.verticalDirection = VerticalDirection.down,
     this.textBaseline,
     this.children = const <Widget>[],
-    this.flex = false,
   });
 
   @override
@@ -29,11 +27,7 @@ class ScrollableColumn extends StatelessWidget {
     return LayoutBuilder(
       builder: (ctx, viewportConstraints) {
         return SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints:
-                BoxConstraints(minHeight: viewportConstraints.maxHeight),
-            child: (flex) ? IntrinsicHeight(child: _column()) : _column(),
-          ),
+          child: _column(),
         );
       },
     );

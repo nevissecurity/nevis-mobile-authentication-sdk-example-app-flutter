@@ -1,11 +1,12 @@
 // Copyright © 2022 Nevis Security AG. All rights reserved.
 
 import 'dart:io' show Platform;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/authenticator/authenticator_item.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/error/error_message_types.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/operation_type.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/l10n/app_localizations.dart';
 
 extension AuthenticatorLocalizationExtension on String {
   String resolve(AppLocalizations localizations) {

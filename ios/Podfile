@@ -1,6 +1,6 @@
 source "https://cdn.cocoapods.org"
 
-deployment_target = "12.0"
+deployment_target = "15.5"
 platform :ios, deployment_target
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
@@ -33,8 +33,8 @@ target "Runner" do
 	use_frameworks!
 	use_modular_headers!
 
-	pod "NevisMobileAuthentication-Debug", "~> 3.9.0", configurations: ["Debug", "Profile"]
-	pod "NevisMobileAuthentication", "~> 3.9.0", configurations: ["Release"]
+	pod "NevisMobileAuthentication-Debug", "~> 4.0.0", configurations: ["Debug", "Profile"]
+	pod "NevisMobileAuthentication", "~> 4.0.0", configurations: ["Release"]
 
 	flutter_install_all_ios_pods __dir__
 end

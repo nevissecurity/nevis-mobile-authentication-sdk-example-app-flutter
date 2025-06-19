@@ -2,21 +2,21 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/credential/credential_kind.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/credential/credential_mode.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/model/credentials.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/navigation/credential_parameter.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/l10n/app_localizations.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/credential_bloc.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/credential_event.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/credential_state.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/widgets/credential_field.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/widgets/credential_old_field.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/model/credentials.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/navigation/credential_parameter.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/widgets/credential_description_label.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/widgets/credential_error_label.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/widgets/credential_field.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/widgets/credential_info_label.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/widgets/credential_old_field.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/widgets/credential_title_label.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/app_scaffold.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/button.dart';
