@@ -193,4 +193,9 @@ xcuserdata/
 
 # End of https://www.toptal.com/developers/gitignore/api/xcode,dotenv,android,flutter,fastlane,cocoapods,macos
 
+# Custom
+
+## Flutter
 untranslated.txt
+# gitignore.io is not updated to ignore Flutter 3.32.0 related files
+**/ios/Flutter/ephemeral/

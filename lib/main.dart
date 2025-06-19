@@ -3,10 +3,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/getit_root.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/l10n/app_localizations.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/navigation/app_navigation.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/navigation/global_navigation_manager.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/app_state/app_bloc.dart';

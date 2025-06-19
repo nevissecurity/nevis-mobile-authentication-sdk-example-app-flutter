@@ -64,22 +64,22 @@ abstract class CredentialEvent extends DomainEvent {
   final CredentialKind kind;
   final PinAuthenticatorProtectionStatus? pinProtectionStatus;
   final PasswordAuthenticatorProtectionStatus? passwordProtectionStatus;
-  final RecoverableError? lastRecoverableError;
 
   CredentialEvent({
     required this.aaid,
     this.pinProtectionStatus,
     this.passwordProtectionStatus,
-    this.lastRecoverableError,
   }) : kind = aaid.isPin ? CredentialKind.pin : CredentialKind.password;
 }
 
 class CredentialEnrollmentEvent extends CredentialEvent {
+  final RecoverableError? lastRecoverableError;
+
   CredentialEnrollmentEvent({
     required super.aaid,
     super.pinProtectionStatus,
     super.passwordProtectionStatus,
-    super.lastRecoverableError,
+    this.lastRecoverableError,
   });
 }
 
@@ -88,16 +88,17 @@ class CredentialUserVerificationEvent extends CredentialEvent {
     required super.aaid,
     super.pinProtectionStatus,
     super.passwordProtectionStatus,
-    super.lastRecoverableError,
   });
 }
 
 class CredentialChangeEvent extends CredentialEvent {
+  final RecoverableError? lastRecoverableError;
+
   CredentialChangeEvent({
     required super.aaid,
     super.pinProtectionStatus,
     super.passwordProtectionStatus,
-    super.lastRecoverableError,
+    this.lastRecoverableError,
   });
 }
 

@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/l10n/app_localizations.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_bloc.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_event.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_state.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/widgets/attestation_information_section.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/widgets/meta_data_section.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/app_scaffold.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/app_text.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/button.dart';
@@ -28,7 +30,6 @@ class HomeScreen extends StatelessWidget {
               : Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: ScrollableColumn(
-                    flex: true,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -38,14 +39,12 @@ class HomeScreen extends StatelessWidget {
                           child: AppText.title(localization.appTitle),
                         ),
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 16.0, right: 0.0, left: 0.0, bottom: 64.0),
-                          child: AppText.body(
-                            localization.homeRegisteredAccounts(
-                              state.registeredAccounts,
-                            ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 16.0, right: 0.0, left: 0.0, bottom: 64.0),
+                        child: AppText.body(
+                          localization.homeRegisteredAccounts(
+                            state.registeredAccounts,
                           ),
                         ),
                       ),
@@ -99,6 +98,16 @@ class HomeScreen extends StatelessWidget {
                           onPressed: () {
                             homeBloc.add(InBandRegisterEvent());
                           }),
+                      if (state.metaData != null)
+                        MetaDataSection(metaData: state.metaData!),
+                      if (state.attestationInformation != null)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: AttestationInformationSection(
+                            attestationInformation:
+                                state.attestationInformation!,
+                          ),
+                        ),
                       const SizedBox(
                         height: 16.0,
                       ),

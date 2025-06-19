@@ -1,5 +1,5 @@
-name: Validate Flutter
-description: Validates Flutter code by running formatter and the analyzer
+name: Lint Flutter
+description: Lints Flutter code by formatting and analyzing
 
 runs:
   using: composite
