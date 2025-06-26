@@ -69,7 +69,10 @@ import 'domain/usecase/device_passcode_listen_for_os_credentials_usecase.dart'
 import 'domain/usecase/enroll_credential_usecase.dart' as _i457;
 import 'domain/usecase/fingerprint_listen_for_os_credentials_usecase.dart'
     as _i619;
+import 'domain/usecase/get_fido_uaf_attestation_information_usecase.dart'
+    as _i797;
 import 'domain/usecase/login_usecase.dart' as _i579;
+import 'domain/usecase/meta_data_usecase.dart' as _i1052;
 import 'domain/usecase/oob_payload_decode_usecase.dart' as _i535;
 import 'domain/usecase/oob_process_usecase.dart' as _i1054;
 import 'domain/usecase/pause_listening_usecase.dart' as _i965;
@@ -127,6 +130,7 @@ _i174.GetIt $initGetIt(
       () => _i787.UserInteractionOperationStateCacheImpl());
   gh.singleton<_i452.Cache<_i966.PasswordEnrollmentState>>(
       () => _i787.PasswordEnrollmentStateCacheImpl());
+  gh.factory<_i1052.MetaDataUseCase>(() => _i1052.MetaDataUseCaseImpl());
   gh.singleton<_i461.DeepLinkDataSource>(() => _i461.DeepLinkDataSourceImpl());
   gh.factory<_i404.StateRepository<_i966.PasswordEnrollmentState>>(() =>
       _i281.PasswordEnrollmentStateRepositoryImpl(
@@ -354,6 +358,9 @@ _i174.GetIt $initGetIt(
             gh<_i218.DomainBloc>(),
             gh<_i711.ErrorHandler>(),
           ));
+  gh.factory<_i797.GetFidoUafAttestationInformationUseCase>(() =>
+      _i797.GetFidoUafAttestationInformationUseCaseImpl(
+          gh<_i965.ClientProvider>()));
   gh.factory<_i535.OobPayloadDecodeUseCase>(
       () => _i535.OobPayloadDecodeUseCaseImpl(
             gh<_i965.ClientProvider>(),
@@ -456,21 +463,6 @@ _i174.GetIt $initGetIt(
         gh<_i711.ErrorHandler>(),
         gh<_i341.GlobalNavigationManager>(),
       ));
-  gh.factory<_i286.HomeBloc>(() => _i286.HomeBloc(
-        gh<_i640.DeepLinkRepository>(),
-        gh<_i425.ConfigurationLoader>(),
-        gh<_i965.ClientProvider>(),
-        gh<_i1054.OobProcessUseCase>(),
-        gh<_i382.RegisteredAccountsUseCase>(),
-        gh<_i286.DeregisterAllUseCase>(),
-        gh<_i453.AuthenticatorsUseCase>(),
-        gh<_i311.ChangePinUseCase>(),
-        gh<_i90.ChangePasswordUseCase>(),
-        gh<_i776.DeleteAuthenticatorsUseCase>(),
-        gh<_i165.LocalDataBloc>(),
-        gh<_i711.ErrorHandler>(),
-        gh<_i341.GlobalNavigationManager>(),
-      ));
   gh.factory<_i185.ReadQrCodeBloc>(() => _i185.ReadQrCodeBloc(
         gh<_i1054.OobProcessUseCase>(),
         gh<_i711.ErrorHandler>(),
@@ -496,6 +488,23 @@ _i174.GetIt $initGetIt(
             gh<_i404.StateRepository<_i761.OperationType>>(),
             gh<_i711.ErrorHandler>(),
           ));
+  gh.factory<_i286.HomeBloc>(() => _i286.HomeBloc(
+        gh<_i640.DeepLinkRepository>(),
+        gh<_i425.ConfigurationLoader>(),
+        gh<_i965.ClientProvider>(),
+        gh<_i1054.OobProcessUseCase>(),
+        gh<_i382.RegisteredAccountsUseCase>(),
+        gh<_i286.DeregisterAllUseCase>(),
+        gh<_i453.AuthenticatorsUseCase>(),
+        gh<_i311.ChangePinUseCase>(),
+        gh<_i90.ChangePasswordUseCase>(),
+        gh<_i776.DeleteAuthenticatorsUseCase>(),
+        gh<_i797.GetFidoUafAttestationInformationUseCase>(),
+        gh<_i1052.MetaDataUseCase>(),
+        gh<_i165.LocalDataBloc>(),
+        gh<_i711.ErrorHandler>(),
+        gh<_i341.GlobalNavigationManager>(),
+      ));
   gh.factory<_i220.AuthCloudApiRegistrationBloc>(
       () => _i220.AuthCloudApiRegistrationBloc(
             gh<_i341.GlobalNavigationManager>(),
