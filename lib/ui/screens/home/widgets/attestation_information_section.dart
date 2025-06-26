@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/l10n/app_localizations.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/model/sdk_attestation_information.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/attestation/sdk_attestation_information.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/widgets/attestation_mode_list_tile.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/app_text.dart';
 
@@ -20,19 +20,14 @@ class AttestationInformationSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppText.body(
-          localization.homeSupportedAttestation,
-        ),
+        AppText(text: localization.homeSupportedAttestation),
         AttestationModeListTile(
           title: localization.homeSurrogateBasic,
-          isSupported: attestationInformation.onlySurrogateBasic ||
-              attestationInformation.onlyDefault ||
-              attestationInformation.strict,
+          isSupported: attestationInformation.onlySurrogateBasic,
         ),
         AttestationModeListTile(
           title: localization.homeFullBasicDefault,
-          isSupported: attestationInformation.onlyDefault ||
-              attestationInformation.strict,
+          isSupported: attestationInformation.onlyDefault,
         ),
         AttestationModeListTile(
           title: localization.homeFullBasicStrict,

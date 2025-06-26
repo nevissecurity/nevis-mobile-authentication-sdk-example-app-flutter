@@ -1,8 +1,8 @@
 // Copyright © 2022 Nevis Security AG. All rights reserved.
 
 import 'package:flutter/cupertino.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/model/sdk_attestation_information.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/model/sdk_meta_data.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/attestation/sdk_attestation_information.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/meta_data/sdk_meta_data.dart';
 
 @immutable
 abstract class HomeState {}

@@ -1,7 +1,6 @@
 // Copyright © 2022 Nevis Security AG. All rights reserved.
 
 import 'dart:async';
-import 'dart:io' show Platform;
 
 import 'package:flutter/cupertino.dart' hide MetaData;
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,16 +20,17 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/useca
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/change_pin_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/delete_authenticators_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/deregister_all_usecase.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/get_fido_uaf_attestation_information_usecase.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/meta_data_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/oob_process_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/registered_accounts_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/navigation/global_navigation_manager.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/navigation/credential_parameter.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_event.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_state.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/model/sdk_attestation_information.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/model/sdk_meta_data.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/attestation/sdk_attestation_information.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/meta_data/sdk_meta_data.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/select_account/navigation/select_account_parameter.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/util/version_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 @injectable
@@ -45,6 +45,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final ChangePinUseCase _changePinUseCase;
   final ChangePasswordUseCase _changePasswordUseCase;
   final DeleteAuthenticatorsUseCase _deleteAuthenticatorsUseCase;
+  final GetFidoUafAttestationInformationUseCase
+      _getFidoUafAttestationInformationUseCase;
+  final MetaDataUseCase _metaDataUseCase;
   final LocalDataBloc _localDataBloc;
   final ErrorHandler _errorHandler;
   final GlobalNavigationManager _globalNavigationManager;
@@ -67,6 +70,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     this._changePinUseCase,
     this._changePasswordUseCase,
     this._deleteAuthenticatorsUseCase,
+    this._getFidoUafAttestationInformationUseCase,
+    this._metaDataUseCase,
     this._localDataBloc,
     this._errorHandler,
     this._globalNavigationManager,
@@ -152,9 +157,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       _errorHandler.handle(error);
       return Set<Authenticator>.identity();
     });
-
-    await _loadMetaData();
-    await _loadAttestationInformation();
+    _sdkMetaData = await _metaDataUseCase.execute().catchError((error) {
+      _errorHandler.handle(error);
+      return null;
+    });
+    _sdkAttestationInformation =
+        await _getFidoUafAttestationInformationUseCase.execute();
     debugPrint('Loading data finished.');
   }
 
@@ -375,79 +383,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
 
     return authenticators.first.userEnrollment.isEnrolled(username);
-  }
-
-  Future<void> _loadMetaData() async {
-    if (Platform.isIOS) {
-      final metaData = await MetaData.iosMetaData;
-      _sdkMetaData = SdkMetaData(
-        sdkVersion: metaData?.mobileAuthenticationVersion.formatted(),
-        facetId: metaData?.applicationFacetId,
-      );
-    } else if (Platform.isAndroid) {
-      final metaData = await MetaData.androidMetaData;
-      _sdkMetaData = SdkMetaData(
-        sdkVersion: metaData?.mobileAuthenticationVersion.formatted(),
-        facetId: metaData?.applicationFacetId,
-        certificateFingerprint: metaData?.signingCertificateSha256,
-      );
-    }
-  }
-
-  Future<void> _loadAttestationInformation() async {
-    if (!Platform.isAndroid) {
-      debugPrint('Getting FIDO UAF attestation information is not supported.');
-      return;
-    }
-
-    final Completer<void> completer = Completer();
-    await _clientProvider.client.deviceCapabilities.androidDeviceCapabilities
-        .fidoUafAttestationInformationGetter
-        .onSuccess((FidoUafAttestationInformation? information) {
-          debugPrint('Getting FIDO UAF attestation information succeeded.');
-          if (information == null) {
-            debugPrint('No attestation information received.');
-            if (!completer.isCompleted) {
-              completer.complete();
-            }
-            return;
-          }
-          if (information is OnlySurrogateBasicSupported) {
-            debugPrint('Only surrogate basic supported.');
-            if (information.cause != null) {
-              debugPrint('Cause: ${information.cause}');
-            }
-            _sdkAttestationInformation =
-                SdkAttestationInformation.onlySurrogateBasic();
-          } else if (information is OnlyDefaultMode) {
-            debugPrint('Full basic default mode supported.');
-            if (information.cause != null) {
-              debugPrint('Cause: ${information.cause}');
-            }
-            _sdkAttestationInformation =
-                SdkAttestationInformation.onlyDefault();
-          } else if (information is StrictMode) {
-            debugPrint('Full basic strict mode supported.');
-            _sdkAttestationInformation = SdkAttestationInformation.strict();
-          }
-          if (!completer.isCompleted) {
-            completer.complete();
-          }
-        })
-        .onError((error) {
-          debugPrint(
-              'Getting FIDO UAF attestation information failed. Error: ${error.runtimeType}');
-          if (!completer.isCompleted) {
-            completer.complete();
-          }
-        })
-        .execute()
-        .catchError((error) {
-          debugPrint(
-              'Getting FIDO UAF attestation information failed. Error: ${error.runtimeType}');
-        });
-
-    await completer.future;
   }
 
   @override

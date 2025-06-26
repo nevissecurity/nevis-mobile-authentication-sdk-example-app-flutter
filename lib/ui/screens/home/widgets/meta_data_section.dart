@@ -2,8 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/l10n/app_localizations.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/model/sdk_meta_data.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/meta_data/sdk_meta_data.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/widgets/app_text.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/util/version_utils.dart';
 
 class MetaDataSection extends StatelessWidget {
   final SdkMetaData metaData;
@@ -22,7 +23,8 @@ class MetaDataSection extends StatelessWidget {
         ListTile(
           title: AppText(text: localization.homeNevisMobileAuthenticationSdk),
           subtitle: AppText.footnote(
-            metaData.sdkVersion ?? localization.homeUnknownMetaData,
+            metaData.sdkVersion?.formatted() ??
+                localization.homeUnknownMetaData,
           ),
           contentPadding: EdgeInsets.zero,
         ),

@@ -100,7 +100,7 @@ The example apps are supporting two kinds of configuration: `authenticationCloud
 > Only *build-time* configuration change is supported.
 
 
-To change the configuration open the [getit_root.dart](lib/getit_root.dart) file which describes the dependency injection related configuration using the `get_it` dart package.
+To change the configuration open the [getit_root.dart](lib/getit_root.dart) file which describes the dependency injection related configuration using the [get_it](https://pub.dev/packages/get_it) dart package.
 The `environment` parameter should be changed to one of the values already mentioned.
 
 #### Deep links
@@ -218,13 +218,13 @@ The most important component/dependency of the example application is the [Nevis
 
 In this section you can find hints about how the Nevis Mobile Authentication SDK is integrated into the example app.
 
-* `MobileAuthenticationClient` initialization (which is the entry point to the SDK) is implemented in [ClientProvider](lib/domain/client_provider/client_provider.dart) class.
+* [MobileAuthenticationClient](https://docs.nevis.net/mobilesdk/api-references/flutter/nevis_mobile_authentication_sdk/MobileAuthenticationClient-class.html) initialization (which is the entry point to the SDK) is implemented in [ClientProvider](lib/domain/client_provider/client_provider.dart) class.
 * All SDK operation invocation is implemented in the corresponding use-case class in [usecase](lib/domain/usecase) folder.
 * All SDK specific user interaction related interface implementation can be found in the [interaction](lib/domain/interaction) folder.
 
 ### Initialization
 
-The [HomeBloc](lib/ui/screens/home/home_bloc.dart) class is responsible for creating and initializing a `MobileAuthenticationClient` instance (which is the entry point to the SDK) by calling the init method of [ClientProvider](lib/domain/client_provider/client_provider.dart) class. Later this `MobileAuthenticationClient` instance can be used to start the different operations, it is accessible as the `client` property of the [ClientProvider](lib/domain/client_provider/client_provider.dart) class.
+The [HomeBloc](lib/ui/screens/home/home_bloc.dart) class is responsible for creating and initializing a [MobileAuthenticationClient](https://docs.nevis.net/mobilesdk/api-references/flutter/nevis_mobile_authentication_sdk/MobileAuthenticationClient-class.html) instance (which is the entry point to the SDK) by calling the init method of [ClientProvider](lib/domain/client_provider/client_provider.dart) class. Later this [MobileAuthenticationClient](https://docs.nevis.net/mobilesdk/api-references/flutter/nevis_mobile_authentication_sdk/MobileAuthenticationClient-class.html) instance can be used to start the different operations, it is accessible as the `client` property of the [ClientProvider](lib/domain/client_provider/client_provider.dart) class.
 The default implementation of [ClientProvider](lib/domain/client_provider/client_provider.dart) is [ClientProviderImpl](lib/domain/client_provider/client_provider.dart), it is injected into all use-case, user interaction related interface implementation where it is needed.
 
 ### Registration
@@ -235,13 +235,13 @@ Before being able to authenticate using the Nevis Mobile Authentication SDK, go 
 
 If the application is using a backend using the Nevis Authentication Cloud, the [AuthCloudApiRegisterUseCase](lib/domain/usecase/auth_cloud_api_register_usecase.dart) class will be used by passing the `enrollResponse` response or an `appLinkUri`.
 
-When the backend used by the application does not use the Nevis Authentication Cloud the [RegistrationUseCase](lib/domain/usecase/registration_usecase.dart) class will be used. If authorization is required by the backend to register, provide an `AuthorizationProvider`.  
-In the example app a `CookieAuthorizationProvider` is used from the [Credentials](lib/domain/model/login/credentials.dart) object returned by the `execute` method of [LoginUseCase](lib/domain/usecase/login_usecase.dart). Behind the scenes it is created from the cookies obtained by the [LoginDataSource](lib/data/datasource/login/login_datasource.dart) class.  
+When the backend used by the application does not use the Nevis Authentication Cloud the [RegistrationUseCase](lib/domain/usecase/registration_usecase.dart) class will be used. If authorization is required by the backend to register, provide an [AuthorizationProvider](https://docs.nevis.net/mobilesdk/api-references/flutter/nevis_mobile_authentication_sdk/AuthorizationProvider-class.html).  
+In the example app a [CookieAuthorizationProvider](https://docs.nevis.net/mobilesdk/api-references/flutter/nevis_mobile_authentication_sdk/CookieAuthorizationProvider-class.html) is used from the [Credentials](lib/domain/model/login/credentials.dart) object returned by the `execute` method of [LoginUseCase](lib/domain/usecase/login_usecase.dart). Behind the scenes it is created from the cookies obtained by the [LoginDataSource](lib/data/datasource/login/login_datasource.dart) class.  
 To see the whole process check [LegacyLoginBloc](lib/ui/screens/legacy_login/legacy_login_bloc.dart) implementation.
 
 #### Out-of-band registration
 
-When the registration is initiated in another device or application, the information required to process the operation is transmitted through a QR code or a link. After the payload obtained from the QR code or the link the [OobProcessUseCase](lib/domain/usecase/oob_process_usecase.dart) is used to start the out-of-band operation. Behind the scenes before calling the out-of-band operation [OobPayloadDecodeUseCase](lib/domain/usecase/oob_payload_decode_usecase.dart) is used to decode the `OutOfBandPayload` object from the received payload data.
+When the registration is initiated in another device or application, the information required to process the operation is transmitted through a QR code or a link. After the payload obtained from the QR code or the link the [OobProcessUseCase](lib/domain/usecase/oob_process_usecase.dart) is used to start the out-of-band operation. Behind the scenes before calling the out-of-band operation [OobPayloadDecodeUseCase](lib/domain/usecase/oob_payload_decode_usecase.dart) is used to decode the [OutOfBandPayload](https://docs.nevis.net/mobilesdk/api-references/flutter/nevis_mobile_authentication_sdk/OutOfBandPayload-class.html) object from the received payload data.
 
 ### Authentication
 
@@ -253,11 +253,11 @@ For the application to trigger the authentication, the name of the user is provi
 
 #### Out-of-band authentication
 
-When the authentication is initiated in another device or application, the information required to process the operation is transmitted through a QR code or a link. After the payload obtained from the QR code or the link the [OobProcessUseCase](lib/domain/usecase/oob_process_usecase.dart) is used to start the out-of-band operation. Behind the scenes before calling the out-of-band operation [OobPayloadDecodeUseCase](lib/domain/usecase/oob_payload_decode_usecase.dart) is used to decode the `OutOfBandPayload` object from the received payload data.
+When the authentication is initiated in another device or application, the information required to process the operation is transmitted through a QR code or a link. After the payload obtained from the QR code or the link the [OobProcessUseCase](lib/domain/usecase/oob_process_usecase.dart) is used to start the out-of-band operation. Behind the scenes before calling the out-of-band operation [OobPayloadDecodeUseCase](lib/domain/usecase/oob_payload_decode_usecase.dart) is used to decode the [OutOfBandPayload](https://docs.nevis.net/mobilesdk/api-references/flutter/nevis_mobile_authentication_sdk/OutOfBandPayload-class.html) object from the received payload data.
 
 #### Transaction confirmation
 
-There are cases when specific information is to be presented to the user during the user verification process, known as transaction confirmation. The `AuthenticatorSelectionContext` and the `AccountSelectionContext` contain a byte array with the information. In the example app it is handled in the [AccountSelectorImpl](lib/domain/interaction/account_selector_impl.dart) class.
+There are cases when specific information is to be presented to the user during the user verification process, known as transaction confirmation. The [AuthenticatorSelectionContext](https://docs.nevis.net/mobilesdk/api-references/flutter/nevis_mobile_authentication_sdk/AuthenticatorSelectionContext-class.html) and the [AccountSelectionContext](https://docs.nevis.net/mobilesdk/api-references/flutter/nevis_mobile_authentication_sdk/AccountSelectionContext-class.html) contain a byte array with the information. In the example app it is handled in the [AccountSelectorImpl](lib/domain/interaction/account_selector_impl.dart) class.
 
 ### Deregistration
 
@@ -275,7 +275,7 @@ With the change password operation you can modify the password of a registered P
 
 #### Decode out-of-band payload
 
-Out-of-band operations occur when a message is delivered to the application through an alternate channel like a push notification, a QR code, or a deep link. With the help of the [OobPayloadDecodeUseCase](lib/domain/usecase/oob_payload_decode_usecase.dart) class the application can create an `OutOfBandPayload` either from a JSON or a Base64 URL encoded String. The `OutOfBandPayload` is then used to start an `OutOfBandOperation`, see chapters [Out-of-Band Registration](#out-of-band-registration) and [Out-of-Band Authentication](#out-of-band-authentication).
+Out-of-band operations occur when a message is delivered to the application through an alternate channel like a push notification, a QR code, or a deep link. With the help of the [OobPayloadDecodeUseCase](lib/domain/usecase/oob_payload_decode_usecase.dart) class the application can create an [OutOfBandPayload](https://docs.nevis.net/mobilesdk/api-references/flutter/nevis_mobile_authentication_sdk/OutOfBandPayload-class.html) either from a JSON or a Base64 URL encoded String. The [OutOfBandPayload](https://docs.nevis.net/mobilesdk/api-references/flutter/nevis_mobile_authentication_sdk/OutOfBandPayload-class.html) is then used to start an [OutOfBandOperation](https://docs.nevis.net/mobilesdk/api-references/flutter/nevis_mobile_authentication_sdk/OutOfBandOperation-class.html), see chapters [Out-of-Band Registration](#out-of-band-registration) and [Out-of-Band Authentication](#out-of-band-authentication).
 
 #### Change device information
 
@@ -286,11 +286,19 @@ During registration, the device information can be provided that contains the na
 
 #### Get information
 
-The following use cases are responsible for getting information with the help of `LocalData`:
+The following use cases are responsible for getting information with the help of [LocalData](https://docs.nevis.net/mobilesdk/api-references/flutter/nevis_mobile_authentication_sdk/LocalData-class.html):
 
 - The [RegisteredAccountsUseCase](lib/domain/usecase/registered_accounts_usecase.dart) class obtains the registered accounts.
 - The [AuthenticatorsUseCase](lib/domain/usecase/authenticators_usecase.dart) class obtains the authenticator information.
 - The [DeviceInformationUseCase](lib/domain/usecase/device_information_usecase.dart) class obtains the device information.
+
+#### Get MetaData
+
+The [MetaDataUseCase](lib/domain/usecase/meta_data_usecase.dart) class is responsible for obtaining the information of the SDK and the application with the help of [MetaData](https://docs.nevis.net/mobilesdk/api-references/flutter/nevis_mobile_authentication_sdk/MetaData-class.html), such as the SDK version, the application facet identifier and the certificate fingerprint.
+
+#### Get device capabilities
+
+The [GetFidoUafAttestationInformationUseCase](lib/domain/usecase/get_fido_uaf_attestation_information_usecase.dart) class is responsible for obtaining the information about what the device can support. It informs about whether the device supports [full basic FIDO UAF attestations](https://docs.nevis.net/mobilesdk/concept/security-considerations#surrogate-basic-and-full-basic-attestation) or not.
 
 ### Error handling
 
