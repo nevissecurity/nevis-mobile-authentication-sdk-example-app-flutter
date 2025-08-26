@@ -44,7 +44,7 @@ class FingerprintUserVerifierImpl implements FingerprintUserVerifier {
         userVerificationHandler: handler,
       ),
     );
-    _domainBloc.add(FingerPrintUserVerificationEvent());
+    _domainBloc.add(FingerprintUserVerificationEvent());
   }
 
   @override

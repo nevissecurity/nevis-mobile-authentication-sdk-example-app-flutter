@@ -53,8 +53,8 @@ class DomainCredentialState extends DomainVerifyState {
   }) : mode = CredentialMode.change;
 }
 
-class DomainVerifyFingerPrintState extends DomainVerifyState {
-  DomainVerifyFingerPrintState() : super(aaid: Aaid.fingerprint.rawValue);
+class DomainVerifyFingerprintState extends DomainVerifyState {
+  DomainVerifyFingerprintState() : super(aaid: Aaid.fingerprint.rawValue);
 }
 
 class DomainVerifyBiometricState extends DomainVerifyState {

@@ -187,6 +187,9 @@ _i174.GetIt $initGetIt(
   gh.factory<_i125.CancelUserInteractionOperationUseCase>(() =>
       _i125.CancelUserInteractionOperationUseCaseImpl(
           gh<_i404.StateRepository<_i954.UserInteractionOperationState>>()));
+  gh.factory<_i619.FingerprintListenForOsCredentialsUseCase>(() =>
+      _i619.FingerprintListenForOsCredentialsUseCaseImpl(
+          gh<_i404.StateRepository<_i954.UserInteractionOperationState>>()));
   gh.factory<_i150.PasswordChanger>(() => _i147.PasswordChangerImpl(
         gh<_i218.DomainBloc>(),
         gh<_i404.StateRepository<_i17.PasswordChangeState>>(),
@@ -198,9 +201,6 @@ _i174.GetIt $initGetIt(
       ));
   gh.factory<_i415.ResetUserInteractionStateUseCase>(() =>
       _i415.ResetUserInteractionStateUseCaseImpl(
-          gh<_i404.StateRepository<_i954.UserInteractionOperationState>>()));
-  gh.factory<_i619.FingerPrintListenForOsCredentialsUseCase>(() =>
-      _i619.FingerPrintListenForOsCredentialsUseCaseImpl(
           gh<_i404.StateRepository<_i954.UserInteractionOperationState>>()));
   gh.factory<_i836.ResumeListeningUseCase>(() =>
       _i836.ResumeListeningUseCaseImpl(
@@ -267,15 +267,6 @@ _i174.GetIt $initGetIt(
         gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
         gh<_i657.AccountValidator>(),
       ));
-  gh.factory<_i988.ConfirmationBloc>(() => _i988.ConfirmationBloc(
-        gh<_i316.BiometricListenForOsCredentialsUseCase>(),
-        gh<_i619.FingerPrintListenForOsCredentialsUseCase>(),
-        gh<_i609.DevicePasscodeListenForOsCredentialsUseCase>(),
-        gh<_i125.CancelUserInteractionOperationUseCase>(),
-        gh<_i965.PauseListeningUseCase>(),
-        gh<_i836.ResumeListeningUseCase>(),
-        gh<_i711.ErrorHandler>(),
-      ));
   gh.factory<_i1028.BatchCall>(() => _i1028.BatchCallImpl(
         gh<_i218.DomainBloc>(),
         gh<_i711.ErrorHandler>(),
@@ -299,6 +290,15 @@ _i174.GetIt $initGetIt(
         gh<_i218.DomainBloc>(),
         gh<_i711.ErrorHandler>(),
         gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+      ));
+  gh.factory<_i988.ConfirmationBloc>(() => _i988.ConfirmationBloc(
+        gh<_i316.BiometricListenForOsCredentialsUseCase>(),
+        gh<_i619.FingerprintListenForOsCredentialsUseCase>(),
+        gh<_i609.DevicePasscodeListenForOsCredentialsUseCase>(),
+        gh<_i125.CancelUserInteractionOperationUseCase>(),
+        gh<_i965.PauseListeningUseCase>(),
+        gh<_i836.ResumeListeningUseCase>(),
+        gh<_i711.ErrorHandler>(),
       ));
   gh.factory<_i306.DeregisterUseCase>(() => _i306.DeregisterUseCaseImpl(
         gh<_i965.ClientProvider>(),

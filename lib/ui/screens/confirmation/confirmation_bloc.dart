@@ -18,7 +18,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/c
 class ConfirmationBloc extends Bloc<ConfirmationEvent, ConfirmationState> {
   final BiometricListenForOsCredentialsUseCase
       _biometricListenForOsCredentialsUseCase;
-  final FingerPrintListenForOsCredentialsUseCase
+  final FingerprintListenForOsCredentialsUseCase
       _fingerPrintListenForOsCredentialsUseCase;
   final DevicePasscodeListenForOsCredentialsUseCase
       _devicePasscodeListenForOsCredentialsUseCase;
@@ -42,7 +42,7 @@ class ConfirmationBloc extends Bloc<ConfirmationEvent, ConfirmationState> {
     on<ConfirmationUserAcceptedEvent>(_handleUserAccepted);
     on<ConfirmationUserCancelledEvent>(_handleUserCancelled);
     on<ConfirmationBiometricEvent>(_handleBiometric);
-    on<ConfirmationFingerPrintEvent>(_handleFingerPrint);
+    on<ConfirmationFingerprintEvent>(_handleFingerprint);
     on<ConfirmationDevicePasscodeEvent>(_handleDevicePasscode);
     on<ConfirmationPauseListeningEvent>(_handlePauseListening);
     on<ConfirmationResumeListeningEvent>(_handleResumeListening);
@@ -67,12 +67,8 @@ class ConfirmationBloc extends Bloc<ConfirmationEvent, ConfirmationState> {
     if (_parameter.aaid == Aaid.biometric.rawValue) {
       emit(ConfirmBiometricState());
     } else if (_parameter.aaid == Aaid.fingerprint.rawValue) {
-      emit(ConfirmFingerPrintLoadedState(aaid: Aaid.fingerprint.rawValue));
-      await _fingerPrintListenForOsCredentialsUseCase
-          .execute()
-          .catchError((error) {
-        _errorHandler.handle(error);
-      });
+      emit(ConfirmFingerprintLoadedState(aaid: Aaid.fingerprint.rawValue));
+      emit(ConfirmFingerprintState());
     } else if (_parameter.aaid == Aaid.devicePasscode.rawValue) {
       emit(ConfirmDevicePasscodeState());
     }
@@ -91,25 +87,30 @@ class ConfirmationBloc extends Bloc<ConfirmationEvent, ConfirmationState> {
     ConfirmationBiometricEvent event,
     Emitter<ConfirmationState> emit,
   ) async {
+    final options = BiometricPromptOptions(
+      title: event.title,
+      description: event.description,
+      cancelButtonText: event.cancelButtonText,
+      fallbackButtonText: event.fallbackButtonText,
+    );
     await _biometricListenForOsCredentialsUseCase
-        .execute(
-      BiometricPromptOptions(
-        title: event.title,
-        description: event.description,
-        cancelButtonText: event.cancelButtonText,
-      ),
-    )
+        .execute(options)
         .catchError((error) {
       _errorHandler.handle(error);
     });
   }
 
-  Future<void> _handleFingerPrint(
-    ConfirmationFingerPrintEvent event,
+  Future<void> _handleFingerprint(
+    ConfirmationFingerprintEvent event,
     Emitter<ConfirmationState> emit,
   ) async {
+    final options = FingerprintPromptOptions(
+      description: event.description,
+      cancelButtonText: event.cancelButtonText,
+      fallbackButtonText: event.fallbackButtonText,
+    );
     await _fingerPrintListenForOsCredentialsUseCase
-        .execute()
+        .execute(options)
         .catchError((error) {
       _errorHandler.handle(error);
     });
@@ -119,13 +120,12 @@ class ConfirmationBloc extends Bloc<ConfirmationEvent, ConfirmationState> {
     ConfirmationDevicePasscodeEvent event,
     Emitter<ConfirmationState> emit,
   ) async {
+    final options = DevicePasscodePromptOptions(
+      title: event.title,
+      description: event.description,
+    );
     await _devicePasscodeListenForOsCredentialsUseCase
-        .execute(
-      DevicePasscodePromptOptions(
-        title: event.title,
-        description: event.description,
-      ),
-    )
+        .execute(options)
         .catchError((error) {
       _errorHandler.handle(error);
     });
