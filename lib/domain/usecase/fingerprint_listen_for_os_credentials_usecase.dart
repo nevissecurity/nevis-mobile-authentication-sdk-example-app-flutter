@@ -6,22 +6,22 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/user_interaction_operation_state.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/state_repository.dart';
 
-abstract class FingerPrintListenForOsCredentialsUseCase {
-  Future<void> execute();
+abstract class FingerprintListenForOsCredentialsUseCase {
+  Future<void> execute(FingerprintPromptOptions options);
 }
 
-@Injectable(as: FingerPrintListenForOsCredentialsUseCase)
-class FingerPrintListenForOsCredentialsUseCaseImpl
-    extends FingerPrintListenForOsCredentialsUseCase {
+@Injectable(as: FingerprintListenForOsCredentialsUseCase)
+class FingerprintListenForOsCredentialsUseCaseImpl
+    extends FingerprintListenForOsCredentialsUseCase {
   final StateRepository<UserInteractionOperationState>
       _userInteractionOperationStateRepository;
 
-  FingerPrintListenForOsCredentialsUseCaseImpl(
+  FingerprintListenForOsCredentialsUseCaseImpl(
     this._userInteractionOperationStateRepository,
   );
 
   @override
-  Future<void> execute() async {
+  Future<void> execute(FingerprintPromptOptions options) async {
     final state = _userInteractionOperationStateRepository.state;
     if (state == null) throw BusinessException.invalidState();
     final handler = state.userVerificationHandler;
@@ -33,7 +33,8 @@ class FingerPrintListenForOsCredentialsUseCaseImpl
       state.copyWith(
         accountSelectionHandler: null,
         authenticatorSelectionHandler: null,
-        osAuthenticationListenHandler: await handler.listenForOsCredentials(),
+        osAuthenticationListenHandler:
+            await handler.listenForOsCredentials(options),
       ),
     );
   }

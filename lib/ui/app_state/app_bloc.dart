@@ -103,7 +103,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         ),
       );
     } else if (state is DomainVerifyBiometricState ||
-        state is DomainVerifyFingerPrintState ||
+        state is DomainVerifyFingerprintState ||
         state is DomainVerifyDevicePasscodeState) {
       _globalNavigationManager.pushConfirmation(
         ConfirmationParameter(aaid: state.aaid),

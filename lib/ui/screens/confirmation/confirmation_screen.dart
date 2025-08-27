@@ -76,14 +76,23 @@ class _ConfirmationContentState extends State<ConfirmationContent>
       listener: (ctx, state) async {
         if (state is ConfirmBiometricState) {
           _bloc.add(ConfirmationBiometricEvent(
-            title: _localization.biometricPopUpTitle,
-            description: _localization.biometricPopUpDescription,
+            title: _localization.biometricPromptTitle,
+            description: _localization.biometricPromptDescription,
             cancelButtonText: _localization.cancelButtonTitle,
+            fallbackButtonText:
+                _localization.biometricPromptFallbackButtonTitle,
           ));
         } else if (state is ConfirmDevicePasscodeState) {
           _bloc.add(ConfirmationDevicePasscodeEvent(
-            title: _localization.devicePasscodePopUpTitle,
-            description: _localization.devicePasscodePopUpDescription,
+            title: _localization.devicePasscodePromptTitle,
+            description: _localization.devicePasscodePromptDescription,
+          ));
+        } else if (state is ConfirmFingerprintState) {
+          _bloc.add(ConfirmationFingerprintEvent(
+            description: _localization.fingerprintDescription,
+            cancelButtonText: _localization.cancelButtonTitle,
+            fallbackButtonText:
+                _localization.fingerprintPromptFallbackButtonTitle,
           ));
         }
       },
@@ -121,7 +130,7 @@ class _ConfirmationContentState extends State<ConfirmationContent>
                 state.aaid.resolve(_localization),
               ),
             ),
-            if (state is ConfirmFingerPrintLoadedState)
+            if (state is ConfirmFingerprintLoadedState)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: AppText.body(
