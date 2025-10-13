@@ -32,7 +32,7 @@ dependencies:
   injectable: ^2.5.1
   intl: any
   json_annotation: ^4.9.0
-  mobile_scanner: ^6.0.10
+  mobile_scanner: 6.0.10
   nevis_mobile_authentication_sdk: '>=4.3.0 <4.4.0'
   permission_handler: ^11.3.1
 
