@@ -306,6 +306,12 @@ abstract class AppLocalizations {
   /// **'Full basic strict mode'**
   String get homeFullBasicStrict;
 
+  /// No description provided for @homeFullBasicStrictStrongBox.
+  ///
+  /// In en, this message translates to:
+  /// **'Full basic strict StongBox mode'**
+  String get homeFullBasicStrictStrongBox;
+
   /// No description provided for @readQrCode.
   ///
   /// In en, this message translates to:

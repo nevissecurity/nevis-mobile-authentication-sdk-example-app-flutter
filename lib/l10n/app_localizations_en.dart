@@ -133,6 +133,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeFullBasicStrict => 'Full basic strict mode';
 
   @override
+  String get homeFullBasicStrictStrongBox => 'Full basic strict StongBox mode';
+
+  @override
   String get readQrCode => 'Read Qr Code';
 
   @override

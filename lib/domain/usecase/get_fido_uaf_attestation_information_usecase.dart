@@ -54,6 +54,9 @@ class GetFidoUafAttestationInformationUseCaseImpl
       } else if (information is StrictMode) {
         debugPrint('Full basic strict mode supported.');
         sdkAttestationInformation = SdkAttestationInformation.strict();
+      } else if (information is StrictStrongBoxMode) {
+        debugPrint('Full basic strict StrongBox mode supported.');
+        sdkAttestationInformation = SdkAttestationInformation.strictStrongBox();
       } else {
         debugPrint(
             'Unknown FIDO UAF attestation information type: ${information.runtimeType}');

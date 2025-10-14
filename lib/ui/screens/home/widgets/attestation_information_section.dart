@@ -33,6 +33,10 @@ class AttestationInformationSection extends StatelessWidget {
           title: localization.homeFullBasicStrict,
           isSupported: attestationInformation.strict,
         ),
+        AttestationModeListTile(
+          title: localization.homeFullBasicStrictStrongBox,
+          isSupported: attestationInformation.strongBox,
+        ),
       ],
     );
   }
