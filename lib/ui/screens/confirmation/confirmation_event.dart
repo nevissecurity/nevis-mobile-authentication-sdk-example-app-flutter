@@ -18,15 +18,27 @@ class ConfirmationBiometricEvent extends ConfirmationEvent {
   final String title;
   final String description;
   final String cancelButtonText;
+  final String fallbackButtonText;
 
   ConfirmationBiometricEvent({
     required this.title,
     required this.description,
     required this.cancelButtonText,
+    required this.fallbackButtonText,
   });
 }
 
-class ConfirmationFingerPrintEvent extends ConfirmationEvent {}
+class ConfirmationFingerprintEvent extends ConfirmationEvent {
+  final String description;
+  final String cancelButtonText;
+  final String fallbackButtonText;
+
+  ConfirmationFingerprintEvent({
+    required this.description,
+    required this.cancelButtonText,
+    required this.fallbackButtonText,
+  });
+}
 
 class ConfirmationDevicePasscodeEvent extends ConfirmationEvent {
   final String title;

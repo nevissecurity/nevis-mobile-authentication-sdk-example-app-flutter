@@ -24,7 +24,7 @@ class DomainBloc extends Bloc<DomainEvent, DomainState>
     on<ResultEvent>(_handleResult);
     on<CredentialEnrollmentEvent>(_handleCredentialEnrollment);
     on<CredentialUserVerificationEvent>(_handleCredentialVerification);
-    on<FingerPrintUserVerificationEvent>(_handleFingerPrintVerification);
+    on<FingerprintUserVerificationEvent>(_handleFingerprintVerification);
     on<BiometricUserVerificationEvent>(_handleBiometricVerification);
     on<DevicePasscodeUserVerificationEvent>(_handleDevicePasscodeVerification);
     on<CredentialChangeEvent>(_handleCredentialChange);
@@ -98,11 +98,11 @@ class DomainBloc extends Bloc<DomainEvent, DomainState>
     );
   }
 
-  Future<void> _handleFingerPrintVerification(
-    FingerPrintUserVerificationEvent event,
+  Future<void> _handleFingerprintVerification(
+    FingerprintUserVerificationEvent event,
     Emitter<DomainState> emit,
   ) async {
-    emit(DomainVerifyFingerPrintState());
+    emit(DomainVerifyFingerprintState());
   }
 
   Future<void> _handleBiometricVerification(
