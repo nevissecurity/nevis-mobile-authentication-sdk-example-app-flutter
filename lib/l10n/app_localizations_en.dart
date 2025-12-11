@@ -133,6 +133,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeFullBasicStrict => 'Full basic strict mode';
 
   @override
+  String get homeFullBasicStrictStrongBox => 'Full basic strict StongBox mode';
+
+  @override
   String get readQrCode => 'Read Qr Code';
 
   @override
@@ -163,18 +166,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readQrCodeScreenTitle => 'Read Qr Code';
 
   @override
-  String get biometricPopUpTitle => 'Biometric authentication required';
+  String get biometricPromptTitle => 'Verification';
 
   @override
-  String get biometricPopUpDescription =>
-      'Please use the default biometric method to identify yourself.';
+  String get biometricPromptDescription =>
+      'Please authenticate to complete the operation.';
 
   @override
-  String get devicePasscodePopUpTitle => 'Passcode required';
+  String get biometricPromptFallbackButtonTitle => 'Enter Passcode';
 
   @override
-  String get devicePasscodePopUpDescription =>
-      'Please provide the device passcode.';
+  String get devicePasscodePromptTitle => 'Verification';
+
+  @override
+  String get devicePasscodePromptDescription =>
+      'Please authenticate to complete the operation.';
+
+  @override
+  String get fingerprintDescription =>
+      'Please authenticate to complete the operation.';
+
+  @override
+  String get fingerprintPromptFallbackButtonTitle => 'Enter Passcode';
 
   @override
   String get credentialScreenTitlePinEnrollment => 'Create PIN';

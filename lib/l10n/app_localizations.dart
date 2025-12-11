@@ -306,6 +306,12 @@ abstract class AppLocalizations {
   /// **'Full basic strict mode'**
   String get homeFullBasicStrict;
 
+  /// No description provided for @homeFullBasicStrictStrongBox.
+  ///
+  /// In en, this message translates to:
+  /// **'Full basic strict StongBox mode'**
+  String get homeFullBasicStrictStrongBox;
+
   /// No description provided for @readQrCode.
   ///
   /// In en, this message translates to:
@@ -366,29 +372,47 @@ abstract class AppLocalizations {
   /// **'Read Qr Code'**
   String get readQrCodeScreenTitle;
 
-  /// No description provided for @biometricPopUpTitle.
+  /// No description provided for @biometricPromptTitle.
   ///
   /// In en, this message translates to:
-  /// **'Biometric authentication required'**
-  String get biometricPopUpTitle;
+  /// **'Verification'**
+  String get biometricPromptTitle;
 
-  /// No description provided for @biometricPopUpDescription.
+  /// No description provided for @biometricPromptDescription.
   ///
   /// In en, this message translates to:
-  /// **'Please use the default biometric method to identify yourself.'**
-  String get biometricPopUpDescription;
+  /// **'Please authenticate to complete the operation.'**
+  String get biometricPromptDescription;
 
-  /// No description provided for @devicePasscodePopUpTitle.
+  /// No description provided for @biometricPromptFallbackButtonTitle.
   ///
   /// In en, this message translates to:
-  /// **'Passcode required'**
-  String get devicePasscodePopUpTitle;
+  /// **'Enter Passcode'**
+  String get biometricPromptFallbackButtonTitle;
 
-  /// No description provided for @devicePasscodePopUpDescription.
+  /// No description provided for @devicePasscodePromptTitle.
   ///
   /// In en, this message translates to:
-  /// **'Please provide the device passcode.'**
-  String get devicePasscodePopUpDescription;
+  /// **'Verification'**
+  String get devicePasscodePromptTitle;
+
+  /// No description provided for @devicePasscodePromptDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Please authenticate to complete the operation.'**
+  String get devicePasscodePromptDescription;
+
+  /// No description provided for @fingerprintDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Please authenticate to complete the operation.'**
+  String get fingerprintDescription;
+
+  /// No description provided for @fingerprintPromptFallbackButtonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Passcode'**
+  String get fingerprintPromptFallbackButtonTitle;
 
   /// No description provided for @credentialScreenTitlePinEnrollment.
   ///

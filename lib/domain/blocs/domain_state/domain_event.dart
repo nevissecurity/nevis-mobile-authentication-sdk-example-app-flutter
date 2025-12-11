@@ -102,7 +102,7 @@ class CredentialChangeEvent extends CredentialEvent {
   });
 }
 
-class FingerPrintUserVerificationEvent extends DomainEvent {}
+class FingerprintUserVerificationEvent extends DomainEvent {}
 
 class BiometricUserVerificationEvent extends DomainEvent {}
 

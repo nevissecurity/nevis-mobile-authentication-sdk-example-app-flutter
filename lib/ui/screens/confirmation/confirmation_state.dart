@@ -17,8 +17,8 @@ class ConfirmationLoadedState extends ConfirmationState {
   });
 }
 
-class ConfirmFingerPrintLoadedState extends ConfirmationLoadedState {
-  ConfirmFingerPrintLoadedState({required super.aaid});
+class ConfirmFingerprintLoadedState extends ConfirmationLoadedState {
+  ConfirmFingerprintLoadedState({required super.aaid});
 }
 
 abstract class ConfirmUserAcceptedState extends ConfirmationState {
@@ -29,3 +29,5 @@ abstract class ConfirmUserAcceptedState extends ConfirmationState {
 class ConfirmBiometricState extends ConfirmUserAcceptedState {}
 
 class ConfirmDevicePasscodeState extends ConfirmUserAcceptedState {}
+
+class ConfirmFingerprintState extends ConfirmUserAcceptedState {}
