@@ -119,7 +119,7 @@ platform :ios do
 
 		UI.message("Archive Preparation")
 		Dir.chdir("..") do
-			Actions.sh("flutter build ios --no-codesign", error_callback: ->(result) {
+			Actions.sh("flutter build ios --no-codesign", error_callback: lambda {
 				raise "❌ Archive Preparation failed failed! Result: #{result}"
 			})
 		end
@@ -194,7 +194,7 @@ platform :ios do
 			use_automatic_signing: false,
 			team_id: ENV["DEVELOPER_PORTAL_TEAM_ID"],
 			code_sign_identity: ENV["CODE_SIGNING_IDENTITY"],
-			profile_name:,
+			profile_name:
 		)
 	end
 end

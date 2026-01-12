@@ -9,7 +9,7 @@ ENV["COCOAPODS_DISABLE_STATS"] = "true"
 project "Runner", {
 	"Debug" => :debug,
 	"Profile" => :debug,
-	"Release" => :release,
+	"Release" => :release
 }
 
 def flutter_root

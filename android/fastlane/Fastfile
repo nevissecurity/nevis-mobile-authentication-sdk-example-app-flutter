@@ -76,7 +76,7 @@ platform :android do
 		modify_file(
 			file_path: build_gradle,
 			old_value: "url \"#{public_maven_repository_url}\"",
-			new_value: "url \"#{private_maven_repository_url}\"",
+			new_value: "url \"#{private_maven_repository_url}\""
 		) if private_maven_repository_url
 	end
 
