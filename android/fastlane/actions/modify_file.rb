@@ -3,6 +3,21 @@ require "fileutils"
 
 module Fastlane
 	module Actions
+		# This class provides an action to modify a file by replacing, appending, or prepending content.
+		#
+		# Example usage:
+		# modify_file(
+		#   file_path: "path/to/file",
+		#   old_value: "old_value",
+		#   new_value: "new_value",
+		#   mode: "replace"
+		# )
+		#
+		# Available options:
+		# - file_path: The path to the file to be modified (String, required)
+		# - old_value: The old value to be replaced, appended after, or prepended before with the new value (String, required)
+		# - new_value: The new value (String, required)
+		# - mode: The working mode. Possible values are "replace","append" or "prepend" (String, optional, default: "replace")
 		class ModifyFileAction < Action
 			def self.run(params)
 				file_path ||= params[:file_path]
