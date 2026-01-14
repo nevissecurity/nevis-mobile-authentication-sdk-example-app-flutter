@@ -12,12 +12,12 @@ on:
         default: "self-hosted"
         options:
           - "self-hosted"
-          - "macos-15"
+          - "macos-26"
 
 env:
   BUILD_TYPE: 'RELEASE_CANDIDATE' # Allowed values: 'SNAPSHOT', 'RELEASE', 'RELEASE_CANDIDATE'
   FLUTTER_VERSION: 3.22.0
-  XCODE_VERSION: 16.2
+  XCODE_VERSION: 26.2
   JAVA_VERSION: 17
   RUBY_VERSION: 3.4.2
 
