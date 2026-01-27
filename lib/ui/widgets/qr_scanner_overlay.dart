@@ -19,20 +19,16 @@ class QrScannerOverlay extends StatelessWidget {
       children: <Widget>[
         _expandedOpacityBox(flex: 3),
         Expanded(
-            flex: 4,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                _expandedOpacityBox(flex: 1),
-                const Expanded(
-                  flex: 8,
-                  child: FittedBox(
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                _expandedOpacityBox(flex: 1),
-              ],
-            )),
+          flex: 4,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              _expandedOpacityBox(flex: 1),
+              const Expanded(flex: 8, child: FittedBox(fit: BoxFit.fill)),
+              _expandedOpacityBox(flex: 1),
+            ],
+          ),
+        ),
         _expandedOpacityBox(flex: 3),
       ],
     );
@@ -43,9 +39,7 @@ class QrScannerOverlay extends StatelessWidget {
       flex: flex,
       child: Opacity(
         opacity: opacity,
-        child: DecoratedBox(
-          decoration: BoxDecoration(color: color),
-        ),
+        child: DecoratedBox(decoration: BoxDecoration(color: color)),
       ),
     );
   }

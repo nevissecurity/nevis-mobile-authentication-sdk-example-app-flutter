@@ -41,11 +41,14 @@ class DeregisterUseCaseImpl implements DeregisterUseCase {
         .username(username)
         .authorizationProvider(authorizationProvider)
         .onSuccess(() {
-      debugPrint('Deregistration using authorization provider succeeded.');
-      _domainBloc.add(ResultEvent());
-    }).onError((error) {
-      debugPrint(
-          'Deregistration using authorization provider failed: ${error.runtimeType}');
-    }).execute();
+          debugPrint('Deregistration using authorization provider succeeded.');
+          _domainBloc.add(ResultEvent());
+        })
+        .onError((error) {
+          debugPrint(
+            'Deregistration using authorization provider failed: ${error.runtimeType}',
+          );
+        })
+        .execute();
   }
 }

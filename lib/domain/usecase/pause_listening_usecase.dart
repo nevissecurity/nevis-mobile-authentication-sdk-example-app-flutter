@@ -12,25 +12,25 @@ abstract class PauseListeningUseCase {
 @Injectable(as: PauseListeningUseCase)
 class PauseListeningUseCaseImpl extends PauseListeningUseCase {
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
-  PauseListeningUseCaseImpl(
-    this._userInteractionOperationStateRepository,
-  );
+  PauseListeningUseCaseImpl(this._userInteractionOperationStateRepository);
 
   @override
   Future<void> execute() async {
     final state = _userInteractionOperationStateRepository.state;
     if (state == null) {
       debugPrint(
-          "User interaction state is missing, no need for resuming the listen handler.");
+        "User interaction state is missing, no need for resuming the listen handler.",
+      );
       return;
     }
 
     final osAuthenticationListenHandler = state.osAuthenticationListenHandler;
     if (osAuthenticationListenHandler == null) {
       debugPrint(
-          "OS authentication listen handler does not exist, no need for pausing.");
+        "OS authentication listen handler does not exist, no need for pausing.",
+      );
       return;
     }
 

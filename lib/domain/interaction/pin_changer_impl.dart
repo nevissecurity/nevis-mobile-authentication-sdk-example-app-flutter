@@ -13,16 +13,15 @@ class PinChangerImpl extends PinChanger {
   final DomainBloc _domainBloc;
   final StateRepository<PinChangeState> _stateRepository;
 
-  PinChangerImpl(
-    this._domainBloc,
-    this._stateRepository,
-  );
+  PinChangerImpl(this._domainBloc, this._stateRepository);
 
   @override
   void changePin(PinChangeContext context, PinChangeHandler handler) {
-    debugPrint(context.lastRecoverableError != null
-        ? 'PIN change failed. Please try again. Error: ${context.lastRecoverableError?.description}'
-        : 'Please start PIN change.');
+    debugPrint(
+      context.lastRecoverableError != null
+          ? 'PIN change failed. Please try again. Error: ${context.lastRecoverableError?.description}'
+          : 'Please start PIN change.',
+    );
 
     _stateRepository.save(PinChangeState(context, handler));
     final event = CredentialChangeEvent(
@@ -33,9 +32,9 @@ class PinChangerImpl extends PinChanger {
     _domainBloc.add(event);
   }
 
-//  You can add custom PIN policy by overriding the `pinPolicy` getter
-//  The default minimum and maximum PIN length is 6 without any validation during PIN enrollment or change.
-//
-//  @override
-//  PinPolicy get pinPolicy => CustomPinPolicyImpl(maxLength: 8, minLength: 4);
+  //  You can add custom PIN policy by overriding the `pinPolicy` getter
+  //  The default minimum and maximum PIN length is 6 without any validation during PIN enrollment or change.
+  //
+  //  @override
+  //  PinPolicy get pinPolicy => CustomPinPolicyImpl(maxLength: 8, minLength: 4);
 }

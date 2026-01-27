@@ -9,10 +9,7 @@ class LoginResponse {
   final String status;
   final String extId;
 
-  LoginResponse({
-    required this.status,
-    required this.extId,
-  });
+  LoginResponse({required this.status, required this.extId});
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>
       _$LoginResponseFromJson(json);

@@ -12,7 +12,7 @@ abstract class ResetUserInteractionStateUseCase {
 class ResetUserInteractionStateUseCaseImpl
     extends ResetUserInteractionStateUseCase {
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
   ResetUserInteractionStateUseCaseImpl(
     this._userInteractionOperationStateRepository,

@@ -50,23 +50,23 @@ class ResultContent extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 16.0,
-                                  ),
-                                  child: AppText.title(
-                                    _title(localization, state),
-                                  )),
-                              if (state.errorType != null)
-                                AppText.body(
-                                  state.errorType!.resolve(localization),
-                                ),
-                              if (state.description != null)
-                                AppText.body(state.description!),
-                            ]),
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 16.0,
+                              ),
+                              child: AppText.title(_title(localization, state)),
+                            ),
+                            if (state.errorType != null)
+                              AppText.body(
+                                state.errorType!.resolve(localization),
+                              ),
+                            if (state.description != null)
+                              AppText.body(state.description!),
+                          ],
+                        ),
                       ),
                       // On Android platform the confirm button is always shown,
                       // on iOS platform it is hidden in case of fatal result type.
@@ -93,10 +93,9 @@ class ResultContent extends StatelessWidget {
                         ),
                       const SizedBox(height: 16.0),
                     ],
-                  ))
-              : const Center(
-                  child: CircularProgressIndicator(),
-                ),
+                  ),
+                )
+              : const Center(child: CircularProgressIndicator()),
         );
       },
     );
@@ -106,11 +105,13 @@ class ResultContent extends StatelessWidget {
     switch (state.type) {
       case OperationResultType.success:
         return localizations.operationSucceededResultTitle(
-            state.operationType.resolve(localizations));
+          state.operationType.resolve(localizations),
+        );
       case OperationResultType.fatal:
       case OperationResultType.failure:
         return localizations.operationFailedResultTitle(
-            state.operationType.resolve(localizations));
+          state.operationType.resolve(localizations),
+        );
     }
   }
 }

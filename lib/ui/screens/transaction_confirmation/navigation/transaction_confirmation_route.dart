@@ -7,7 +7,6 @@ class TransactionConfirmationRoute {
   static const transactionConfirmation = "transaction_data";
 
   Map<String, WidgetBuilder> get routes => {
-        transactionConfirmation: (context) =>
-            const TransactionConfirmationScreen(),
-      };
+    transactionConfirmation: (context) => const TransactionConfirmationScreen(),
+  };
 }

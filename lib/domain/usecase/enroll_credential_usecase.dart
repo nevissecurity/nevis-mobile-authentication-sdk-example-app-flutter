@@ -8,17 +8,14 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/state_repository.dart';
 
 abstract class EnrollCredentialUseCase {
-  Future<void> execute(
-    CredentialKind kind,
-    String credential,
-  );
+  Future<void> execute(CredentialKind kind, String credential);
 }
 
 @Injectable(as: EnrollCredentialUseCase)
 class EnrollCredentialUseCaseImpl implements EnrollCredentialUseCase {
   final StateRepository<PinEnrollmentState> _pinEnrollmentStateRepository;
   final StateRepository<PasswordEnrollmentState>
-      _passwordEnrollmentStateRepository;
+  _passwordEnrollmentStateRepository;
 
   EnrollCredentialUseCaseImpl(
     this._pinEnrollmentStateRepository,
@@ -26,10 +23,7 @@ class EnrollCredentialUseCaseImpl implements EnrollCredentialUseCase {
   );
 
   @override
-  Future<void> execute(
-    CredentialKind kind,
-    String credential,
-  ) async {
+  Future<void> execute(CredentialKind kind, String credential) async {
     switch (kind) {
       case CredentialKind.pin:
         final currentState = _pinEnrollmentStateRepository.state;

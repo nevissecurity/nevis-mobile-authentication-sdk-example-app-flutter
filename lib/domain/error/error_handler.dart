@@ -21,7 +21,7 @@ class ErrorHandlerImpl extends ErrorHandler {
   // instance of ErrorHandler, that would lead to circular dependency.
   final GlobalNavigationManager _globalNavigationManager;
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
   ErrorHandlerImpl(
     this._globalNavigationManager,
@@ -31,17 +31,13 @@ class ErrorHandlerImpl extends ErrorHandler {
   @override
   void handle(dynamic exception) {
     if (exception is MobileAuthenticationClientError) {
-      _navigateToResultWith(
-        _processMobileAuthenticationClientError(exception),
-      );
+      _navigateToResultWith(_processMobileAuthenticationClientError(exception));
     } else if (exception is PlatformSdkException) {
       _navigateToResultWith(
         _processMobileAuthenticationClientError(exception.error),
       );
     } else if (exception is BusinessException) {
-      _navigateToResultWith(
-        ResultParameter.failure(errorType: exception.type),
-      );
+      _navigateToResultWith(ResultParameter.failure(errorType: exception.type));
     } else {
       _navigateToResultWith(
         ResultParameter.failure(description: exception.toString()),

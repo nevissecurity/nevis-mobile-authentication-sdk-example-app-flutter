@@ -22,10 +22,14 @@ class PasswordChangerImpl extends PasswordChanger {
 
   @override
   void changePassword(
-      PasswordChangeContext context, PasswordChangeHandler handler) {
-    debugPrint(context.lastRecoverableError != null
-        ? 'Password change failed. Please try again. Error: ${context.lastRecoverableError?.description}'
-        : 'Please start password change.');
+    PasswordChangeContext context,
+    PasswordChangeHandler handler,
+  ) {
+    debugPrint(
+      context.lastRecoverableError != null
+          ? 'Password change failed. Please try again. Error: ${context.lastRecoverableError?.description}'
+          : 'Please start password change.',
+    );
 
     _stateRepository.save(PasswordChangeState(context, handler));
     final event = CredentialChangeEvent(
@@ -36,7 +40,7 @@ class PasswordChangerImpl extends PasswordChanger {
     _domainBloc.add(event);
   }
 
-//  You can add custom password policy by overriding the `passwordPolicy` getter
+  //  You can add custom password policy by overriding the `passwordPolicy` getter
   @override
   PasswordPolicy get passwordPolicy => _passwordPolicy;
 }

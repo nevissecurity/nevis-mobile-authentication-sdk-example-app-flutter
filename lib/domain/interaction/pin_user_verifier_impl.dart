@@ -15,7 +15,7 @@ class PinUserVerifierImpl implements PinUserVerifier {
   final DomainBloc _domainBloc;
   final ErrorHandler _errorHandler;
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
   PinUserVerifierImpl(
     this._domainBloc,
@@ -34,7 +34,8 @@ class PinUserVerifierImpl implements PinUserVerifier {
     } else if (status is PinProtectionStatusLastAttemptFailed &&
         status.remainingRetries > 0) {
       debugPrint(
-          'Last PIN user verification attempt failed. Please try again.');
+        'Last PIN user verification attempt failed. Please try again.',
+      );
     } else {
       debugPrint('Last PIN user verification attempt failed.');
     }

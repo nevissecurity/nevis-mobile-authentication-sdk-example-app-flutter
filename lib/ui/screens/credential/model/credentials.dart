@@ -4,8 +4,5 @@ class Credentials {
   final String? oldValue;
   final String value;
 
-  Credentials({
-    this.oldValue,
-    required this.value,
-  });
+  Credentials({this.oldValue, required this.value});
 }

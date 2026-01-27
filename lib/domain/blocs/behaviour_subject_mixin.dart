@@ -13,10 +13,10 @@ mixin BehaviorSubjectMixin<E, S> on Bloc<E, S> {
   }) {
     onData(state);
     return super.stream.listen(
-          onData,
-          onError: onError,
-          onDone: onDone,
-          cancelOnError: cancelOnError,
-        );
+      onData,
+      onError: onError,
+      onDone: onDone,
+      cancelOnError: cancelOnError,
+    );
   }
 }

@@ -1,8 +1,10 @@
 // Copyright © 2025 Nevis Security AG. All rights reserved.
 
-// ignore_for_file: type=lint
-
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
 
 /// The translations for English (`en`).
 class AppLocalizationsEn extends AppLocalizations {
@@ -265,7 +267,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String authenticatorProtectionStatusLastAttemptFailed(
-      int retryCount, int coolDown) {
+    int retryCount,
+    int coolDown,
+  ) {
     return 'Invalid credential was provided previously. Authenticator is unlocked. You have $retryCount try left.\nPlease retry in $coolDown seconds.';
   }
 

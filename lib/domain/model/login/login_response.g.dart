@@ -13,7 +13,4 @@ LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
-    <String, dynamic>{
-      'status': instance.status,
-      'extId': instance.extId,
-    };
+    <String, dynamic>{'status': instance.status, 'extId': instance.extId};

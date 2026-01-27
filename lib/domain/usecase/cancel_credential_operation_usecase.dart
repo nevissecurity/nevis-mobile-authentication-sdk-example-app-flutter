@@ -16,7 +16,7 @@ class CancelCredentialOperationUseCaseImpl
     implements CancelCredentialOperationUseCase {
   final StateRepository<PinEnrollmentState> _pinEnrollmentStateRepository;
   final StateRepository<PasswordEnrollmentState>
-      _passwordEnrollmentStateRepository;
+  _passwordEnrollmentStateRepository;
   final StateRepository<PinChangeState> _pinChangeStateRepository;
   final StateRepository<PasswordChangeState> _passwordChangeStateRepository;
 

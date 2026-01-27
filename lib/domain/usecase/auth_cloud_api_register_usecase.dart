@@ -33,23 +33,24 @@ class AuthCloudApiRegisterUseCaseImpl implements AuthCloudApiRegisterUseCase {
   final FingerprintUserVerifier _fingerprintUserVerifier;
   final DomainBloc _domainBloc;
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
   final StateRepository<OperationType> _operationTypeRepository;
   final ErrorHandler _errorHandler;
 
   AuthCloudApiRegisterUseCaseImpl(
-      this._clientProvider,
-      this._createDeviceInformationUseCase,
-      @Named("auth_selector_reg") this._authenticatorSelector,
-      this._pinEnroller,
-      this._passwordEnroller,
-      this._biometricUserVerifier,
-      this._devicePasscodeUserVerifier,
-      this._fingerprintUserVerifier,
-      this._domainBloc,
-      this._userInteractionOperationStateRepository,
-      this._operationTypeRepository,
-      this._errorHandler);
+    this._clientProvider,
+    this._createDeviceInformationUseCase,
+    @Named("auth_selector_reg") this._authenticatorSelector,
+    this._pinEnroller,
+    this._passwordEnroller,
+    this._biometricUserVerifier,
+    this._devicePasscodeUserVerifier,
+    this._fingerprintUserVerifier,
+    this._domainBloc,
+    this._userInteractionOperationStateRepository,
+    this._operationTypeRepository,
+    this._errorHandler,
+  );
 
   @override
   Future<void> execute({
@@ -59,7 +60,9 @@ class AuthCloudApiRegisterUseCaseImpl implements AuthCloudApiRegisterUseCase {
     final deviceInformation = await _createDeviceInformationUseCase.execute();
     _operationTypeRepository.save(OperationType.authCloudApiRegistration);
     var authCloudApiRegistration = _clientProvider
-        .client.operations.authCloudApiRegistration
+        .client
+        .operations
+        .authCloudApiRegistration
         .deviceInformation(deviceInformation)
         .authenticatorSelector(_authenticatorSelector)
         .pinEnroller(_pinEnroller)
@@ -68,14 +71,17 @@ class AuthCloudApiRegisterUseCaseImpl implements AuthCloudApiRegisterUseCase {
         .devicePasscodeUserVerifier(_devicePasscodeUserVerifier)
         .fingerprintUserVerifier(_fingerprintUserVerifier)
         .onSuccess(() {
-      debugPrint('Auth Cloud API registration succeeded.');
-      _domainBloc.add(ResultEvent());
-      _userInteractionOperationStateRepository.reset();
-    }).onError((error) {
-      debugPrint('Auth Cloud API registration failed: ${error.runtimeType}');
-      _errorHandler.handle(error);
-      _userInteractionOperationStateRepository.reset();
-    });
+          debugPrint('Auth Cloud API registration succeeded.');
+          _domainBloc.add(ResultEvent());
+          _userInteractionOperationStateRepository.reset();
+        })
+        .onError((error) {
+          debugPrint(
+            'Auth Cloud API registration failed: ${error.runtimeType}',
+          );
+          _errorHandler.handle(error);
+          _userInteractionOperationStateRepository.reset();
+        });
 
     if (enrollResponse != null) {
       authCloudApiRegistration.enrollResponse(enrollResponse);

@@ -46,7 +46,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final ChangePasswordUseCase _changePasswordUseCase;
   final DeleteAuthenticatorsUseCase _deleteAuthenticatorsUseCase;
   final GetFidoUafAttestationInformationUseCase
-      _getFidoUafAttestationInformationUseCase;
+  _getFidoUafAttestationInformationUseCase;
   final MetaDataUseCase _metaDataUseCase;
   final LocalDataBloc _localDataBloc;
   final ErrorHandler _errorHandler;
@@ -76,7 +76,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     this._errorHandler,
     this._globalNavigationManager,
   ) : super(HomeInitialState()) {
-    _localDataSubscription = _localDataBloc.stream.listen((LocalDataState state) {
+    _localDataSubscription = _localDataBloc.stream.listen((
+      LocalDataState state,
+    ) {
       add(LocalDataEvent(state));
     });
     on<HomeCreatedEvent>(_handleHomeCreated);
@@ -127,7 +129,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (uri == null || uri.isEmpty) {
       return;
     }
-    final dispatchTokenResponse = Uri.tryParse(uri)?.queryParameters["dispatchTokenResponse"];
+    final dispatchTokenResponse = Uri.tryParse(
+      uri,
+    )?.queryParameters["dispatchTokenResponse"];
     await _oobProcessUseCase.execute(dispatchTokenResponse).catchError((e) {
       _errorHandler.handle(e);
     });
@@ -135,22 +139,26 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> _initClient(Emitter<HomeState> emit) async {
     final sdkConfiguration = await _configurationLoader.sdkConfiguration();
-    return await _clientProvider.init(sdkConfiguration, () async {
-      add(ClientInitializedEvent());
-    }).catchError((error) {
-      _yieldBasedOnCurrentState(emit);
-      _errorHandler.handle(error);
-    });
+    return await _clientProvider
+        .init(sdkConfiguration, () async {
+          add(ClientInitializedEvent());
+        })
+        .catchError((error) {
+          _yieldBasedOnCurrentState(emit);
+          _errorHandler.handle(error);
+        });
   }
 
   Future<void> _loadData() async {
-    _registeredAccounts =
-        await _registeredAccountsUseCase.execute().catchError((error) {
-      _errorHandler.handle(error);
-      return Set<Account>.identity();
-    });
-    _authenticators =
-        await _authenticatorsUseCase.execute().catchError((error) {
+    _registeredAccounts = await _registeredAccountsUseCase.execute().catchError(
+      (error) {
+        _errorHandler.handle(error);
+        return Set<Account>.identity();
+      },
+    );
+    _authenticators = await _authenticatorsUseCase.execute().catchError((
+      error,
+    ) {
       _errorHandler.handle(error);
       return Set<Authenticator>.identity();
     });
@@ -158,8 +166,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       _errorHandler.handle(error);
       return null;
     });
-    _sdkAttestationInformation =
-        await _getFidoUafAttestationInformationUseCase.execute();
+    _sdkAttestationInformation = await _getFidoUafAttestationInformationUseCase
+        .execute();
     debugPrint('Loading data finished.');
   }
 
@@ -208,13 +216,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       );
     } else {
       await _deregisterAllUseCase
-          .execute(
-        accounts: _registeredAccounts,
-        authorizationProvider: null,
-      )
+          .execute(accounts: _registeredAccounts, authorizationProvider: null)
           .catchError((error) {
-        _errorHandler.handle(error);
-      });
+            _errorHandler.handle(error);
+          });
     }
   }
 
@@ -332,8 +337,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     await _deleteAuthenticatorsUseCase
         .execute(accounts: _registeredAccounts)
         .catchError((error) {
-      _errorHandler.handle(error);
-    });
+          _errorHandler.handle(error);
+        });
   }
 
   Future<void> _handleLocalData(
@@ -349,32 +354,29 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _startPinChange(String username) async {
-    final parameter = CredentialParameter.pinChange(
-      username: username,
-    );
+    final parameter = CredentialParameter.pinChange(username: username);
     _changePinUseCase
         .execute(username: username) //
         .catchError((error) {
-      _errorHandler.handle(error);
-    });
+          _errorHandler.handle(error);
+        });
     _globalNavigationManager.pushCredential(parameter);
   }
 
   Future<void> _startPasswordChange(String username) async {
-    final parameter = CredentialParameter.passwordChange(
-      username: username,
-    );
+    final parameter = CredentialParameter.passwordChange(username: username);
     _changePasswordUseCase
         .execute(username: username) //
         .catchError((error) {
-      _errorHandler.handle(error);
-    });
+          _errorHandler.handle(error);
+        });
     _globalNavigationManager.pushCredential(parameter);
   }
 
   bool _isEnrolled(String username, Aaid aaid) {
-    final authenticators =
-        _authenticators.where((element) => element.aaid == aaid.rawValue);
+    final authenticators = _authenticators.where(
+      (element) => element.aaid == aaid.rawValue,
+    );
     if (authenticators.isEmpty) {
       return false;
     }

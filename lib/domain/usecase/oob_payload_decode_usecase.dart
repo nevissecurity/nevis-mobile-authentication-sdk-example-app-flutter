@@ -41,20 +41,24 @@ class OobPayloadDecodeUseCaseImpl implements OobPayloadDecodeUseCase {
     }
     final decodedJson = utf8.decode(base64.decode(fixedJson));
     _operationTypeRepository.save(OperationType.payloadDecode);
-    await _clientProvider.client.operations.outOfBandPayloadDecode //
+    await _clientProvider.client.operations.outOfBandPayloadDecode
         .json(decodedJson)
         .onSuccess((payload) {
-      if (payload == null) {
-        debugPrint('Out of band payload is null.');
-        _errorHandler.handle(BusinessErrorType.invalidState);
-        return;
-      }
+          if (payload == null) {
+            debugPrint('Out of band payload is null.');
+            _errorHandler.handle(BusinessErrorType.invalidState);
+            return;
+          }
 
-      debugPrint('Out of band payload decode succeeded.');
-      onSuccess.call(payload);
-    }).onError((error) {
-      debugPrint('Out of band payload decode failed: ${error.runtimeType}.');
-      _errorHandler.handle(error);
-    }).execute();
+          debugPrint('Out of band payload decode succeeded.');
+          onSuccess.call(payload);
+        })
+        .onError((error) {
+          debugPrint(
+            'Out of band payload decode failed: ${error.runtimeType}.',
+          );
+          _errorHandler.handle(error);
+        })
+        .execute();
   }
 }

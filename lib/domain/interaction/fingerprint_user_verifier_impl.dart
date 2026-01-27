@@ -15,7 +15,7 @@ class FingerprintUserVerifierImpl implements FingerprintUserVerifier {
   final DomainBloc _domainBloc;
   final ErrorHandler _errorHandler;
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
   FingerprintUserVerifierImpl(
     this._domainBloc,
@@ -28,9 +28,11 @@ class FingerprintUserVerifierImpl implements FingerprintUserVerifier {
     FingerprintUserVerificationContext context,
     FingerprintUserVerificationHandler handler,
   ) {
-    debugPrint(context.lastRecoverableError != null
-        ? 'Fingerprint user verification failed. Please try again. Error: ${context.lastRecoverableError?.description}'
-        : 'Please start fingerprint user verification.');
+    debugPrint(
+      context.lastRecoverableError != null
+          ? 'Fingerprint user verification failed. Please try again. Error: ${context.lastRecoverableError?.description}'
+          : 'Please start fingerprint user verification.',
+    );
 
     final state = _userInteractionOperationStateRepository.state;
     if (state == null) {

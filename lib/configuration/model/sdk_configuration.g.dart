@@ -7,11 +7,7 @@ part of 'sdk_configuration.dart';
 // **************************************************************************
 
 SdkConfiguration _$SdkConfigurationFromJson(Map<String, dynamic> json) =>
-    SdkConfiguration(
-      json['hostname'] as String,
-    );
+    SdkConfiguration(json['hostname'] as String);
 
 Map<String, dynamic> _$SdkConfigurationToJson(SdkConfiguration instance) =>
-    <String, dynamic>{
-      'hostname': instance.hostname,
-    };
+    <String, dynamic>{'hostname': instance.hostname};

@@ -12,8 +12,9 @@ abstract class AccountValidator {
 class AccountValidatorImpl implements AccountValidator {
   @override
   Future<Set<Account>> validate(AccountSelectionContext context) async {
-    final supportedAuthenticators =
-        context.authenticators.where((i) => i.isSupportedByHardware).toList();
+    final supportedAuthenticators = context.authenticators
+        .where((i) => i.isSupportedByHardware)
+        .toList();
     if (supportedAuthenticators.isEmpty) {
       throw BusinessException.authenticatorNotFound();
     }

@@ -24,9 +24,7 @@ class HomeScreen extends StatelessWidget {
       builder: (ctx, state) {
         return AppScaffold(
           body: state is! HomeLoadedState
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
+              ? const Center(child: CircularProgressIndicator())
               : Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: ScrollableColumn(
@@ -41,7 +39,11 @@ class HomeScreen extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            top: 16.0, right: 0.0, left: 0.0, bottom: 64.0),
+                          top: 16.0,
+                          right: 0.0,
+                          left: 0.0,
+                          bottom: 64.0,
+                        ),
                         child: AppText.body(
                           localization.homeRegisteredAccounts(
                             state.registeredAccounts,
@@ -49,15 +51,17 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       Button.outlined(
-                          text: localization.readQrCode,
-                          onPressed: () {
-                            homeBloc.add(ReadQrCodeEvent());
-                          }),
+                        text: localization.readQrCode,
+                        onPressed: () {
+                          homeBloc.add(ReadQrCodeEvent());
+                        },
+                      ),
                       Button.outlined(
-                          text: localization.inBandAuthenticate,
-                          onPressed: () {
-                            homeBloc.add(InBandAuthenticationEvent());
-                          }),
+                        text: localization.inBandAuthenticate,
+                        onPressed: () {
+                          homeBloc.add(InBandAuthenticationEvent());
+                        },
+                      ),
                       Button.outlined(
                         text: localization.deregister,
                         onPressed: () {
@@ -65,39 +69,45 @@ class HomeScreen extends StatelessWidget {
                         },
                       ),
                       Button.outlined(
-                          text: localization.pinChange,
-                          onPressed: () {
-                            homeBloc.add(PinChangeEvent());
-                          }),
+                        text: localization.pinChange,
+                        onPressed: () {
+                          homeBloc.add(PinChangeEvent());
+                        },
+                      ),
                       Button.outlined(
-                          text: localization.passwordChange,
-                          onPressed: () {
-                            homeBloc.add(PasswordChangeEvent());
-                          }),
+                        text: localization.passwordChange,
+                        onPressed: () {
+                          homeBloc.add(PasswordChangeEvent());
+                        },
+                      ),
                       Button.outlined(
-                          text: localization.changeDeviceInformation,
-                          onPressed: () {
-                            homeBloc.add(ChangeDeviceInformationEvent());
-                          }),
+                        text: localization.changeDeviceInformation,
+                        onPressed: () {
+                          homeBloc.add(ChangeDeviceInformationEvent());
+                        },
+                      ),
                       Button.outlined(
-                          text: localization.authCloudApiRegistration,
-                          onPressed: () {
-                            homeBloc.add(AuthCloudApiRegistrationEvent());
-                          }),
+                        text: localization.authCloudApiRegistration,
+                        onPressed: () {
+                          homeBloc.add(AuthCloudApiRegistrationEvent());
+                        },
+                      ),
                       Button.outlined(
-                          text: localization.deleteAuthenticators,
-                          onPressed: () {
-                            homeBloc.add(DeleteAuthenticatorsEvent());
-                          }),
+                        text: localization.deleteAuthenticators,
+                        onPressed: () {
+                          homeBloc.add(DeleteAuthenticatorsEvent());
+                        },
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: AppText.body(localization.homeIdentitySuiteOnly),
                       ),
                       Button.outlined(
-                          text: localization.inBandRegister,
-                          onPressed: () {
-                            homeBloc.add(InBandRegisterEvent());
-                          }),
+                        text: localization.inBandRegister,
+                        onPressed: () {
+                          homeBloc.add(InBandRegisterEvent());
+                        },
+                      ),
                       if (state.metaData != null)
                         MetaDataSection(metaData: state.metaData!),
                       if (state.attestationInformation != null)
@@ -108,9 +118,7 @@ class HomeScreen extends StatelessWidget {
                                 state.attestationInformation!,
                           ),
                         ),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
+                      const SizedBox(height: 16.0),
                     ],
                   ),
                 ),

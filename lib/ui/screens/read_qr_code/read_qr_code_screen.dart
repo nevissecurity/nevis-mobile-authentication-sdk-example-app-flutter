@@ -50,9 +50,7 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen>
       content = _mobileScannerContent(localization);
     }
 
-    return AppScaffold(
-      body: content,
-    );
+    return AppScaffold(body: content);
   }
 
   Widget _mobileScannerContent(AppLocalizations localization) {
@@ -61,9 +59,7 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen>
       children: [
         Column(
           children: <Widget>[
-            Expanded(
-              child: MobileScanner(controller: _controller),
-            ),
+            Expanded(child: MobileScanner(controller: _controller)),
           ],
         ),
         const QrScannerOverlay(),
@@ -73,7 +69,10 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen>
   }
 
   Widget _textContent(
-      AppLocalizations localization, Color color, String? text) {
+    AppLocalizations localization,
+    Color color,
+    String? text,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -100,14 +99,9 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen>
         ),
         Expanded(
           child: Center(
-            child: text != null
-                ? AppText.title(
-                    text,
-                    textColor: color,
-                  )
-                : null,
+            child: text != null ? AppText.title(text, textColor: color) : null,
           ),
-        )
+        ),
       ],
     );
   }

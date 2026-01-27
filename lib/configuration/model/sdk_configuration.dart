@@ -8,9 +8,7 @@ part 'sdk_configuration.g.dart';
 class SdkConfiguration {
   String hostname;
 
-  SdkConfiguration(
-    this.hostname,
-  );
+  SdkConfiguration(this.hostname);
 
   factory SdkConfiguration.fromJson(Map<String, dynamic> json) =>
       _$SdkConfigurationFromJson(json);
