@@ -76,18 +76,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     this._errorHandler,
     this._globalNavigationManager,
   ) : super(HomeInitialState()) {
-    // Checking broadcast stream, if deep link was clicked in opened application
-    _deepLinkRepositorySubscription =
-        _deepLinkRepository.setDeepLinkReceiver((redirectUri) {
-      add(OOBRedirectArrivedEvent(redirectUri));
-    });
-    _localDataSubscription =
-        _localDataBloc.stream.listen((LocalDataState state) {
+    _localDataSubscription = _localDataBloc.stream.listen((LocalDataState state) {
       add(LocalDataEvent(state));
     });
     on<HomeCreatedEvent>(_handleHomeCreated);
     on<ClientInitializedEvent>(_handleClientInitialized);
-    on<OOBRedirectArrivedEvent>(_handleOOBRedirect);
     on<ReadQrCodeEvent>(_handleReadQrCode);
     on<DeregisterEvent>(_handleDeregister);
     on<InBandAuthenticationEvent>(_handleInBandAuthentication);
@@ -111,26 +104,30 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     ClientInitializedEvent event,
     Emitter<HomeState> emit,
   ) async {
-    //Checking application start by deep link
-    final uri = await _deepLinkRepository.getStartUri();
-    if (uri?.isNotEmpty ?? false) _onRedirected(emit, uri);
     await _loadData();
+    await initDeepLinkStream();
     _yieldBasedOnCurrentState(emit);
   }
 
-  Future<void> _handleOOBRedirect(
-    OOBRedirectArrivedEvent event,
-    Emitter<HomeState> emit,
-  ) async {
-    _onRedirected(emit, event.redirectUri);
+  Future<void> initDeepLinkStream() async {
+    try {
+      final uri = await _deepLinkRepository.getStartUri();
+      await processUri(uri);
+      _deepLinkRepositorySubscription = _deepLinkRepository.setDeepLinkReceiver(
+        (redirectUri) async {
+          await processUri(redirectUri);
+        },
+      );
+    } catch (e) {
+      _errorHandler.handle(e);
+    }
   }
 
-  _onRedirected(
-    Emitter<HomeState> emit,
-    String? uri,
-  ) async {
-    final dispatchTokenResponse =
-        Uri.tryParse(uri ?? "")?.queryParameters["dispatchTokenResponse"];
+  Future<void> processUri(String? uri) async {
+    if (uri == null || uri.isEmpty) {
+      return;
+    }
+    final dispatchTokenResponse = Uri.tryParse(uri)?.queryParameters["dispatchTokenResponse"];
     await _oobProcessUseCase.execute(dispatchTokenResponse).catchError((e) {
       _errorHandler.handle(e);
     });

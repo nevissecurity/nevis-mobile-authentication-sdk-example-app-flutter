@@ -50,7 +50,7 @@ class TransactionConfirmationContent extends StatelessWidget {
                   child: AppText.title(
                       localization.transactionConfirmationScreenTitle),
                 ),
-                Expanded(child: _data(state)),
+                Flexible(child: _data(state)),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
