@@ -7,7 +7,7 @@ class AuthCloudApiRegistrationRoute {
   static const authCloudApiRegistration = "auth_cloud_api_registration";
 
   Map<String, WidgetBuilder> get routes => {
-        authCloudApiRegistration: (context) =>
-            const AuthCloudApiRegistrationScreen()
-      };
+    authCloudApiRegistration: (context) =>
+        const AuthCloudApiRegistrationScreen(),
+  };
 }

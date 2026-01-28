@@ -20,10 +20,7 @@ class CredentialInfoLabel extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: 16),
-        Text(
-          _info(localization),
-          style: const TextStyle(color: Colors.black),
-        ),
+        Text(_info(localization), style: const TextStyle(color: Colors.black)),
       ],
     );
   }

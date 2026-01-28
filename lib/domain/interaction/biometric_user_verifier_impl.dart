@@ -15,7 +15,7 @@ class BiometricUserVerifierImpl implements BiometricUserVerifier {
   final DomainBloc _domainBloc;
   final ErrorHandler _errorHandler;
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
   BiometricUserVerifierImpl(
     this._domainBloc,

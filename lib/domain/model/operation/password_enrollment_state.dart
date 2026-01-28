@@ -3,8 +3,9 @@
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/simple_base_state.dart';
 
-class PasswordEnrollmentState extends SimpleBaseState<PasswordEnrollmentContext,
-    PasswordEnrollmentHandler> {
+class PasswordEnrollmentState
+    extends
+        SimpleBaseState<PasswordEnrollmentContext, PasswordEnrollmentHandler> {
   final PasswordEnrollmentContext _context;
   final PasswordEnrollmentHandler _handler;
 

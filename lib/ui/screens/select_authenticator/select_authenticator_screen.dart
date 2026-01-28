@@ -17,8 +17,9 @@ class SelectAuthenticatorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final params = ModalRoute.of(context)!.settings.arguments
-        as SelectAuthenticatorParameter;
+    final params =
+        ModalRoute.of(context)!.settings.arguments
+            as SelectAuthenticatorParameter;
     return BlocProvider<SelectAuthenticatorBloc>(
       create: (_) {
         return GetIt.I.get<SelectAuthenticatorBloc>()
@@ -41,40 +42,39 @@ class SelectAuthenticatorContent extends StatelessWidget {
       builder: (ctx, state) {
         return AppScaffold(
           body: Center(
-              child: (state is SelectAuthenticatorLoadedState)
-                  ? Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: AppText.title(
-                            localization.selectAuthenticatorScreenTitle,
-                          ),
+            child: (state is SelectAuthenticatorLoadedState)
+                ? Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: AppText.title(
+                          localization.selectAuthenticatorScreenTitle,
                         ),
-                        Expanded(
-                          child: ListView.builder(
-                              itemCount:
-                                  state.parameter.authenticatorItems.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                final item = state.parameter.authenticatorItems
-                                    .elementAt(index);
-                                return AuthenticatorListTile(
-                                  item: item,
-                                  onTap: () {
-                                    if (item.isEnabled()) {
-                                      context
-                                          .read<SelectAuthenticatorBloc>()
-                                          .add(AuthenticatorSelectedEvent(
-                                            item.aaid,
-                                          ));
-                                    }
-                                  },
-                                );
-                              }),
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: state.parameter.authenticatorItems.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final item = state.parameter.authenticatorItems
+                                .elementAt(index);
+                            return AuthenticatorListTile(
+                              item: item,
+                              onTap: () {
+                                if (item.isEnabled()) {
+                                  context.read<SelectAuthenticatorBloc>().add(
+                                    AuthenticatorSelectedEvent(item.aaid),
+                                  );
+                                }
+                              },
+                            );
+                          },
                         ),
-                      ],
-                    )
-                  : const CircularProgressIndicator()),
+                      ),
+                    ],
+                  )
+                : const CircularProgressIndicator(),
+          ),
         );
       },
     );

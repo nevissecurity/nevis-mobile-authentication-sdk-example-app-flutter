@@ -12,9 +12,7 @@ class ConfirmationInitialState extends ConfirmationState {}
 class ConfirmationLoadedState extends ConfirmationState {
   final String aaid;
 
-  ConfirmationLoadedState({
-    required this.aaid,
-  });
+  ConfirmationLoadedState({required this.aaid});
 }
 
 class ConfirmFingerprintLoadedState extends ConfirmationLoadedState {

@@ -48,15 +48,15 @@ class AuthenticatorValidatorImpl implements AuthenticatorValidator {
     AuthenticatorSelectionContext context,
     List<String> authenticatorAllowlist,
   ) {
-    return _allowedAuthenticators(
-      context,
-      authenticatorAllowlist,
-    ).where((authenticator) {
+    return _allowedAuthenticators(context, authenticatorAllowlist).where((
+      authenticator,
+    ) {
       // Do not display:
       //   - non-registered authenticators
       //   - not hardware supported authenticators
-      return authenticator.registration
-              .isRegistered(context.account.username) &&
+      return authenticator.registration.isRegistered(
+            context.account.username,
+          ) &&
           authenticator.isSupportedByHardware;
     }).toSet();
   }

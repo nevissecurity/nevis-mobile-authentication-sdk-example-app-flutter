@@ -7,11 +7,7 @@ part of 'login_configuration.dart';
 // **************************************************************************
 
 LoginConfiguration _$LoginConfigurationFromJson(Map<String, dynamic> json) =>
-    LoginConfiguration(
-      json['loginRequestURL'] as String,
-    );
+    LoginConfiguration(json['loginRequestURL'] as String);
 
 Map<String, dynamic> _$LoginConfigurationToJson(LoginConfiguration instance) =>
-    <String, dynamic>{
-      'loginRequestURL': instance.loginRequestURL,
-    };
+    <String, dynamic>{'loginRequestURL': instance.loginRequestURL};

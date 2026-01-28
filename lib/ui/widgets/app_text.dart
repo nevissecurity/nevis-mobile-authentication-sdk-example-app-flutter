@@ -16,32 +16,17 @@ class AppText extends StatelessWidget {
     this.textColor = Colors.black,
   });
 
-  const AppText.title(
-    this.text, {
-    super.key,
-    this.textColor = Colors.black,
-  })  : style = const TextStyle(
-          fontSize: 22.0,
-          fontWeight: FontWeight.bold,
-        ),
-        textAlign = TextAlign.center;
+  const AppText.title(this.text, {super.key, this.textColor = Colors.black})
+    : style = const TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
+      textAlign = TextAlign.center;
 
-  const AppText.body(
-    this.text, {
-    super.key,
-    this.textColor = Colors.black,
-  })  : style = const TextStyle(fontSize: 17.0),
-        textAlign = TextAlign.center;
+  const AppText.body(this.text, {super.key, this.textColor = Colors.black})
+    : style = const TextStyle(fontSize: 17.0),
+      textAlign = TextAlign.center;
 
-  const AppText.footnote(
-    this.text, {
-    super.key,
-    this.textColor = Colors.black,
-  })  : style = const TextStyle(
-          fontSize: 13.0,
-          fontWeight: FontWeight.w400,
-        ),
-        textAlign = TextAlign.left;
+  const AppText.footnote(this.text, {super.key, this.textColor = Colors.black})
+    : style = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w400),
+      textAlign = TextAlign.left;
 
   @override
   Widget build(BuildContext context) {

@@ -6,6 +6,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/c
 class ConfirmationRoute {
   static const confirmation = "confirmation";
 
-  Map<String, WidgetBuilder> get routes =>
-      {confirmation: (context) => const ConfirmationScreen()};
+  Map<String, WidgetBuilder> get routes => {
+    confirmation: (context) => const ConfirmationScreen(),
+  };
 }

@@ -11,10 +11,11 @@ class ChangeDeviceInformationRoute {
   static const changeDeviceInformation = "change_device_information";
 
   Map<String, WidgetBuilder> get routes => {
-        changeDeviceInformation: (context) => BlocProvider(
-              create: (_) => GetIt.I.get<ChangeDeviceInformationBloc>()
-                ..add(ChangeDeviceInformationCreatedEvent()),
-              child: const ChangeDeviceInformationScreen(),
-            ),
-      };
+    changeDeviceInformation: (context) => BlocProvider(
+      create: (_) =>
+          GetIt.I.get<ChangeDeviceInformationBloc>()
+            ..add(ChangeDeviceInformationCreatedEvent()),
+      child: const ChangeDeviceInformationScreen(),
+    ),
+  };
 }

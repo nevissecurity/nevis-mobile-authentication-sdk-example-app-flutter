@@ -14,7 +14,7 @@ abstract class BiometricListenForOsCredentialsUseCase {
 class BiometricListenForOsCredentialsUseCaseImpl
     extends BiometricListenForOsCredentialsUseCase {
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
   BiometricListenForOsCredentialsUseCaseImpl(
     this._userInteractionOperationStateRepository,
@@ -33,8 +33,9 @@ class BiometricListenForOsCredentialsUseCaseImpl
       state.copyWith(
         accountSelectionHandler: null,
         authenticatorSelectionHandler: null,
-        osAuthenticationListenHandler:
-            await handler.listenForOsCredentials(options),
+        osAuthenticationListenHandler: await handler.listenForOsCredentials(
+          options,
+        ),
       ),
     );
   }

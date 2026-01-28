@@ -16,7 +16,7 @@ class RegistrationAuthenticatorSelectorImpl extends AuthenticatorSelectorImpl {
   final ConfigurationLoader _configurationLoader;
   final AuthenticatorValidator _authenticatorValidator;
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
   RegistrationAuthenticatorSelectorImpl(
     this._domainBloc,
@@ -36,8 +36,8 @@ class RegistrationAuthenticatorSelectorImpl extends AuthenticatorSelectorImpl {
 
   @override
   StateRepository<UserInteractionOperationState>
-      get userInteractionOperationStateRepository =>
-          _userInteractionOperationStateRepository;
+  get userInteractionOperationStateRepository =>
+      _userInteractionOperationStateRepository;
 
   @override
   Operation get operation => Operation.registration;

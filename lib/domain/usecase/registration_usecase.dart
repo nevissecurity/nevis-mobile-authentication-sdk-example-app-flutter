@@ -33,7 +33,7 @@ class RegistrationUseCaseImpl implements RegistrationUseCase {
   final FingerprintUserVerifier _fingerprintUserVerifier;
   final DomainBloc _domainBloc;
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
   final StateRepository<OperationType> _operationTypeRepository;
   final ErrorHandler _errorHandler;
 
@@ -74,14 +74,15 @@ class RegistrationUseCaseImpl implements RegistrationUseCase {
         .devicePasscodeUserVerifier(_devicePasscodeUserVerifier)
         .fingerprintUserVerifier(_fingerprintUserVerifier)
         .onSuccess(() {
-      debugPrint('In-band registration succeeded.');
-      _domainBloc.add(ResultEvent());
-      _userInteractionOperationStateRepository.reset();
-    }).onError((error) {
-      debugPrint('In-band registration failed: ${error.runtimeType}');
-      _errorHandler.handle(error);
-      _userInteractionOperationStateRepository.reset();
-    });
+          debugPrint('In-band registration succeeded.');
+          _domainBloc.add(ResultEvent());
+          _userInteractionOperationStateRepository.reset();
+        })
+        .onError((error) {
+          debugPrint('In-band registration failed: ${error.runtimeType}');
+          _errorHandler.handle(error);
+          _userInteractionOperationStateRepository.reset();
+        });
 
     if (authorizationProvider != null) {
       registration.authorizationProvider(authorizationProvider);

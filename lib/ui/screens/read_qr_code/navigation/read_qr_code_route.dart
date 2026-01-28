@@ -10,9 +10,9 @@ class ReadQrCodeRoute {
   static const readQrCode = "read_qr_code";
 
   Map<String, WidgetBuilder> get routes => {
-        readQrCode: (context) => BlocProvider<ReadQrCodeBloc>(
-              create: (_) => GetIt.I.get<ReadQrCodeBloc>(),
-              child: const ReadQrCodeScreen(),
-            ),
-      };
+    readQrCode: (context) => BlocProvider<ReadQrCodeBloc>(
+      create: (_) => GetIt.I.get<ReadQrCodeBloc>(),
+      child: const ReadQrCodeScreen(),
+    ),
+  };
 }

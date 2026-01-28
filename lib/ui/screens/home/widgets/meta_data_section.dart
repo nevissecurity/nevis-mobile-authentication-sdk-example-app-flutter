@@ -9,10 +9,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/util/version
 class MetaDataSection extends StatelessWidget {
   final SdkMetaData metaData;
 
-  const MetaDataSection({
-    super.key,
-    required this.metaData,
-  });
+  const MetaDataSection({super.key, required this.metaData});
 
   @override
   Widget build(BuildContext context) {

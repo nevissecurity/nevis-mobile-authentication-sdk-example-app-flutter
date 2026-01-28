@@ -31,12 +31,14 @@ class CredentialScreen extends StatelessWidget {
 
     return BlocProvider<CredentialBloc>(
       create: (ctx) => GetIt.I.get<CredentialBloc>()
-        ..add(CredentialCreatedEvent(
-          mode: parameter.mode,
-          kind: parameter.kind,
-          username: parameter.username,
-          verificationData: parameter.verificationData,
-        )),
+        ..add(
+          CredentialCreatedEvent(
+            mode: parameter.mode,
+            kind: parameter.kind,
+            username: parameter.username,
+            verificationData: parameter.verificationData,
+          ),
+        ),
       child: const CredentialScreenContent(),
     );
   }
@@ -78,48 +80,44 @@ class _CredentialScreenContentState extends State<CredentialScreenContent> {
         return (state is CredentialUpdatedState)
             ? AppScaffold(
                 body: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CredentialTitleLabel(
-                          mode: state.mode,
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CredentialTitleLabel(mode: state.mode, kind: state.kind),
+                      CredentialDescriptionLabel(
+                        mode: state.mode,
+                        kind: state.kind,
+                      ),
+                      if (state.mode == CredentialMode.change)
+                        CredentialOldField(
+                          textEditingController: oldCredentialController,
                           kind: state.kind,
                         ),
-                        CredentialDescriptionLabel(
-                          mode: state.mode,
-                          kind: state.kind,
+                      CredentialField(
+                        textEditingController: credentialController,
+                        mode: state.mode,
+                        kind: state.kind,
+                      ),
+                      if (errorMessage != null)
+                        CredentialErrorLabel(errorMessage: errorMessage),
+                      if (state.pinProtectionStatus
+                              is! PinProtectionStatusUnlocked ||
+                          state.passwordProtectionStatus
+                              is! PasswordProtectionStatusUnlocked)
+                        CredentialInfoLabel(
+                          pinProtectionStatus: state.pinProtectionStatus,
+                          passwordProtectionStatus:
+                              state.passwordProtectionStatus,
                         ),
-                        if (state.mode == CredentialMode.change)
-                          CredentialOldField(
-                            textEditingController: oldCredentialController,
-                            kind: state.kind,
-                          ),
-                        CredentialField(
-                          textEditingController: credentialController,
-                          mode: state.mode,
-                          kind: state.kind,
-                        ),
-                        if (errorMessage != null)
-                          CredentialErrorLabel(errorMessage: errorMessage),
-                        if (state.pinProtectionStatus
-                                is! PinProtectionStatusUnlocked ||
-                            state.passwordProtectionStatus
-                                is! PasswordProtectionStatusUnlocked)
-                          CredentialInfoLabel(
-                            pinProtectionStatus: state.pinProtectionStatus,
-                            passwordProtectionStatus:
-                                state.passwordProtectionStatus,
-                          ),
-                        _confirmButton(state.mode, state.kind),
-                        const SizedBox(height: 16),
-                        _cancelButton(state.mode),
-                      ],
-                    )),
+                      _confirmButton(state.mode, state.kind),
+                      const SizedBox(height: 16),
+                      _cancelButton(state.mode),
+                    ],
+                  ),
+                ),
               )
-            : const Center(
-                child: CircularProgressIndicator(),
-              );
+            : const Center(child: CircularProgressIndicator());
       },
     );
   }
@@ -132,12 +130,12 @@ class _CredentialScreenContentState extends State<CredentialScreenContent> {
           text: _localization.confirmButtonTitle,
           onPressed: () {
             context.read<CredentialBloc>().add(
-                  CredentialEnterEvent(
-                    mode: mode,
-                    kind: kind,
-                    credentials: _makeCredentials(mode),
-                  ),
-                );
+              CredentialEnterEvent(
+                mode: mode,
+                kind: kind,
+                credentials: _makeCredentials(mode),
+              ),
+            );
           },
         ),
       ],

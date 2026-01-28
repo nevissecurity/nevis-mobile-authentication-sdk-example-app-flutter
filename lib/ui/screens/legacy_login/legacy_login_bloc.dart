@@ -38,22 +38,19 @@ class LegacyLoginBloc extends Bloc<LegacyLoginEvent, LegacyLoginState> {
       password: event.password,
     );
     final credentials = await _loginUseCase
-        .execute(
-      uri: uri,
-      loginRequest: loginRequest,
-    )
+        .execute(uri: uri, loginRequest: loginRequest)
         .catchError((e) {
-      _errorHandler.handle(e);
-      return Credentials.empty();
-    });
+          _errorHandler.handle(e);
+          return Credentials.empty();
+        });
 
     await _registrationUseCase
         .execute(
-      username: credentials.username,
-      authorizationProvider: credentials.authorizationProvider,
-    )
+          username: credentials.username,
+          authorizationProvider: credentials.authorizationProvider,
+        )
         .catchError((e) {
-      _errorHandler.handle(e);
-    });
+          _errorHandler.handle(e);
+        });
   }
 }

@@ -38,24 +38,24 @@ class SelectAuthenticatorBloc
     Emitter<SelectAuthenticatorState> emit,
   ) async {
     debugPrint('Selected authenticator aaid: ${event.aaid}');
-    await _selectAuthenticatorUseCase.execute(event.aaid, (String username) {
-      final CredentialParameter parameter;
-      if (event.aaid.isPin) {
-        parameter = CredentialParameter.pinEnrollment(
-          username: username,
-        );
-      } else if (event.aaid.isPassword) {
-        parameter = CredentialParameter.passwordEnrollment(
-          username: username,
-        );
-      } else {
-        throw BusinessException.invalidState();
-      }
+    await _selectAuthenticatorUseCase
+        .execute(event.aaid, (String username) {
+          final CredentialParameter parameter;
+          if (event.aaid.isPin) {
+            parameter = CredentialParameter.pinEnrollment(username: username);
+          } else if (event.aaid.isPassword) {
+            parameter = CredentialParameter.passwordEnrollment(
+              username: username,
+            );
+          } else {
+            throw BusinessException.invalidState();
+          }
 
-      _globalNavigationManager.pushCredential(parameter);
-    }).catchError((error) {
-      _errorHandler.handle(error);
-    });
+          _globalNavigationManager.pushCredential(parameter);
+        })
+        .catchError((error) {
+          _errorHandler.handle(error);
+        });
   }
 
   Future<void> _handleSelectAuthenticatorCreated(

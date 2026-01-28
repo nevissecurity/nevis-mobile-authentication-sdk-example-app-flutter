@@ -24,9 +24,7 @@ class DeleteAuthenticatorsUseCaseImpl implements DeleteAuthenticatorsUseCase {
   );
 
   @override
-  Future<void> execute({
-    required Set<Account> accounts,
-  }) {
+  Future<void> execute({required Set<Account> accounts}) {
     final batchCall = GetIt.I.get<BatchCall>();
     final List<SdkCall> batchCalls = [];
 
@@ -34,10 +32,12 @@ class DeleteAuthenticatorsUseCaseImpl implements DeleteAuthenticatorsUseCase {
 
     for (var account in accounts) {
       batchCalls.add(() async {
-        await _clientProvider.client.localData
-            .deleteAuthenticator(username: account.username);
+        await _clientProvider.client.localData.deleteAuthenticator(
+          username: account.username,
+        );
         debugPrint(
-            'Deleting authenticators for ${account.username} succeeded.');
+          'Deleting authenticators for ${account.username} succeeded.',
+        );
         batchCall.onOperationFinished();
       });
     }

@@ -8,18 +8,12 @@ class ResultParameter {
   final BusinessErrorType? errorType;
   final String? description;
 
-  ResultParameter.success({
-    this.errorType,
-    this.description,
-  }) : type = OperationResultType.success;
+  ResultParameter.success({this.errorType, this.description})
+    : type = OperationResultType.success;
 
-  ResultParameter.failure({
-    this.errorType,
-    this.description,
-  }) : type = OperationResultType.failure;
+  ResultParameter.failure({this.errorType, this.description})
+    : type = OperationResultType.failure;
 
-  ResultParameter.fatal({
-    this.errorType,
-    this.description,
-  }) : type = OperationResultType.fatal;
+  ResultParameter.fatal({this.errorType, this.description})
+    : type = OperationResultType.fatal;
 }

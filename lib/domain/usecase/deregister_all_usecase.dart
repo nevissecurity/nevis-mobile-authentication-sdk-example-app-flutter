@@ -21,10 +21,7 @@ class DeregisterAllUseCaseImpl implements DeregisterAllUseCase {
   final ClientProvider _clientProvider;
   final StateRepository<OperationType> _operationTypeRepository;
 
-  DeregisterAllUseCaseImpl(
-    this._clientProvider,
-    this._operationTypeRepository,
-  );
+  DeregisterAllUseCaseImpl(this._clientProvider, this._operationTypeRepository);
 
   @override
   Future<void> execute({
@@ -38,15 +35,16 @@ class DeregisterAllUseCaseImpl implements DeregisterAllUseCase {
 
     for (var account in accounts) {
       batchCalls.add(() async {
-        var deregistration = _clientProvider.client.operations.deregistration //
+        var deregistration = _clientProvider.client.operations.deregistration
             .username(account.username)
             .onSuccess(() {
-          debugPrint('Deregistration succeeded.');
-          batchCall.onOperationFinished();
-        }).onError((error) {
-          debugPrint('Deregistration failed: ${error.runtimeType}');
-          batchCall.onOperationFinished(error: error);
-        });
+              debugPrint('Deregistration succeeded.');
+              batchCall.onOperationFinished();
+            })
+            .onError((error) {
+              debugPrint('Deregistration failed: ${error.runtimeType}');
+              batchCall.onOperationFinished(error: error);
+            });
 
         if (authorizationProvider != null) {
           deregistration.authorizationProvider(authorizationProvider);

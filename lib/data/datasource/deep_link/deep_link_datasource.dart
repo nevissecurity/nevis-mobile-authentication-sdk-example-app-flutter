@@ -18,29 +18,35 @@ abstract class DeepLinkDataSource {
 
 @Singleton(as: DeepLinkDataSource)
 class DeepLinkDataSourceImpl implements DeepLinkDataSource {
-  // Event Channel creation
+  // The event channel for deep links
   final _eventStream = const EventChannel(
-      'nevis_mobile_authentication_sdk_example/deeplink_event_channel');
+    'nevis_mobile_authentication_sdk_example/deeplink_event_channel',
+  );
 
-  // Method channel creation
-  final _platform = const MethodChannel(
-      'nevis_mobile_authentication_sdk_example/deeplink_method_channel');
+  // The method channel for deep links
+  final _deeplinkMethodChannel = const MethodChannel(
+    'nevis_mobile_authentication_sdk_example/deeplink_method_channel',
+  );
 
   @override
-  StreamSubscription setDeepLinkReceiver(void Function(dynamic)? onData,
-      {Function? onError, void Function()? onDone, bool? cancelOnError}) {
+  StreamSubscription setDeepLinkReceiver(
+    void Function(dynamic)? onData, {
+    Function? onError,
+    void Function()? onDone,
+    bool? cancelOnError,
+  }) {
     return _eventStream.receiveBroadcastStream().listen(
-          onData,
-          onError: onError,
-          onDone: onDone,
-          cancelOnError: cancelOnError,
-        );
+      onData,
+      onError: onError,
+      onDone: onDone,
+      cancelOnError: cancelOnError,
+    );
   }
 
   @override
   Future<String?> getStartUri() async {
     try {
-      return await _platform.invokeMethod(
+      return await _deeplinkMethodChannel.invokeMethod(
         DeepLinkPlatformMethodNames.initialLink,
       );
     } on PlatformException catch (e) {

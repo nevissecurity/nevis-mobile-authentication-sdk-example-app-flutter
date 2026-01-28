@@ -8,26 +8,18 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/state_repository.dart';
 
 abstract class VerifyCredentialUseCase {
-  Future<void> execute(
-    CredentialKind kind,
-    String credential,
-  );
+  Future<void> execute(CredentialKind kind, String credential);
 }
 
 @Injectable(as: VerifyCredentialUseCase)
 class VerifyCredentialUseCaseImpl extends VerifyCredentialUseCase {
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
-  VerifyCredentialUseCaseImpl(
-    this._userInteractionOperationStateRepository,
-  );
+  VerifyCredentialUseCaseImpl(this._userInteractionOperationStateRepository);
 
   @override
-  Future<void> execute(
-    CredentialKind kind,
-    String credential,
-  ) async {
+  Future<void> execute(CredentialKind kind, String credential) async {
     final handler =
         _userInteractionOperationStateRepository.state?.userVerificationHandler;
     if (handler == null) throw BusinessException.invalidState();

@@ -17,9 +17,11 @@ class PinEnrollerImpl extends PinEnroller {
 
   @override
   void enrollPin(PinEnrollmentContext context, PinEnrollmentHandler handler) {
-    debugPrint(context.lastRecoverableError != null
-        ? 'PIN enrollment failed. Please try again. Error: ${context.lastRecoverableError?.description}'
-        : 'Please start PIN enrollment.');
+    debugPrint(
+      context.lastRecoverableError != null
+          ? 'PIN enrollment failed. Please try again. Error: ${context.lastRecoverableError?.description}'
+          : 'Please start PIN enrollment.',
+    );
 
     _stateRepository.save(PinEnrollmentState(context, handler));
     final event = CredentialEnrollmentEvent(
@@ -34,9 +36,9 @@ class PinEnrollerImpl extends PinEnroller {
     debugPrint('Valid PIN credentials provided.');
   }
 
-//  You can add custom PIN policy by overriding the `pinPolicy` getter
-//  The default minimum and maximum PIN length is 6 without any validation during PIN enrollment or change.
-//
-//  @override
-//  PinPolicy get pinPolicy => CustomPinPolicyImpl(maxLength: 8, minLength: 4);
+  //  You can add custom PIN policy by overriding the `pinPolicy` getter
+  //  The default minimum and maximum PIN length is 6 without any validation during PIN enrollment or change.
+  //
+  //  @override
+  //  PinPolicy get pinPolicy => CustomPinPolicyImpl(maxLength: 8, minLength: 4);
 }

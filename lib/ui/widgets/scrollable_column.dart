@@ -26,9 +26,7 @@ class ScrollableColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (ctx, viewportConstraints) {
-        return SingleChildScrollView(
-          child: _column(),
-        );
+        return SingleChildScrollView(child: _column());
       },
     );
   }

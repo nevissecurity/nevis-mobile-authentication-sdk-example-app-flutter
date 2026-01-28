@@ -12,7 +12,7 @@ abstract class CancelUserInteractionOperationUseCase {
 class CancelUserInteractionOperationUseCaseImpl
     extends CancelUserInteractionOperationUseCase {
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
   CancelUserInteractionOperationUseCaseImpl(
     this._userInteractionOperationStateRepository,
@@ -30,11 +30,13 @@ class CancelUserInteractionOperationUseCaseImpl
     await state.userVerificationHandler?.cancel();
     await state.osAuthenticationListenHandler?.cancelAuthentication();
 
-    _userInteractionOperationStateRepository.save(state.copyWith(
-      accountSelectionHandler: null,
-      authenticatorSelectionHandler: null,
-      userVerificationHandler: null,
-      osAuthenticationListenHandler: null,
-    ));
+    _userInteractionOperationStateRepository.save(
+      state.copyWith(
+        accountSelectionHandler: null,
+        authenticatorSelectionHandler: null,
+        userVerificationHandler: null,
+        osAuthenticationListenHandler: null,
+      ),
+    );
   }
 }

@@ -37,7 +37,7 @@ Your development setup has to meet the following prerequisites:
 * Gradle 8.4 or later
 * Android Gradle Plugin `com.android.tools.build:gradle` 8.3.0 or later
 * Kotlin Gradle Plugin `org.jetbrains.kotlin:kotlin-gradle-plugin` 1.8.22 or later
-* Dart SDK 3.4.0 or later
+* Dart SDK 3.10.0 or later
 * Java 17
 
 ### Initialization

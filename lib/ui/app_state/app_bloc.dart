@@ -48,10 +48,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<VerifyUserCredentialEvent>(_handleUserCredentialsEvent);
   }
 
-  void _handleDomainEvent(
-    AppDomainEvent event,
-    Emitter<AppState> emit,
-  ) {
+  void _handleDomainEvent(AppDomainEvent event, Emitter<AppState> emit) {
     final state = event.domainState;
     if (state is DomainVerifyState) {
       _handleDomainVerify(state, emit);
@@ -64,9 +61,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       );
     } else if (state is DomainResultState) {
       _globalNavigationManager.pushResult(
-        ResultParameter.success(
-          description: state.description,
-        ),
+        ResultParameter.success(description: state.description),
       );
     } else if (state is DomainSelectAccountState) {
       _globalNavigationManager.pushSelectAccount(
@@ -88,10 +83,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
   }
 
-  void _handleDomainVerify(
-    DomainVerifyState state,
-    Emitter<AppState> emit,
-  ) {
+  void _handleDomainVerify(DomainVerifyState state, Emitter<AppState> emit) {
     if (state is DomainCredentialState &&
         state.mode == CredentialMode.verification) {
       emit(
@@ -168,12 +160,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
     await _deregisterUseCase
         .execute(
-      username: username,
-      authorizationProvider: authorizationProvider,
-    )
+          username: username,
+          authorizationProvider: authorizationProvider,
+        )
         .catchError((error) {
-      _errorHandler.handle(error);
-    });
+          _errorHandler.handle(error);
+        });
   }
 
   @override

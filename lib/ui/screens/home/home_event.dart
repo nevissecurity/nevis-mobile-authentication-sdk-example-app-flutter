@@ -8,12 +8,6 @@ class HomeCreatedEvent extends HomeEvent {}
 
 class ClientInitializedEvent extends HomeEvent {}
 
-class OOBRedirectArrivedEvent extends HomeEvent {
-  final String redirectUri;
-
-  OOBRedirectArrivedEvent(this.redirectUri);
-}
-
 class ReadQrCodeEvent extends HomeEvent {}
 
 class DeregisterEvent extends HomeEvent {}

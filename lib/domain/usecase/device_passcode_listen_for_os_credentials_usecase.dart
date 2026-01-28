@@ -14,7 +14,7 @@ abstract class DevicePasscodeListenForOsCredentialsUseCase {
 class DevicePasscodeListenForOsCredentialsUseCaseImpl
     extends DevicePasscodeListenForOsCredentialsUseCase {
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
   DevicePasscodeListenForOsCredentialsUseCaseImpl(
     this._userInteractionOperationStateRepository,
@@ -33,8 +33,9 @@ class DevicePasscodeListenForOsCredentialsUseCaseImpl
       state.copyWith(
         accountSelectionHandler: null,
         authenticatorSelectionHandler: null,
-        osAuthenticationListenHandler:
-            await handler.listenForOsCredentials(options),
+        osAuthenticationListenHandler: await handler.listenForOsCredentials(
+          options,
+        ),
       ),
     );
   }

@@ -32,25 +32,28 @@ class _ChangeDeviceInformationScreenState
   @override
   Widget build(BuildContext context) {
     _localization = AppLocalizations.of(context)!;
-    return BlocBuilder<ChangeDeviceInformationBloc,
-        ChangeDeviceInformationState>(
+    return BlocBuilder<
+      ChangeDeviceInformationBloc,
+      ChangeDeviceInformationState
+    >(
       builder: (ctx, state) {
         return AppScaffold(
           body: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _titleLabel(),
-                  _nameLabel(state),
-                  const SizedBox(height: 16),
-                  _nameField(),
-                  const SizedBox(height: 16),
-                  _confirmButton(),
-                  const SizedBox(height: 16),
-                  _cancelButton(),
-                ],
-              )),
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _titleLabel(),
+                _nameLabel(state),
+                const SizedBox(height: 16),
+                _nameField(),
+                const SizedBox(height: 16),
+                _confirmButton(),
+                const SizedBox(height: 16),
+                _cancelButton(),
+              ],
+            ),
+          ),
         );
       },
     );
@@ -70,7 +73,8 @@ class _ChangeDeviceInformationScreenState
     if (state is ChangeDeviceInformationLoaded &&
         state.deviceInformationCurrentName != null) {
       text = _localization.changeDeviceInformationCurrentName(
-          state.deviceInformationCurrentName!);
+        state.deviceInformationCurrentName!,
+      );
     } else {
       text = _localization.changeDeviceInformationEmptyCurrentName;
     }
@@ -111,9 +115,9 @@ class _ChangeDeviceInformationScreenState
           text: _localization.confirmButtonTitle,
           onPressed: () {
             FocusManager.instance.primaryFocus?.unfocus();
-            context
-                .read<ChangeDeviceInformationBloc>()
-                .add(ChangeConfirmedEvent(_nameController.text));
+            context.read<ChangeDeviceInformationBloc>().add(
+              ChangeConfirmedEvent(_nameController.text),
+            );
           },
         ),
       ],
