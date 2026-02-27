@@ -12,9 +12,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/state_repository.dart';
 
 abstract class ChangePasswordUseCase {
-  Future<void> execute({
-    required String username,
-  });
+  Future<void> execute({required String username});
 }
 
 @Injectable(as: ChangePasswordUseCase)
@@ -36,21 +34,21 @@ class ChangePasswordUseCaseImpl implements ChangePasswordUseCase {
   );
 
   @override
-  Future<void> execute({
-    required String username,
-  }) async {
+  Future<void> execute({required String username}) async {
     _operationTypeRepository.save(OperationType.passwordChange);
-    await _clientProvider.client.operations.passwordChange //
+    await _clientProvider.client.operations.passwordChange
         .username(username)
         .passwordChanger(_passwordChanger)
         .onSuccess(() {
-      debugPrint('Password change succeeded.');
-      _domainBloc.add(ResultEvent());
-      _pinChangeStateRepository.reset();
-    }).onError((error) {
-      debugPrint('Password change failed: ${error.description}');
-      _errorHandler.handle(error);
-      _pinChangeStateRepository.reset();
-    }).execute();
+          debugPrint('Password change succeeded.');
+          _domainBloc.add(ResultEvent());
+          _pinChangeStateRepository.reset();
+        })
+        .onError((error) {
+          debugPrint('Password change failed: ${error.description}');
+          _errorHandler.handle(error);
+          _pinChangeStateRepository.reset();
+        })
+        .execute();
   }
 }

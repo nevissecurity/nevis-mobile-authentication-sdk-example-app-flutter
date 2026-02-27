@@ -6,12 +6,7 @@ class Credentials {
   final String username;
   final AuthorizationProvider? authorizationProvider;
 
-  Credentials({
-    required this.username,
-    required this.authorizationProvider,
-  });
+  Credentials({required this.username, required this.authorizationProvider});
 
-  Credentials.empty()
-      : username = "",
-        authorizationProvider = null;
+  Credentials.empty() : username = "", authorizationProvider = null;
 }

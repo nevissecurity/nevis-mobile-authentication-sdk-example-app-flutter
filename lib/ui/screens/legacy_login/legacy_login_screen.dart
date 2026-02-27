@@ -54,17 +54,18 @@ class _LegacyLoginContentState extends State<LegacyLoginContent> {
       builder: (ctx, state) {
         return AppScaffold(
           body: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _titleLabel(),
-                  _usernameField(),
-                  _passwordField(),
-                  _confirmButton(),
-                  _cancelButton(),
-                ],
-              )),
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _titleLabel(),
+                _usernameField(),
+                _passwordField(),
+                _confirmButton(),
+                _cancelButton(),
+              ],
+            ),
+          ),
         );
       },
     );

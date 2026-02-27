@@ -13,7 +13,7 @@ abstract class SelectAuthenticatorUseCase {
 @Injectable(as: SelectAuthenticatorUseCase)
 class SelectAuthenticatorUseCaseImpl implements SelectAuthenticatorUseCase {
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
   SelectAuthenticatorUseCaseImpl(this._userInteractionOperationStateRepository);
 
@@ -56,8 +56,9 @@ class SelectAuthenticatorUseCaseImpl implements SelectAuthenticatorUseCase {
       (e) => e.aaid == aaid,
     );
     if (filteredAuthenticators.isNotEmpty) {
-      return filteredAuthenticators.first.userEnrollment
-          .isEnrolled(context.account.username);
+      return filteredAuthenticators.first.userEnrollment.isEnrolled(
+        context.account.username,
+      );
     }
 
     return false;

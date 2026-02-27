@@ -17,7 +17,7 @@ class AuthenticationAuthenticatorSelectorImpl
   final ConfigurationLoader _configurationLoader;
   final AuthenticatorValidator _authenticatorValidator;
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
   AuthenticationAuthenticatorSelectorImpl(
     this._domainBloc,
@@ -37,8 +37,8 @@ class AuthenticationAuthenticatorSelectorImpl
 
   @override
   StateRepository<UserInteractionOperationState>
-      get userInteractionOperationStateRepository =>
-          _userInteractionOperationStateRepository;
+  get userInteractionOperationStateRepository =>
+      _userInteractionOperationStateRepository;
 
   @override
   Operation get operation => Operation.authentication;

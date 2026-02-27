@@ -10,39 +10,33 @@ class CredentialParameter {
   final String? username;
   final CredentialVerificationData? verificationData;
 
-  CredentialParameter.pinEnrollment({
-    required this.username,
-  })  : mode = CredentialMode.enrollment,
-        kind = CredentialKind.pin,
-        verificationData = null;
+  CredentialParameter.pinEnrollment({required this.username})
+    : mode = CredentialMode.enrollment,
+      kind = CredentialKind.pin,
+      verificationData = null;
 
-  CredentialParameter.pinVerification({
-    required this.verificationData,
-  })  : mode = CredentialMode.verification,
-        kind = CredentialKind.pin,
-        username = null;
+  CredentialParameter.pinVerification({required this.verificationData})
+    : mode = CredentialMode.verification,
+      kind = CredentialKind.pin,
+      username = null;
 
-  CredentialParameter.pinChange({
-    required this.username,
-  })  : mode = CredentialMode.change,
-        kind = CredentialKind.pin,
-        verificationData = null;
+  CredentialParameter.pinChange({required this.username})
+    : mode = CredentialMode.change,
+      kind = CredentialKind.pin,
+      verificationData = null;
 
-  CredentialParameter.passwordEnrollment({
-    required this.username,
-  })  : mode = CredentialMode.enrollment,
-        kind = CredentialKind.password,
-        verificationData = null;
+  CredentialParameter.passwordEnrollment({required this.username})
+    : mode = CredentialMode.enrollment,
+      kind = CredentialKind.password,
+      verificationData = null;
 
-  CredentialParameter.passwordVerification({
-    required this.verificationData,
-  })  : mode = CredentialMode.verification,
-        kind = CredentialKind.password,
-        username = null;
+  CredentialParameter.passwordVerification({required this.verificationData})
+    : mode = CredentialMode.verification,
+      kind = CredentialKind.password,
+      username = null;
 
-  CredentialParameter.passwordChange({
-    required this.username,
-  })  : mode = CredentialMode.change,
-        kind = CredentialKind.password,
-        verificationData = null;
+  CredentialParameter.passwordChange({required this.username})
+    : mode = CredentialMode.change,
+      kind = CredentialKind.password,
+      verificationData = null;
 }

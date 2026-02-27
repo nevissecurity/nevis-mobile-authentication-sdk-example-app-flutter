@@ -26,10 +26,7 @@ class ResultBloc extends Bloc<ResultEvent, ResultState> {
     on<NavigateToHomeEvent>(_handleNavigateToHome);
   }
 
-  void _handleCreated(
-    ResultCreatedEvent event,
-    Emitter<ResultState> emit,
-  ) {
+  void _handleCreated(ResultCreatedEvent event, Emitter<ResultState> emit) {
     final operationType =
         _operationTypeStateRepository.state ?? OperationType.unknown;
     emit(
@@ -46,7 +43,8 @@ class ResultBloc extends Bloc<ResultEvent, ResultState> {
     NavigateToHomeEvent event,
     Emitter<ResultState> emit,
   ) {
-    final initClientFailed = (event.resultType == OperationResultType.failure &&
+    final initClientFailed =
+        (event.resultType == OperationResultType.failure &&
         event.operationType == OperationType.init);
     if (initClientFailed == false) {
       _localDataBloc.add(LoadAccountsEvent());

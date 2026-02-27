@@ -18,9 +18,7 @@ class CreateDeviceInformationUseCaseImpl
   final DeviceInformationUseCase _deviceInformationUseCase;
   final DeviceInfoPlugin _deviceInfoPlugin = DeviceInfoPlugin();
 
-  CreateDeviceInformationUseCaseImpl(
-    this._deviceInformationUseCase,
-  );
+  CreateDeviceInformationUseCaseImpl(this._deviceInformationUseCase);
 
   @override
   Future<DeviceInformation> execute() async {
@@ -44,8 +42,9 @@ class CreateDeviceInformationUseCaseImpl
       deviceName = iosInfo.name;
     }
     deviceName = deviceName?.trim();
-    deviceName =
-        deviceName == null || deviceName.isEmpty ? "Unknown" : deviceName;
+    deviceName = deviceName == null || deviceName.isEmpty
+        ? "Unknown"
+        : deviceName;
     final dateFormat = DateFormat('dd.MM.yyyy kk:mm:sss');
     final formattedDate = dateFormat.format(DateTime.now());
     return '$osPrefix $deviceName-$formattedDate';

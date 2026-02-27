@@ -7,26 +7,26 @@ class SdkAttestationInformation {
   final bool strongBox;
 
   SdkAttestationInformation.onlySurrogateBasic()
-      : onlySurrogateBasic = true,
-        onlyDefault = false,
-        strict = false,
-        strongBox = false;
+    : onlySurrogateBasic = true,
+      onlyDefault = false,
+      strict = false,
+      strongBox = false;
 
   SdkAttestationInformation.onlyDefault()
-      : onlySurrogateBasic = true,
-        onlyDefault = true,
-        strict = false,
-        strongBox = false;
+    : onlySurrogateBasic = true,
+      onlyDefault = true,
+      strict = false,
+      strongBox = false;
 
   SdkAttestationInformation.strict()
-      : onlySurrogateBasic = true,
-        onlyDefault = true,
-        strict = true,
-        strongBox = false;
+    : onlySurrogateBasic = true,
+      onlyDefault = true,
+      strict = true,
+      strongBox = false;
 
   SdkAttestationInformation.strictStrongBox()
-      : onlySurrogateBasic = true,
-        onlyDefault = true,
-        strict = true,
-        strongBox = true;
+    : onlySurrogateBasic = true,
+      onlyDefault = true,
+      strict = true,
+      strongBox = true;
 }

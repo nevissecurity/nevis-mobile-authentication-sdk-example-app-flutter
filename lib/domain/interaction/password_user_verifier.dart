@@ -15,7 +15,7 @@ class PasswordUserVerifierImpl implements PasswordUserVerifier {
   final DomainBloc _domainBloc;
   final ErrorHandler _errorHandler;
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
   PasswordUserVerifierImpl(
     this._domainBloc,
@@ -34,7 +34,8 @@ class PasswordUserVerifierImpl implements PasswordUserVerifier {
     } else if (status is PasswordProtectionStatusLastAttemptFailed &&
         status.remainingRetries > 0) {
       debugPrint(
-          'Last password user verification attempt failed. Please try again.');
+        'Last password user verification attempt failed. Please try again.',
+      );
     } else {
       debugPrint('Last password user verification attempt failed.');
     }

@@ -35,7 +35,7 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
   final FingerprintUserVerifier _fingerprintUserVerifier;
   final DomainBloc _domainBloc;
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
   final StateRepository<OperationType> _operationTypeRepository;
   final ErrorHandler _errorHandler;
 
@@ -83,25 +83,29 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
     required OutOfBandPayload outOfBandPayload,
     required DeviceInformation deviceInformation,
   }) async {
-    await _clientProvider.client.operations.outOfBandOperation //
+    await _clientProvider.client.operations.outOfBandOperation
         .payload(outOfBandPayload)
         .onRegistration((registration) async {
-      await handleRegistration(
-        registration: registration,
-        deviceInformation: deviceInformation,
-      ).catchError((error) {
-        _errorHandler.handle(error);
-      });
-    }).onAuthentication((authentication) async {
-      await handleAuthentication(authentication: authentication)
-          .catchError((error) {
-        _errorHandler.handle(error);
-      });
-    }).onError((error) {
-      debugPrint('Out of band operation failed: ${error.runtimeType}');
-      _errorHandler.handle(error);
-      _userInteractionOperationStateRepository.reset();
-    }).execute();
+          await handleRegistration(
+            registration: registration,
+            deviceInformation: deviceInformation,
+          ).catchError((error) {
+            _errorHandler.handle(error);
+          });
+        })
+        .onAuthentication((authentication) async {
+          await handleAuthentication(authentication: authentication).catchError(
+            (error) {
+              _errorHandler.handle(error);
+            },
+          );
+        })
+        .onError((error) {
+          debugPrint('Out of band operation failed: ${error.runtimeType}');
+          _errorHandler.handle(error);
+          _userInteractionOperationStateRepository.reset();
+        })
+        .execute();
   }
 
   Future<void> handleRegistration({
@@ -117,16 +121,18 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
         .devicePasscodeUserVerifier(_devicePasscodeUserVerifier)
         .fingerprintUserVerifier(_fingerprintUserVerifier)
         .onSuccess(() {
-      debugPrint('Out of band registration succeeded.');
-      _operationTypeRepository.save(OperationType.registration);
-      _domainBloc.add(ResultEvent());
-      _userInteractionOperationStateRepository.reset();
-    }).onError((error) {
-      debugPrint('Out of band registration failed: ${error.runtimeType}');
-      _operationTypeRepository.save(OperationType.registration);
-      _errorHandler.handle(error);
-      _userInteractionOperationStateRepository.reset();
-    }).execute();
+          debugPrint('Out of band registration succeeded.');
+          _operationTypeRepository.save(OperationType.registration);
+          _domainBloc.add(ResultEvent());
+          _userInteractionOperationStateRepository.reset();
+        })
+        .onError((error) {
+          debugPrint('Out of band registration failed: ${error.runtimeType}');
+          _operationTypeRepository.save(OperationType.registration);
+          _errorHandler.handle(error);
+          _userInteractionOperationStateRepository.reset();
+        })
+        .execute();
   }
 
   Future<void> handleAuthentication({
@@ -141,15 +147,17 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
         .devicePasscodeUserVerifier(_devicePasscodeUserVerifier)
         .fingerprintUserVerifier(_fingerprintUserVerifier)
         .onSuccess((authorizationProvider) {
-      debugPrint('Out of band authentication succeeded.');
-      _operationTypeRepository.save(OperationType.authentication);
-      _domainBloc.add(ResultEvent());
-      _userInteractionOperationStateRepository.reset();
-    }).onError((error) {
-      debugPrint('Out of band authentication failed: ${error.runtimeType}');
-      _operationTypeRepository.save(OperationType.authentication);
-      _errorHandler.handle(error);
-      _userInteractionOperationStateRepository.reset();
-    }).execute();
+          debugPrint('Out of band authentication succeeded.');
+          _operationTypeRepository.save(OperationType.authentication);
+          _domainBloc.add(ResultEvent());
+          _userInteractionOperationStateRepository.reset();
+        })
+        .onError((error) {
+          debugPrint('Out of band authentication failed: ${error.runtimeType}');
+          _operationTypeRepository.save(OperationType.authentication);
+          _errorHandler.handle(error);
+          _userInteractionOperationStateRepository.reset();
+        })
+        .execute();
   }
 }

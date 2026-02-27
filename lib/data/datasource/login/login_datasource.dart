@@ -24,9 +24,7 @@ class LoginDataSourceImpl implements LoginDataSource {
   final Dio dio;
   final CookieJar cookieJar;
 
-  LoginDataSourceImpl()
-      : dio = Dio(),
-        cookieJar = CookieJar() {
+  LoginDataSourceImpl() : dio = Dio(), cookieJar = CookieJar() {
     dio.interceptors.add(CookieManager(cookieJar));
     dio.httpClientAdapter = IOHttpClientAdapter(
       createHttpClient: () {
@@ -55,17 +53,18 @@ class LoginDataSourceImpl implements LoginDataSource {
   }
 
   Future<Credentials> _makeCredentials(
-      Uri uri, Response response, List<Cookie> cookies) {
+    Uri uri,
+    Response response,
+    List<Cookie> cookies,
+  ) {
     AuthorizationProvider? authorizationProvider;
     if (cookies.isNotEmpty) {
       final List<CookieContainer> containers = cookies
-          .map((cookie) => CookieContainer(
-                uri: uri,
-                cookie: cookie.toString(),
-              ))
+          .map((cookie) => CookieContainer(uri: uri, cookie: cookie.toString()))
           .toList();
-      authorizationProvider =
-          CookieAuthorizationProvider(cookieContainers: containers);
+      authorizationProvider = CookieAuthorizationProvider(
+        cookieContainers: containers,
+      );
     }
 
     final loginResponse = LoginResponse.fromJson(response.data);

@@ -17,13 +17,13 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/c
 @injectable
 class ConfirmationBloc extends Bloc<ConfirmationEvent, ConfirmationState> {
   final BiometricListenForOsCredentialsUseCase
-      _biometricListenForOsCredentialsUseCase;
+  _biometricListenForOsCredentialsUseCase;
   final FingerprintListenForOsCredentialsUseCase
-      _fingerPrintListenForOsCredentialsUseCase;
+  _fingerPrintListenForOsCredentialsUseCase;
   final DevicePasscodeListenForOsCredentialsUseCase
-      _devicePasscodeListenForOsCredentialsUseCase;
+  _devicePasscodeListenForOsCredentialsUseCase;
   final CancelUserInteractionOperationUseCase
-      _cancelUserInteractionOperationUseCase;
+  _cancelUserInteractionOperationUseCase;
   final PauseListeningUseCase _pauseListeningUseCase;
   final ResumeListeningUseCase _resumeListeningUseCase;
   final ErrorHandler _errorHandler;
@@ -53,11 +53,7 @@ class ConfirmationBloc extends Bloc<ConfirmationEvent, ConfirmationState> {
     Emitter<ConfirmationState> emit,
   ) {
     _parameter = event.parameter;
-    emit(
-      ConfirmationLoadedState(
-        aaid: event.parameter.aaid,
-      ),
-    );
+    emit(ConfirmationLoadedState(aaid: event.parameter.aaid));
   }
 
   Future<void> _handleUserAccepted(
@@ -93,9 +89,9 @@ class ConfirmationBloc extends Bloc<ConfirmationEvent, ConfirmationState> {
       cancelButtonText: event.cancelButtonText,
       fallbackButtonText: event.fallbackButtonText,
     );
-    await _biometricListenForOsCredentialsUseCase
-        .execute(options)
-        .catchError((error) {
+    await _biometricListenForOsCredentialsUseCase.execute(options).catchError((
+      error,
+    ) {
       _errorHandler.handle(error);
     });
   }
@@ -109,11 +105,11 @@ class ConfirmationBloc extends Bloc<ConfirmationEvent, ConfirmationState> {
       cancelButtonText: event.cancelButtonText,
       fallbackButtonText: event.fallbackButtonText,
     );
-    await _fingerPrintListenForOsCredentialsUseCase
-        .execute(options)
-        .catchError((error) {
-      _errorHandler.handle(error);
-    });
+    await _fingerPrintListenForOsCredentialsUseCase.execute(options).catchError(
+      (error) {
+        _errorHandler.handle(error);
+      },
+    );
   }
 
   Future<void> _handleDevicePasscode(
@@ -127,8 +123,8 @@ class ConfirmationBloc extends Bloc<ConfirmationEvent, ConfirmationState> {
     await _devicePasscodeListenForOsCredentialsUseCase
         .execute(options)
         .catchError((error) {
-      _errorHandler.handle(error);
-    });
+          _errorHandler.handle(error);
+        });
   }
 
   Future<void> _handlePauseListening(

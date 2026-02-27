@@ -11,17 +11,14 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/state_repository.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/validation/authenticator_validator.dart';
 
-enum Operation {
-  registration,
-  authentication,
-}
+enum Operation { registration, authentication }
 
 abstract class AuthenticatorSelectorImpl implements AuthenticatorSelector {
   DomainBloc get domainBloc;
   ConfigurationLoader get configurationLoader;
   AuthenticatorValidator get authenticatorValidator;
   StateRepository<UserInteractionOperationState>
-      get userInteractionOperationStateRepository;
+  get userInteractionOperationStateRepository;
   Operation get operation;
 
   @override
@@ -74,8 +71,8 @@ abstract class AuthenticatorSelectorImpl implements AuthenticatorSelector {
       ),
     );
 
-    domainBloc.add(SelectAuthenticatorEvent(
-      authenticatorItems: authenticatorItems,
-    ));
+    domainBloc.add(
+      SelectAuthenticatorEvent(authenticatorItems: authenticatorItems),
+    );
   }
 }

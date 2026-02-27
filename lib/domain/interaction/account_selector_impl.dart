@@ -17,7 +17,7 @@ class AccountSelectorImpl implements AccountSelector {
   final DomainBloc _domainBloc;
   final ErrorHandler _errorHandler;
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
   final AccountValidator _accountValidator;
 
   AccountSelectorImpl(
@@ -36,9 +36,7 @@ class AccountSelectorImpl implements AccountSelector {
       debugPrint('Please select one of the received available accounts!');
 
       _userInteractionOperationStateRepository.save(
-        UserInteractionOperationState(
-          accountSelectionHandler: handler,
-        ),
+        UserInteractionOperationState(accountSelectionHandler: handler),
       );
 
       final validAccounts = await _validateAccounts(context);
@@ -58,7 +56,8 @@ class AccountSelectorImpl implements AccountSelector {
   }
 
   Future<Set<Account>> _validateAccounts(
-      AccountSelectionContext context) async {
+    AccountSelectionContext context,
+  ) async {
     final validAccounts = await _accountValidator.validate(context);
     if (validAccounts.length > 1) {
       return Future.value(validAccounts);
@@ -91,10 +90,12 @@ class AccountSelectorImpl implements AccountSelector {
       }
     }
 
-    _userInteractionOperationStateRepository.save(state.copyWith(
-      accountSelectionHandler: null,
-      authenticatorSelectionHandler: null,
-    ));
+    _userInteractionOperationStateRepository.save(
+      state.copyWith(
+        accountSelectionHandler: null,
+        authenticatorSelectionHandler: null,
+      ),
+    );
     return Future.value({});
   }
 }

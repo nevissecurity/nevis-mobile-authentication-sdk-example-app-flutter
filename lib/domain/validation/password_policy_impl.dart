@@ -18,10 +18,12 @@ class PasswordPolicyImpl implements PasswordPolicy {
     debugPrint('Received password for enrollment is $password');
     _isValid(password)
         ? onSuccess.call()
-        : onError.call(PasswordEnrollmentCustomValidationError.create(
-            _errorMessage,
-            _cause,
-          ));
+        : onError.call(
+            PasswordEnrollmentCustomValidationError.create(
+              _errorMessage,
+              _cause,
+            ),
+          );
   }
 
   @override
@@ -33,10 +35,12 @@ class PasswordPolicyImpl implements PasswordPolicy {
     debugPrint('Received password for change is $password');
     _isValid(password)
         ? onSuccess.call()
-        : onError.call(PasswordChangeRecoverableCustomValidationError.create(
-            _errorMessage,
-            _cause,
-          ));
+        : onError.call(
+            PasswordChangeRecoverableCustomValidationError.create(
+              _errorMessage,
+              _cause,
+            ),
+          );
   }
 
   bool _isValid(String password) {

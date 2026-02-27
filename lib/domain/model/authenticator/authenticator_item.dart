@@ -14,14 +14,14 @@ class AuthenticatorItem {
   });
 
   AuthenticatorItem.pin()
-      : aaid = Aaid.pin.rawValue,
-        isPolicyCompliant = true,
-        isUserEnrolled = true;
+    : aaid = Aaid.pin.rawValue,
+      isPolicyCompliant = true,
+      isUserEnrolled = true;
 
   AuthenticatorItem.password()
-      : aaid = Aaid.password.rawValue,
-        isPolicyCompliant = true,
-        isUserEnrolled = true;
+    : aaid = Aaid.password.rawValue,
+      isPolicyCompliant = true,
+      isUserEnrolled = true;
 
   bool isEnabled() {
     return isPolicyCompliant &&

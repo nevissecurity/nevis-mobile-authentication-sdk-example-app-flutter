@@ -49,24 +49,27 @@ class _AuthCloudApiRegistrationContentState
   @override
   Widget build(BuildContext context) {
     _localization = AppLocalizations.of(context)!;
-    return BlocBuilder<AuthCloudApiRegistrationBloc,
-        AuthCloudApiRegistrationState>(
+    return BlocBuilder<
+      AuthCloudApiRegistrationBloc,
+      AuthCloudApiRegistrationState
+    >(
       builder: (ctx, state) {
         return AppScaffold(
           body: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AppText.title(_localization.authCloudApiRegistrationTitle),
-                  _enrollResponseField(),
-                  _appLinkUriField(),
-                  if (_errorMessage != null) _errorMessageWidget(),
-                  _confirmButton(),
-                  const SizedBox(height: 16),
-                  _cancelButton(),
-                ],
-              )),
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppText.title(_localization.authCloudApiRegistrationTitle),
+                _enrollResponseField(),
+                _appLinkUriField(),
+                if (_errorMessage != null) _errorMessageWidget(),
+                _confirmButton(),
+                const SizedBox(height: 16),
+                _cancelButton(),
+              ],
+            ),
+          ),
         );
       },
     );
@@ -124,10 +127,7 @@ class _AuthCloudApiRegistrationContentState
     return Column(
       children: [
         const SizedBox(height: 5),
-        Text(
-          _errorMessage!,
-          style: const TextStyle(color: Colors.red),
-        ),
+        Text(_errorMessage!, style: const TextStyle(color: Colors.red)),
       ],
     );
   }
@@ -150,9 +150,9 @@ class _AuthCloudApiRegistrationContentState
     return Button.outlined(
       text: _localization.cancelButtonTitle,
       onPressed: () {
-        context
-            .read<AuthCloudApiRegistrationBloc>()
-            .add(RegistrationCancelledEvent());
+        context.read<AuthCloudApiRegistrationBloc>().add(
+          RegistrationCancelledEvent(),
+        );
       },
     );
   }

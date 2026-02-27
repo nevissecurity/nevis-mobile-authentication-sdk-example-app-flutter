@@ -12,7 +12,7 @@ abstract class ResumeListeningUseCase {
 @Injectable(as: ResumeListeningUseCase)
 class ResumeListeningUseCaseImpl extends ResumeListeningUseCase {
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
   ResumeListeningUseCaseImpl(this._userInteractionOperationStateRepository);
 
@@ -21,14 +21,16 @@ class ResumeListeningUseCaseImpl extends ResumeListeningUseCase {
     final state = _userInteractionOperationStateRepository.state;
     if (state == null) {
       debugPrint(
-          "User interaction state is missing, no need for resuming the listen handler.");
+        "User interaction state is missing, no need for resuming the listen handler.",
+      );
       return;
     }
 
     final osAuthenticationListenHandler = state.osAuthenticationListenHandler;
     if (osAuthenticationListenHandler == null) {
       debugPrint(
-          "OS authentication listen handler does not exist, no need for resuming.");
+        "OS authentication listen handler does not exist, no need for resuming.",
+      );
       return;
     }
 

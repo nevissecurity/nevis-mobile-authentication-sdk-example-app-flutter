@@ -42,11 +42,7 @@ class SelectAccountBloc extends Bloc<SelectAccountEvent, SelectAccountState> {
     Emitter<SelectAccountState> emit,
   ) {
     _parameter = event.parameter;
-    emit(
-      SelectAccountInitialState(
-        accounts: _parameter.accounts,
-      ),
-    );
+    emit(SelectAccountInitialState(accounts: _parameter.accounts));
   }
 
   void _handleAccountSelected(
@@ -67,13 +63,13 @@ class SelectAccountBloc extends Bloc<SelectAccountEvent, SelectAccountState> {
       // (arriving from the Home screen)
       await _authenticateUseCase
           .execute(
-        username: event.account.username,
-        sessionProvider: null,
-        operationType: _parameter.operationType,
-      )
+            username: event.account.username,
+            sessionProvider: null,
+            operationType: _parameter.operationType,
+          )
           .catchError((error) {
-        _errorHandler.handle(error);
-      });
+            _errorHandler.handle(error);
+          });
     } else if (_parameter.operationType == OperationType.pinChange) {
       final parameter = CredentialParameter.pinChange(
         username: event.account.username,
@@ -81,8 +77,8 @@ class SelectAccountBloc extends Bloc<SelectAccountEvent, SelectAccountState> {
       _changePinUseCase
           .execute(username: event.account.username) //
           .catchError((error) {
-        _errorHandler.handle(error);
-      });
+            _errorHandler.handle(error);
+          });
       _globalNavigationManager.pushCredential(parameter);
     } else if (_parameter.operationType == OperationType.passwordChange) {
       final parameter = CredentialParameter.passwordChange(
@@ -91,14 +87,14 @@ class SelectAccountBloc extends Bloc<SelectAccountEvent, SelectAccountState> {
       _changePasswordUseCase
           .execute(username: event.account.username) //
           .catchError((error) {
-        _errorHandler.handle(error);
-      });
+            _errorHandler.handle(error);
+          });
       _globalNavigationManager.pushCredential(parameter);
     } else {
       // simple account selection (e.g. during usernameless oob auth)
-      await _selectAccountUseCase
-          .execute(event.account.username)
-          .catchError((error) {
+      await _selectAccountUseCase.execute(event.account.username).catchError((
+        error,
+      ) {
         _errorHandler.handle(error);
       });
     }

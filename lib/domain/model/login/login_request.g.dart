@@ -7,9 +7,9 @@ part of 'login_request.dart';
 // **************************************************************************
 
 LoginRequest _$LoginRequestFromJson(Map<String, dynamic> json) => LoginRequest(
-      username: json['isiwebuserid'] as String,
-      password: json['isiwebpasswd'] as String,
-    );
+  username: json['isiwebuserid'] as String,
+  password: json['isiwebpasswd'] as String,
+);
 
 Map<String, dynamic> _$LoginRequestToJson(LoginRequest instance) =>
     <String, dynamic>{

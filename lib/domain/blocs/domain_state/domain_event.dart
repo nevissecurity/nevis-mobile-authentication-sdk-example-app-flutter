@@ -42,9 +42,7 @@ class SelectAuthenticatorEvent extends DomainEvent {
 class ResultEvent extends DomainEvent {
   final String? description;
 
-  ResultEvent({
-    this.description,
-  });
+  ResultEvent({this.description});
 }
 
 class AuthenticationSucceededEvent extends DomainEvent {

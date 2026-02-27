@@ -14,10 +14,8 @@ class ReadQrCodeBloc extends Bloc<ReadQrCodeEvent, ReadQrCodeState> {
   final OobProcessUseCase _oobProcessUseCase;
   final ErrorHandler _errorHandler;
 
-  ReadQrCodeBloc(
-    this._oobProcessUseCase,
-    this._errorHandler,
-  ) : super(ReadQrCodeInitialState()) {
+  ReadQrCodeBloc(this._oobProcessUseCase, this._errorHandler)
+    : super(ReadQrCodeInitialState()) {
     on<QrCodeScannedEvent>(_handleQrCodeScannedEvent);
   }
 

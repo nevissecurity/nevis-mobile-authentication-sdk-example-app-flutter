@@ -14,19 +14,14 @@ class AppScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppScaffoldContent(
-      body: body,
-    );
+    return AppScaffoldContent(body: body);
   }
 }
 
 class AppScaffoldContent extends StatelessWidget {
   final Widget body;
 
-  const AppScaffoldContent({
-    super.key,
-    required this.body,
-  });
+  const AppScaffoldContent({super.key, required this.body});
 
   @override
   Widget build(BuildContext context) {
@@ -39,22 +34,21 @@ class AppScaffoldContent extends StatelessWidget {
       listener: (ctx, state) async {
         if (state is VerifyCredentialState &&
             currentScreen(context) != CredentialRoute.credential) {
-          bloc.add(VerifyUserCredentialEvent(
-            kind: state.kind,
-            pinProtectionStatus: state.pinProtectionStatus,
-            passwordProtectionStatus: state.passwordProtectionStatus,
-            lastRecoverableError: state.lastRecoverableError,
-          ));
+          bloc.add(
+            VerifyUserCredentialEvent(
+              kind: state.kind,
+              pinProtectionStatus: state.pinProtectionStatus,
+              passwordProtectionStatus: state.passwordProtectionStatus,
+              lastRecoverableError: state.lastRecoverableError,
+            ),
+          );
         }
       },
       builder: (ctx, state) {
         return PopScope(
           canPop: false,
           child: SafeArea(
-            child: Scaffold(
-              resizeToAvoidBottomInset: false,
-              body: body,
-            ),
+            child: Scaffold(resizeToAvoidBottomInset: false, body: body),
           ),
         );
       },

@@ -22,14 +22,13 @@ class UserInteractionOperationState {
     required AuthenticatorSelectionHandler? authenticatorSelectionHandler,
     UserVerificationHandler? userVerificationHandler,
     OsAuthenticationListenHandler? osAuthenticationListenHandler,
-  }) =>
-      UserInteractionOperationState(
-        accountSelectionHandler: accountSelectionHandler,
-        authenticatorSelectionContext: authenticatorSelectionContext,
-        authenticatorSelectionHandler: authenticatorSelectionHandler,
-        userVerificationHandler:
-            userVerificationHandler ?? this.userVerificationHandler,
-        osAuthenticationListenHandler:
-            osAuthenticationListenHandler ?? this.osAuthenticationListenHandler,
-      );
+  }) => UserInteractionOperationState(
+    accountSelectionHandler: accountSelectionHandler,
+    authenticatorSelectionContext: authenticatorSelectionContext,
+    authenticatorSelectionHandler: authenticatorSelectionHandler,
+    userVerificationHandler:
+        userVerificationHandler ?? this.userVerificationHandler,
+    osAuthenticationListenHandler:
+        osAuthenticationListenHandler ?? this.osAuthenticationListenHandler,
+  );
 }

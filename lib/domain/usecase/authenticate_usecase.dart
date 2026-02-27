@@ -62,17 +62,20 @@ class AuthenticateUseCaseImpl implements AuthenticateUseCase {
         .devicePasscodeUserVerifier(_devicePasscodeUserVerifier)
         .fingerprintUserVerifier(_fingerprintUserVerifier)
         .onSuccess((AuthorizationProvider? authorizationProvider) {
-      debugPrint('In-band authentication succeeded.');
-      _printAuthorizationInfo(authorizationProvider);
-      _domainBloc.add(AuthenticationSucceededEvent(
-        operation: operationType,
-        authorizationProvider: authorizationProvider,
-      ));
-    }).onError((error) {
-      debugPrint('In-band authentication failed: ${error.runtimeType}');
-      _printSessionInfo(error.sessionProvider);
-      _errorHandler.handle(error);
-    });
+          debugPrint('In-band authentication succeeded.');
+          _printAuthorizationInfo(authorizationProvider);
+          _domainBloc.add(
+            AuthenticationSucceededEvent(
+              operation: operationType,
+              authorizationProvider: authorizationProvider,
+            ),
+          );
+        })
+        .onError((error) {
+          debugPrint('In-band authentication failed: ${error.runtimeType}');
+          _printSessionInfo(error.sessionProvider);
+          _errorHandler.handle(error);
+        });
 
     if (sessionProvider != null) {
       authentication.sessionProvider(sessionProvider);

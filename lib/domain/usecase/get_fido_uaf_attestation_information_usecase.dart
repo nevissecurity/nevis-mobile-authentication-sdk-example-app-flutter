@@ -28,47 +28,55 @@ class GetFidoUafAttestationInformationUseCaseImpl
     }
 
     final Completer<SdkAttestationInformation?> completer = Completer();
-    await _clientProvider.client.deviceCapabilities.androidDeviceCapabilities
+    await _clientProvider
+        .client
+        .deviceCapabilities
+        .androidDeviceCapabilities
         .fidoUafAttestationInformationGetter
         .onSuccess((FidoUafAttestationInformation? information) {
-      debugPrint('Getting FIDO UAF attestation information succeeded.');
-      SdkAttestationInformation? sdkAttestationInformation;
-      if (information == null) {
-        debugPrint('No attestation information received.');
-        return completer.complete(sdkAttestationInformation);
-      }
+          debugPrint('Getting FIDO UAF attestation information succeeded.');
+          SdkAttestationInformation? sdkAttestationInformation;
+          if (information == null) {
+            debugPrint('No attestation information received.');
+            return completer.complete(sdkAttestationInformation);
+          }
 
-      if (information is OnlySurrogateBasicSupported) {
-        debugPrint('Only surrogate basic supported.');
-        if (information.cause != null) {
-          debugPrint('Cause: ${information.cause}');
-        }
-        sdkAttestationInformation =
-            SdkAttestationInformation.onlySurrogateBasic();
-      } else if (information is OnlyDefaultMode) {
-        debugPrint('Full basic default mode supported.');
-        if (information.cause != null) {
-          debugPrint('Cause: ${information.cause}');
-        }
-        sdkAttestationInformation = SdkAttestationInformation.onlyDefault();
-      } else if (information is StrictMode) {
-        debugPrint('Full basic strict mode supported.');
-        sdkAttestationInformation = SdkAttestationInformation.strict();
-      } else if (information is StrictStrongBoxMode) {
-        debugPrint('Full basic strict StrongBox mode supported.');
-        sdkAttestationInformation = SdkAttestationInformation.strictStrongBox();
-      } else {
-        debugPrint(
-            'Unknown FIDO UAF attestation information type: ${information.runtimeType}');
-      }
-      if (!completer.isCompleted) {
-        completer.complete(sdkAttestationInformation);
-      }
-    }).onError((error) {
-      debugPrint(
-          'Getting FIDO UAF attestation information failed. Error: ${error.runtimeType}');
-      return completer.complete(null);
-    }).execute();
+          if (information is OnlySurrogateBasicSupported) {
+            debugPrint('Only surrogate basic supported.');
+            if (information.cause != null) {
+              debugPrint('Cause: ${information.cause}');
+            }
+            sdkAttestationInformation =
+                SdkAttestationInformation.onlySurrogateBasic();
+          } else if (information is OnlyDefaultMode) {
+            debugPrint('Full basic default mode supported.');
+            if (information.cause != null) {
+              debugPrint('Cause: ${information.cause}');
+            }
+            sdkAttestationInformation = SdkAttestationInformation.onlyDefault();
+          } else if (information is StrictMode) {
+            debugPrint('Full basic strict mode supported.');
+            sdkAttestationInformation = SdkAttestationInformation.strict();
+          } else if (information is StrictStrongBoxMode) {
+            debugPrint('Full basic strict StrongBox mode supported.');
+            sdkAttestationInformation =
+                SdkAttestationInformation.strictStrongBox();
+          } else {
+            debugPrint(
+              'Unknown FIDO UAF attestation information type: ${information.runtimeType}',
+            );
+          }
+          if (!completer.isCompleted) {
+            completer.complete(sdkAttestationInformation);
+          }
+        })
+        .onError((error) {
+          debugPrint(
+            'Getting FIDO UAF attestation information failed. Error: ${error.runtimeType}',
+          );
+          return completer.complete(null);
+        })
+        .execute();
 
     return completer.future;
   }

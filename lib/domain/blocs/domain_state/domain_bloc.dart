@@ -13,11 +13,10 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repos
 class DomainBloc extends Bloc<DomainEvent, DomainState>
     with BehaviorSubjectMixin<DomainEvent, DomainState> {
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
-  DomainBloc(
-    this._userInteractionOperationStateRepository,
-  ) : super(DomainInitialState()) {
+  DomainBloc(this._userInteractionOperationStateRepository)
+    : super(DomainInitialState()) {
     on<SelectAccountEvent>(_handleSelectAccount);
     on<SelectAuthenticatorEvent>(_handleSelectAuthenticator);
     on<TransactionConfirmationEvent>(_handleTransactionConfirmation);
@@ -148,7 +147,10 @@ class DomainBloc extends Bloc<DomainEvent, DomainState>
   ) async {
     if (event.operation == OperationType.deregistration) {
       final username = _userInteractionOperationStateRepository
-          .state?.authenticatorSelectionContext?.account.username;
+          .state
+          ?.authenticatorSelectionContext
+          ?.account
+          .username;
       emit(
         DomainAuthenticationSucceededState(
           operationType: event.operation,
