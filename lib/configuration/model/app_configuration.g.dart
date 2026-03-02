@@ -12,8 +12,9 @@ AppConfiguration _$AppConfigurationFromJson(Map<String, dynamic> json) =>
       authenticatorAllowlist: (json['authenticatorAllowlist'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
-      loginConfiguration:
-          LoginConfiguration.fromJson(json['login'] as Map<String, dynamic>),
+      loginConfiguration: LoginConfiguration.fromJson(
+        json['login'] as Map<String, dynamic>,
+      ),
       sdk: SdkConfiguration.fromJson(json['sdk'] as Map<String, dynamic>),
     );
 

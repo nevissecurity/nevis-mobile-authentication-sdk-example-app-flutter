@@ -1,5 +1,5 @@
 //
-// Copyright © 2022 Nevis Security AG. All rights reserved.
+// Copyright © 2022 Nevis Security AG. All rights reserved.
 //
 
 import Foundation

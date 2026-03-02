@@ -14,7 +14,7 @@ abstract class FingerprintListenForOsCredentialsUseCase {
 class FingerprintListenForOsCredentialsUseCaseImpl
     extends FingerprintListenForOsCredentialsUseCase {
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
   FingerprintListenForOsCredentialsUseCaseImpl(
     this._userInteractionOperationStateRepository,
@@ -33,8 +33,9 @@ class FingerprintListenForOsCredentialsUseCaseImpl
       state.copyWith(
         accountSelectionHandler: null,
         authenticatorSelectionHandler: null,
-        osAuthenticationListenHandler:
-            await handler.listenForOsCredentials(options),
+        osAuthenticationListenHandler: await handler.listenForOsCredentials(
+          options,
+        ),
       ),
     );
   }

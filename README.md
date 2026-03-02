@@ -34,10 +34,10 @@ Your development setup has to meet the following prerequisites:
 * Xcode 26.2, including Swift 6 or later
 * Android 6 or later, with API level 23 -or-
 * Android 10 or later, with API level 29, for the biometric authenticator to work
-* Gradle 8.4 or later
-* Android Gradle Plugin `com.android.tools.build:gradle` 8.3.0 or later
-* Kotlin Gradle Plugin `org.jetbrains.kotlin:kotlin-gradle-plugin` 1.8.22 or later
-* Dart SDK 3.4.0 or later
+* Gradle 8.7 or later
+* Android Gradle Plugin `com.android.tools.build:gradle` 8.6.0 or later
+* Kotlin Gradle Plugin `org.jetbrains.kotlin:kotlin-gradle-plugin` 2.1.0 or later
+* Dart SDK 3.10.0 or later
 * Java 17
 
 ### Initialization

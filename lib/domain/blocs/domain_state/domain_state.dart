@@ -16,9 +16,7 @@ class DomainInitialState extends DomainState {}
 abstract class DomainVerifyState extends DomainState {
   final String aaid;
 
-  DomainVerifyState({
-    required this.aaid,
-  });
+  DomainVerifyState({required this.aaid});
 }
 
 class DomainCredentialState extends DomainVerifyState {
@@ -78,9 +76,7 @@ class DomainSelectAuthenticatorState extends DomainState {
 class DomainResultState extends DomainState {
   final String? description;
 
-  DomainResultState({
-    this.description,
-  });
+  DomainResultState({this.description});
 }
 
 class DomainSelectAccountState extends DomainState {

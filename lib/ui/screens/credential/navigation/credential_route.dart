@@ -10,9 +10,9 @@ class CredentialRoute {
   static const credential = "credentials";
 
   Map<String, WidgetBuilder> get routes => {
-        credential: (context) => BlocProvider<CredentialBloc>(
-              create: (_) => GetIt.I.get<CredentialBloc>(),
-              child: const CredentialScreen(),
-            )
-      };
+    credential: (context) => BlocProvider<CredentialBloc>(
+      create: (_) => GetIt.I.get<CredentialBloc>(),
+      child: const CredentialScreen(),
+    ),
+  };
 }

@@ -11,9 +11,9 @@ class HomeRoute {
   static const home = '/';
 
   Map<String, WidgetBuilder> get routes => {
-        home: (context) => BlocProvider<HomeBloc>(
-              create: (_) => GetIt.I.get<HomeBloc>()..add(HomeCreatedEvent()),
-              child: const HomeScreen(),
-            ),
-      };
+    home: (context) => BlocProvider<HomeBloc>(
+      create: (_) => GetIt.I.get<HomeBloc>()..add(HomeCreatedEvent()),
+      child: const HomeScreen(),
+    ),
+  };
 }

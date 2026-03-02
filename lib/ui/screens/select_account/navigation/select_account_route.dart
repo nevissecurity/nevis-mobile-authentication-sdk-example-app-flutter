@@ -7,6 +7,6 @@ class SelectAccountRoute {
   static const selectAccount = "select_account";
 
   Map<String, WidgetBuilder> get routes => {
-        selectAccount: (context) => const SelectAccountScreen(),
-      };
+    selectAccount: (context) => const SelectAccountScreen(),
+  };
 }

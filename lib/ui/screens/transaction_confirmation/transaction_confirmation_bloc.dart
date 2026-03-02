@@ -18,7 +18,7 @@ class TransactionConfirmationBloc
   final ErrorHandler _errorHandler;
   final SelectAccountUseCase _selectAccountUseCase;
   final CancelUserInteractionOperationUseCase
-      _cancelUserInteractionOperationUseCase;
+  _cancelUserInteractionOperationUseCase;
   final GlobalNavigationManager _globalNavigationManager;
   late TransactionConfirmationParameter _parameter;
 
@@ -38,11 +38,7 @@ class TransactionConfirmationBloc
     Emitter<TransactionConfirmationState> emit,
   ) {
     _parameter = event.parameter;
-    emit(
-      TransactionConfirmationInitialState(
-        event.parameter.transactionData,
-      ),
-    );
+    emit(TransactionConfirmationInitialState(event.parameter.transactionData));
   }
 
   Future<void> _handleUserAccepted(
@@ -57,7 +53,8 @@ class TransactionConfirmationBloc
     } else {
       _globalNavigationManager.pushSelectAuthenticator(
         SelectAuthenticatorParameter(
-          authenticatorItems: {}, // authenticators will be received through domain event
+          authenticatorItems:
+              {}, // authenticators will be received through domain event
           operationType: OperationType.authentication,
         ),
       );

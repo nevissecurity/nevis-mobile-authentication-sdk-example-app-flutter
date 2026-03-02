@@ -39,16 +39,19 @@ class ChangeDeviceInformationUseCaseImpl
     bool? disablePushNotifications,
   }) async {
     _operationTypeRepository.save(OperationType.deviceInformationChange);
-    var deviceInformationChange =
-        _clientProvider.client.operations.deviceInformationChange //
-            .onSuccess(() {
-      debugPrint('Change device information succeeded.');
-      _domainBloc.add(ResultEvent());
-      _operationTypeRepository.reset();
-    }).onError((error) {
-      debugPrint('Change device information failed: ${error.runtimeType}');
-      _errorHandler.handle(error);
-    });
+    var deviceInformationChange = _clientProvider
+        .client
+        .operations
+        .deviceInformationChange
+        .onSuccess(() {
+          debugPrint('Change device information succeeded.');
+          _domainBloc.add(ResultEvent());
+          _operationTypeRepository.reset();
+        })
+        .onError((error) {
+          debugPrint('Change device information failed: ${error.runtimeType}');
+          _errorHandler.handle(error);
+        });
 
     if (name != null) {
       deviceInformationChange.name(name);

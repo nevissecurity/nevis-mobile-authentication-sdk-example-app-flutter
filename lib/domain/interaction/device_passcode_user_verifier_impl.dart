@@ -15,7 +15,7 @@ class DevicePasscodeUserVerifierImpl implements DevicePasscodeUserVerifier {
   final DomainBloc _domainBloc;
   final ErrorHandler _errorHandler;
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
   DevicePasscodeUserVerifierImpl(
     this._domainBloc,

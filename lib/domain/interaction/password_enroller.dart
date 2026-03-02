@@ -22,10 +22,14 @@ class PasswordEnrollerImpl extends PasswordEnroller {
 
   @override
   void enrollPassword(
-      PasswordEnrollmentContext context, PasswordEnrollmentHandler handler) {
-    debugPrint(context.lastRecoverableError != null
-        ? 'Password enrollment failed. Please try again. Error: ${context.lastRecoverableError?.description}'
-        : 'Please start password enrollment.');
+    PasswordEnrollmentContext context,
+    PasswordEnrollmentHandler handler,
+  ) {
+    debugPrint(
+      context.lastRecoverableError != null
+          ? 'Password enrollment failed. Please try again. Error: ${context.lastRecoverableError?.description}'
+          : 'Please start password enrollment.',
+    );
 
     _stateRepository.save(PasswordEnrollmentState(context, handler));
     final event = CredentialEnrollmentEvent(
@@ -40,7 +44,7 @@ class PasswordEnrollerImpl extends PasswordEnroller {
     debugPrint('Valid password credentials provided.');
   }
 
-//  You can add custom password policy by overriding the `passwordPolicy` getter
+  //  You can add custom password policy by overriding the `passwordPolicy` getter
   @override
   PasswordPolicy get passwordPolicy => _passwordPolicy;
 }

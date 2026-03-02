@@ -33,7 +33,8 @@ abstract class StateRepositoryImpl<T> implements StateRepository<T> {
 class UserInteractionOperationStateRepositoryImpl
     extends StateRepositoryImpl<UserInteractionOperationState> {
   UserInteractionOperationStateRepositoryImpl(
-      super.userInteractionOperationStateCache);
+    super.userInteractionOperationStateCache,
+  );
 }
 
 @Injectable(as: StateRepository<PinEnrollmentState>)

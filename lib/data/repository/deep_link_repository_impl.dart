@@ -12,8 +12,12 @@ class DeepLinkRepositoryImpl implements DeepLinkRepository {
   DeepLinkRepositoryImpl(this._deepLinkDataSource);
 
   @override
-  StreamSubscription setDeepLinkReceiver(void Function(dynamic)? onData,
-      {Function? onError, void Function()? onDone, bool? cancelOnError}) {
+  StreamSubscription setDeepLinkReceiver(
+    void Function(dynamic)? onData, {
+    Function? onError,
+    void Function()? onDone,
+    bool? cancelOnError,
+  }) {
     return _deepLinkDataSource.setDeepLinkReceiver(
       onData,
       onError: onError,

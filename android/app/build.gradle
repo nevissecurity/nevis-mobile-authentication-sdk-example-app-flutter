@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace 'ch.nevis.nevis_mobile_authentication_sdk_example_app_flutter'
-    compileSdk 34
+    compileSdk flutter.compileSdkVersion
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -41,7 +41,7 @@ android {
     defaultConfig {
         applicationId "ch.nevis.nevis_mobile_authentication_sdk_example"
         minSdkVersion 24
-        targetSdkVersion 34
+        targetSdkVersion flutter.targetSdkVersion
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -62,5 +62,5 @@ flutter {
 
 dependencies {
     //noinspection GradleDynamicVersion
-    debugImplementation 'ch.nevis:nevis-mobile-authentication-sdk-android-debug:4.2.+'
+    debugImplementation 'ch.nevis:nevis-mobile-authentication-sdk-android-debug:4.3.+'
 }

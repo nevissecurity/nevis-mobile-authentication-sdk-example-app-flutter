@@ -1,3 +1,4 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -115,35 +116,41 @@ _i174.GetIt $initGetIt(
   String? environment,
   _i526.EnvironmentFilter? environmentFilter,
 }) {
-  final gh = _i526.GetItHelper(
-    getIt,
-    environment,
-    environmentFilter,
-  );
+  final gh = _i526.GetItHelper(getIt, environment, environmentFilter);
   gh.singleton<_i341.GlobalNavigationManager>(
-      () => _i341.GlobalNavigationManager());
+    () => _i341.GlobalNavigationManager(),
+  );
   gh.singleton<_i1056.AppNavigation>(() => _i1056.AppNavigation());
   gh.singleton<_i452.Cache<_i761.OperationType>>(
-      () => _i787.OperationTypeCacheImpl());
+    () => _i787.OperationTypeCacheImpl(),
+  );
   gh.factory<_i524.LoginDataSource>(() => _i524.LoginDataSourceImpl());
   gh.singleton<_i452.Cache<_i954.UserInteractionOperationState>>(
-      () => _i787.UserInteractionOperationStateCacheImpl());
+    () => _i787.UserInteractionOperationStateCacheImpl(),
+  );
   gh.singleton<_i452.Cache<_i966.PasswordEnrollmentState>>(
-      () => _i787.PasswordEnrollmentStateCacheImpl());
+    () => _i787.PasswordEnrollmentStateCacheImpl(),
+  );
   gh.factory<_i1052.MetaDataUseCase>(() => _i1052.MetaDataUseCaseImpl());
   gh.singleton<_i461.DeepLinkDataSource>(() => _i461.DeepLinkDataSourceImpl());
-  gh.factory<_i404.StateRepository<_i966.PasswordEnrollmentState>>(() =>
-      _i281.PasswordEnrollmentStateRepositoryImpl(
-          gh<_i452.Cache<_i966.PasswordEnrollmentState>>()));
+  gh.factory<_i404.StateRepository<_i966.PasswordEnrollmentState>>(
+    () => _i281.PasswordEnrollmentStateRepositoryImpl(
+      gh<_i452.Cache<_i966.PasswordEnrollmentState>>(),
+    ),
+  );
   gh.singleton<_i452.Cache<_i17.PasswordChangeState>>(
-      () => _i787.PasswordChangeStateCacheImpl());
+    () => _i787.PasswordChangeStateCacheImpl(),
+  );
   gh.factory<_i150.PasswordPolicy>(() => _i1030.PasswordPolicyImpl());
   gh.factory<_i373.LoginRepository>(
-      () => _i371.LoginRepositoryImpl(gh<_i524.LoginDataSource>()));
+    () => _i371.LoginRepositoryImpl(gh<_i524.LoginDataSource>()),
+  );
   gh.factory<_i517.AuthenticatorValidator>(
-      () => _i517.AuthenticatorValidatorImpl());
+    () => _i517.AuthenticatorValidatorImpl(),
+  );
   gh.singleton<_i452.Cache<_i1064.PinChangeState>>(
-      () => _i787.PinChangeStateCacheImpl());
+    () => _i787.PinChangeStateCacheImpl(),
+  );
   gh.singleton<_i425.ConfigurationLoader>(
     () => _i425.AuthenticationCloudConfigurationLoader(),
     registerFor: {_authenticationCloud},
@@ -152,85 +159,134 @@ _i174.GetIt $initGetIt(
     () => _i425.IdentitySuiteConfigurationLoader(),
     registerFor: {_identitySuite},
   );
-  gh.factory<_i404.StateRepository<_i1064.PinChangeState>>(() =>
-      _i281.PinChangeStateRepositoryImpl(
-          gh<_i452.Cache<_i1064.PinChangeState>>()));
+  gh.factory<_i404.StateRepository<_i1064.PinChangeState>>(
+    () => _i281.PinChangeStateRepositoryImpl(
+      gh<_i452.Cache<_i1064.PinChangeState>>(),
+    ),
+  );
   gh.factory<_i657.AccountValidator>(() => _i657.AccountValidatorImpl());
   gh.singleton<_i452.Cache<_i291.PinEnrollmentState>>(
-      () => _i787.PinEnrollmentStateCacheImpl());
-  gh.factory<_i404.StateRepository<_i17.PasswordChangeState>>(() =>
-      _i281.PasswordChangeStateRepositoryImpl(
-          gh<_i452.Cache<_i17.PasswordChangeState>>()));
-  gh.factory<_i404.StateRepository<_i954.UserInteractionOperationState>>(() =>
-      _i281.UserInteractionOperationStateRepositoryImpl(
-          gh<_i452.Cache<_i954.UserInteractionOperationState>>()));
-  gh.factory<_i501.SelectAccountUseCase>(() => _i501.SelectAccountUseCaseImpl(
-      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>()));
-  gh.factory<_i965.PauseListeningUseCase>(() => _i965.PauseListeningUseCaseImpl(
-      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>()));
-  gh.factory<_i609.DevicePasscodeListenForOsCredentialsUseCase>(() =>
-      _i609.DevicePasscodeListenForOsCredentialsUseCaseImpl(
-          gh<_i404.StateRepository<_i954.UserInteractionOperationState>>()));
-  gh.factory<_i316.BiometricListenForOsCredentialsUseCase>(() =>
-      _i316.BiometricListenForOsCredentialsUseCaseImpl(
-          gh<_i404.StateRepository<_i954.UserInteractionOperationState>>()));
-  gh.factory<_i404.StateRepository<_i761.OperationType>>(() =>
-      _i281.OperationTypeRepositoryImpl(
-          gh<_i452.Cache<_i761.OperationType>>()));
-  gh.singleton<_i218.DomainBloc>(() => _i218.DomainBloc(
-      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>()));
+    () => _i787.PinEnrollmentStateCacheImpl(),
+  );
+  gh.factory<_i404.StateRepository<_i17.PasswordChangeState>>(
+    () => _i281.PasswordChangeStateRepositoryImpl(
+      gh<_i452.Cache<_i17.PasswordChangeState>>(),
+    ),
+  );
+  gh.factory<_i404.StateRepository<_i954.UserInteractionOperationState>>(
+    () => _i281.UserInteractionOperationStateRepositoryImpl(
+      gh<_i452.Cache<_i954.UserInteractionOperationState>>(),
+    ),
+  );
+  gh.factory<_i501.SelectAccountUseCase>(
+    () => _i501.SelectAccountUseCaseImpl(
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+  );
+  gh.factory<_i965.PauseListeningUseCase>(
+    () => _i965.PauseListeningUseCaseImpl(
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+  );
+  gh.factory<_i609.DevicePasscodeListenForOsCredentialsUseCase>(
+    () => _i609.DevicePasscodeListenForOsCredentialsUseCaseImpl(
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+  );
+  gh.factory<_i316.BiometricListenForOsCredentialsUseCase>(
+    () => _i316.BiometricListenForOsCredentialsUseCaseImpl(
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+  );
+  gh.factory<_i404.StateRepository<_i761.OperationType>>(
+    () => _i281.OperationTypeRepositoryImpl(
+      gh<_i452.Cache<_i761.OperationType>>(),
+    ),
+  );
+  gh.singleton<_i218.DomainBloc>(
+    () => _i218.DomainBloc(
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+  );
   gh.factory<_i579.LoginUseCase>(
-      () => _i579.LoginUseCaseImpl(gh<_i373.LoginRepository>()));
-  gh.factory<_i942.VerifyCredentialUseCase>(() =>
-      _i942.VerifyCredentialUseCaseImpl(
-          gh<_i404.StateRepository<_i954.UserInteractionOperationState>>()));
-  gh.factory<_i125.CancelUserInteractionOperationUseCase>(() =>
-      _i125.CancelUserInteractionOperationUseCaseImpl(
-          gh<_i404.StateRepository<_i954.UserInteractionOperationState>>()));
-  gh.factory<_i619.FingerprintListenForOsCredentialsUseCase>(() =>
-      _i619.FingerprintListenForOsCredentialsUseCaseImpl(
-          gh<_i404.StateRepository<_i954.UserInteractionOperationState>>()));
-  gh.factory<_i150.PasswordChanger>(() => _i147.PasswordChangerImpl(
-        gh<_i218.DomainBloc>(),
-        gh<_i404.StateRepository<_i17.PasswordChangeState>>(),
-        gh<_i150.PasswordPolicy>(),
-      ));
-  gh.factory<_i150.PinChanger>(() => _i790.PinChangerImpl(
-        gh<_i218.DomainBloc>(),
-        gh<_i404.StateRepository<_i1064.PinChangeState>>(),
-      ));
-  gh.factory<_i415.ResetUserInteractionStateUseCase>(() =>
-      _i415.ResetUserInteractionStateUseCaseImpl(
-          gh<_i404.StateRepository<_i954.UserInteractionOperationState>>()));
-  gh.factory<_i836.ResumeListeningUseCase>(() =>
-      _i836.ResumeListeningUseCaseImpl(
-          gh<_i404.StateRepository<_i954.UserInteractionOperationState>>()));
-  gh.factory<_i472.SelectAuthenticatorUseCase>(() =>
-      _i472.SelectAuthenticatorUseCaseImpl(
-          gh<_i404.StateRepository<_i954.UserInteractionOperationState>>()));
+    () => _i579.LoginUseCaseImpl(gh<_i373.LoginRepository>()),
+  );
+  gh.factory<_i942.VerifyCredentialUseCase>(
+    () => _i942.VerifyCredentialUseCaseImpl(
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+  );
+  gh.factory<_i125.CancelUserInteractionOperationUseCase>(
+    () => _i125.CancelUserInteractionOperationUseCaseImpl(
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+  );
+  gh.factory<_i619.FingerprintListenForOsCredentialsUseCase>(
+    () => _i619.FingerprintListenForOsCredentialsUseCaseImpl(
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+  );
+  gh.factory<_i150.PasswordChanger>(
+    () => _i147.PasswordChangerImpl(
+      gh<_i218.DomainBloc>(),
+      gh<_i404.StateRepository<_i17.PasswordChangeState>>(),
+      gh<_i150.PasswordPolicy>(),
+    ),
+  );
+  gh.factory<_i150.PinChanger>(
+    () => _i790.PinChangerImpl(
+      gh<_i218.DomainBloc>(),
+      gh<_i404.StateRepository<_i1064.PinChangeState>>(),
+    ),
+  );
+  gh.factory<_i415.ResetUserInteractionStateUseCase>(
+    () => _i415.ResetUserInteractionStateUseCaseImpl(
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+  );
+  gh.factory<_i836.ResumeListeningUseCase>(
+    () => _i836.ResumeListeningUseCaseImpl(
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+  );
+  gh.factory<_i472.SelectAuthenticatorUseCase>(
+    () => _i472.SelectAuthenticatorUseCaseImpl(
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+  );
   gh.factory<_i640.DeepLinkRepository>(
-      () => _i675.DeepLinkRepositoryImpl(gh<_i461.DeepLinkDataSource>()));
-  gh.factory<_i150.PasswordEnroller>(() => _i1054.PasswordEnrollerImpl(
-        gh<_i404.StateRepository<_i966.PasswordEnrollmentState>>(),
-        gh<_i218.DomainBloc>(),
-        gh<_i150.PasswordPolicy>(),
-      ));
-  gh.factory<_i404.StateRepository<_i291.PinEnrollmentState>>(() =>
-      _i281.PinEnrollmentStateRepositoryImpl(
-          gh<_i452.Cache<_i291.PinEnrollmentState>>()));
-  gh.factory<_i711.ErrorHandler>(() => _i711.ErrorHandlerImpl(
-        gh<_i341.GlobalNavigationManager>(),
-        gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
-      ));
+    () => _i675.DeepLinkRepositoryImpl(gh<_i461.DeepLinkDataSource>()),
+  );
+  gh.factory<_i150.PasswordEnroller>(
+    () => _i1054.PasswordEnrollerImpl(
+      gh<_i404.StateRepository<_i966.PasswordEnrollmentState>>(),
+      gh<_i218.DomainBloc>(),
+      gh<_i150.PasswordPolicy>(),
+    ),
+  );
+  gh.factory<_i404.StateRepository<_i291.PinEnrollmentState>>(
+    () => _i281.PinEnrollmentStateRepositoryImpl(
+      gh<_i452.Cache<_i291.PinEnrollmentState>>(),
+    ),
+  );
+  gh.factory<_i711.ErrorHandler>(
+    () => _i711.ErrorHandlerImpl(
+      gh<_i341.GlobalNavigationManager>(),
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+  );
   gh.factory<_i521.ProvidedCredentialsUseCase>(
-      () => _i521.ProvidedCredentialsUseCaseImpl(
-            gh<_i404.StateRepository<_i1064.PinChangeState>>(),
-            gh<_i404.StateRepository<_i17.PasswordChangeState>>(),
-          ));
-  gh.factory<_i150.PinEnroller>(() => _i445.PinEnrollerImpl(
-        gh<_i404.StateRepository<_i291.PinEnrollmentState>>(),
-        gh<_i218.DomainBloc>(),
-      ));
+    () => _i521.ProvidedCredentialsUseCaseImpl(
+      gh<_i404.StateRepository<_i1064.PinChangeState>>(),
+      gh<_i404.StateRepository<_i17.PasswordChangeState>>(),
+    ),
+  );
+  gh.factory<_i150.PinEnroller>(
+    () => _i445.PinEnrollerImpl(
+      gh<_i404.StateRepository<_i291.PinEnrollmentState>>(),
+      gh<_i218.DomainBloc>(),
+    ),
+  );
   gh.factory<_i150.AuthenticatorSelector>(
     () => _i78.RegistrationAuthenticatorSelectorImpl(
       gh<_i218.DomainBloc>(),
@@ -241,10 +297,11 @@ _i174.GetIt $initGetIt(
     instanceName: 'auth_selector_reg',
   );
   gh.factory<_i457.EnrollCredentialUseCase>(
-      () => _i457.EnrollCredentialUseCaseImpl(
-            gh<_i404.StateRepository<_i291.PinEnrollmentState>>(),
-            gh<_i404.StateRepository<_i966.PasswordEnrollmentState>>(),
-          ));
+    () => _i457.EnrollCredentialUseCaseImpl(
+      gh<_i404.StateRepository<_i291.PinEnrollmentState>>(),
+      gh<_i404.StateRepository<_i966.PasswordEnrollmentState>>(),
+    ),
+  );
   gh.factory<_i150.AuthenticatorSelector>(
     () => _i316.AuthenticationAuthenticatorSelectorImpl(
       gh<_i218.DomainBloc>(),
@@ -255,261 +312,322 @@ _i174.GetIt $initGetIt(
     instanceName: 'auth_selector_auth',
   );
   gh.factory<_i592.TransactionConfirmationBloc>(
-      () => _i592.TransactionConfirmationBloc(
-            gh<_i711.ErrorHandler>(),
-            gh<_i501.SelectAccountUseCase>(),
-            gh<_i125.CancelUserInteractionOperationUseCase>(),
-            gh<_i341.GlobalNavigationManager>(),
-          ));
-  gh.factory<_i150.AccountSelector>(() => _i902.AccountSelectorImpl(
-        gh<_i218.DomainBloc>(),
-        gh<_i711.ErrorHandler>(),
-        gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
-        gh<_i657.AccountValidator>(),
-      ));
-  gh.factory<_i1028.BatchCall>(() => _i1028.BatchCallImpl(
-        gh<_i218.DomainBloc>(),
-        gh<_i711.ErrorHandler>(),
-      ));
-  gh.factory<_i150.BiometricUserVerifier>(() => _i274.BiometricUserVerifierImpl(
-        gh<_i218.DomainBloc>(),
-        gh<_i711.ErrorHandler>(),
-        gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
-      ));
+    () => _i592.TransactionConfirmationBloc(
+      gh<_i711.ErrorHandler>(),
+      gh<_i501.SelectAccountUseCase>(),
+      gh<_i125.CancelUserInteractionOperationUseCase>(),
+      gh<_i341.GlobalNavigationManager>(),
+    ),
+  );
+  gh.factory<_i150.AccountSelector>(
+    () => _i902.AccountSelectorImpl(
+      gh<_i218.DomainBloc>(),
+      gh<_i711.ErrorHandler>(),
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+      gh<_i657.AccountValidator>(),
+    ),
+  );
+  gh.factory<_i1028.BatchCall>(
+    () =>
+        _i1028.BatchCallImpl(gh<_i218.DomainBloc>(), gh<_i711.ErrorHandler>()),
+  );
+  gh.factory<_i150.BiometricUserVerifier>(
+    () => _i274.BiometricUserVerifierImpl(
+      gh<_i218.DomainBloc>(),
+      gh<_i711.ErrorHandler>(),
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+  );
   gh.factory<_i150.DevicePasscodeUserVerifier>(
-      () => _i737.DevicePasscodeUserVerifierImpl(
-            gh<_i218.DomainBloc>(),
-            gh<_i711.ErrorHandler>(),
-            gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
-          ));
-  gh.factory<_i965.ClientProvider>(() => _i965.ClientProviderImpl(
-        gh<_i404.StateRepository<_i761.OperationType>>(),
-        gh<_i711.ErrorHandler>(),
-      ));
-  gh.factory<_i150.PinUserVerifier>(() => _i809.PinUserVerifierImpl(
-        gh<_i218.DomainBloc>(),
-        gh<_i711.ErrorHandler>(),
-        gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
-      ));
-  gh.factory<_i988.ConfirmationBloc>(() => _i988.ConfirmationBloc(
-        gh<_i316.BiometricListenForOsCredentialsUseCase>(),
-        gh<_i619.FingerprintListenForOsCredentialsUseCase>(),
-        gh<_i609.DevicePasscodeListenForOsCredentialsUseCase>(),
-        gh<_i125.CancelUserInteractionOperationUseCase>(),
-        gh<_i965.PauseListeningUseCase>(),
-        gh<_i836.ResumeListeningUseCase>(),
-        gh<_i711.ErrorHandler>(),
-      ));
-  gh.factory<_i306.DeregisterUseCase>(() => _i306.DeregisterUseCaseImpl(
-        gh<_i965.ClientProvider>(),
-        gh<_i218.DomainBloc>(),
-        gh<_i404.StateRepository<_i761.OperationType>>(),
-      ));
+    () => _i737.DevicePasscodeUserVerifierImpl(
+      gh<_i218.DomainBloc>(),
+      gh<_i711.ErrorHandler>(),
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+  );
+  gh.factory<_i965.ClientProvider>(
+    () => _i965.ClientProviderImpl(
+      gh<_i404.StateRepository<_i761.OperationType>>(),
+      gh<_i711.ErrorHandler>(),
+    ),
+  );
+  gh.factory<_i150.PinUserVerifier>(
+    () => _i809.PinUserVerifierImpl(
+      gh<_i218.DomainBloc>(),
+      gh<_i711.ErrorHandler>(),
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+  );
+  gh.factory<_i988.ConfirmationBloc>(
+    () => _i988.ConfirmationBloc(
+      gh<_i316.BiometricListenForOsCredentialsUseCase>(),
+      gh<_i619.FingerprintListenForOsCredentialsUseCase>(),
+      gh<_i609.DevicePasscodeListenForOsCredentialsUseCase>(),
+      gh<_i125.CancelUserInteractionOperationUseCase>(),
+      gh<_i965.PauseListeningUseCase>(),
+      gh<_i836.ResumeListeningUseCase>(),
+      gh<_i711.ErrorHandler>(),
+    ),
+  );
+  gh.factory<_i306.DeregisterUseCase>(
+    () => _i306.DeregisterUseCaseImpl(
+      gh<_i965.ClientProvider>(),
+      gh<_i218.DomainBloc>(),
+      gh<_i404.StateRepository<_i761.OperationType>>(),
+    ),
+  );
   gh.factory<_i382.RegisteredAccountsUseCase>(
-      () => _i382.RegisteredAccountsUseCaseImpl(gh<_i965.ClientProvider>()));
-  gh.factory<_i150.PasswordUserVerifier>(() => _i536.PasswordUserVerifierImpl(
-        gh<_i218.DomainBloc>(),
-        gh<_i711.ErrorHandler>(),
-        gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
-      ));
-  gh.factory<_i244.SelectAuthenticatorBloc>(() => _i244.SelectAuthenticatorBloc(
-        gh<_i472.SelectAuthenticatorUseCase>(),
-        gh<_i341.GlobalNavigationManager>(),
-        gh<_i711.ErrorHandler>(),
-      ));
+    () => _i382.RegisteredAccountsUseCaseImpl(gh<_i965.ClientProvider>()),
+  );
+  gh.factory<_i150.PasswordUserVerifier>(
+    () => _i536.PasswordUserVerifierImpl(
+      gh<_i218.DomainBloc>(),
+      gh<_i711.ErrorHandler>(),
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+  );
+  gh.factory<_i244.SelectAuthenticatorBloc>(
+    () => _i244.SelectAuthenticatorBloc(
+      gh<_i472.SelectAuthenticatorUseCase>(),
+      gh<_i341.GlobalNavigationManager>(),
+      gh<_i711.ErrorHandler>(),
+    ),
+  );
   gh.factory<_i150.FingerprintUserVerifier>(
-      () => _i716.FingerprintUserVerifierImpl(
-            gh<_i218.DomainBloc>(),
-            gh<_i711.ErrorHandler>(),
-            gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
-          ));
+    () => _i716.FingerprintUserVerifierImpl(
+      gh<_i218.DomainBloc>(),
+      gh<_i711.ErrorHandler>(),
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+  );
   gh.factory<_i776.DeleteAuthenticatorsUseCase>(
-      () => _i776.DeleteAuthenticatorsUseCaseImpl(
-            gh<_i965.ClientProvider>(),
-            gh<_i404.StateRepository<_i761.OperationType>>(),
-          ));
+    () => _i776.DeleteAuthenticatorsUseCaseImpl(
+      gh<_i965.ClientProvider>(),
+      gh<_i404.StateRepository<_i761.OperationType>>(),
+    ),
+  );
   gh.factory<_i1003.CancelCredentialOperationUseCase>(
-      () => _i1003.CancelCredentialOperationUseCaseImpl(
-            gh<_i404.StateRepository<_i291.PinEnrollmentState>>(),
-            gh<_i404.StateRepository<_i966.PasswordEnrollmentState>>(),
-            gh<_i404.StateRepository<_i1064.PinChangeState>>(),
-            gh<_i404.StateRepository<_i17.PasswordChangeState>>(),
-          ));
-  gh.factory<_i90.ChangePasswordUseCase>(() => _i90.ChangePasswordUseCaseImpl(
-        gh<_i965.ClientProvider>(),
-        gh<_i150.PasswordChanger>(),
-        gh<_i218.DomainBloc>(),
-        gh<_i404.StateRepository<_i761.OperationType>>(),
-        gh<_i404.StateRepository<_i1064.PinChangeState>>(),
-        gh<_i711.ErrorHandler>(),
-      ));
-  gh.singleton<_i165.LocalDataBloc>(() => _i165.LocalDataBloc(
-        gh<_i965.ClientProvider>(),
-        gh<_i711.ErrorHandler>(),
-      ));
-  gh.factory<_i286.DeregisterAllUseCase>(() => _i286.DeregisterAllUseCaseImpl(
-        gh<_i965.ClientProvider>(),
-        gh<_i404.StateRepository<_i761.OperationType>>(),
-      ));
+    () => _i1003.CancelCredentialOperationUseCaseImpl(
+      gh<_i404.StateRepository<_i291.PinEnrollmentState>>(),
+      gh<_i404.StateRepository<_i966.PasswordEnrollmentState>>(),
+      gh<_i404.StateRepository<_i1064.PinChangeState>>(),
+      gh<_i404.StateRepository<_i17.PasswordChangeState>>(),
+    ),
+  );
+  gh.factory<_i90.ChangePasswordUseCase>(
+    () => _i90.ChangePasswordUseCaseImpl(
+      gh<_i965.ClientProvider>(),
+      gh<_i150.PasswordChanger>(),
+      gh<_i218.DomainBloc>(),
+      gh<_i404.StateRepository<_i761.OperationType>>(),
+      gh<_i404.StateRepository<_i1064.PinChangeState>>(),
+      gh<_i711.ErrorHandler>(),
+    ),
+  );
+  gh.singleton<_i165.LocalDataBloc>(
+    () => _i165.LocalDataBloc(
+      gh<_i965.ClientProvider>(),
+      gh<_i711.ErrorHandler>(),
+    ),
+  );
+  gh.factory<_i286.DeregisterAllUseCase>(
+    () => _i286.DeregisterAllUseCaseImpl(
+      gh<_i965.ClientProvider>(),
+      gh<_i404.StateRepository<_i761.OperationType>>(),
+    ),
+  );
   gh.factory<_i956.ChangeDeviceInformationUseCase>(
-      () => _i956.ChangeDeviceInformationUseCaseImpl(
-            gh<_i965.ClientProvider>(),
-            gh<_i404.StateRepository<_i761.OperationType>>(),
-            gh<_i218.DomainBloc>(),
-            gh<_i711.ErrorHandler>(),
-          ));
-  gh.factory<_i797.GetFidoUafAttestationInformationUseCase>(() =>
-      _i797.GetFidoUafAttestationInformationUseCaseImpl(
-          gh<_i965.ClientProvider>()));
+    () => _i956.ChangeDeviceInformationUseCaseImpl(
+      gh<_i965.ClientProvider>(),
+      gh<_i404.StateRepository<_i761.OperationType>>(),
+      gh<_i218.DomainBloc>(),
+      gh<_i711.ErrorHandler>(),
+    ),
+  );
+  gh.factory<_i797.GetFidoUafAttestationInformationUseCase>(
+    () => _i797.GetFidoUafAttestationInformationUseCaseImpl(
+      gh<_i965.ClientProvider>(),
+    ),
+  );
   gh.factory<_i535.OobPayloadDecodeUseCase>(
-      () => _i535.OobPayloadDecodeUseCaseImpl(
-            gh<_i965.ClientProvider>(),
-            gh<_i404.StateRepository<_i761.OperationType>>(),
-            gh<_i711.ErrorHandler>(),
-          ));
+    () => _i535.OobPayloadDecodeUseCaseImpl(
+      gh<_i965.ClientProvider>(),
+      gh<_i404.StateRepository<_i761.OperationType>>(),
+      gh<_i711.ErrorHandler>(),
+    ),
+  );
   gh.factory<_i453.AuthenticatorsUseCase>(
-      () => _i453.AuthenticatorsUseCaseImpl(gh<_i965.ClientProvider>()));
-  gh.factory<_i476.AuthenticateUseCase>(() => _i476.AuthenticateUseCaseImpl(
-        gh<_i965.ClientProvider>(),
-        gh<_i150.AuthenticatorSelector>(instanceName: 'auth_selector_auth'),
-        gh<_i150.PinUserVerifier>(),
-        gh<_i150.PasswordUserVerifier>(),
-        gh<_i150.BiometricUserVerifier>(),
-        gh<_i150.DevicePasscodeUserVerifier>(),
-        gh<_i150.FingerprintUserVerifier>(),
-        gh<_i218.DomainBloc>(),
-        gh<_i404.StateRepository<_i761.OperationType>>(),
-        gh<_i711.ErrorHandler>(),
-      ));
+    () => _i453.AuthenticatorsUseCaseImpl(gh<_i965.ClientProvider>()),
+  );
+  gh.factory<_i476.AuthenticateUseCase>(
+    () => _i476.AuthenticateUseCaseImpl(
+      gh<_i965.ClientProvider>(),
+      gh<_i150.AuthenticatorSelector>(instanceName: 'auth_selector_auth'),
+      gh<_i150.PinUserVerifier>(),
+      gh<_i150.PasswordUserVerifier>(),
+      gh<_i150.BiometricUserVerifier>(),
+      gh<_i150.DevicePasscodeUserVerifier>(),
+      gh<_i150.FingerprintUserVerifier>(),
+      gh<_i218.DomainBloc>(),
+      gh<_i404.StateRepository<_i761.OperationType>>(),
+      gh<_i711.ErrorHandler>(),
+    ),
+  );
   gh.factory<_i906.DeviceInformationUseCase>(
-      () => _i906.DeviceInformationUseCaseImpl(gh<_i965.ClientProvider>()));
-  gh.singleton<_i196.AppBloc>(() => _i196.AppBloc(
-        gh<_i306.DeregisterUseCase>(),
-        gh<_i425.ConfigurationLoader>(),
-        gh<_i711.ErrorHandler>(),
-        gh<_i218.DomainBloc>(),
-        gh<_i341.GlobalNavigationManager>(),
-      ));
-  gh.factory<_i311.ChangePinUseCase>(() => _i311.ChangePinUseCaseImpl(
-        gh<_i965.ClientProvider>(),
-        gh<_i150.PinChanger>(),
-        gh<_i218.DomainBloc>(),
-        gh<_i404.StateRepository<_i761.OperationType>>(),
-        gh<_i404.StateRepository<_i1064.PinChangeState>>(),
-        gh<_i711.ErrorHandler>(),
-      ));
-  gh.factory<_i587.CreateDeviceInformationUseCase>(() =>
-      _i587.CreateDeviceInformationUseCaseImpl(
-          gh<_i906.DeviceInformationUseCase>()));
-  gh.factory<_i353.RegistrationUseCase>(() => _i353.RegistrationUseCaseImpl(
-        gh<_i965.ClientProvider>(),
-        gh<_i587.CreateDeviceInformationUseCase>(),
-        gh<_i150.AuthenticatorSelector>(instanceName: 'auth_selector_reg'),
-        gh<_i150.PinEnroller>(),
-        gh<_i150.PasswordEnroller>(),
-        gh<_i150.BiometricUserVerifier>(),
-        gh<_i150.DevicePasscodeUserVerifier>(),
-        gh<_i150.FingerprintUserVerifier>(),
-        gh<_i218.DomainBloc>(),
-        gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
-        gh<_i404.StateRepository<_i761.OperationType>>(),
-        gh<_i711.ErrorHandler>(),
-      ));
-  gh.factory<_i300.ResultBloc>(() => _i300.ResultBloc(
-        gh<_i341.GlobalNavigationManager>(),
-        gh<_i165.LocalDataBloc>(),
-        gh<_i404.StateRepository<_i761.OperationType>>(),
-      ));
-  gh.factory<_i478.CredentialBloc>(() => _i478.CredentialBloc(
-        gh<_i218.DomainBloc>(),
-        gh<_i1003.CancelCredentialOperationUseCase>(),
-        gh<_i521.ProvidedCredentialsUseCase>(),
-        gh<_i125.CancelUserInteractionOperationUseCase>(),
-        gh<_i457.EnrollCredentialUseCase>(),
-        gh<_i942.VerifyCredentialUseCase>(),
-        gh<_i711.ErrorHandler>(),
-      ));
-  gh.factory<_i1054.OobProcessUseCase>(() => _i1054.OobProcessUseCaseImpl(
-        gh<_i965.ClientProvider>(),
-        gh<_i587.CreateDeviceInformationUseCase>(),
-        gh<_i535.OobPayloadDecodeUseCase>(),
-        gh<_i150.AccountSelector>(),
-        gh<_i150.AuthenticatorSelector>(instanceName: 'auth_selector_reg'),
-        gh<_i150.AuthenticatorSelector>(instanceName: 'auth_selector_auth'),
-        gh<_i150.PinEnroller>(),
-        gh<_i150.PasswordEnroller>(),
-        gh<_i150.PinUserVerifier>(),
-        gh<_i150.PasswordUserVerifier>(),
-        gh<_i150.BiometricUserVerifier>(),
-        gh<_i150.DevicePasscodeUserVerifier>(),
-        gh<_i150.FingerprintUserVerifier>(),
-        gh<_i218.DomainBloc>(),
-        gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
-        gh<_i404.StateRepository<_i761.OperationType>>(),
-        gh<_i711.ErrorHandler>(),
-      ));
+    () => _i906.DeviceInformationUseCaseImpl(gh<_i965.ClientProvider>()),
+  );
+  gh.singleton<_i196.AppBloc>(
+    () => _i196.AppBloc(
+      gh<_i306.DeregisterUseCase>(),
+      gh<_i425.ConfigurationLoader>(),
+      gh<_i711.ErrorHandler>(),
+      gh<_i218.DomainBloc>(),
+      gh<_i341.GlobalNavigationManager>(),
+    ),
+  );
+  gh.factory<_i311.ChangePinUseCase>(
+    () => _i311.ChangePinUseCaseImpl(
+      gh<_i965.ClientProvider>(),
+      gh<_i150.PinChanger>(),
+      gh<_i218.DomainBloc>(),
+      gh<_i404.StateRepository<_i761.OperationType>>(),
+      gh<_i404.StateRepository<_i1064.PinChangeState>>(),
+      gh<_i711.ErrorHandler>(),
+    ),
+  );
+  gh.factory<_i587.CreateDeviceInformationUseCase>(
+    () => _i587.CreateDeviceInformationUseCaseImpl(
+      gh<_i906.DeviceInformationUseCase>(),
+    ),
+  );
+  gh.factory<_i353.RegistrationUseCase>(
+    () => _i353.RegistrationUseCaseImpl(
+      gh<_i965.ClientProvider>(),
+      gh<_i587.CreateDeviceInformationUseCase>(),
+      gh<_i150.AuthenticatorSelector>(instanceName: 'auth_selector_reg'),
+      gh<_i150.PinEnroller>(),
+      gh<_i150.PasswordEnroller>(),
+      gh<_i150.BiometricUserVerifier>(),
+      gh<_i150.DevicePasscodeUserVerifier>(),
+      gh<_i150.FingerprintUserVerifier>(),
+      gh<_i218.DomainBloc>(),
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+      gh<_i404.StateRepository<_i761.OperationType>>(),
+      gh<_i711.ErrorHandler>(),
+    ),
+  );
+  gh.factory<_i300.ResultBloc>(
+    () => _i300.ResultBloc(
+      gh<_i341.GlobalNavigationManager>(),
+      gh<_i165.LocalDataBloc>(),
+      gh<_i404.StateRepository<_i761.OperationType>>(),
+    ),
+  );
+  gh.factory<_i478.CredentialBloc>(
+    () => _i478.CredentialBloc(
+      gh<_i218.DomainBloc>(),
+      gh<_i1003.CancelCredentialOperationUseCase>(),
+      gh<_i521.ProvidedCredentialsUseCase>(),
+      gh<_i125.CancelUserInteractionOperationUseCase>(),
+      gh<_i457.EnrollCredentialUseCase>(),
+      gh<_i942.VerifyCredentialUseCase>(),
+      gh<_i711.ErrorHandler>(),
+    ),
+  );
+  gh.factory<_i1054.OobProcessUseCase>(
+    () => _i1054.OobProcessUseCaseImpl(
+      gh<_i965.ClientProvider>(),
+      gh<_i587.CreateDeviceInformationUseCase>(),
+      gh<_i535.OobPayloadDecodeUseCase>(),
+      gh<_i150.AccountSelector>(),
+      gh<_i150.AuthenticatorSelector>(instanceName: 'auth_selector_reg'),
+      gh<_i150.AuthenticatorSelector>(instanceName: 'auth_selector_auth'),
+      gh<_i150.PinEnroller>(),
+      gh<_i150.PasswordEnroller>(),
+      gh<_i150.PinUserVerifier>(),
+      gh<_i150.PasswordUserVerifier>(),
+      gh<_i150.BiometricUserVerifier>(),
+      gh<_i150.DevicePasscodeUserVerifier>(),
+      gh<_i150.FingerprintUserVerifier>(),
+      gh<_i218.DomainBloc>(),
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+      gh<_i404.StateRepository<_i761.OperationType>>(),
+      gh<_i711.ErrorHandler>(),
+    ),
+  );
   gh.factory<_i153.ChangeDeviceInformationBloc>(
-      () => _i153.ChangeDeviceInformationBloc(
-            gh<_i341.GlobalNavigationManager>(),
-            gh<_i956.ChangeDeviceInformationUseCase>(),
-            gh<_i906.DeviceInformationUseCase>(),
-            gh<_i711.ErrorHandler>(),
-          ));
-  gh.factory<_i704.SelectAccountBloc>(() => _i704.SelectAccountBloc(
-        gh<_i476.AuthenticateUseCase>(),
-        gh<_i501.SelectAccountUseCase>(),
-        gh<_i311.ChangePinUseCase>(),
-        gh<_i90.ChangePasswordUseCase>(),
-        gh<_i711.ErrorHandler>(),
-        gh<_i341.GlobalNavigationManager>(),
-      ));
-  gh.factory<_i185.ReadQrCodeBloc>(() => _i185.ReadQrCodeBloc(
-        gh<_i1054.OobProcessUseCase>(),
-        gh<_i711.ErrorHandler>(),
-      ));
-  gh.factory<_i429.LegacyLoginBloc>(() => _i429.LegacyLoginBloc(
-        gh<_i425.ConfigurationLoader>(),
-        gh<_i579.LoginUseCase>(),
-        gh<_i353.RegistrationUseCase>(),
-        gh<_i711.ErrorHandler>(),
-      ));
+    () => _i153.ChangeDeviceInformationBloc(
+      gh<_i341.GlobalNavigationManager>(),
+      gh<_i956.ChangeDeviceInformationUseCase>(),
+      gh<_i906.DeviceInformationUseCase>(),
+      gh<_i711.ErrorHandler>(),
+    ),
+  );
+  gh.factory<_i704.SelectAccountBloc>(
+    () => _i704.SelectAccountBloc(
+      gh<_i476.AuthenticateUseCase>(),
+      gh<_i501.SelectAccountUseCase>(),
+      gh<_i311.ChangePinUseCase>(),
+      gh<_i90.ChangePasswordUseCase>(),
+      gh<_i711.ErrorHandler>(),
+      gh<_i341.GlobalNavigationManager>(),
+    ),
+  );
+  gh.factory<_i185.ReadQrCodeBloc>(
+    () => _i185.ReadQrCodeBloc(
+      gh<_i1054.OobProcessUseCase>(),
+      gh<_i711.ErrorHandler>(),
+    ),
+  );
+  gh.factory<_i429.LegacyLoginBloc>(
+    () => _i429.LegacyLoginBloc(
+      gh<_i425.ConfigurationLoader>(),
+      gh<_i579.LoginUseCase>(),
+      gh<_i353.RegistrationUseCase>(),
+      gh<_i711.ErrorHandler>(),
+    ),
+  );
   gh.factory<_i346.AuthCloudApiRegisterUseCase>(
-      () => _i346.AuthCloudApiRegisterUseCaseImpl(
-            gh<_i965.ClientProvider>(),
-            gh<_i587.CreateDeviceInformationUseCase>(),
-            gh<_i150.AuthenticatorSelector>(instanceName: 'auth_selector_reg'),
-            gh<_i150.PinEnroller>(),
-            gh<_i150.PasswordEnroller>(),
-            gh<_i150.BiometricUserVerifier>(),
-            gh<_i150.DevicePasscodeUserVerifier>(),
-            gh<_i150.FingerprintUserVerifier>(),
-            gh<_i218.DomainBloc>(),
-            gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
-            gh<_i404.StateRepository<_i761.OperationType>>(),
-            gh<_i711.ErrorHandler>(),
-          ));
-  gh.factory<_i286.HomeBloc>(() => _i286.HomeBloc(
-        gh<_i640.DeepLinkRepository>(),
-        gh<_i425.ConfigurationLoader>(),
-        gh<_i965.ClientProvider>(),
-        gh<_i1054.OobProcessUseCase>(),
-        gh<_i382.RegisteredAccountsUseCase>(),
-        gh<_i286.DeregisterAllUseCase>(),
-        gh<_i453.AuthenticatorsUseCase>(),
-        gh<_i311.ChangePinUseCase>(),
-        gh<_i90.ChangePasswordUseCase>(),
-        gh<_i776.DeleteAuthenticatorsUseCase>(),
-        gh<_i797.GetFidoUafAttestationInformationUseCase>(),
-        gh<_i1052.MetaDataUseCase>(),
-        gh<_i165.LocalDataBloc>(),
-        gh<_i711.ErrorHandler>(),
-        gh<_i341.GlobalNavigationManager>(),
-      ));
+    () => _i346.AuthCloudApiRegisterUseCaseImpl(
+      gh<_i965.ClientProvider>(),
+      gh<_i587.CreateDeviceInformationUseCase>(),
+      gh<_i150.AuthenticatorSelector>(instanceName: 'auth_selector_reg'),
+      gh<_i150.PinEnroller>(),
+      gh<_i150.PasswordEnroller>(),
+      gh<_i150.BiometricUserVerifier>(),
+      gh<_i150.DevicePasscodeUserVerifier>(),
+      gh<_i150.FingerprintUserVerifier>(),
+      gh<_i218.DomainBloc>(),
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+      gh<_i404.StateRepository<_i761.OperationType>>(),
+      gh<_i711.ErrorHandler>(),
+    ),
+  );
+  gh.factory<_i286.HomeBloc>(
+    () => _i286.HomeBloc(
+      gh<_i640.DeepLinkRepository>(),
+      gh<_i425.ConfigurationLoader>(),
+      gh<_i965.ClientProvider>(),
+      gh<_i1054.OobProcessUseCase>(),
+      gh<_i382.RegisteredAccountsUseCase>(),
+      gh<_i286.DeregisterAllUseCase>(),
+      gh<_i453.AuthenticatorsUseCase>(),
+      gh<_i311.ChangePinUseCase>(),
+      gh<_i90.ChangePasswordUseCase>(),
+      gh<_i776.DeleteAuthenticatorsUseCase>(),
+      gh<_i797.GetFidoUafAttestationInformationUseCase>(),
+      gh<_i1052.MetaDataUseCase>(),
+      gh<_i165.LocalDataBloc>(),
+      gh<_i711.ErrorHandler>(),
+      gh<_i341.GlobalNavigationManager>(),
+    ),
+  );
   gh.factory<_i220.AuthCloudApiRegistrationBloc>(
-      () => _i220.AuthCloudApiRegistrationBloc(
-            gh<_i341.GlobalNavigationManager>(),
-            gh<_i346.AuthCloudApiRegisterUseCase>(),
-            gh<_i711.ErrorHandler>(),
-          ));
+    () => _i220.AuthCloudApiRegistrationBloc(
+      gh<_i341.GlobalNavigationManager>(),
+      gh<_i346.AuthCloudApiRegisterUseCase>(),
+      gh<_i711.ErrorHandler>(),
+    ),
+  );
   return getIt;
 }

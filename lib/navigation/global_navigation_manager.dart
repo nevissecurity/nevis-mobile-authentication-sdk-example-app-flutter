@@ -35,8 +35,9 @@ class GlobalNavigationManager {
   }
 
   void popUntilHome() {
-    return _navigatorKey?.currentState
-        ?.popUntil((route) => route.settings.name == HomeRoute.home);
+    return _navigatorKey?.currentState?.popUntil(
+      (route) => route.settings.name == HomeRoute.home,
+    );
   }
 
   Future<dynamic>? pushReadQrCode() {

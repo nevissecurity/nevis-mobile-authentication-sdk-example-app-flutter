@@ -24,7 +24,7 @@ class CredentialBloc extends Bloc<CredentialEvent, CredentialState> {
   final CancelCredentialOperationUseCase _cancelCredentialOperationUseCase;
   final ProvidedCredentialsUseCase _providedCredentialsUseCase;
   final CancelUserInteractionOperationUseCase
-      _cancelUserInteractionOperationUseCase;
+  _cancelUserInteractionOperationUseCase;
   final EnrollCredentialUseCase _enrollCredentialUseCase;
   final VerifyCredentialUseCase _verifyCredentialUseCase;
   final ErrorHandler _errorHandler;
@@ -93,31 +93,32 @@ class CredentialBloc extends Bloc<CredentialEvent, CredentialState> {
         await _enrollCredentialUseCase
             .execute(event.kind, credentials.value)
             .catchError((error) {
-          _errorHandler.handle(error);
-        });
+              _errorHandler.handle(error);
+            });
         break;
       case CredentialMode.verification:
         await _verifyCredentialUseCase
             .execute(event.kind, credentials.value)
             .catchError((error) {
-          _errorHandler.handle(error);
-        });
+              _errorHandler.handle(error);
+            });
         break;
       case CredentialMode.change:
         if (credentials.oldValue == null) {
           debugPrint(
-              'Old credentials value is null during credentials change!');
+            'Old credentials value is null during credentials change!',
+          );
           _errorHandler.handle(BusinessException.invalidState());
         }
         await _providedCredentialsUseCase
             .execute(
-          kind: event.kind,
-          oldCredential: credentials.oldValue!,
-          newCredential: credentials.value,
-        )
+              kind: event.kind,
+              oldCredential: credentials.oldValue!,
+              newCredential: credentials.value,
+            )
             .catchError((error) {
-          _errorHandler.handle(error);
-        });
+              _errorHandler.handle(error);
+            });
         break;
     }
   }
@@ -134,9 +135,9 @@ class CredentialBloc extends Bloc<CredentialEvent, CredentialState> {
         });
         break;
       case CredentialMode.verification:
-        await _cancelUserInteractionOperationUseCase
-            .execute()
-            .catchError((error) {
+        await _cancelUserInteractionOperationUseCase.execute().catchError((
+          error,
+        ) {
           _errorHandler.handle(error);
         });
         break;

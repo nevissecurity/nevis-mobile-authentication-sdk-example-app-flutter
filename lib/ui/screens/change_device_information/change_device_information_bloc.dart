@@ -49,12 +49,12 @@ class ChangeDeviceInformationBloc
   ) async {
     await _changeDeviceInformationUseCase
         .execute(
-      name: event.newName,
-      fcmRegistrationToken: _deviceInformation?.fcmRegistrationToken,
-    )
+          name: event.newName,
+          fcmRegistrationToken: _deviceInformation?.fcmRegistrationToken,
+        )
         .catchError((e) {
-      _errorHandler.handle(e);
-    });
+          _errorHandler.handle(e);
+        });
   }
 
   void _handleCancel(

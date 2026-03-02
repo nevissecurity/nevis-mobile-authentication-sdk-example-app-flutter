@@ -12,9 +12,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/state_repository.dart';
 
 abstract class ChangePinUseCase {
-  Future<void> execute({
-    required String username,
-  });
+  Future<void> execute({required String username});
 }
 
 @Injectable(as: ChangePinUseCase)
@@ -36,21 +34,21 @@ class ChangePinUseCaseImpl implements ChangePinUseCase {
   );
 
   @override
-  Future<void> execute({
-    required String username,
-  }) async {
+  Future<void> execute({required String username}) async {
     _operationTypeRepository.save(OperationType.pinChange);
-    await _clientProvider.client.operations.pinChange //
+    await _clientProvider.client.operations.pinChange
         .username(username)
         .pinChanger(_pinChanger)
         .onSuccess(() {
-      debugPrint('PIN change succeeded.');
-      _domainBloc.add(ResultEvent());
-      _pinChangeStateRepository.reset();
-    }).onError((error) {
-      debugPrint('PIN change failed: ${error.description}');
-      _errorHandler.handle(error);
-      _pinChangeStateRepository.reset();
-    }).execute();
+          debugPrint('PIN change succeeded.');
+          _domainBloc.add(ResultEvent());
+          _pinChangeStateRepository.reset();
+        })
+        .onError((error) {
+          debugPrint('PIN change failed: ${error.description}');
+          _errorHandler.handle(error);
+          _pinChangeStateRepository.reset();
+        })
+        .execute();
   }
 }

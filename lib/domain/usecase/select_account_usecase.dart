@@ -12,7 +12,7 @@ abstract class SelectAccountUseCase {
 @Injectable(as: SelectAccountUseCase)
 class SelectAccountUseCaseImpl implements SelectAccountUseCase {
   final StateRepository<UserInteractionOperationState>
-      _userInteractionOperationStateRepository;
+  _userInteractionOperationStateRepository;
 
   SelectAccountUseCaseImpl(this._userInteractionOperationStateRepository);
 
@@ -27,9 +27,11 @@ class SelectAccountUseCaseImpl implements SelectAccountUseCase {
       throw BusinessException.invalidState();
     }
     await handler.username(username);
-    _userInteractionOperationStateRepository.save(state.copyWith(
-      accountSelectionHandler: null,
-      authenticatorSelectionHandler: null,
-    ));
+    _userInteractionOperationStateRepository.save(
+      state.copyWith(
+        accountSelectionHandler: null,
+        authenticatorSelectionHandler: null,
+      ),
+    );
   }
 }

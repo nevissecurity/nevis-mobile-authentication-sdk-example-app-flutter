@@ -29,18 +29,17 @@ class AuthCloudApiRegistrationBloc
     RegistrationConfirmedEvent event,
     Emitter<AuthCloudApiRegistrationState> emit,
   ) async {
-    String? enrollResponse =
-        event.enrollResponse.isNullOrEmpty ? null : event.enrollResponse;
-    String? appLinkUri =
-        event.appLinkUri.isNullOrEmpty ? null : event.appLinkUri;
+    String? enrollResponse = event.enrollResponse.isNullOrEmpty
+        ? null
+        : event.enrollResponse;
+    String? appLinkUri = event.appLinkUri.isNullOrEmpty
+        ? null
+        : event.appLinkUri;
     await _authCloudApiRegisterUseCase
-        .execute(
-      enrollResponse: enrollResponse,
-      appLinkUri: appLinkUri,
-    )
+        .execute(enrollResponse: enrollResponse, appLinkUri: appLinkUri)
         .catchError((e) {
-      _errorHandler.handle(e);
-    });
+          _errorHandler.handle(e);
+        });
   }
 
   void _handleCancel(

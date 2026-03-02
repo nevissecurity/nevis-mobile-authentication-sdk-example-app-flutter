@@ -7,9 +7,5 @@ class SdkMetaData {
   final String? facetId;
   final String? certificateFingerprint;
 
-  SdkMetaData({
-    this.sdkVersion,
-    this.facetId,
-    this.certificateFingerprint,
-  });
+  SdkMetaData({this.sdkVersion, this.facetId, this.certificateFingerprint});
 }

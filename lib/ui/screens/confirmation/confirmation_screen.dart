@@ -21,8 +21,9 @@ class ConfirmationScreen extends StatelessWidget {
     final modalRoute = ModalRoute.of(context)!;
     final parameter = modalRoute.settings.arguments as ConfirmationParameter;
     return BlocProvider<ConfirmationBloc>(
-      create: (ctx) => GetIt.I.get<ConfirmationBloc>()
-        ..add(ConfirmationCreatedEvent(parameter)),
+      create: (ctx) =>
+          GetIt.I.get<ConfirmationBloc>()
+            ..add(ConfirmationCreatedEvent(parameter)),
       child: const ConfirmationContent(),
     );
   }
@@ -56,11 +57,13 @@ class _ConfirmationContentState extends State<ConfirmationContent>
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
       debugPrint(
-          "[ConfirmationScreen didChangeAppLifecycleState] State resumed.");
+        "[ConfirmationScreen didChangeAppLifecycleState] State resumed.",
+      );
       _bloc.add(ConfirmationResumeListeningEvent());
     } else if (state == AppLifecycleState.paused) {
       debugPrint(
-          "[ConfirmationScreen didChangeAppLifecycleState] State paused.");
+        "[ConfirmationScreen didChangeAppLifecycleState] State paused.",
+      );
       _bloc.add(ConfirmationPauseListeningEvent());
     }
   }
@@ -75,25 +78,31 @@ class _ConfirmationContentState extends State<ConfirmationContent>
       buildWhen: (oldState, newState) => !newState.isListenable,
       listener: (ctx, state) async {
         if (state is ConfirmBiometricState) {
-          _bloc.add(ConfirmationBiometricEvent(
-            title: _localization.biometricPromptTitle,
-            description: _localization.biometricPromptDescription,
-            cancelButtonText: _localization.cancelButtonTitle,
-            fallbackButtonText:
-                _localization.biometricPromptFallbackButtonTitle,
-          ));
+          _bloc.add(
+            ConfirmationBiometricEvent(
+              title: _localization.biometricPromptTitle,
+              description: _localization.biometricPromptDescription,
+              cancelButtonText: _localization.cancelButtonTitle,
+              fallbackButtonText:
+                  _localization.biometricPromptFallbackButtonTitle,
+            ),
+          );
         } else if (state is ConfirmDevicePasscodeState) {
-          _bloc.add(ConfirmationDevicePasscodeEvent(
-            title: _localization.devicePasscodePromptTitle,
-            description: _localization.devicePasscodePromptDescription,
-          ));
+          _bloc.add(
+            ConfirmationDevicePasscodeEvent(
+              title: _localization.devicePasscodePromptTitle,
+              description: _localization.devicePasscodePromptDescription,
+            ),
+          );
         } else if (state is ConfirmFingerprintState) {
-          _bloc.add(ConfirmationFingerprintEvent(
-            description: _localization.fingerprintDescription,
-            cancelButtonText: _localization.cancelButtonTitle,
-            fallbackButtonText:
-                _localization.fingerprintPromptFallbackButtonTitle,
-          ));
+          _bloc.add(
+            ConfirmationFingerprintEvent(
+              description: _localization.fingerprintDescription,
+              cancelButtonText: _localization.cancelButtonTitle,
+              fallbackButtonText:
+                  _localization.fingerprintPromptFallbackButtonTitle,
+            ),
+          );
         }
       },
       builder: (ctx, state) {
@@ -110,10 +119,9 @@ class _ConfirmationContentState extends State<ConfirmationContent>
                       _cancelButton(),
                       const SizedBox(height: 16.0),
                     ],
-                  ))
-              : const Center(
-                  child: CircularProgressIndicator(),
-                ),
+                  ),
+                )
+              : const Center(child: CircularProgressIndicator()),
         );
       },
     );
@@ -122,23 +130,24 @@ class _ConfirmationContentState extends State<ConfirmationContent>
   Widget _descriptionWidget(ConfirmationLoadedState state) {
     return Expanded(
       child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            AppText.title(
-              _localization.confirmationScreenDescription(
-                state.aaid.resolve(_localization),
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          AppText.title(
+            _localization.confirmationScreenDescription(
+              state.aaid.resolve(_localization),
+            ),
+          ),
+          if (state is ConfirmFingerprintLoadedState)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: AppText.body(
+                _localization
+                    .confirmationScreenDescriptionFingerprintVerification,
               ),
             ),
-            if (state is ConfirmFingerprintLoadedState)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: AppText.body(
-                  _localization
-                      .confirmationScreenDescriptionFingerprintVerification,
-                ),
-              ),
-          ]),
+        ],
+      ),
     );
   }
 

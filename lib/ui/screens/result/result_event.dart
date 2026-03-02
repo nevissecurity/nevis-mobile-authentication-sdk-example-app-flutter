@@ -16,8 +16,5 @@ class NavigateToHomeEvent extends ResultEvent {
   final OperationResultType resultType;
   final OperationType operationType;
 
-  NavigateToHomeEvent({
-    required this.resultType,
-    required this.operationType,
-  });
+  NavigateToHomeEvent({required this.resultType, required this.operationType});
 }
