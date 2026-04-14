@@ -28,4 +28,6 @@ runs:
 
     - name: Resolve Flutter Packages
       shell: bash
-      run: flutter pub get
+      run: |
+        flutter config --enable-swift-package-manager
+        flutter pub get

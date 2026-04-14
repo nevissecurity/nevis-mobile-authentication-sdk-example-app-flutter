@@ -1,6 +1,10 @@
 AllCops:
   NewCops: enable
   TargetRubyVersion: 3.4
+  Include:
+    - '**/*.rb'
+    - '**/Fastfile'
+    - '**/Gemfile'
   Exclude:
     - "**/Flutter.podspec"
     - "**/vendor/**/*"
@@ -28,6 +32,10 @@ Layout/FirstHashElementIndentation:
 Layout/FirstArrayElementIndentation:
   Description: 'Checks the indentation of the first element in an array literal.'
   EnforcedStyle: consistent
+
+Layout/MultilineMethodCallIndentation:
+  Description: 'Checks the indentation of method calls that span multiple lines.'
+  EnforcedStyle: indented # aligned is the default, but it doesn't work well with tabs
 
 Layout/LineLength:
   Description: 'Limits lines to 150 characters.'
