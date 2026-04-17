@@ -17,10 +17,14 @@ class DeepLinkPlugin: NSObject, FlutterPlugin, FlutterStreamHandler, FlutterScen
 	// MARK: - FlutterPlugin
 
 	static func register(with registrar: FlutterPluginRegistrar) {
-		let deepLinkMethodChannel = FlutterMethodChannel(name: MethodChannel.Name.deeplink,
-		                                                 binaryMessenger: registrar.messenger())
-		let deepLinkEventChannel = FlutterEventChannel(name: EventChannel.Name.deeplink,
-		                                               binaryMessenger: registrar.messenger())
+		let deepLinkMethodChannel = FlutterMethodChannel(
+			name: MethodChannel.Name.deeplink,
+			binaryMessenger: registrar.messenger()
+		)
+		let deepLinkEventChannel = FlutterEventChannel(
+			name: EventChannel.Name.deeplink,
+			binaryMessenger: registrar.messenger()
+		)
 		let instance = DeepLinkPlugin.shared
 		registrar.addMethodCallDelegate(instance, channel: deepLinkMethodChannel)
 		deepLinkEventChannel.setStreamHandler(instance)
@@ -29,10 +33,10 @@ class DeepLinkPlugin: NSObject, FlutterPlugin, FlutterStreamHandler, FlutterScen
 
 	func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
 		switch call.method {
-		case FlutterMethod.initialLink:
-			result(initialLink)
-		default:
-			result(FlutterMethodNotImplemented)
+			case FlutterMethod.initialLink:
+				result(initialLink)
+			default:
+				result(FlutterMethodNotImplemented)
 		}
 	}
 
