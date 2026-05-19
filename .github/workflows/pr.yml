@@ -46,7 +46,7 @@ jobs:
       sdk-version: ${{ steps.get-versions.outputs.sdk-version }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Fetch Versions
         id: get-versions
@@ -58,7 +58,7 @@ jobs:
     needs: [versioning]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Resolve RubyGem Dependencies for Android
         uses: ruby/setup-ruby@v1
@@ -90,7 +90,7 @@ jobs:
     needs: [versioning]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
@@ -109,7 +109,7 @@ jobs:
     needs: [versioning, lint-flutter, lint-ruby]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
@@ -136,7 +136,7 @@ jobs:
     needs: [versioning, lint-flutter, lint-ruby]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
