@@ -3,22 +3,16 @@ require "fileutils"
 
 module Fastlane
 	module Actions
+		##
 		# This class provides an action to modify a file by replacing, appending, or prepending content.
 		#
-		# Example usage:
-		# modify_file(
-		#   file_path: "path/to/file",
-		#   old_value: "old_value",
-		#   new_value: "new_value",
-		#   mode: "replace"
-		# )
-		#
-		# Available options:
-		# - file_path: The path to the file to be modified (String, required)
-		# - old_value: The old value to be replaced, appended after, or prepended before with the new value (String, required)
-		# - new_value: The new value (String, required)
-		# - mode: The working mode. Possible values are "replace","append" or "prepend" (String, optional, default: "replace")
+		# See {ModifyFileAction.available_options available options} for supported parameters.
 		class ModifyFileAction < Action
+			##
+			# Main entry point for this Fastlane action.
+			#
+			# @param params [FastlaneCore::Configuration] Parameters for the action.
+			# @return [void]
 			def self.run(params)
 				file_path ||= params[:file_path]
 				old_value = params[:old_value]
@@ -29,6 +23,23 @@ module Fastlane
 				modify(file_path, old_value, new_value, mode)
 			end
 
+			##
+			# Modifies a text file in-place by applying an operation ("replace", "append", or "prepend")
+			# on every line that contains `old_value`.
+			#
+			# The method streams the original file line-by-line into a temporary file, then
+			# replaces the original file with the temporary one.
+			#
+			# @param path [String] Path to the file to modify.
+			# @param old_value [String] Substring to look for in each line. The operation is applied
+			#   only to lines that include this value.
+			# @param new_value [String] Replacement text (for "replace") or the text to insert
+			#   (for "append"/"prepend").
+			# @param mode [String] Operation mode:
+			#   - `replace`: Replaces the first occurrence of `old_value` in the matching line with `new_value`.
+			#   - `append`: Writes the original matching line, then writes `new_value` as a new line after it.
+			#   - `prepend`: Writes `new_value` as a new line before the original matching line.
+			# @return [void]
 			def self.modify(path, old_value, new_value, mode)
 				raise "No file exist at path: (#{File.expand_path(path)})!" unless File.file?(path)
 
@@ -64,6 +75,7 @@ module Fastlane
 					raise "Modifying file failed!"
 				end
 			end
+			private_class_method :modify
 
 			def self.description
 				"Modify file of your Android project."

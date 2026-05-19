@@ -25,7 +25,6 @@ env:
   PRIVATE_REPOSITORY_API_KEY: ${{ secrets.PRIVATE_REPOSITORY_API_KEY }}
   PRIVATE_DART_REPOSITORY_URL: ${{ secrets.PRIVATE_DART_REPOSITORY_URL }}
   PRIVATE_NATIVE_IOS_REPOSITORY_URL: ${{ secrets.PRIVATE_NATIVE_IOS_REPOSITORY_URL }}
-  PRIVATE_NATIVE_IOS_REPOSITORY_NAME: ${{ secrets.PRIVATE_NATIVE_IOS_REPOSITORY_NAME }}
   PRIVATE_NATIVE_ANDROID_REPOSITORY_URL: ${{ secrets.PRIVATE_NATIVE_ANDROID_REPOSITORY_URL }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GH_USERNAME: ${{ vars.GH_USERNAME }}
@@ -33,6 +32,7 @@ env:
   MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
   MATCH_GIT_URL: ${{ vars.MATCH_GIT_URL }}
   MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+  NMA_IOS_SDK_VERSION: ${{ vars.NMA_IOS_SDK_VERSION }}
   DEVELOPER_PORTAL_TEAM_ID: ${{ secrets.DEVELOPER_PORTAL_TEAM_ID }}
   CODE_SIGNING_IDENTITY: ${{ secrets.CODE_SIGNING_IDENTITY }}
   TEMP_KEYCHAIN_NAME: ${{ vars.TEMP_KEYCHAIN_NAME }}
@@ -46,7 +46,7 @@ jobs:
       sdk-version: ${{ steps.get-versions.outputs.sdk-version }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Fetch Versions
         id: get-versions
@@ -58,31 +58,16 @@ jobs:
     needs: [versioning]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Resolve RubyGem Dependencies for Android
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
           bundler-cache: true
-          working-directory: 'android'
 
-      - name: Lint Ruby for Android
+      - name: Lint Ruby
         uses: ./.github/actions/lint-ruby
-        with:
-          working-directory: 'android'
-
-      - name: Resolve RubyGem Dependencies for iOS
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ env.RUBY_VERSION }}
-          bundler-cache: true
-          working-directory: 'ios'
-
-      - name: Lint Ruby for iOS
-        uses: ./.github/actions/lint-ruby
-        with:
-          working-directory: 'ios'
 
   lint-flutter:
     name: Lint Flutter
@@ -90,7 +75,7 @@ jobs:
     needs: [versioning]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
@@ -109,7 +94,7 @@ jobs:
     needs: [versioning, lint-flutter, lint-ruby]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
@@ -136,7 +121,7 @@ jobs:
     needs: [versioning, lint-flutter, lint-ruby]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter

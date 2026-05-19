@@ -53,7 +53,7 @@ jobs:
       build-number: ${{ steps.get-versions.outputs.build-number }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Fetch Versions
         id: get-versions
@@ -65,7 +65,7 @@ jobs:
     runs-on: ${{ github.event.inputs.ios-runner-type || 'self-hosted' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Update Configuration
         uses: ./.github/actions/update-config
@@ -101,7 +101,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Update Configuration
         uses: ./.github/actions/update-config
@@ -137,7 +137,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Project
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Create Tag
         uses: ./.github/actions/create-tag

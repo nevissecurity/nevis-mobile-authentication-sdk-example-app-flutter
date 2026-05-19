@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "lineLength": 250,
+  "indentation": {
+    "tabs": 1
+  },
+  "tabWidth": 4,
+  "indentSwitchCaseLabels": true,
+  "maximumBlankLines": 1,
+  "respectsExistingLineBreaks": true,
+  "lineBreakBeforeControlFlowKeywords": false,
+  "lineBreakBeforeEachArgument": true,
+  "lineBreakBeforeEachGenericRequirement": false,
+  "prioritizeKeepingFunctionOutputTogether": false,
+  "indentConditionalCompilationBlocks": true,
+  "lineBreakAroundMultilineExpressionChainComponents": false,
+  "spacesAroundRangeFormationOperators": true,
+  "fileScopedDeclarationPrivacy": {
+    "accessLevel": "private"
+  },
+  "rules": {
+    "FileScopedDeclarationPrivacy": true,
+    "NoAccessLevelOnExtensionDeclaration": false,
+    "OrderedImports": true,
+    "ReplaceForEachWithForLoop": false,
+    "ReturnVoidInsteadOfEmptyTuple": false
+  }
+}

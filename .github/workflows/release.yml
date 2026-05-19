@@ -39,38 +39,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Resolve RubyGem Dependencies for Android
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
           bundler-cache: true
-          working-directory: 'android'
 
-      - name: Lint Ruby for Android
+      - name: Lint Ruby
         uses: ./.github/actions/lint-ruby
-        with:
-          working-directory: 'android'
-
-      - name: Resolve RubyGem Dependencies for iOS
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ env.RUBY_VERSION }}
-          bundler-cache: true
-          working-directory: 'ios'
-
-      - name: Lint Ruby for iOS
-        uses: ./.github/actions/lint-ruby
-        with:
-          working-directory: 'ios'
 
   lint-flutter:
     name: Lint Flutter
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
@@ -87,7 +72,7 @@ jobs:
     needs: [lint-flutter, lint-ruby]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
@@ -110,7 +95,7 @@ jobs:
     needs: [lint-flutter, lint-ruby]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
