@@ -140,11 +140,12 @@ platform :ios do
 	desc "Utilize private repositories"
 	desc ""
 	private_lane :utilize_private_repos do
+		repository_url = ENV["PRIVATE_NATIVE_REPOSITORY_URL"]
 		update_nma_sdk(
 			project:,
-			repository_url: ENV["PRIVATE_NATIVE_REPOSITORY_URL"],
+			repository_url:,
 			version: ENV["NMA_IOS_SDK_VERSION"]
-		)
+		) if repository_url
 	end
 
 	desc "Build the application"
