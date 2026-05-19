@@ -16,10 +16,18 @@ runs:
         bundler-cache: true
         working-directory: 'ios'
 
-    - name: Add Private Cocoapods Repo
+    - name: Setup .netrc for github.com
       if: ${{ env.BUILD_TYPE == 'SNAPSHOT' }}
-      shell: bash
-      working-directory: 'ios'
-      run: |
-        bundle exec pod repo remove ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_NAME }} &> /dev/null || true
-        bundle exec pod repo add ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_NAME }} ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_URL }}
+      uses: extractions/netrc@v2
+      with:
+        machine: github.com
+        username: ${{ env.GH_USERNAME }}
+        password: ${{ env.GH_PERSONAL_ACCESS_TOKEN }}
+
+    - name: Setup .netrc for api.github.com
+      if: ${{ env.BUILD_TYPE == 'SNAPSHOT' }}
+      uses: extractions/netrc@v2
+      with:
+        machine: api.github.com
+        username: ${{ env.GH_USERNAME }}
+        password: ${{ env.GH_PERSONAL_ACCESS_TOKEN }}
