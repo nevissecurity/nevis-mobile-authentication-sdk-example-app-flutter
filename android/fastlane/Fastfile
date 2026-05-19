@@ -13,6 +13,13 @@ app_build_gradle = File.join(root_dir, "app/build.gradle")
 build_gradle = File.join(root_dir, "build.gradle")
 public_maven_repository_url = "https://maven.pkg.github.com/nevissecurity/nevis-mobile-authentication-sdk-android-package"
 
+##
+# Reports a successful build to Slack (if `SLACK_WEBHOOK_URL` environment variable is set).
+#
+# Uses `CURRENT_BUILD_URL` environment variable to provide context on success.
+#
+# @param message [String] Message prefix to send.
+# @return [void]
 def report_on_success(message)
 	slack(
 		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
@@ -20,6 +27,15 @@ def report_on_success(message)
 	) if ENV["SLACK_WEBHOOK_URL"]
 end
 
+##
+# Reports a failed build to Slack (if `SLACK_WEBHOOK_URL` environment variable is set)
+# and fails the lane with the given exception and surface the error in Fastlane output.
+#
+# Uses `CURRENT_BUILD_URL` and `BUILD_NUMBER` environment variables to provide context on the failure.
+#
+# @param message [String] Message to send.
+# @param exception [Exception] The exception to report.
+# @return [void]
 def report_on_error(message, exception)
 	slack(
 		message: "#{message}\nCheck build logs: #{ENV['CURRENT_BUILD_URL']}",
@@ -117,7 +133,7 @@ platform :android do
 			app: ENV["FIREBASE_APP_ID_ANDROID"],
 			apk_path:,
 			groups: "developers, internal-testers, presales"
-		)
+		) if ENV["FIREBASE_TOKEN"]
 		report_on_success("#{display_name} build is completed: #{version} (#{build_number}) ✅")
 	rescue => e
 		report_on_error("#{display_name} build failed ❌", e)

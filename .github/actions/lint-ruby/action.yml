@@ -1,16 +1,9 @@
 name: Lint Ruby
 description: Lints Ruby code running RuboCop
 
-inputs:
-  working-directory:
-    description: 'The working directory to run the linter in'
-    required: false
-    default: '.'
-
 runs:
   using: composite
   steps:
     - name: Run Ruby Linter
       shell: bash
-      working-directory: ${{ inputs.working-directory }}
-      run: bundle exec rubocop -c ${{ github.workspace }}/.rubocop.yml
+      run: bundle exec rubocop

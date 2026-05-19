@@ -1,4 +1,8 @@
-![Nevis Logo](https://www.nevis.net/hubfs/Nevis/images/logotype.svg)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://www.nevis.net/hubfs/Nevis%202023%20theme/Icons/negativ.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://www.nevis.net/hubfs/Nevis%202023%20theme/Icons/positiv.svg">
+  <img alt="Fallback image description" src="https://www.nevis.net/hubfs/Nevis/images/logotype.svg">
+</picture>
 
 # Nevis Mobile Authentication SDK Flutter Example App
 
@@ -66,11 +70,9 @@ The package repository only exposes the `debug` flavor. To use the `release` fla
 <details>
 <summary>iOS</summary>
 
-Native iOS dependencies of this project (including the Nevis Mobile Authentication Client SDK for iOS) are provided via [Cocoapods](https://cocoapods.org/). Please install all dependencies by running the following command in your [iOS](/ios) directory:
+[Swift Package Manager](https://developer.apple.com/documentation/xcode/swift-packages) is used to resolve application dependencies. See the "Frameworks, Libraries, and Embedded Content" section on the Runner target's General pane in Xcode for the list of exact dependencies.
 
-```bash
-pod install
-```
+Xcode updates your package dependencies and resolves package versions automatically. If not, it can be triggered from the File > Packages menu.
 
 </details>
 
@@ -157,7 +159,7 @@ For more information about custom URL scheme, visit the official [Apple guide](h
 Now you're ready to build the example app by running:
 
 ```bash
-flutter build ios --no-codesign
+PERMISSION_CAMERA=1 flutter build ios --no-codesign
 ```
 
 ```bash
@@ -279,7 +281,7 @@ Out-of-band operations occur when a message is delivered to the application thro
 
 #### Change device information
 
-During registration, the device information can be provided that contains the name identifying your device, and also the Firebase Cloud Messaging registration token. Updating both the name and the token is implemented in the [ChangeDeviceInformationUseCase](lib/domain/usecase/change_device_information_usecase.dart) class.
+During registration, the device information can be provided that contains the name identifying your device, and also the Firebase Cloud Messaging registration token. Updating both the name and the token are implemented in the [ChangeDeviceInformationUseCase](lib/domain/usecase/change_device_information_usecase.dart) class.
 
 > [!NOTE]
 > Firebase Cloud Messaging is not supported in the example app.

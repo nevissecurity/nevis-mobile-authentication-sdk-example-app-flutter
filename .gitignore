@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/xcode,dotenv,android,flutter,fastlane,cocoapods,macos
-# Edit at https://www.toptal.com/developers/gitignore?templates=xcode,dotenv,android,flutter,fastlane,cocoapods,macos
+# Created by https://www.toptal.com/developers/gitignore/api/macos,xcode,dotenv,android,flutter,fastlane,swiftpackagemanager
+# Edit at https://www.toptal.com/developers/gitignore?templates=macos,xcode,dotenv,android,flutter,fastlane,swiftpackagemanager
 
 ### Android ###
 # Gradle files
@@ -42,15 +42,6 @@ gen-external-apklibs
 # Replacement of .externalNativeBuild directories introduced
 # with Android Studio 3.5.
 
-### CocoaPods ###
-## CocoaPods GitIgnore Template
-
-# CocoaPods - Only use to conserve bandwidth / Save time on Pushing
-#           - Also handy if you have a large number of dependant pods
-#           - AS PER https://guides.cocoapods.org/using/using-cocoapods.html NEVER IGNORE THE LOCK FILE
-Pods/
-Podfile.lock
-
 ### dotenv ###
 .env
 
@@ -84,7 +75,6 @@ Podfile.lock
 .flutter-plugins
 .flutter-plugins-dependencies
 .fvm/flutter_sdk
-.fvmrc
 .packages
 .pub-cache/
 .pub/
@@ -174,6 +164,15 @@ Temporary Items
 # iCloud generated files
 *.icloud
 
+### SwiftPackageManager ###
+Packages
+Package.resolved
+.build/
+xcuserdata
+DerivedData/
+*.xcodeproj
+
+
 ### Xcode ###
 ## User settings
 xcuserdata/
@@ -191,7 +190,7 @@ xcuserdata/
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
 
-# End of https://www.toptal.com/developers/gitignore/api/xcode,dotenv,android,flutter,fastlane,cocoapods,macos
+# End of https://www.toptal.com/developers/gitignore/api/macos,xcode,dotenv,android,flutter,fastlane,swiftpackagemanager
 
 # Custom
 
