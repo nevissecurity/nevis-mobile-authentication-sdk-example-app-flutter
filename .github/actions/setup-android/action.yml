@@ -5,7 +5,7 @@ runs:
   using: composite
   steps:
     - name: Setup Java JDK
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         distribution: 'zulu'
         java-version: ${{ env.JAVA_VERSION }}
@@ -19,7 +19,7 @@ runs:
 
     - name: Decode Keystore
       if: ${{ env.KEYSTORE_FILE != '' }}
-      uses: timheuer/base64-to-file@v1
+      uses: timheuer/base64-to-file@v2
       with:
         fileName: 'keystore-example-app.jks'
         fileDir: './android/etc'
