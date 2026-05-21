@@ -110,11 +110,8 @@ jobs:
       - name: Build iOS Example App
         env:
           PRIVATE_NATIVE_REPOSITORY_URL: ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_URL }}
-        uses: maierj/fastlane-action@v3.1.0
-        with:
-          lane: 'pr'
-          subdirectory: 'ios'
-
+        working-directory: ios
+        run: bundle exec fastlane pr
   android-build:
     name: Building Android App
     runs-on: ubuntu-latest
@@ -137,7 +134,5 @@ jobs:
       - name: Build Android Example App
         env:
           PRIVATE_NATIVE_REPOSITORY_URL: ${{ env.PRIVATE_NATIVE_ANDROID_REPOSITORY_URL }}
-        uses: maierj/fastlane-action@v3.1.0
-        with:
-          lane: 'pr'
-          subdirectory: 'android'
+        working-directory: android
+        run: bundle exec fastlane pr

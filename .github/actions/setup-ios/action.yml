@@ -18,7 +18,7 @@ runs:
 
     - name: Setup .netrc for github.com
       if: ${{ env.BUILD_TYPE == 'SNAPSHOT' }}
-      uses: extractions/netrc@v2
+      uses: extractions/netrc@v3
       with:
         machine: github.com
         username: ${{ env.GH_USERNAME }}
@@ -26,7 +26,7 @@ runs:
 
     - name: Setup .netrc for api.github.com
       if: ${{ env.BUILD_TYPE == 'SNAPSHOT' }}
-      uses: extractions/netrc@v2
+      uses: extractions/netrc@v3
       with:
         machine: api.github.com
         username: ${{ env.GH_USERNAME }}
