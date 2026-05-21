@@ -91,16 +91,8 @@ jobs:
       - name: Build And Distribute The iOS Example App
         env:
           PRIVATE_NATIVE_REPOSITORY_URL: ${{ env.PRIVATE_NATIVE_IOS_REPOSITORY_URL }}
-        uses: maierj/fastlane-action@v3.1.0
-        with:
-          lane: 'develop'
-          subdirectory: 'ios'
-          options: |
-            {
-              "version": "${{ needs.versioning.outputs.app-version }}",
-              "build_number": "${{ needs.versioning.outputs.build-number }}"
-            }
-
+        working-directory: ios
+        run: bundle exec fastlane develop version:"${{ needs.versioning.outputs.app-version }}" build_number:"${{ needs.versioning.outputs.build-number }}"
   publish-android:
     name: Publishing Android App
     needs: [versioning]
@@ -131,16 +123,8 @@ jobs:
       - name: Build And Distribute The Android Example App
         env:
           PRIVATE_NATIVE_REPOSITORY_URL: ${{ env.PRIVATE_NATIVE_ANDROID_REPOSITORY_URL }}
-        uses: maierj/fastlane-action@v3.1.0
-        with:
-          lane: 'develop'
-          subdirectory: 'android'
-          options: |
-            {
-              "version": "${{ needs.versioning.outputs.app-version }}",
-              "build_number": "${{ needs.versioning.outputs.build-number }}"
-            }
-
+        working-directory: android
+        run: bundle exec fastlane develop version:"${{ needs.versioning.outputs.app-version }}" build_number:"${{ needs.versioning.outputs.build-number }}"
   tag:
     name: Tagging
     needs: [versioning, publish-ios, publish-android]
