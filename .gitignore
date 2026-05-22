@@ -198,3 +198,7 @@ xcuserdata/
 untranslated.txt
 # gitignore.io is not updated to ignore Flutter 3.32.0 related files
 **/ios/Flutter/ephemeral/
+
+# FVM Version Cache
+**/.fvm
+**/.fvmrc
