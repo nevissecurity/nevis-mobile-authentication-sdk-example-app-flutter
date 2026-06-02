@@ -84,11 +84,8 @@ jobs:
         uses: ./.github/actions/setup-ios
 
       - name: Build iOS Example App
-        uses: maierj/fastlane-action@v3.1.0
-        with:
-          lane: 'pr'
-          subdirectory: 'ios'
-
+        working-directory: ios
+        run: bundle exec fastlane pr
   android-build:
     name: Building Android App
     runs-on: ubuntu-latest
@@ -107,7 +104,5 @@ jobs:
         uses: ./.github/actions/setup-android
 
       - name: Build Android Example App
-        uses: maierj/fastlane-action@v3.1.0
-        with:
-          lane: 'pr'
-          subdirectory: 'android'
+        working-directory: android
+        run: bundle exec fastlane pr
