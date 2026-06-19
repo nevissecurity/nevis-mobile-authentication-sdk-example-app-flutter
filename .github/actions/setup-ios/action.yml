@@ -9,6 +9,10 @@ runs:
       with:
         xcode-version: ${{ env.XCODE_VERSION }}
 
+    - name: Clear SPM manifest cache
+      shell: bash
+      run: rm -rf ~/Library/Caches/org.swift.swiftpm/manifests/
+
     - name: Cache RubyGem Dependencies
       uses: ruby/setup-ruby@v1
       with:
