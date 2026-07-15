@@ -32,7 +32,10 @@ dependencies:
   injectable: ^2.7.1+4
   intl: any
   json_annotation: ^4.11.0
-  mobile_scanner: ^7.2.0
+  # Pinned exactly: 7.2.0 bundles androidx.camera 1.5.3, which requires
+  # Android Gradle plugin 8.6.0 (current AGP). Newer 7.x releases pull
+  # camera 1.6.1, which requires AGP 8.9.1 and breaks the Android build.
+  mobile_scanner: 7.2.0
   nevis_mobile_authentication_sdk: '>=4.6.0 <4.7.0'
   permission_handler: ^12.0.3
 
