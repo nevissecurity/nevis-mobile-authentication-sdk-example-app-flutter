@@ -7,8 +7,8 @@ version: 4.6.0+1
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
-  sdk: ^3.10.0
-  flutter: ^3.38.1
+  sdk: ^3.12.2
+  flutter: ^3.44.6
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -24,14 +24,14 @@ dependencies:
 
   cookie_jar: ^4.0.9
   cupertino_icons: ^1.0.9
-  device_info_plus: ^12.4.0
-  dio: ^5.9.2
+  device_info_plus: ^13.2.0
+  dio: ^5.10.0
   dio_cookie_manager: ^3.4.0
   flutter_bloc: ^9.1.1
   get_it: ^9.2.1
-  injectable: ^2.7.1+4
+  injectable: ^3.0.0
   intl: any
-  json_annotation: ^4.11.0
+  json_annotation: ^4.12.0
   # Pinned exactly: 7.2.0 bundles androidx.camera 1.5.3, which requires
   # Android Gradle plugin 8.6.0 (current AGP). Newer 7.x releases pull
   # camera 1.6.1, which requires AGP 8.9.1 and breaks the Android build.
@@ -50,9 +50,9 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
   plugin_platform_interface: ^2.1.8
-  injectable_generator: ^2.12.1
-  build_runner: ^2.13.1
-  json_serializable: ^6.13.1
+  injectable_generator: ^3.1.0
+  build_runner: ^2.15.1
+  json_serializable: ^6.14.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

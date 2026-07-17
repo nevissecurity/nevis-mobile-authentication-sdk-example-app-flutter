@@ -38,10 +38,9 @@ Your development setup has to meet the following prerequisites:
 * Xcode 26.2, including Swift 6 or later
 * Android 6 or later, with API level 23 -or-
 * Android 10 or later, with API level 29, for the biometric authenticator to work
-* Gradle 8.7 or later
-* Android Gradle Plugin `com.android.tools.build:gradle` 8.6.0 or later
-* Kotlin Gradle Plugin `org.jetbrains.kotlin:kotlin-gradle-plugin` 2.1.0 or later
-* Dart SDK 3.10.0 or later
+* Gradle 9.6 or later
+* Android Gradle Plugin `com.android.tools.build:gradle` 9.3.0 or later
+* Dart SDK 3.12.2 or later
 * Java 17
 
 ### Initialization
@@ -112,7 +111,7 @@ The example applications handle deep links those contain a valid `dispatchTokenR
 <details>
 <summary>Android</summary>
 
-The related configuration located in the [AndroidManifest.xml](android/app/src/main/AndroidManifest.xml) for [MainActivity](android/app/src/main/kotlin/ch/nevis/nevis_mobile_authentication_sdk_example_app_flutter/MainActivity.kt) with action `android.intent.action.VIEW`.
+The related configuration located in the [AndroidManifest.xml](android/app/src/main/AndroidManifest.xml) for [MainActivity](android/app/src/main/kotlin/ch/nevis/exampleapp/MainActivity.kt) with action `android.intent.action.VIEW`.
 Change the `nevisaccess` scheme value in the following `intent-filter` with the right scheme information of your environment.
 
 ```xml
@@ -134,7 +133,7 @@ For more information about deep links, visit the official [Android guide](https:
 <details>
 <summary>iOS</summary>
 
-The related configuration located in the [Info.plist](ios/Runner/Resources/Info.plist) file in the `CFBundleURLSchemes` array.
+The related configuration located in the [Info.plist](ios/Runner/Info.plist) file in the `CFBundleURLSchemes` array.
 Change the `nevisaccess` scheme to the right scheme information of your environment.
 
 ```
