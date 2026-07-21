@@ -6,11 +6,11 @@
 default_platform(:android)
 
 root_dir = File.expand_path(File.join(File.dirname(__FILE__), "../"))
-signing_configs_gradle = File.join(root_dir, "app/signing_configs.gradle")
 apk_path = File.join(root_dir, "../build/app/outputs/flutter-apk/app-debug.apk")
 display_name = "Nevis Mobile Authentication SDK Example App Flutter Android"
-app_build_gradle = File.join(root_dir, "app/build.gradle")
-build_gradle = File.join(root_dir, "build.gradle")
+app_build_gradle = File.join(root_dir, "app/build.gradle.kts")
+build_gradle = File.join(root_dir, "build.gradle.kts")
+keystore_properties_file = File.join(root_dir, "keystore.properties")
 public_maven_repository_url = "https://maven.pkg.github.com/nevissecurity/nevis-mobile-authentication-sdk-android-package"
 
 ##
@@ -91,8 +91,8 @@ platform :android do
 		private_maven_repository_url = ENV["PRIVATE_NATIVE_REPOSITORY_URL"]
 		modify_file(
 			file_path: build_gradle,
-			old_value: "url \"#{public_maven_repository_url}\"",
-			new_value: "url \"#{private_maven_repository_url}\""
+			old_value: "url = uri(\"#{public_maven_repository_url}\")",
+			new_value: "url = uri(\"#{private_maven_repository_url}\")"
 		) if private_maven_repository_url
 	end
 
@@ -112,19 +112,17 @@ platform :android do
 		build_number = options[:build_number]
 		UI.message("Distributing #{display_name} #{version} (#{build_number}) 📦")
 
-		sh("echo \"#{ENV['SIGNING_CONFIGS']}\" > #{signing_configs_gradle}")
+		unless File.exist?(keystore_properties_file)
+			UI.user_error!(
+				"keystore.properties not found at #{keystore_properties_file}. " \
+				"Set the KEYSTORE_FILE and KEYSTORE_PROPERTIES secrets so the \"signing\" signingConfig can be created."
+			)
+		end
 
 		modify_file(
 			file_path: app_build_gradle,
-			old_value: "signingConfig signingConfigs.debug",
-			new_value: "signingConfig signingConfigs.signing"
-		)
-
-		modify_file(
-			file_path: app_build_gradle,
-			old_value: "android {",
-			new_value: "apply from: 'signing_configs.gradle'\n",
-			mode: "prepend"
+			old_value: "signingConfig = signingConfigs.getByName(\"debug\")",
+			new_value: "signingConfig = signingConfigs.getByName(\"signing\")"
 		)
 
 		build
