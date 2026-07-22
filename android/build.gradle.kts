@@ -8,7 +8,9 @@ fun getConfig(name: String): String {
     System.getenv(name)?.let { return it }
     System.getProperty(name)?.let { return it }
     providers.gradleProperty(name).orNull?.let { return it }
-    throw GradleException("Getting configuration with name $name failed! Set it as environment variable or as local/project/system property.")
+    throw GradleException(
+        "Getting configuration with name $name failed! Set it as environment variable or as local/project/system property."
+    )
 }
 
 allprojects {
