@@ -9,7 +9,7 @@
         android:label="Nevis Flutter">
 
         <activity
-            android:name="ch.nevis.nevis_mobile_authentication_sdk_example_app_flutter.MainActivity"
+            android:name="ch.nevis.exampleapp.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:exported="true"
             android:hardwareAccelerated="true"
