@@ -1,0 +1,11 @@
+[versions]
+agp-version = "9.3.0"
+ktlint-version = "14.2.0"
+nevis-mobile-authentication-sdk-version = "4.5.+"
+
+[libraries]
+nevis-mobile-authentication-sdk-debug = { group = "ch.nevis", name = "nevis-mobile-authentication-sdk-android-debug", version.ref = "nevis-mobile-authentication-sdk-version" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp-version" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-version" }

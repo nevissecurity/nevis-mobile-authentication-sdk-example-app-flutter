@@ -1,0 +1,10 @@
+name: Lint Kotlin
+description: Lints Kotlin code by running Ktlint
+
+runs:
+  using: composite
+  steps:
+    - name: Run Kotlin Linter
+      shell: bash
+      working-directory: android
+      run: ./gradlew ktlintCheck

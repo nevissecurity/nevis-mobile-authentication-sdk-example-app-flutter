@@ -38,10 +38,9 @@ Your development setup has to meet the following prerequisites:
 * Xcode 26.2, including Swift 6 or later
 * Android 6 or later, with API level 23 -or-
 * Android 10 or later, with API level 29, for the biometric authenticator to work
-* Gradle 8.7 or later
-* Android Gradle Plugin `com.android.tools.build:gradle` 8.6.0 or later
-* Kotlin Gradle Plugin `org.jetbrains.kotlin:kotlin-gradle-plugin` 2.1.0 or later
-* Dart SDK 3.10.0 or later
+* Gradle 9.6 or later
+* Android Gradle Plugin `com.android.tools.build:gradle` 9.3.0 or later
+* Dart SDK 3.12.2 or later
 * Java 17
 
 ### Initialization
@@ -73,6 +72,56 @@ The package repository only exposes the `debug` flavor. To use the `release` fla
 [Swift Package Manager](https://developer.apple.com/documentation/xcode/swift-packages) is used to resolve application dependencies. See the "Frameworks, Libraries, and Embedded Content" section on the Runner target's General pane in Xcode for the list of exact dependencies.
 
 Xcode updates your package dependencies and resolves package versions automatically. If not, it can be triggered from the File > Packages menu.
+
+#### Linking the Release Flavor (Target Duplication)
+
+The Nevis Mobile Authentication SDK iOS package publishes two XCFramework targets via its public SPM repository:
+
+- `NevisMobileAuthentication-Debug` — debug flavor, linked by the default `Runner` target
+- `NevisMobileAuthentication` — release flavor, intended for production/obfuscated builds
+
+To produce an IPA using the release flavor, a separate Xcode target must be created. Follow these steps:
+
+**1. Duplicate the Runner target**
+
+In the Xcode project navigator, select the `Runner` target, right-click and choose **Duplicate**. Rename the new target (e.g. `Runner_Prod`) and update its reference as needed.
+
+**2. Add both SPM products to the Xcode project**
+
+In Xcode, check each target's **Frameworks, Libraries, and Embedded Content** section and link the appropriate XCFramework product:
+- `Runner` → `NevisMobileAuthentication-Debug`
+- `Runner_Prod` → `NevisMobileAuthentication`
+
+**3. Add the required Flutter build configurations**
+
+Flutter's [flavor mechanism](https://docs.flutter.dev/deployment/flavors-ios) requires project-level build configurations named `Debug-<FlavorName>`, `Release-<FlavorName>`, and `Profile-<FlavorName>` to exist. In `project.pbxproj`, add the following for both the **project** and the **new target**:
+
+- `Debug-Runner_Prod`
+- `Release-Runner_Prod`
+- `Profile-Runner_Prod`
+
+These should be based on the existing `Debug`, `Release`, and `Profile` configurations respectively (same `baseConfigurationReference` `.xcconfig` files).
+
+**4. Edit the new scheme**
+
+After duplicating the target, a `Runner_Prod.xcscheme` is created under `ios/Runner.xcodeproj/xcshareddata/xcschemes/`. This scheme must be edited carefully:
+
+- Set the build configuration in `Run`, `Test` and `Analyze` actions to `Debug-Runner_Prod`.
+- Set the build configuration in `Archive` action to `Release-Runner_Prod`.
+- Set the build configuration in `Profile` action to `Profile-Runner_Prod`.
+- Add a `PreActions` block to `BuildAction` that runs `xcode_backend.sh prepare`. The existing `Runner.xcscheme` already has this pre-action and can be used as a reference. Configure the action as follows:
+  - **Title:** `Run Prepare Flutter Framework Script`
+  - **Provide build settings from:** `Runner_Prod` (select the new target)
+  - **Script:** `/bin/sh "$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh" prepare`
+
+:warning: **Warning**\
+The pre-action title **must** be exactly `"Run Prepare Flutter Framework Script"`. Flutter's `SwiftPackageManagerIntegrationMigration` uses this string to detect whether a scheme is already migrated. If the title is anything else (e.g. `"Run Script"`), Flutter will attempt to migrate the scheme, fail because it cannot find the default `Runner` target's hardcoded UUID in the custom scheme, and then **reset the scheme to its backup state** on every build — undoing all manual edits. This is a known Flutter limitation tracked in [flutter/flutter#164099](https://github.com/flutter/flutter/issues/164099).
+
+**5. Build the obfuscated IPA**
+
+```bash
+flutter build ipa --flavor Runner_Prod --release --export-method ad-hoc --obfuscate --split-debug-info=build/mapping/ios
+```
 
 </details>
 
@@ -112,7 +161,7 @@ The example applications handle deep links those contain a valid `dispatchTokenR
 <details>
 <summary>Android</summary>
 
-The related configuration located in the [AndroidManifest.xml](android/app/src/main/AndroidManifest.xml) for [MainActivity](android/app/src/main/kotlin/ch/nevis/nevis_mobile_authentication_sdk_example_app_flutter/MainActivity.kt) with action `android.intent.action.VIEW`.
+The related configuration located in the [AndroidManifest.xml](android/app/src/main/AndroidManifest.xml) for [MainActivity](android/app/src/main/kotlin/ch/nevis/exampleapp/MainActivity.kt) with action `android.intent.action.VIEW`.
 Change the `nevisaccess` scheme value in the following `intent-filter` with the right scheme information of your environment.
 
 ```xml
@@ -134,7 +183,7 @@ For more information about deep links, visit the official [Android guide](https:
 <details>
 <summary>iOS</summary>
 
-The related configuration located in the [Info.plist](ios/Runner/Resources/Info.plist) file in the `CFBundleURLSchemes` array.
+The related configuration located in the [Info.plist](ios/Runner/Info.plist) file in the `CFBundleURLSchemes` array.
 Change the `nevisaccess` scheme to the right scheme information of your environment.
 
 ```
@@ -159,7 +208,7 @@ For more information about custom URL scheme, visit the official [Apple guide](h
 Now you're ready to build the example app by running:
 
 ```bash
-PERMISSION_CAMERA=1 flutter build ios --no-codesign
+flutter build ios --no-codesign
 ```
 
 ```bash
