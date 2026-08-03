@@ -1125,7 +1125,7 @@
 			repositoryURL = "https://github.com/nevissecurity/nevis-mobile-authentication-sdk-ios-package";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.5.0;
+				minimumVersion = 4.6.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
