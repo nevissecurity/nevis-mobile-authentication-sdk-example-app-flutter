@@ -73,6 +73,8 @@ extension OperationTypeLocalizationExtension on OperationType {
         return localizations.operationTypeDeviceInformationChange;
       case OperationType.payloadDecode:
         return localizations.operationTypePayloadDecode;
+      case OperationType.pendingOutOfBandOperations:
+        return localizations.operationTypePendingOutOfBandOperations;
       case OperationType.localData:
         return localizations.operationTypeLocalData;
       case OperationType.unknown:

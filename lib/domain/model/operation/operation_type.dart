@@ -8,6 +8,7 @@ enum OperationType {
   deregistration,
   deviceInformationChange,
   payloadDecode,
+  pendingOutOfBandOperations,
   pinChange,
   passwordChange,
   localData,

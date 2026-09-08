@@ -22,7 +22,9 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/useca
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/deregister_all_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/get_fido_uaf_attestation_information_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/meta_data_usecase.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/oob_payload_decode_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/oob_process_usecase.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/pending_out_of_band_operations_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/registered_accounts_usecase.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/navigation/global_navigation_manager.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/navigation/credential_parameter.dart';
@@ -38,7 +40,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final DeepLinkRepository _deepLinkRepository;
   final ConfigurationLoader _configurationLoader;
   final ClientProvider _clientProvider;
+  final OobPayloadDecodeUseCase _oobPayloadDecodeUseCase;
   final OobProcessUseCase _oobProcessUseCase;
+  final PendingOutOfBandOperationsUseCase _pendingOutOfBandOperationsUseCase;
   final RegisteredAccountsUseCase _registeredAccountsUseCase;
   final DeregisterAllUseCase _deregisterAllUseCase;
   final AuthenticatorsUseCase _authenticatorsUseCase;
@@ -63,7 +67,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     this._deepLinkRepository,
     this._configurationLoader,
     this._clientProvider,
+    this._oobPayloadDecodeUseCase,
     this._oobProcessUseCase,
+    this._pendingOutOfBandOperationsUseCase,
     this._registeredAccountsUseCase,
     this._deregisterAllUseCase,
     this._authenticatorsUseCase,
@@ -92,6 +98,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<ChangeDeviceInformationEvent>(_handleChangeDeviceInformation);
     on<AuthCloudApiRegistrationEvent>(_handleAuthCloudApiRegistration);
     on<DeleteAuthenticatorsEvent>(_handleDeleteAuthenticators);
+    on<FetchPendingOperationsEvent>(_handleFetchPendingOperations);
     on<LocalDataEvent>(_handleLocalData);
   }
 
@@ -132,9 +139,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final dispatchTokenResponse = Uri.tryParse(
       uri,
     )?.queryParameters["dispatchTokenResponse"];
-    await _oobProcessUseCase.execute(dispatchTokenResponse).catchError((e) {
-      _errorHandler.handle(e);
-    });
+    if (dispatchTokenResponse == null) {
+      _errorHandler.handle(BusinessException.missingDispatchTokenResponse());
+      return;
+    }
+    await _oobPayloadDecodeUseCase
+        .execute(
+          json: dispatchTokenResponse,
+          onSuccess: (payload) async {
+            await _oobProcessUseCase.execute(payload).catchError((e) {
+              _errorHandler.handle(e);
+            });
+          },
+        )
+        .catchError((e) {
+          _errorHandler.handle(e);
+        });
   }
 
   Future<void> _initClient(Emitter<HomeState> emit) async {
@@ -336,6 +356,28 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     await _deleteAuthenticatorsUseCase
         .execute(accounts: _registeredAccounts)
+        .catchError((error) {
+          _errorHandler.handle(error);
+        });
+  }
+
+  Future<void> _handleFetchPendingOperations(
+    FetchPendingOperationsEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    if (_registeredAccounts.isEmpty) {
+      return _errorHandler.handle(
+        BusinessException.registeredAccountsNotFound(),
+      );
+    }
+
+    await _pendingOutOfBandOperationsUseCase
+        .execute()
+        .then((payload) async {
+          if (payload != null) {
+            await _oobProcessUseCase.execute(payload);
+          }
+        })
         .catchError((error) {
           _errorHandler.handle(error);
         });

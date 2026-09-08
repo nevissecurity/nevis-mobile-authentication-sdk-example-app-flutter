@@ -25,11 +25,11 @@ import 'data/repository/state_repository_impl.dart' as _i281;
 import 'domain/batch_call/batch_call.dart' as _i1028;
 import 'domain/blocs/domain_state/domain_bloc.dart' as _i218;
 import 'domain/blocs/local_data/local_data_bloc.dart' as _i165;
-import 'domain/client_provider/client_provider.dart' as _i965;
+import 'domain/client_provider/client_provider.dart' as _i967;
 import 'domain/error/error_handler.dart' as _i711;
 import 'domain/interaction/account_selector_impl.dart' as _i902;
 import 'domain/interaction/authentication_authenticator_selector_impl.dart'
-    as _i316;
+    as _i317;
 import 'domain/interaction/biometric_user_verifier_impl.dart' as _i274;
 import 'domain/interaction/device_passcode_user_verifier_impl.dart' as _i737;
 import 'domain/interaction/fingerprint_user_verifier_impl.dart' as _i716;
@@ -75,8 +75,9 @@ import 'domain/usecase/get_fido_uaf_attestation_information_usecase.dart'
 import 'domain/usecase/login_usecase.dart' as _i579;
 import 'domain/usecase/meta_data_usecase.dart' as _i1052;
 import 'domain/usecase/oob_payload_decode_usecase.dart' as _i535;
-import 'domain/usecase/oob_process_usecase.dart' as _i1054;
+import 'domain/usecase/oob_process_usecase.dart' as _i1055;
 import 'domain/usecase/pause_listening_usecase.dart' as _i965;
+import 'domain/usecase/pending_out_of_band_operations_usecase.dart' as _i653;
 import 'domain/usecase/provided_credentials_usecase.dart' as _i521;
 import 'domain/usecase/registered_accounts_usecase.dart' as _i382;
 import 'domain/usecase/registration_usecase.dart' as _i353;
@@ -97,7 +98,7 @@ import 'ui/screens/change_device_information/change_device_information_bloc.dart
     as _i153;
 import 'ui/screens/confirmation/confirmation_bloc.dart' as _i988;
 import 'ui/screens/credential/credential_bloc.dart' as _i478;
-import 'ui/screens/home/home_bloc.dart' as _i286;
+import 'ui/screens/home/home_bloc.dart' as _i287;
 import 'ui/screens/legacy_login/legacy_login_bloc.dart' as _i429;
 import 'ui/screens/read_qr_code/read_qr_code_bloc.dart' as _i185;
 import 'ui/screens/result/result_bloc.dart' as _i300;
@@ -305,7 +306,7 @@ _i174.GetIt $initGetIt(
     ),
   );
   gh.factory<_i150.AuthenticatorSelector>(
-    () => _i316.AuthenticationAuthenticatorSelectorImpl(
+    () => _i317.AuthenticationAuthenticatorSelectorImpl(
       gh<_i218.DomainBloc>(),
       gh<_i425.ConfigurationLoader>(),
       gh<_i517.AuthenticatorValidator>(),
@@ -320,15 +321,15 @@ _i174.GetIt $initGetIt(
       gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
     ),
   );
-  gh.factory<_i965.ClientProvider>(
-    () => _i965.ClientProviderImpl(
+  gh.factory<_i967.ClientProvider>(
+    () => _i967.ClientProviderImpl(
       gh<_i404.StateRepository<_i761.OperationType>>(),
       gh<_i711.ErrorHandler>(),
     ),
   );
   gh.factory<_i797.GetFidoUafAttestationInformationUseCase>(
     () => _i797.GetFidoUafAttestationInformationUseCaseImpl(
-      gh<_i965.ClientProvider>(),
+      gh<_i967.ClientProvider>(),
     ),
   );
   gh.factory<_i244.SelectAuthenticatorBloc>(
@@ -339,7 +340,7 @@ _i174.GetIt $initGetIt(
     ),
   );
   gh.factory<_i906.DeviceInformationUseCase>(
-    () => _i906.DeviceInformationUseCaseImpl(gh<_i965.ClientProvider>()),
+    () => _i906.DeviceInformationUseCaseImpl(gh<_i967.ClientProvider>()),
   );
   gh.factory<_i150.PasswordChanger>(
     () => _i147.PasswordChangerImpl(
@@ -357,7 +358,7 @@ _i174.GetIt $initGetIt(
     ),
   );
   gh.factory<_i453.AuthenticatorsUseCase>(
-    () => _i453.AuthenticatorsUseCaseImpl(gh<_i965.ClientProvider>()),
+    () => _i453.AuthenticatorsUseCaseImpl(gh<_i967.ClientProvider>()),
   );
   gh.factory<_i521.ProvidedCredentialsUseCase>(
     () => _i521.ProvidedCredentialsUseCaseImpl(
@@ -367,7 +368,7 @@ _i174.GetIt $initGetIt(
   );
   gh.singleton<_i165.LocalDataBloc>(
     () => _i165.LocalDataBloc(
-      gh<_i965.ClientProvider>(),
+      gh<_i967.ClientProvider>(),
       gh<_i711.ErrorHandler>(),
     ),
   );
@@ -392,7 +393,13 @@ _i174.GetIt $initGetIt(
   );
   gh.factory<_i286.DeregisterAllUseCase>(
     () => _i286.DeregisterAllUseCaseImpl(
-      gh<_i965.ClientProvider>(),
+      gh<_i967.ClientProvider>(),
+      gh<_i404.StateRepository<_i761.OperationType>>(),
+    ),
+  );
+  gh.factory<_i653.PendingOutOfBandOperationsUseCase>(
+    () => _i653.PendingOutOfBandOperationsUseCaseImpl(
+      gh<_i967.ClientProvider>(),
       gh<_i404.StateRepository<_i761.OperationType>>(),
     ),
   );
@@ -423,7 +430,7 @@ _i174.GetIt $initGetIt(
   );
   gh.factory<_i776.DeleteAuthenticatorsUseCase>(
     () => _i776.DeleteAuthenticatorsUseCaseImpl(
-      gh<_i965.ClientProvider>(),
+      gh<_i967.ClientProvider>(),
       gh<_i404.StateRepository<_i761.OperationType>>(),
     ),
   );
@@ -447,7 +454,7 @@ _i174.GetIt $initGetIt(
   );
   gh.factory<_i956.ChangeDeviceInformationUseCase>(
     () => _i956.ChangeDeviceInformationUseCaseImpl(
-      gh<_i965.ClientProvider>(),
+      gh<_i967.ClientProvider>(),
       gh<_i404.StateRepository<_i761.OperationType>>(),
       gh<_i218.DomainBloc>(),
       gh<_i711.ErrorHandler>(),
@@ -455,14 +462,14 @@ _i174.GetIt $initGetIt(
   );
   gh.factory<_i535.OobPayloadDecodeUseCase>(
     () => _i535.OobPayloadDecodeUseCaseImpl(
-      gh<_i965.ClientProvider>(),
+      gh<_i967.ClientProvider>(),
       gh<_i404.StateRepository<_i761.OperationType>>(),
       gh<_i711.ErrorHandler>(),
     ),
   );
   gh.factory<_i90.ChangePasswordUseCase>(
     () => _i90.ChangePasswordUseCaseImpl(
-      gh<_i965.ClientProvider>(),
+      gh<_i967.ClientProvider>(),
       gh<_i150.PasswordChanger>(),
       gh<_i218.DomainBloc>(),
       gh<_i404.StateRepository<_i761.OperationType>>(),
@@ -480,14 +487,14 @@ _i174.GetIt $initGetIt(
   );
   gh.factory<_i306.DeregisterUseCase>(
     () => _i306.DeregisterUseCaseImpl(
-      gh<_i965.ClientProvider>(),
+      gh<_i967.ClientProvider>(),
       gh<_i218.DomainBloc>(),
       gh<_i404.StateRepository<_i761.OperationType>>(),
     ),
   );
   gh.factory<_i476.AuthenticateUseCase>(
     () => _i476.AuthenticateUseCaseImpl(
-      gh<_i965.ClientProvider>(),
+      gh<_i967.ClientProvider>(),
       gh<_i150.AuthenticatorSelector>(instanceName: 'auth_selector_auth'),
       gh<_i150.PinUserVerifier>(),
       gh<_i150.PasswordUserVerifier>(),
@@ -500,7 +507,7 @@ _i174.GetIt $initGetIt(
     ),
   );
   gh.factory<_i382.RegisteredAccountsUseCase>(
-    () => _i382.RegisteredAccountsUseCaseImpl(gh<_i965.ClientProvider>()),
+    () => _i382.RegisteredAccountsUseCaseImpl(gh<_i967.ClientProvider>()),
   );
   gh.factory<_i587.CreateDeviceInformationUseCase>(
     () => _i587.CreateDeviceInformationUseCaseImpl(
@@ -509,32 +516,11 @@ _i174.GetIt $initGetIt(
   );
   gh.factory<_i311.ChangePinUseCase>(
     () => _i311.ChangePinUseCaseImpl(
-      gh<_i965.ClientProvider>(),
+      gh<_i967.ClientProvider>(),
       gh<_i150.PinChanger>(),
       gh<_i218.DomainBloc>(),
       gh<_i404.StateRepository<_i761.OperationType>>(),
       gh<_i404.StateRepository<_i1064.PinChangeState>>(),
-      gh<_i711.ErrorHandler>(),
-    ),
-  );
-  gh.factory<_i1054.OobProcessUseCase>(
-    () => _i1054.OobProcessUseCaseImpl(
-      gh<_i965.ClientProvider>(),
-      gh<_i587.CreateDeviceInformationUseCase>(),
-      gh<_i535.OobPayloadDecodeUseCase>(),
-      gh<_i150.AccountSelector>(),
-      gh<_i150.AuthenticatorSelector>(instanceName: 'auth_selector_reg'),
-      gh<_i150.AuthenticatorSelector>(instanceName: 'auth_selector_auth'),
-      gh<_i150.PinEnroller>(),
-      gh<_i150.PasswordEnroller>(),
-      gh<_i150.PinUserVerifier>(),
-      gh<_i150.PasswordUserVerifier>(),
-      gh<_i150.BiometricUserVerifier>(),
-      gh<_i150.DevicePasscodeUserVerifier>(),
-      gh<_i150.FingerprintUserVerifier>(),
-      gh<_i218.DomainBloc>(),
-      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
-      gh<_i404.StateRepository<_i761.OperationType>>(),
       gh<_i711.ErrorHandler>(),
     ),
   );
@@ -557,15 +543,9 @@ _i174.GetIt $initGetIt(
       gh<_i341.GlobalNavigationManager>(),
     ),
   );
-  gh.factory<_i185.ReadQrCodeBloc>(
-    () => _i185.ReadQrCodeBloc(
-      gh<_i1054.OobProcessUseCase>(),
-      gh<_i711.ErrorHandler>(),
-    ),
-  );
   gh.factory<_i346.AuthCloudApiRegisterUseCase>(
     () => _i346.AuthCloudApiRegisterUseCaseImpl(
-      gh<_i965.ClientProvider>(),
+      gh<_i967.ClientProvider>(),
       gh<_i587.CreateDeviceInformationUseCase>(),
       gh<_i150.AuthenticatorSelector>(instanceName: 'auth_selector_reg'),
       gh<_i150.PinEnroller>(),
@@ -581,7 +561,7 @@ _i174.GetIt $initGetIt(
   );
   gh.factory<_i353.RegistrationUseCase>(
     () => _i353.RegistrationUseCaseImpl(
-      gh<_i965.ClientProvider>(),
+      gh<_i967.ClientProvider>(),
       gh<_i587.CreateDeviceInformationUseCase>(),
       gh<_i150.AuthenticatorSelector>(instanceName: 'auth_selector_reg'),
       gh<_i150.PinEnroller>(),
@@ -595,12 +575,34 @@ _i174.GetIt $initGetIt(
       gh<_i711.ErrorHandler>(),
     ),
   );
-  gh.factory<_i286.HomeBloc>(
-    () => _i286.HomeBloc(
+  gh.factory<_i1055.OobProcessUseCase>(
+    () => _i1055.OobProcessUseCaseImpl(
+      gh<_i967.ClientProvider>(),
+      gh<_i587.CreateDeviceInformationUseCase>(),
+      gh<_i150.AccountSelector>(),
+      gh<_i150.AuthenticatorSelector>(instanceName: 'auth_selector_reg'),
+      gh<_i150.AuthenticatorSelector>(instanceName: 'auth_selector_auth'),
+      gh<_i150.PinEnroller>(),
+      gh<_i150.PasswordEnroller>(),
+      gh<_i150.PinUserVerifier>(),
+      gh<_i150.PasswordUserVerifier>(),
+      gh<_i150.BiometricUserVerifier>(),
+      gh<_i150.DevicePasscodeUserVerifier>(),
+      gh<_i150.FingerprintUserVerifier>(),
+      gh<_i218.DomainBloc>(),
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+      gh<_i404.StateRepository<_i761.OperationType>>(),
+      gh<_i711.ErrorHandler>(),
+    ),
+  );
+  gh.factory<_i287.HomeBloc>(
+    () => _i287.HomeBloc(
       gh<_i640.DeepLinkRepository>(),
       gh<_i425.ConfigurationLoader>(),
-      gh<_i965.ClientProvider>(),
-      gh<_i1054.OobProcessUseCase>(),
+      gh<_i967.ClientProvider>(),
+      gh<_i535.OobPayloadDecodeUseCase>(),
+      gh<_i1055.OobProcessUseCase>(),
+      gh<_i653.PendingOutOfBandOperationsUseCase>(),
       gh<_i382.RegisteredAccountsUseCase>(),
       gh<_i286.DeregisterAllUseCase>(),
       gh<_i453.AuthenticatorsUseCase>(),
@@ -612,6 +614,13 @@ _i174.GetIt $initGetIt(
       gh<_i165.LocalDataBloc>(),
       gh<_i711.ErrorHandler>(),
       gh<_i341.GlobalNavigationManager>(),
+    ),
+  );
+  gh.factory<_i185.ReadQrCodeBloc>(
+    () => _i185.ReadQrCodeBloc(
+      gh<_i535.OobPayloadDecodeUseCase>(),
+      gh<_i1055.OobProcessUseCase>(),
+      gh<_i711.ErrorHandler>(),
     ),
   );
   gh.factory<_i220.AuthCloudApiRegistrationBloc>(
