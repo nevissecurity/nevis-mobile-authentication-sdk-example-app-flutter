@@ -12,7 +12,9 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/blocs
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/blocs/local_data/local_data_state.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/client_provider/client_provider.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/error/error_handler.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/attestation/sdk_attestation_information.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/error/error.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/meta_data/sdk_meta_data.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/operation_type.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/deep_link_repository.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/authenticators_usecase.dart';
@@ -30,8 +32,6 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/navigation/g
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/credential/navigation/credential_parameter.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_event.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/home/home_state.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/attestation/sdk_attestation_information.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/meta_data/sdk_meta_data.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/select_account/navigation/select_account_parameter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -144,14 +144,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       return;
     }
     await _oobPayloadDecodeUseCase
-        .execute(
-          json: dispatchTokenResponse,
-          onSuccess: (payload) async {
-            await _oobProcessUseCase.execute(payload).catchError((e) {
-              _errorHandler.handle(e);
-            });
-          },
-        )
+        .execute(json: dispatchTokenResponse)
+        .then((payload) async {
+          await _oobProcessUseCase.execute(payload);
+        })
         .catchError((e) {
           _errorHandler.handle(e);
         });

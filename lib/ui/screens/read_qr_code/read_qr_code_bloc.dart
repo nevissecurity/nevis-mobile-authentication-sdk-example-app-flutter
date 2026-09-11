@@ -29,14 +29,10 @@ class ReadQrCodeBloc extends Bloc<ReadQrCodeEvent, ReadQrCodeState> {
     Emitter<ReadQrCodeState> emit,
   ) async {
     await _oobPayloadDecodeUseCase
-        .execute(
-          json: event.content,
-          onSuccess: (payload) async {
-            await _oobProcessUseCase.execute(payload).catchError((error) {
-              _errorHandler.handle(error);
-            });
-          },
-        )
+        .execute(json: event.content)
+        .then((payload) async {
+          await _oobProcessUseCase.execute(payload);
+        })
         .catchError((error) {
           _errorHandler.handle(error);
         });

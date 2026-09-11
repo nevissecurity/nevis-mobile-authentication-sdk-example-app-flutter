@@ -391,6 +391,12 @@ _i174.GetIt $initGetIt(
       gh<_i657.AccountValidator>(),
     ),
   );
+  gh.factory<_i535.OobPayloadDecodeUseCase>(
+    () => _i535.OobPayloadDecodeUseCaseImpl(
+      gh<_i967.ClientProvider>(),
+      gh<_i404.StateRepository<_i761.OperationType>>(),
+    ),
+  );
   gh.factory<_i286.DeregisterAllUseCase>(
     () => _i286.DeregisterAllUseCaseImpl(
       gh<_i967.ClientProvider>(),
@@ -457,13 +463,6 @@ _i174.GetIt $initGetIt(
       gh<_i967.ClientProvider>(),
       gh<_i404.StateRepository<_i761.OperationType>>(),
       gh<_i218.DomainBloc>(),
-      gh<_i711.ErrorHandler>(),
-    ),
-  );
-  gh.factory<_i535.OobPayloadDecodeUseCase>(
-    () => _i535.OobPayloadDecodeUseCaseImpl(
-      gh<_i967.ClientProvider>(),
-      gh<_i404.StateRepository<_i761.OperationType>>(),
       gh<_i711.ErrorHandler>(),
     ),
   );

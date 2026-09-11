@@ -74,7 +74,7 @@ class GetFidoUafAttestationInformationUseCaseImpl
           debugPrint(
             'Getting FIDO UAF attestation information failed. Error: ${error.runtimeType}',
           );
-          return completer.complete(null);
+          completer.complete(null);
         })
         .execute();
 
