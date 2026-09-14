@@ -11,6 +11,7 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/l10n/app_loc
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/navigation/app_navigation.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/navigation/global_navigation_manager.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/app_state/app_bloc.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/theme/app_theme.dart';
 
 late AppNavigation _appNavigation;
 late GlobalNavigationManager _globalNavigationManager;
@@ -52,23 +53,35 @@ class _MyAppState extends State<MyApp> {
     return BlocProvider.value(
       value: GetIt.I.get<AppBloc>(),
       child: MaterialApp(
-        theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+        theme: lightAppTheme,
+        darkTheme: darkAppTheme,
+        themeMode: ThemeMode.system,
         navigatorKey: _navigatorKey,
         initialRoute: AppNavigation.initialRoute,
         routes: _appNavigation.routes,
-        builder: (ctx, child) => AnnotatedRegion<SystemUiOverlayStyle>(
-          value: const SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent,
-            statusBarBrightness: Brightness.light,
-            statusBarIconBrightness: Brightness.dark,
-            systemStatusBarContrastEnforced: false,
-            systemNavigationBarColor: Colors.transparent,
-            systemNavigationBarDividerColor: Colors.transparent,
-            systemNavigationBarIconBrightness: Brightness.dark,
-            systemNavigationBarContrastEnforced: false,
-          ),
-          child: child ?? const SizedBox.shrink(),
-        ),
+        builder: (ctx, child) {
+          final isDark = Theme.of(ctx).brightness == Brightness.dark;
+          return AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              // On iOS this names the background the status bar sits on,
+              // on Android the two icon brightnesses name the icon color,
+              // which is why they intentionally point in opposite directions.
+              statusBarBrightness: isDark ? Brightness.dark : Brightness.light,
+              statusBarIconBrightness: isDark
+                  ? Brightness.light
+                  : Brightness.dark,
+              systemStatusBarContrastEnforced: false,
+              systemNavigationBarColor: Colors.transparent,
+              systemNavigationBarDividerColor: Colors.transparent,
+              systemNavigationBarIconBrightness: isDark
+                  ? Brightness.light
+                  : Brightness.dark,
+              systemNavigationBarContrastEnforced: false,
+            ),
+            child: child ?? const SizedBox.shrink(),
+          );
+        },
         localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
