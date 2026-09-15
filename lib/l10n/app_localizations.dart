@@ -324,6 +324,12 @@ abstract class AppLocalizations {
   /// **'In-Band Authenticate'**
   String get inBandAuthenticate;
 
+  /// No description provided for @fetchPendingOperations.
+  ///
+  /// In en, this message translates to:
+  /// **'Fetch Pending Operations'**
+  String get fetchPendingOperations;
+
   /// No description provided for @deregister.
   ///
   /// In en, this message translates to:
@@ -656,6 +662,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Payload decode'**
   String get operationTypePayloadDecode;
+
+  /// No description provided for @operationTypePendingOutOfBandOperations.
+  ///
+  /// In en, this message translates to:
+  /// **'Fetch Pending Operations'**
+  String get operationTypePendingOutOfBandOperations;
 
   /// No description provided for @operationTypeLocalData.
   ///

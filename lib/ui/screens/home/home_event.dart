@@ -26,6 +26,8 @@ class AuthCloudApiRegistrationEvent extends HomeEvent {}
 
 class DeleteAuthenticatorsEvent extends HomeEvent {}
 
+class FetchPendingOperationsEvent extends HomeEvent {}
+
 class LocalDataEvent extends HomeEvent {
   final LocalDataState state;
 

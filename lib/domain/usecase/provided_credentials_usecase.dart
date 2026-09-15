@@ -37,13 +37,13 @@ class ProvidedCredentialsUseCaseImpl implements ProvidedCredentialsUseCase {
         if (state == null) {
           throw BusinessException.invalidState();
         }
-        state.handler.pins(oldCredential, newCredential);
+        await state.handler.pins(oldCredential, newCredential);
       case CredentialKind.password:
         final state = _passwordChangeStateRepository.state;
         if (state == null) {
           throw BusinessException.invalidState();
         }
-        state.handler.passwords(oldCredential, newCredential);
+        await state.handler.passwords(oldCredential, newCredential);
     }
   }
 }
