@@ -241,6 +241,16 @@ _i174.GetIt $initGetIt(
   gh.factory<_i579.LoginUseCase>(
     () => _i579.LoginUseCaseImpl(gh<_i373.LoginRepository>()),
   );
+  gh.factory<_i150.AuthenticatorSelector>(
+    () => _i317.AuthenticationAuthenticatorSelectorImpl(
+      gh<_i218.DomainBloc>(),
+      gh<_i425.ConfigurationLoader>(),
+      gh<_i517.AuthenticatorValidator>(),
+      gh<_i711.ErrorHandler>(),
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+    instanceName: 'auth_selector_auth',
+  );
   gh.factory<_i404.StateRepository<_i291.PinEnrollmentState>>(
     () => _i281.PinEnrollmentStateRepositoryImpl(
       gh<_i452.Cache<_i291.PinEnrollmentState>>(),
@@ -289,30 +299,12 @@ _i174.GetIt $initGetIt(
       gh<_i404.StateRepository<_i966.PasswordEnrollmentState>>(),
     ),
   );
-  gh.factory<_i150.AuthenticatorSelector>(
-    () => _i78.RegistrationAuthenticatorSelectorImpl(
-      gh<_i218.DomainBloc>(),
-      gh<_i425.ConfigurationLoader>(),
-      gh<_i517.AuthenticatorValidator>(),
-      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
-    ),
-    instanceName: 'auth_selector_reg',
-  );
   gh.factory<_i150.BiometricUserVerifier>(
     () => _i274.BiometricUserVerifierImpl(
       gh<_i218.DomainBloc>(),
       gh<_i711.ErrorHandler>(),
       gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
     ),
-  );
-  gh.factory<_i150.AuthenticatorSelector>(
-    () => _i317.AuthenticationAuthenticatorSelectorImpl(
-      gh<_i218.DomainBloc>(),
-      gh<_i425.ConfigurationLoader>(),
-      gh<_i517.AuthenticatorValidator>(),
-      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
-    ),
-    instanceName: 'auth_selector_auth',
   );
   gh.factory<_i150.DevicePasscodeUserVerifier>(
     () => _i737.DevicePasscodeUserVerifierImpl(
@@ -433,6 +425,16 @@ _i174.GetIt $initGetIt(
       gh<_i218.DomainBloc>(),
       gh<_i404.StateRepository<_i1064.PinChangeState>>(),
     ),
+  );
+  gh.factory<_i150.AuthenticatorSelector>(
+    () => _i78.RegistrationAuthenticatorSelectorImpl(
+      gh<_i218.DomainBloc>(),
+      gh<_i425.ConfigurationLoader>(),
+      gh<_i517.AuthenticatorValidator>(),
+      gh<_i711.ErrorHandler>(),
+      gh<_i404.StateRepository<_i954.UserInteractionOperationState>>(),
+    ),
+    instanceName: 'auth_selector_reg',
   );
   gh.factory<_i776.DeleteAuthenticatorsUseCase>(
     () => _i776.DeleteAuthenticatorsUseCaseImpl(
