@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/configuration/configuration_loader.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/blocs/domain_state/domain_bloc.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/error/error_handler.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/interaction/authenticator_selector_impl.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/user_interaction_operation_state.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/state_repository.dart';
@@ -16,6 +17,7 @@ class AuthenticationAuthenticatorSelectorImpl
   final DomainBloc _domainBloc;
   final ConfigurationLoader _configurationLoader;
   final AuthenticatorValidator _authenticatorValidator;
+  final ErrorHandler _errorHandler;
   final StateRepository<UserInteractionOperationState>
   _userInteractionOperationStateRepository;
 
@@ -23,6 +25,7 @@ class AuthenticationAuthenticatorSelectorImpl
     this._domainBloc,
     this._configurationLoader,
     this._authenticatorValidator,
+    this._errorHandler,
     this._userInteractionOperationStateRepository,
   );
 
@@ -34,6 +37,9 @@ class AuthenticationAuthenticatorSelectorImpl
 
   @override
   AuthenticatorValidator get authenticatorValidator => _authenticatorValidator;
+
+  @override
+  ErrorHandler get errorHandler => _errorHandler;
 
   @override
   StateRepository<UserInteractionOperationState>
