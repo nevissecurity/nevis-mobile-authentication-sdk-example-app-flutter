@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/extension/http_error_extension.dart';
+import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/extension/mobile_authentication_client_error_extension.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/error/error.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/user_interaction_operation_state.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/state_repository.dart';
@@ -64,17 +66,30 @@ class ErrorHandlerImpl extends ErrorHandler {
     // translations for all your supported languages as well as simplifying the
     // error message presented to the end-user in a way non-technical adverse
     // people can understand and act upon them.
+    debugPrint('Operation failed with ${error.runtimeType.toString()} error.');
+
     String errorDescription = error.description;
     if (error is InitializationError) {
       return ResultParameter.fatal(description: errorDescription);
     }
-    if (error is OperationFidoError) {
-      errorDescription = error.errorCode.description;
-    } else if (error is AuthCloudApiFidoError) {
-      errorDescription = error.errorCode.description;
-    } else if (error is AuthenticationFidoError) {
-      errorDescription = error.errorCode.description;
+
+    FidoErrorCode? errorCode = error.errorCode;
+    if (errorCode != null) {
+      errorDescription = errorCode.description;
     }
+
+    HttpError? httpError = error.httpError;
+    if (httpError != null) {
+      debugPrint(httpError.asString());
+    }
+
+    Server? server = error.server;
+    if (server != null) {
+      debugPrint(
+        'The error occurred on server with base url ${server.baseUrl}',
+      );
+    }
+
     return ResultParameter.failure(description: errorDescription);
   }
 }
