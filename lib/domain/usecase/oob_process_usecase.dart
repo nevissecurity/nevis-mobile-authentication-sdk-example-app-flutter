@@ -7,22 +7,19 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/blocs
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/blocs/domain_state/domain_event.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/client_provider/client_provider.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/error/error_handler.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/error/error.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/operation_type.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/model/operation/user_interaction_operation_state.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/repository/state_repository.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/create_device_information_usecase.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/usecase/oob_payload_decode_usecase.dart';
 
 abstract class OobProcessUseCase {
-  Future<void> execute(String? json);
+  Future<void> execute(OutOfBandPayload payload);
 }
 
 @Injectable(as: OobProcessUseCase)
 class OobProcessUseCaseImpl implements OobProcessUseCase {
   final ClientProvider _clientProvider;
   final CreateDeviceInformationUseCase _createDeviceInformationUseCase;
-  final OobPayloadDecodeUseCase _oobPayloadDecodeUseCase;
   final AccountSelector _accountSelector;
   final AuthenticatorSelector _registrationAuthenticatorSelector;
   final AuthenticatorSelector _authenticationAuthenticatorSelector;
@@ -42,7 +39,6 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
   OobProcessUseCaseImpl(
     this._clientProvider,
     this._createDeviceInformationUseCase,
-    this._oobPayloadDecodeUseCase,
     this._accountSelector,
     @Named("auth_selector_reg") this._registrationAuthenticatorSelector,
     @Named("auth_selector_auth") this._authenticationAuthenticatorSelector,
@@ -60,23 +56,15 @@ class OobProcessUseCaseImpl implements OobProcessUseCase {
   );
 
   @override
-  Future<void> execute(String? json) async {
-    if (json == null) {
-      throw BusinessException.missingDispatchTokenResponse();
-    }
+  Future<void> execute(OutOfBandPayload payload) async {
+    _operationTypeRepository.save(OperationType.registration);
     final deviceInformation = await _createDeviceInformationUseCase.execute();
-    await _oobPayloadDecodeUseCase.execute(
-      json: json,
-      onSuccess: (payload) async {
-        _operationTypeRepository.save(OperationType.registration);
-        await handleOutOfBandPayload(
-          outOfBandPayload: payload,
-          deviceInformation: deviceInformation,
-        ).catchError((error) {
-          _errorHandler.handle(error);
-        });
-      },
-    );
+    await handleOutOfBandPayload(
+      outOfBandPayload: payload,
+      deviceInformation: deviceInformation,
+    ).catchError((error) {
+      _errorHandler.handle(error);
+    });
   }
 
   Future<void> handleOutOfBandPayload({

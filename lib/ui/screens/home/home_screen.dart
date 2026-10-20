@@ -63,6 +63,12 @@ class HomeScreen extends StatelessWidget {
                         },
                       ),
                       Button.outlined(
+                        text: localization.fetchPendingOperations,
+                        onPressed: () {
+                          homeBloc.add(FetchPendingOperationsEvent());
+                        },
+                      ),
+                      Button.outlined(
                         text: localization.deregister,
                         onPressed: () {
                           homeBloc.add(DeregisterEvent());
