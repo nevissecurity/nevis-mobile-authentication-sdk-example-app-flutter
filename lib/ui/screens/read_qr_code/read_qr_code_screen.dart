@@ -26,6 +26,7 @@ class _ReadQrCodeScreenState extends State<ReadQrCodeScreen>
     detectionSpeed: DetectionSpeed.noDuplicates,
     facing: CameraFacing.back,
     torchEnabled: false,
+    autoStart: false,
   );
 
   StreamSubscription<Object?>? _subscription;

@@ -18,10 +18,7 @@ class CredentialInfoLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalizations.of(context)!;
     return Column(
-      children: [
-        const SizedBox(height: 16),
-        Text(_info(localization), style: const TextStyle(color: Colors.black)),
-      ],
+      children: [const SizedBox(height: 16), Text(_info(localization))],
     );
   }
 

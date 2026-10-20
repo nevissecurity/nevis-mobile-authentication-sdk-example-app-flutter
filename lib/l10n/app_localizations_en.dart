@@ -144,6 +144,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get inBandAuthenticate => 'In-Band Authenticate';
 
   @override
+  String get fetchPendingOperations => 'Fetch Pending Operations';
+
+  @override
   String get deregister => 'Deregister';
 
   @override
@@ -325,6 +328,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get operationTypePayloadDecode => 'Payload decode';
+
+  @override
+  String get operationTypePendingOutOfBandOperations =>
+      'Fetch Pending Operations';
 
   @override
   String get operationTypeLocalData => 'Local Data operation';
