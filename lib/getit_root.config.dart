@@ -538,7 +538,6 @@ _i174.GetIt $initGetIt(
   gh.singleton<_i196.AppBloc>(
     () => _i196.AppBloc(
       gh<_i306.DeregisterUseCase>(),
-      gh<_i425.ConfigurationLoader>(),
       gh<_i711.ErrorHandler>(),
       gh<_i218.DomainBloc>(),
       gh<_i341.GlobalNavigationManager>(),
