@@ -1,0 +1,38 @@
+{
+  "fill" : "automatic",
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "glass" : false,
+          "image-name" : "label.svg",
+          "name" : "label"
+        },
+        {
+          "glass" : false,
+          "image-name" : "badge.svg",
+          "name" : "badge"
+        },
+        {
+          "glass" : false,
+          "image-name" : "nevis-mark.svg",
+          "name" : "nevis-mark"
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "specular" : false,
+      "translucency" : {
+        "enabled" : false,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "squares" : [
+      "iOS"
+    ]
+  }
+}
