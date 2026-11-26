@@ -10,6 +10,8 @@
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		38032CD228DAF3C500EDCD60 /* FlutterChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38032CD128DAF3C500EDCD60 /* FlutterChannel.swift */; };
 		381BF1C72F8E5CFF00E9792D /* NevisMobileAuthentication-Debug in Frameworks */ = {isa = PBXBuildFile; productRef = 381BF1C62F8E5CFF00E9792D /* NevisMobileAuthentication-Debug */; };
+		3843569730B87ECB008F6EBB /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 3843569630B87ECB008F6EBB /* AppIcon.icon */; };
+		3843569830B87ECB008F6EBB /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 3843569630B87ECB008F6EBB /* AppIcon.icon */; };
 		38666B052F23B78100721B5D /* DeepLinkPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38666B042F23B78100721B5D /* DeepLinkPlugin.swift */; };
 		38B150F9300F90EA008479AB /* DeepLinkPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38666B042F23B78100721B5D /* DeepLinkPlugin.swift */; };
 		38B150FA300F90EA008479AB /* FlutterChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38032CD128DAF3C500EDCD60 /* FlutterChannel.swift */; };
@@ -18,14 +20,12 @@
 		38B150FF300F90EA008479AB /* FlutterGeneratedPluginSwiftPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 38B150F3300F90EA008479AB /* FlutterGeneratedPluginSwiftPackage */; };
 		38B15101300F90EA008479AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		38B15102300F90EA008479AB /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
-		38B15103300F90EA008479AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		38B15104300F90EA008479AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		38B15110300F9132008479AB /* NevisMobileAuthentication in Frameworks */ = {isa = PBXBuildFile; productRef = 38B1510F300F9132008479AB /* NevisMobileAuthentication */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		78A318202AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 78A3181F2AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
-		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +56,7 @@
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		38032CD128DAF3C500EDCD60 /* FlutterChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlutterChannel.swift; sourceTree = "<group>"; };
+		3843569630B87ECB008F6EBB /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		3851FE682FE536D000EC9FF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Runner/Info.plist; sourceTree = SOURCE_ROOT; };
 		3851FE692FE536D000EC9FF8 /* Info-Debug.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-Debug.plist"; path = "Runner/Info-Debug.plist"; sourceTree = SOURCE_ROOT; };
 		38666B042F23B78100721B5D /* DeepLinkPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkPlugin.swift; sourceTree = "<group>"; };
@@ -69,7 +70,6 @@
 		9740EEB31CF90195004384FC /* Generated.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Generated.xcconfig; path = Flutter/Generated.xcconfig; sourceTree = "<group>"; };
 		97C146EE1CF9000F007C117D /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97C146FB1CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,8 +100,8 @@
 			children = (
 				3851FE682FE536D000EC9FF8 /* Info.plist */,
 				3851FE692FE536D000EC9FF8 /* Info-Debug.plist */,
+				3843569630B87ECB008F6EBB /* AppIcon.icon */,
 				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
-				97C146FD1CF9000F007C117D /* Assets.xcassets */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 			);
 			path = Resources;
@@ -264,8 +264,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				38B15101300F90EA008479AB /* LaunchScreen.storyboard in Resources */,
+				3843569730B87ECB008F6EBB /* AppIcon.icon in Resources */,
 				38B15102300F90EA008479AB /* AppFrameworkInfo.plist in Resources */,
-				38B15103300F90EA008479AB /* Assets.xcassets in Resources */,
 				38B15104300F90EA008479AB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,8 +275,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
+				3843569830B87ECB008F6EBB /* AppIcon.icon in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
-				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
