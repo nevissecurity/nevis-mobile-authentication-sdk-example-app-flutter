@@ -26,7 +26,7 @@ The example covers only part of the SDK. For features that are not shown here, u
 
 How the SDK is consumed:
 
-- **Flutter plugin** from pub.dev: [`nevis_mobile_authentication_sdk`](https://pub.dev/packages/nevis_mobile_authentication_sdk), constrained in `pubspec.yaml` (currently `'>=4.8.0 <4.9.0'`).
+- **Flutter plugin** from pub.dev: [`nevis_mobile_authentication_sdk`](https://pub.dev/packages/nevis_mobile_authentication_sdk), constrained in `pubspec.yaml` (currently `'>=4.9.0 <4.10.0'`).
 - The plugin wraps the native SDKs, and **the app has to add the native SDKs itself**:
   - **Android**: `ch.nevis:nevis-mobile-authentication-sdk-android-debug`, declared as `debugImplementation` in `android/app/build.gradle.kts`, with the version in `android/gradle/libs.versions.toml`. It comes from GitHub Packages at `https://maven.pkg.github.com/nevissecurity/nevis-mobile-authentication-sdk-android-package` (declared in `android/build.gradle.kts`), which needs `GH_USERNAME` and `GH_PERSONAL_ACCESS_TOKEN` (a token with the `read:packages` scope). That repository only hosts the **debug flavor**; see `README.md` for how to get the release flavor.
   - **iOS**: Swift Package Manager, via the public package https://github.com/nevissecurity/nevis-mobile-authentication-sdk-ios-package (referenced in `ios/Runner.xcodeproj`). The `Runner` target links `NevisMobileAuthentication-Debug`, and the `Runner_Prod` target links the release flavor `NevisMobileAuthentication`. `README.md` § "Linking the Release Flavor (Target Duplication)" explains this setup.
