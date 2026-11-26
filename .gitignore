@@ -360,3 +360,6 @@ untranslated.txt
 # FVM Version Cache
 **/.fvm
 **/.fvmrc
+
+# AI coding assistants: local, per-user state
+.claude/settings.local.json

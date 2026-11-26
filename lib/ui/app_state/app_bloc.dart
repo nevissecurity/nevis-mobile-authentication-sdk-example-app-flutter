@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nevis_mobile_authentication_sdk/nevis_mobile_authentication_sdk.dart';
-import 'package:nevis_mobile_authentication_sdk_example_app_flutter/configuration/configuration_loader.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/blocs/domain_state/domain_bloc.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/blocs/domain_state/domain_state.dart';
 import 'package:nevis_mobile_authentication_sdk_example_app_flutter/domain/error/error_handler.dart';
@@ -28,7 +27,6 @@ import 'package:nevis_mobile_authentication_sdk_example_app_flutter/ui/screens/t
 @singleton
 class AppBloc extends Bloc<AppEvent, AppState> {
   final DeregisterUseCase _deregisterUseCase;
-  final ConfigurationLoader _configurationLoader;
   final ErrorHandler _errorHandler;
   final DomainBloc _domainBloc;
   final GlobalNavigationManager _globalNavigationManager;
@@ -36,7 +34,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   AppBloc(
     this._deregisterUseCase,
-    this._configurationLoader,
     this._errorHandler,
     this._domainBloc,
     this._globalNavigationManager,
@@ -143,29 +140,14 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       return;
     }
 
-    // Based on current backend configuration FIDO UAF authentication is needed for deregistration
-    // and dispatch target deletion in the Identity Suite environment.
-    // The result of the authentication is handled (username + auth provider) and based on the requested operation type
-    // the corresponding use case will be executed.
-    if (authorizationProvider is CookieAuthorizationProvider) {
-      // if a cookie auth provider is received, we need to fill in the correct uri
-      final sdkConfiguration = await _configurationLoader.sdkConfiguration();
-      String path = sdkConfiguration.deregistrationRequestPath;
-      final uri = Uri.parse(sdkConfiguration.baseUrl + path);
-      for (CookieContainer container
-          in authorizationProvider.cookieContainers) {
-        container.uri = uri;
-      }
+    try {
+      await _deregisterUseCase.execute(
+        username: username,
+        authorizationProvider: authorizationProvider,
+      );
+    } catch (error) {
+      _errorHandler.handle(error);
     }
-
-    await _deregisterUseCase
-        .execute(
-          username: username,
-          authorizationProvider: authorizationProvider,
-        )
-        .catchError((error) {
-          _errorHandler.handle(error);
-        });
   }
 
   @override

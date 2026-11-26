@@ -37,18 +37,23 @@ class DeregisterUseCaseImpl implements DeregisterUseCase {
   }) async {
     _operationTypeRepository.save(OperationType.deregistration);
 
-    return await _clientProvider.client.operations.deregistration
+    final completer = Completer<void>();
+    await _clientProvider.client.operations.deregistration
         .username(username)
         .authorizationProvider(authorizationProvider)
         .onSuccess(() {
           debugPrint('Deregistration using authorization provider succeeded.');
           _domainBloc.add(ResultEvent());
+          completer.complete();
         })
         .onError((error) {
           debugPrint(
             'Deregistration using authorization provider failed: ${error.runtimeType}',
           );
+          completer.completeError(error);
         })
         .execute();
+
+    return completer.future;
   }
 }
